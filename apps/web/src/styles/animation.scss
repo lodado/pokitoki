@@ -1,0 +1,38 @@
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* reference : https://github.com/bepyan/bepyan.me.v2/blob/main/src/styles/global.css */
+  @keyframes enter-page {
+    0% {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  [data-animate] > * {
+    --lv: 0;
+    --lv-wait: 0;
+    --delay: 50ms;
+    
+    animation: enter-page 0.5s both;
+    animation-delay: calc(
+      var(--lv) * var(--delay) + var(--lv-wait) * var(--delay)
+    );
+  }
+  [data-animate-speed='slow'] > * {
+    --delay: 100ms;
+  }
+  [data-animate-speed='fast'] > * {
+    --delay: 25ms;
+  }
+
+  @for $i from 1 through 20 {
+    [data-animate] > *:nth-child(#{$i}) {
+      --lv: #{$i};
+    }
+  }
+  
+}

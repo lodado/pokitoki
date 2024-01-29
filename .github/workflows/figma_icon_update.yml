@@ -1,0 +1,48 @@
+name: Run Figma Icon update Script
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-js:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18.18.1
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run the script
+        env:
+          FIGMA_WEBHOOK: ${{ secrets.FIGMA_WEBHOOK }}
+        run: |
+          cd ./packages/shared
+          pnpm generate:icon
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: 'Update files after successful script run'
+          title: 'Update files'
+          body: 'Script run was successful, updating files.'
+          branch: 'figma_update'
+          delete-branch: true
+          base: 'main'

@@ -1,0 +1,17 @@
+{
+  "name": "Myll",
+  "short_name": "My local trip",
+  "theme_color": "#007AFF",
+  "background_color": "#007AFF",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "icons/Illust_Intro.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

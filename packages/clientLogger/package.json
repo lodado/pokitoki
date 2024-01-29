@@ -1,0 +1,23 @@
+{
+  "name": "@custompackages/clientlogger",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./index.tsx",
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "test": "jest --passWithNoTests"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "eslint-config-custom": "workspace:*",
+    "jest-config": "workspace:*",
+    "pino": "^8.17.2",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2"
+  }
+}

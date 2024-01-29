@@ -1,0 +1,42 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDotEnv": [".env"],
+
+  "globalEnv": [
+    "FIGMA_WEBHOOK",
+    "NEXT_PUBLIC_GOOGLE_ANALYTICS",
+    "NEXT_PUBLIC_CLIENT_URL",
+    "OPENAI_API_KEY",
+    "SENTRY_AUTH_TOKEN",
+    "SENTRY_DSN",
+    "GITHUB_ID",
+    "GITHUB_SECRET"
+  ],
+
+  "pipeline": {
+    "gen:build": { "outputs": ["./dist/**"] },
+
+    "build": {
+      "dependsOn": ["^gen:build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {},
+    "gen:dev": {
+      "dependsOn": ["^gen:dev"],
+
+      "outputs": ["./dist/**"]
+    },
+
+    "test": {
+      "cache": false,
+      "outputs": ["./coverage/**"]
+    },
+    "storybook": {},
+
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start": {}
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "language": "en",
+
+  "Index": {
+    "title": "Hello World",
+    "language": "en"
+  },
+  "Menu": {
+    "home": "Home",
+    "about": "About"
+  }
+}

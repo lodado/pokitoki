@@ -1,0 +1,40 @@
+{
+  "name": "@custompackages/designsystem",
+  "version": "0.0.0",
+  "main": "./index.tsx",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "./**"
+  ],
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\"",
+    "test": "jest --passWithNoTests",
+    "generate:component": "turbo gen react-component"
+  },
+  "sideEffects": false,
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.21.0",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "jest-config": "workspace:*",
+    "next": "^14.0.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "@types/node": "20.5.7",
+    "@types/react": "18.2.21",
+    "@types/react-dom": "18.2.6",
+    "shared": "workspace:*",
+    "tailwind-config": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "5.2.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.0",
+    "@custompackages/clientlogger": "workspace:*"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "lucide-react": "^0.303.0"
+  }
+}
