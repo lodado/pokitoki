@@ -7,7 +7,7 @@ import { useTheme } from 'next-themes'
 import { useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
-import { authenticate } from '@/actions/login'
+import { authenticate } from '@/app/[locale]/login/aggregate/login'
 import { useLoginSession } from '@/hooks/login'
 
 const LoginForm = () => {
