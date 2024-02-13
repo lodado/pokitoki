@@ -8,9 +8,13 @@ import { useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
 import { authenticate } from '@/actions/login'
+import { useLoginSession } from '@/hooks/login'
 
 const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+  const { data: session } = useLoginSession()
+
+  console.log(session)
 
   return (
     <LogScreen>

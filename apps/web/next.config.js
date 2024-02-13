@@ -13,6 +13,8 @@ const nextConfig = {
     defaultLocale: 'ko',
   }, */
 
+  reactStrictMode: false,
+
   sentry: {
     transpileClientSDK: true,
   },

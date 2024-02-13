@@ -3,9 +3,9 @@
 import { LogScreen } from '@custompackages/designsystem'
 import { Metadata } from 'next'
 
-import { authenticate } from '@/actions/login'
-import { signOut } from '@/app/api/auth/auth'
+import { getLoginSession } from '@/hooks/login'
 import { getI18n } from '@/lib/i18n'
+import { signOut } from '@/lib/nextAuth'
 import { getMetadata } from '@/utils'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -21,6 +21,8 @@ const LogoutButton = () => {
     <form
       action={async () => {
         'use server'
+
+        await signOut()
       }}
     >
       <button type="submit">logout</button>
@@ -35,10 +37,12 @@ const Paragraph = Array.from({ length: 10 }).map((_, i) => {
 
 const Page = async () => {
   const t = await getI18n('Index')
+  const session = await getLoginSession()
 
   return (
     <>
       <LogScreen>
+        {JSON.stringify(session)}
         <div>
           ${t('title')}
           <LogoutButton />
