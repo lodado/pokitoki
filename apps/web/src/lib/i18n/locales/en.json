@@ -1,12 +1,10 @@
 {
-  "language": "en",
-
-  "Index": {
-    "title": "Hello World",
-    "language": "en"
-  },
-  "Menu": {
-    "home": "Home",
-    "about": "About"
-  }
+  "signin-title": "Sign in",
+  "signin-with-google-label": "Sign in with Google",
+  "signin-with-apple-label": "Sign in with Apple",
+  "signin-or-label": "Or",
+  "signin-email-label": "Email",
+  "signin-with-email-label": "Sign in with Email",
+  "signin-not-member-description": "Not a member?",
+  "signin-signup-label": "Sign up"
 }

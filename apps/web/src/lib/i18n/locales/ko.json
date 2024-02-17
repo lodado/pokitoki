@@ -1,10 +1,10 @@
 {
-  "Index": {
-    "title": "안녕 세상아",
-    "language": "ko"
-  },
-  "Menu": {
-    "home": "ㅇㄴㅁㅇ",
-    "about": "메뉴"
-  }
+  "signin-title": "로그인",
+  "signin-with-google-label": "Google로 로그인",
+  "signin-with-apple-label": "Apple로 로그인",
+  "signin-or-label": "또는",
+  "signin-email-label": "이메일",
+  "signin-with-email-label": "이메일로 로그인",
+  "signin-not-member-description": "아직 회원이 아니신가요?",
+  "signin-signup-label": "회원가입"
 }
