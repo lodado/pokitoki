@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/nextjs.json",
+  "extends": "../../config/tsconfig/nextjs.json",
   "compilerOptions": {
     "jsx": "preserve",
     "target": "es2017",
