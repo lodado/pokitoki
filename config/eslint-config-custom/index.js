@@ -4,6 +4,7 @@ module.exports = {
   plugins: ['jsx-a11y', 'prettier', 'simple-import-sort', 'import'],
   rules: {
     'no-use-before-define': 'off',
+    'no-restricted-syntax': 'off',
 
     'no-unused-vars': 'off',
     '@next/next/no-html-link-for-pages': 'off',
