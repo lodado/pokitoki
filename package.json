@@ -2,7 +2,7 @@
   "name": "template",
   "scripts": {
     "prepare": "husky install",
-    "build": "dotenv -- turbo run gen:build build --concurrency 15 --filter !^docs",
+    "build": "dotenv -- turbo run gen:build build --concurrency 15 --filter !^docs locale",
     "dev": "dotenv -- turbo run gen:dev dev --concurrency 15 --filter !^docs",
     "start": "turbo run start",
     "lint": "turbo run lint",

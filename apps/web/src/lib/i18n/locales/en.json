@@ -6,5 +6,6 @@
   "LOGIN.SIGNIN_EMAIL_LABEL": "Email",
   "LOGIN.SIGNIN_WITH_EMAIL_LABEL": "Sign in with Email",
   "LOGIN.SIGNIN_NOT_MEMBER_DESCRIPTION": "Not a member?",
-  "LOGIN.SIGNIN_SIGNUP_LABEL": "Sign up"
+  "LOGIN.SIGNIN_SIGNUP_LABEL": "Sign up",
+  "TEST.TITLE": "\btitle"
 }

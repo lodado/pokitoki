@@ -24,6 +24,7 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {},
+    "locale": {},
     "gen:dev": {
       "dependsOn": ["^gen:dev"],
 
