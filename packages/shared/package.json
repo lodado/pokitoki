@@ -18,7 +18,8 @@
     "generate:component": "turbo gen react-component",
     "design-token": "node ./src/designTokens/generator.mjs",
     "icon": "node ./src/icons/generator.mjs",
-    "convert": "node ./src/icons/profiles/generator.mjs"
+    "convert": "node ./src/icons/profiles/generator.mjs",
+    "locale": "node ./src/i18n/import-locale.mjs"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.0",

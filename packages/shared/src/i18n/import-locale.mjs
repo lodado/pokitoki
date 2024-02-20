@@ -1,6 +1,7 @@
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
-import url from 'node:url'
+
+import fetch from 'node-fetch'
 
 const KEY_MARKER = 'key'
 const SPREAD_SHEET_ID = '15NqugKxhd8qRfQBk07QywE0-A4_BDnecAi6JKDA4D_w'
@@ -45,8 +46,7 @@ const generateLocaleFiles = async () => {
   const parsedValues = getKeysAndRows(csvText)
   const parsedJson = mapKeysAndValues(parsedValues)
 
-  const dirname = path.dirname(url.fileURLToPath(import.meta.url))
-  const fileDir = path.resolve(dirname, '..', 'i18n', 'locales')
+  const fileDir = path.resolve('../..', 'apps', 'web', 'src', 'lib', 'i18n', 'locales')
 
   for (const [locale, json] of Object.entries(parsedJson)) {
     const fileName = `${locale}.json`

@@ -1,10 +1,10 @@
 {
-  "signin-title": "Sign in",
-  "signin-with-google-label": "Sign in with Google",
-  "signin-with-apple-label": "Sign in with Apple",
-  "signin-or-label": "Or",
-  "signin-email-label": "Email",
-  "signin-with-email-label": "Sign in with Email",
-  "signin-not-member-description": "Not a member?",
-  "signin-signup-label": "Sign up"
+  "LOGIN.SIGNIN_TITLE": "Sign in",
+  "LOGIN.SIGNIN_WITH_GOOGLE_LABEL": "Sign in with Google",
+  "LOGIN.SIGNIN_WITH_APPLE_LABEL": "Sign in with Apple",
+  "LOGIN.SIGNIN_OR_LABEL": "Or",
+  "LOGIN.SIGNIN_EMAIL_LABEL": "Email",
+  "LOGIN.SIGNIN_WITH_EMAIL_LABEL": "Sign in with Email",
+  "LOGIN.SIGNIN_NOT_MEMBER_DESCRIPTION": "Not a member?",
+  "LOGIN.SIGNIN_SIGNUP_LABEL": "Sign up"
 }

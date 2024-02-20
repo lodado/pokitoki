@@ -8,7 +8,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
-    "locale": "node ./apps/web/src/lib/i18n/import-locale.mjs"
+    "locale": "pnpm --filter shared locale"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
