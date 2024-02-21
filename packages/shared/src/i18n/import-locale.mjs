@@ -1,9 +1,11 @@
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import fetch from 'node-fetch'
 
 const KEY_MARKER = 'key'
+const DEPTH_SEPARATOR = '.'
 const SPREAD_SHEET_ID = '15NqugKxhd8qRfQBk07QywE0-A4_BDnecAi6JKDA4D_w'
 
 const commaSplitterRegex = /(['"])((?:\\.|(?:(?!\1)[^\\]))*)\1/g
@@ -18,7 +20,7 @@ const getKeysAndRows = (text) => {
 }
 
 const mapKeysAndValues = ({ keys, rows, length }) => {
-  const locales = keys.filter((key) => !key.includes(KEY_MARKER))
+  const locales = keys.filter((key) => key && !key.includes(KEY_MARKER))
   const fileMap = locales.reduce((obj, key) => ({ ...obj, [key]: {} }), {})
 
   for (const row of rows) {
@@ -31,7 +33,15 @@ const mapKeysAndValues = ({ keys, rows, length }) => {
       if (key.includes(KEY_MARKER)) {
         keyName = value
       } else {
-        fileMap[key][keyName] = value
+        let targetDepth = fileMap
+        const splittedKeys = [key, ...keyName.split(DEPTH_SEPARATOR)]
+        const targetKeyName = splittedKeys.pop()
+
+        for (const currentKey of splittedKeys) {
+          if (!targetDepth[currentKey]) targetDepth[currentKey] = {}
+          targetDepth = targetDepth[currentKey]
+        }
+        targetDepth[targetKeyName] = value
       }
     }
   }
@@ -51,6 +61,7 @@ const generateLocaleFiles = async () => {
   for (const [locale, json] of Object.entries(parsedJson)) {
     const fileName = `${locale}.json`
     writeFileSync(path.resolve(fileDir, fileName), JSON.stringify(json, null, 2), 'utf8')
+    // eslint-disable-next-line no-console
     console.info(`✅   type file "${fileName}" created in ${fileDir}`)
   }
 }
