@@ -1,5 +1,6 @@
+import supaAdapter from './SupabaseAdapter'
 import vercelPostgresAdapter from './vercelPostgresAdapter'
 
-const AuthAdapter = vercelPostgresAdapter()
+// const AuthAdapter = vercelPostgresAdapter()
 
-export default AuthAdapter
+export default supaAdapter

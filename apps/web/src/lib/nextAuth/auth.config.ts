@@ -59,13 +59,21 @@ async function refreshAccessToken(token: any, user: any, nowTime: number) {
 }
 
 export const authConfig = {
+  debug: true,
+
+  adapter: AuthAdapter,
+
   pages: {
     signIn: '/login',
   },
   callbacks: {
     async signIn(params) {
       const { user, account, profile, email, credentials } = params
+
+      console.log('abc23123, user sign in', params)
       const { findOrCreateUser } = AuthAdapter
+
+      console.log('abc23123, user', account?.provider)
 
       if (account?.provider === 'github') {
         try {
@@ -83,6 +91,8 @@ export const authConfig = {
 
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
+
+      console.log('authorized!!', auth)
 
       const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
       if (isOnDashboard) {
@@ -164,10 +174,6 @@ export const authConfig = {
       return jwtMethods.decode({ token, secret })
     },
   },
-
-  debug: true,
-
-  adapter: AuthAdapter,
 
   providers: [
     GithubProvider({

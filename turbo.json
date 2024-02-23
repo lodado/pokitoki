@@ -3,6 +3,9 @@
   "globalDotEnv": [".env"],
 
   "globalEnv": [
+    "NEXT_PUBLIC_SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY",
     "FIGMA_WEBHOOK",
     "NEXT_PUBLIC_GOOGLE_ANALYTICS",
     "AUTH_SECRET",
