@@ -1,3 +1,4 @@
+import { SupabaseAdapter } from '@auth/supabase-adapter'
 import bcrypt from 'bcrypt'
 import type { NextAuthConfig, Session, User } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
@@ -61,7 +62,7 @@ async function refreshAccessToken(token: any, user: any, nowTime: number) {
 export const authConfig = {
   debug: true,
 
-  adapter: AuthAdapter,
+  adapter: AuthAdapter(),
 
   pages: {
     signIn: '/login',
@@ -70,12 +71,9 @@ export const authConfig = {
     async signIn(params) {
       const { user, account, profile, email, credentials } = params
 
-      console.log('abc23123, user sign in', params)
-      const { findOrCreateUser } = AuthAdapter
+      const { findOrCreateUser } = AuthAdapter()
 
-      console.log('abc23123, user', account?.provider)
-
-      if (account?.provider === 'github') {
+      if (['github', 'google'].some((provider) => provider === account?.provider)) {
         try {
           return await findOrCreateUser({ user, account })
         } catch (e) {

@@ -1,34 +1,45 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
 
-/**
- * 라이브러리가 타입을 export 안함 ㅠ
- */
-const supaAdapter = {
-  ...SupabaseAdapter({
+const supabaseAdapterWrapper = () => {
+  const supaAdapter = SupabaseAdapter({
     url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    secret: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  }),
-} as any
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  }) as any
 
-const findOrCreateUser = async ({ user, account }: any) => {
-  console.log('findOrCreateUser', user, account)
+  const preprocessedUserData = ({ user, account }: any) => {
+    const providerId = `prov@@#!#@${account?.provider}`
 
-  try {
-    const row = await supaAdapter.getUser(user.id)
-
-    if (row) {
-      return true
-    }
-  } catch (e) {
-    // 유저가 없으면 생성함
+    return { ...user, id: user.id + providerId }
   }
 
-  const { id } = (await supaAdapter.createUser(user)) as { id: string }
-  account.userId = id
-  await supaAdapter.linkAccount(account)
+  return () => {
+    const findOrCreateUser = async ({ user, account }: any) => {
+      const clonedUser = preprocessedUserData({ user, account })
 
-  return true
+      const row = await supaAdapter.getUserByAccount(account)
+
+      // 이미 가입한 경우 pass, UX에 따라 수정해야할 수도 있음
+      if (row) return true
+
+      console.log('create user')
+
+      const { id } = (await supaAdapter.createUser(clonedUser)) as { id: string }
+
+      account.userId = id
+      await supaAdapter.linkAccount(account)
+
+      return true
+    }
+
+    return { ...supaAdapter, findOrCreateUser } as any
+  }
 }
 
-supaAdapter.findOrCreateUser = findOrCreateUser
-export default supaAdapter
+const supabaseAdapterInstance =
+  typeof window === 'undefined'
+    ? supabaseAdapterWrapper()
+    : () => {
+        return () => {}
+      }
+
+export default supabaseAdapterInstance
