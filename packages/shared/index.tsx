@@ -1,6 +1,7 @@
 import COLOR from './src/color'
 import TYPOGRAPHY from './src/typography'
 
+export * from './src/utils'
 export { COLOR, TYPOGRAPHY }
 
 /*

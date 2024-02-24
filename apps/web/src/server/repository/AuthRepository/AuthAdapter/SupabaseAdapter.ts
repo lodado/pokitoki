@@ -1,10 +1,13 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
+import { serverSideExecutionFunc } from 'shared'
+
+import { SUPABASE_KEY, SUPABASE_URL } from '@/server/repository/supabase'
 
 const supabaseAdapterWrapper = () => {
   const supaAdapter = SupabaseAdapter({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
-  }) as any
+    url: SUPABASE_URL,
+    secret: SUPABASE_KEY,
+  }) as any // 타입 지원이 잘 안됨;
 
   const preprocessedUserData = ({ user, account }: any) => {
     const providerId = `prov@@#!#@${account?.provider}`
@@ -21,8 +24,6 @@ const supabaseAdapterWrapper = () => {
       // 이미 가입한 경우 pass, UX에 따라 수정해야할 수도 있음
       if (row) return true
 
-      console.log('create user')
-
       const { id } = (await supaAdapter.createUser(clonedUser)) as { id: string }
 
       account.userId = id
@@ -35,11 +36,5 @@ const supabaseAdapterWrapper = () => {
   }
 }
 
-const supabaseAdapterInstance =
-  typeof window === 'undefined'
-    ? supabaseAdapterWrapper()
-    : () => {
-        return () => {}
-      }
-
+const supabaseAdapterInstance = serverSideExecutionFunc(supabaseAdapterWrapper)()
 export default supabaseAdapterInstance
