@@ -3,7 +3,7 @@ import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-import { unknown, z } from 'zod'
+import { z } from 'zod'
 
 import AuthService from '@/server/service/auth/AuthService'
 
@@ -45,6 +45,9 @@ export const authConfig = {
       clientSecret: process.env.GOOGLE_SECRET,
     }),
 
+    /** FIXME
+     * 자체 로그인 필요시 사용, 현재는 쓰지 않음
+     * */
     Credentials({
       async authorize(credentials) {
         const { getUser } = AuthAdapter()
