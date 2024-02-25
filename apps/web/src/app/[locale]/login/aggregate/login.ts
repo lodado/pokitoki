@@ -8,8 +8,8 @@ import { signIn } from '@/lib/nextAuth'
 export async function authenticate(prevState: any, formData: FormData) {
   try {
     // await signIn('credentials', formData)
-    // await signIn('github', formData)
-    await signIn('google', formData)
+    await signIn('github', formData)
+    // await signIn('google', formData)
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
