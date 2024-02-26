@@ -1,6 +1,12 @@
-/** @type {import('next').NextConfig} */
+/* eslint-disable turbo/no-undeclared-env-vars */
 
 const createNextIntlPlugin = require('next-intl/plugin')
+
+/** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const Sentry = require('@sentry/nextjs')
 
 const withNextIntl = createNextIntlPlugin()
@@ -43,4 +49,4 @@ const sentryWebpackPluginOptions = {
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
-module.exports = withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions))
+module.exports = withBundleAnalyzer(withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions)))

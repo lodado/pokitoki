@@ -1,7 +1,6 @@
 import { NextRequest } from 'next/server'
 import { CredentialInput } from 'next-auth/providers/credentials'
 import { Account, Profile, Session, User } from 'next-auth/types'
-import { serverSideExecutionFunc } from 'shared'
 
 import { AuthRepository } from '@/server/repository'
 
@@ -31,7 +30,7 @@ type SessionParams = {
   token: JWT
 }
 
-const AuthService = serverSideExecutionFunc(() => {
+const AuthService = () => {
   const { findOrCreateUser } = AuthRepository()
   function refreshAccessToken(token: JWT, user: User, nowTime: number): Promise<JWT> {
     try {
@@ -113,6 +112,6 @@ const AuthService = serverSideExecutionFunc(() => {
     jwt,
     session,
   }
-})
+}
 
 export default AuthService
