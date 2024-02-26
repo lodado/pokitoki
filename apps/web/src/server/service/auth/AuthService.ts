@@ -30,8 +30,8 @@ type SessionParams = {
   token: JWT
 }
 
-const AuthService = () => {
-  const { findOrCreateUser } = AuthRepository()
+const authService = () => {
+  const { findOrCreateUser } = AuthRepository
   function refreshAccessToken(token: JWT, user: User, nowTime: number): Promise<JWT> {
     try {
       // Refresh logic here
@@ -113,5 +113,7 @@ const AuthService = () => {
     session,
   }
 }
+
+const AuthService = authService()
 
 export default AuthService

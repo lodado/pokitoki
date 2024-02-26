@@ -8,6 +8,6 @@ const adapter = {
   // 'vercel': vercelPostgresAdapter
 }
 
-const AuthAdapter = adapter[KEY]
+const AuthAdapter = adapter[KEY]()
 
 export default AuthAdapter

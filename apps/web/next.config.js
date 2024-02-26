@@ -22,6 +22,7 @@ const nextConfig = {
   reactStrictMode: false,
 
   sentry: {
+    hideSourceMaps: true,
     transpileClientSDK: true,
   },
   transpilePackages: ['shared'],
@@ -42,7 +43,6 @@ const sentryWebpackPluginOptions = {
   // An auth token is required for uploading source maps.
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
-  hideSourceMap: true,
   silent: false, // Suppresses all logs
 
   // For all available options, see:

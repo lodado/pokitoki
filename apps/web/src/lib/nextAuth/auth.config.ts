@@ -5,16 +5,16 @@ import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import { z } from 'zod'
 
+import { AuthRepository } from '@/server/repository'
 import AuthService from '@/server/service/auth/AuthService'
 
-import AuthAdapter from '../../server/repository/AuthRepository/AuthAdapter'
 import jwtMethods from '../jwt/jwtMethods'
 
-const { signIn, authorized, jwt, session } = AuthService()
+const { signIn, authorized, jwt, session } = AuthService
 export const authConfig = {
   debug: true,
 
-  adapter: AuthAdapter(),
+  adapter: AuthRepository,
 
   pages: {
     signIn: '/login',
@@ -50,7 +50,7 @@ export const authConfig = {
      * */
     Credentials({
       async authorize(credentials) {
-        const { getUser } = AuthAdapter()
+        const { getUser } = AuthRepository
 
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
