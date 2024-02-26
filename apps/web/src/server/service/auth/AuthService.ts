@@ -35,8 +35,6 @@ class AuthService {
 
   constructor(authRepository: typeof AuthRepository) {
     this.authRepository = authRepository
-
-    console.log('init', this.authRepository)
   }
 
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
