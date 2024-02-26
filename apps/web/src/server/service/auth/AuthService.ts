@@ -30,9 +30,16 @@ type SessionParams = {
   token: JWT
 }
 
-const authService = () => {
-  const { findOrCreateUser } = AuthRepository
-  function refreshAccessToken(token: JWT, user: User, nowTime: number): Promise<JWT> {
+class AuthService {
+  private authRepository: typeof AuthRepository
+
+  constructor(authRepository: typeof AuthRepository) {
+    this.authRepository = authRepository
+
+    console.log('init', this.authRepository)
+  }
+
+  refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
     try {
       // Refresh logic here
       return {
@@ -48,10 +55,10 @@ const authService = () => {
     }
   }
 
-  async function signIn({ user, account }: SignInParams): Promise<boolean> {
+  signIn = async ({ user, account }: SignInParams): Promise<boolean> => {
     if (account?.provider && ['github', 'google'].includes(account.provider)) {
       try {
-        return await findOrCreateUser({ user, account })
+        return await this.authRepository.findOrCreateUser({ user, account })
       } catch (e) {
         console.log(e)
         return false
@@ -59,17 +66,16 @@ const authService = () => {
     }
 
     console.log(`login ${user.id}, ${user.name} ${user.email}`)
-
     return true
   }
 
-  function authorized({ auth, request: { nextUrl } }: AuthorizedParams): boolean {
+  authorized = ({ auth, request: { nextUrl } }: AuthorizedParams): boolean => {
     const isLoggedIn = !!auth?.user
     const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
     return isOnDashboard || isLoggedIn
   }
 
-  async function jwt({ token, account, user }: JWTParams): Promise<JWT> {
+  jwt = async ({ token, account, user }: JWTParams): Promise<JWT> => {
     const nowTime = Math.floor(Date.now() / 1000)
     const isSignIn = !!user
 
@@ -91,10 +97,10 @@ const authService = () => {
       return token
     }
 
-    return refreshAccessToken(token, user!, nowTime)
+    return this.refreshAccessToken(token, user!, nowTime)
   }
 
-  async function session({ session: _session, token }: SessionParams): Promise<Session> {
+  session = async ({ session: _session, token }: SessionParams): Promise<Session> => {
     return {
       ..._session,
       user: token.user as User,
@@ -104,16 +110,8 @@ const authService = () => {
       provider: token.provider,
     }
   }
-
-  // Expose the functions
-  return {
-    signIn,
-    authorized,
-    jwt,
-    session,
-  }
 }
 
-const AuthService = authService()
+const AuthServiceInstance = new AuthService(AuthRepository)
 
-export default AuthService
+export default AuthServiceInstance
