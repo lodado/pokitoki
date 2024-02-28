@@ -44,11 +44,6 @@ const Page = () => {
 
   return (
     <div>
-      <SupabaseImage
-        alt="image testS"
-        src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/test.jpg"
-      />
-
       <h1>{t('title')}</h1>
 
       <Voice onChange={handleInput} />
