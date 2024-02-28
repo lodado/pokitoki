@@ -1,4 +1,5 @@
-import { supabaseInstance } from '../supabase'
+import { supabaseInstance } from '@/lib/supabase'
+
 import { fileOptions, FileStorage } from './type'
 
 /**

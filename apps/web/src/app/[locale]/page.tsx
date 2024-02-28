@@ -5,6 +5,7 @@
 
 import { useState } from 'react'
 
+import { SupabaseImage } from '@/components'
 import { useI18n } from '@/lib/i18n'
 import { getSpeech } from '@/lib/voice'
 
@@ -43,6 +44,11 @@ const Page = () => {
 
   return (
     <div>
+      <SupabaseImage
+        alt="image testS"
+        src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/test.jpg"
+      />
+
       <h1>{t('title')}</h1>
 
       <Voice onChange={handleInput} />

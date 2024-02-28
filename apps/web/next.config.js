@@ -6,12 +6,32 @@ const Sentry = require('@sentry/nextjs')
 const withNextIntl = createNextIntlPlugin()
 const { withSentryConfig } = Sentry
 
+const NEXT_PUBLIC_SUPABASE_URL = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL)
+
+function parseURL(url) {
+  if (!url) throw new Error('No URL specified in next.config.images.remotePatterns')
+
+  return {
+    protocol: url.protocol.replace(':', ''),
+    hostname: url.hostname,
+    port: url.port,
+  }
+}
+
+
 const nextConfig = {
   /*
   i18n: {
     locales: ['en-US', 'ko'],
     defaultLocale: 'ko',
   }, */
+
+  images: {
+    remotePatterns: [parseURL(NEXT_PUBLIC_SUPABASE_URL)],
+
+    // loader: 'custom',
+    // loaderFile: './src/lib/supabase/supabaseLoader.ts',
+  },
 
   reactStrictMode: false,
 
