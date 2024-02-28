@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 /** @type {import('next').NextConfig} */
 
 const createNextIntlPlugin = require('next-intl/plugin')
@@ -6,9 +7,9 @@ const Sentry = require('@sentry/nextjs')
 const withNextIntl = createNextIntlPlugin()
 const { withSentryConfig } = Sentry
 
-const NEXT_PUBLIC_SUPABASE_URL = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL)
+function parseURL(rawUrl) {
+  const url = new URL(process.env.NODE_ENV !== 'test' ? rawUrl : 'https://www.mock.com/')
 
-function parseURL(url) {
   if (!url) throw new Error('No URL specified in next.config.images.remotePatterns')
 
   return {
@@ -18,7 +19,6 @@ function parseURL(url) {
   }
 }
 
-
 const nextConfig = {
   /*
   i18n: {
@@ -27,7 +27,7 @@ const nextConfig = {
   }, */
 
   images: {
-    remotePatterns: [parseURL(NEXT_PUBLIC_SUPABASE_URL)],
+    remotePatterns: [parseURL(process.env.NEXT_PUBLIC_SUPABASE_URL)],
 
     // loader: 'custom',
     // loaderFile: './src/lib/supabase/supabaseLoader.ts',
