@@ -2,6 +2,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { OpenAI } from 'openai'
 
+/** TO DO
+ * service 폴더로 로직 이동 예정
+ *
+ */
+
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })

@@ -2,9 +2,12 @@
   "name": "web",
   "version": "1.0.0",
   "private": false,
+  "sideEffects": false,
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "start": "next start",
+    "build:analyze": "cross-env ANALYZE=true pnpm run build",
     "test": "jest --passWithNoTests --setupFilesAfterEnv=./setupTests.ts",
     "locale": "node --experimental-modules ./src/lib/i18n/locales.mjs"
   },
@@ -12,9 +15,11 @@
     "access": "public"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^0.5.0",
     "@custompackages/clientlogger": "workspace:*",
     "@custompackages/designsystem": "workspace:*",
     "@custompackages/modules": "workspace:*",
+    "@supabase/supabase-js": "^2.39.7",
     "@tanstack/react-query": "^4.29.14",
     "@vercel/postgres": "^0.5.1",
     "autoprefixer": "10.4.15",
@@ -35,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.21.0",
+    "@next/bundle-analyzer": "^14.1.0",
     "@sentry/nextjs": "^7.91.0",
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.5",
@@ -42,6 +48,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.6",
     "@types/react-speech-recognition": "^3.9.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "eslint-config-custom": "workspace:*",
     "jest-config": "workspace:*",

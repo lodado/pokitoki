@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import NextAuth from 'next-auth'
 import createIntlMiddleware from 'next-intl/middleware'
 
-import { authConfig } from './app/api/auth/auth.config'
 import { i18nOption } from './lib/i18n'
+import { authConfig } from './lib/nextAuth'
 
 export async function middleware(request: NextRequest) {
   // Step 1: Use the incoming request (example)

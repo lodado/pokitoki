@@ -6,5 +6,8 @@ declare module 'next-auth' {
     user: User
     accessToken: string
     error: unknown
+
+    expires?: number
+    provider?: string
   }
 }

@@ -5,6 +5,7 @@
 
 import { useState } from 'react'
 
+import { SupabaseImage } from '@/components'
 import { useI18n } from '@/lib/i18n'
 import { getSpeech } from '@/lib/voice'
 

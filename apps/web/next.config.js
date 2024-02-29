@@ -1,10 +1,29 @@
-/** @type {import('next').NextConfig} */
+/* eslint-disable turbo/no-undeclared-env-vars */
 
+/** @type {import('next').NextConfig} */
 const createNextIntlPlugin = require('next-intl/plugin')
+
+/** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const Sentry = require('@sentry/nextjs')
 
 const withNextIntl = createNextIntlPlugin()
 const { withSentryConfig } = Sentry
+
+function parseURL(rawUrl) {
+  const url = new URL(process.env.NODE_ENV !== 'test' ? rawUrl : 'https://www.mock.com/')
+
+  if (!url) throw new Error('No URL specified in next.config.images.remotePatterns')
+
+  return {
+    protocol: url.protocol.replace(':', ''),
+    hostname: url.hostname,
+    port: url.port,
+  }
+}
 
 const nextConfig = {
   /*
@@ -13,9 +32,17 @@ const nextConfig = {
     defaultLocale: 'ko',
   }, */
 
+  images: {
+    remotePatterns: [parseURL(process.env.NEXT_PUBLIC_SUPABASE_URL)],
+
+    // loader: 'custom',
+    // loaderFile: './src/lib/supabase/supabaseLoader.ts',
+  },
+
   reactStrictMode: false,
 
   sentry: {
+    hideSourceMaps: true,
     transpileClientSDK: true,
   },
   transpilePackages: ['shared'],
@@ -36,11 +63,10 @@ const sentryWebpackPluginOptions = {
   // An auth token is required for uploading source maps.
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
-  hideSourceMap: true,
   silent: false, // Suppresses all logs
 
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
-module.exports = withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions))
+module.exports = withBundleAnalyzer(withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions)))
