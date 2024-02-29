@@ -1,7 +1,9 @@
+import generateLocaleFiles from 'i18n/generate-locale-files'
+
 import COLOR from './src/color'
 import TYPOGRAPHY from './src/typography'
 
-export { COLOR, TYPOGRAPHY }
+export { COLOR, generateLocaleFiles, TYPOGRAPHY }
 
 /*
 export * from './src/hook'

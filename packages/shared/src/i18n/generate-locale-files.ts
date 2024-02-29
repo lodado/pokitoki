@@ -11,17 +11,17 @@ const SPREAD_SHEET_ID = '15NqugKxhd8qRfQBk07QywE0-A4_BDnecAi6JKDA4D_w'
 const commaSplitterRegex = /(['"])((?:\\.|(?:(?!\1)[^\\]))*)\1/g
 const removeSideCommaRegex = /^"|"$/g
 
-const getKeysAndRows = (text) => {
+const getKeysAndRows = (text: string) => {
   const [head, ...body] = text.split('\n')
-  const keys = head.match(commaSplitterRegex).map((key) => key.replace(removeSideCommaRegex, ''))
-  const rows = body.map((row) => row.match(commaSplitterRegex))
+  const keys = head.match(commaSplitterRegex)?.map((key) => key.replace(removeSideCommaRegex, '')) || []
+  const rows = body.map((row) => row.match(commaSplitterRegex) as string[])
 
   return { keys, rows, length: keys.length }
 }
 
-const mapKeysAndValues = ({ keys, rows, length }) => {
+const mapKeysAndValues = ({ keys, rows, length }: { keys: string[]; rows: string[][]; length: number }) => {
   const locales = keys.filter((key) => key && !key.includes(KEY_MARKER))
-  const fileMap = locales.reduce((obj, key) => ({ ...obj, [key]: {} }), {})
+  const fileMap: Record<string, Object> = locales.reduce((obj, key) => ({ ...obj, [key]: {} }), {})
 
   for (const row of rows) {
     let keyName = ''
@@ -35,11 +35,11 @@ const mapKeysAndValues = ({ keys, rows, length }) => {
       } else {
         let targetDepth = fileMap
         const splittedKeys = [key, ...keyName.split(DEPTH_SEPARATOR)]
-        const targetKeyName = splittedKeys.pop()
+        const targetKeyName = splittedKeys.pop() || ''
 
         for (const currentKey of splittedKeys) {
           if (!targetDepth[currentKey]) targetDepth[currentKey] = {}
-          targetDepth = targetDepth[currentKey]
+          targetDepth = targetDepth[currentKey] as typeof fileMap
         }
         targetDepth[targetKeyName] = value
       }
@@ -49,14 +49,14 @@ const mapKeysAndValues = ({ keys, rows, length }) => {
   return fileMap
 }
 
-const generateLocaleFiles = async () => {
+const generateLocaleFiles = async (saveLocation: string) => {
   const response = await fetch(`https://docs.google.com/spreadsheets/d/${SPREAD_SHEET_ID}/gviz/tq?tqx=out:csv`)
   const csvText = await response.text()
 
   const parsedValues = getKeysAndRows(csvText)
   const parsedJson = mapKeysAndValues(parsedValues)
 
-  const fileDir = path.resolve('../..', 'apps', 'web', 'src', 'lib', 'i18n', 'locales')
+  const fileDir = path.resolve(saveLocation)
 
   for (const [locale, json] of Object.entries(parsedJson)) {
     const fileName = `${locale}.json`
@@ -66,4 +66,4 @@ const generateLocaleFiles = async () => {
   }
 }
 
-generateLocaleFiles()
+export default generateLocaleFiles

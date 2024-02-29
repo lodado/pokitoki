@@ -5,7 +5,8 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "test": "jest --passWithNoTests --setupFilesAfterEnv=./setupTests.ts"
+    "test": "jest --passWithNoTests --setupFilesAfterEnv=./setupTests.ts",
+    "locale": "node --experimental-modules ./src/lib/i18n/locales.mjs"
   },
   "publishConfig": {
     "access": "public"

@@ -8,7 +8,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
-    "locale": "pnpm --filter shared locale"
+    "locale": "pnpm --filter web locale"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
