@@ -1,6 +1,6 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
 
-import { SUPABASE_KEY, SUPABASE_URL } from '@/server/repository/supabase'
+import { SUPABASE_KEY, SUPABASE_URL } from '@/lib/supabase/supabase'
 
 const supabaseAdapterWrapper = () => {
   const supaAdapter = SupabaseAdapter({
