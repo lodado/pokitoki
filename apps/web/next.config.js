@@ -1,7 +1,13 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-/** @type {import('next').NextConfig} */
 
+/** @type {import('next').NextConfig} */
 const createNextIntlPlugin = require('next-intl/plugin')
+
+/** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
 const Sentry = require('@sentry/nextjs')
 
 const withNextIntl = createNextIntlPlugin()
@@ -36,6 +42,7 @@ const nextConfig = {
   reactStrictMode: false,
 
   sentry: {
+    hideSourceMaps: true,
     transpileClientSDK: true,
   },
   transpilePackages: ['shared'],
@@ -56,11 +63,10 @@ const sentryWebpackPluginOptions = {
   // An auth token is required for uploading source maps.
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
-  hideSourceMap: true,
   silent: false, // Suppresses all logs
 
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
-module.exports = withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions))
+module.exports = withBundleAnalyzer(withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions)))

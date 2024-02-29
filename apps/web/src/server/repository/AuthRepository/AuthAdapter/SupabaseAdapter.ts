@@ -1,5 +1,4 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
-import { serverSideExecutionFunc } from 'shared'
 
 import { SUPABASE_KEY, SUPABASE_URL } from '@/lib/supabase/supabase'
 
@@ -36,5 +35,5 @@ const supabaseAdapterWrapper = () => {
   }
 }
 
-const supabaseAdapterInstance = serverSideExecutionFunc(supabaseAdapterWrapper)()
+const supabaseAdapterInstance = supabaseAdapterWrapper()
 export default supabaseAdapterInstance

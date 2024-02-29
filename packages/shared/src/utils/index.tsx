@@ -1,1 +1,1 @@
-export * from './serverSideExecutionFunc'
+export * from './isServerSide'
