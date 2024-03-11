@@ -15,6 +15,7 @@ export default {
 
   extend: {
     fontFamily: {
+      sans: ['Spoqa Han Sans Neo'],
       pretendard: ['Pretendard', 'sans'],
     },
   },
