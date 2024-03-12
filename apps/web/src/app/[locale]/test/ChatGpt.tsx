@@ -2,6 +2,7 @@
 
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
 import type { Assistant, Thread } from '@/server/service/chatgpt/type'
@@ -140,7 +141,7 @@ const ChatGpt = () => {
           <ul>
             {threads.map(({ threadId, threadName }) => (
               <li key={threadId}>
-                <span>{threadName} 채팅방</span>{' '}
+                <Link href={`./test/${threadId}`}>{threadName} 채팅방</Link>{' '}
                 <button type="button" onClick={() => handleDeleteThread(threadId)}>
                   [ 삭제 ]
                 </button>
