@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
   const userId = user.id
 
   const threadId = await createChat(userId, assistantId, threadName)
-  return NextResponse.json({ threadId, threadName })
+  return NextResponse.json(threadId)
 }
 
 export const DELETE = async (req: NextRequest) => {

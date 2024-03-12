@@ -53,16 +53,18 @@ const ChatGpt = () => {
   }
 
   const handleInsertThread = async () => {
+    if (!selectedAssistant) return
+
     const res = await fetch('/api/chatgpt/thread', {
       method: 'POST',
-      body: JSON.stringify({ assistantId: selectedAssistant?.id, threadName: chatTitleRef.current?.value || '' }),
+      body: JSON.stringify({ assistantId: selectedAssistant.id, threadName: chatTitleRef.current?.value || '' }),
     })
-    const { threadId, threadName }: Thread = await res.json()
+    const data: Thread = await res.json()
 
-    if (!threadId || !chatTitleRef.current) return
+    if (!data || !chatTitleRef.current) return
     chatTitleRef.current.value = ''
     alert(`채팅방이 생성되었습니다.`)
-    handleGetThreads({ id: threadId, name: threadName })
+    handleGetThreads(selectedAssistant)
   }
 
   useEffect(() => {
