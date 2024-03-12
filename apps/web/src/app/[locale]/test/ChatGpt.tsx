@@ -67,6 +67,17 @@ const ChatGpt = () => {
     handleGetThreads(selectedAssistant)
   }
 
+  const handleDeleteThread = async (id: string) => {
+    const res = await fetch(`/api/chatgpt/thread?threadId=${id}`, { method: 'DELETE' })
+    const data: boolean = await res.json()
+
+    if (!data || !selectedAssistant) {
+      alert('삭제에 실패했습니다. 다시 시도해 주세요.')
+      return
+    }
+    handleGetThreads(selectedAssistant)
+  }
+
   useEffect(() => {
     handleGetAssistants()
   }, [])
@@ -128,7 +139,12 @@ const ChatGpt = () => {
         ) : (
           <ul>
             {threads.map(({ threadId, threadName }) => (
-              <li key={threadId}>{threadName} 채팅방</li>
+              <li key={threadId}>
+                <span>{threadName} 채팅방</span>{' '}
+                <button type="button" onClick={() => handleDeleteThread(threadId)}>
+                  [ 삭제 ]
+                </button>
+              </li>
             ))}
           </ul>
         )}

@@ -21,8 +21,7 @@ export const insertThread = async (userId: string, assistantId: string, threadId
 
 // 사용자별 해당 튜터의 스레드(채팅방) 정보를 제거
 export const deleteThread = async (userId: string, threadId: string) => {
-  const { error } = await supabaseInstance.from('user_threads').delete().eq('userId', userId).eq('threadId', threadId)
-
+  const { error } = await supabaseInstance.from('threads').delete().eq('userId', userId).eq('threadId', threadId)
   return { isSuccess: !error, error }
 }
 
