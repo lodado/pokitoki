@@ -16,6 +16,6 @@ export const POST = async (req: NextRequest) => {
   const { threadId, message } = await req.json()
   if (!threadId || !message) return Response.json(false)
 
-  const messageId = await sendChat(threadId, message)
-  return NextResponse.json(messageId)
+  const messages = await sendChat(threadId, message)
+  return NextResponse.json(messages)
 }
