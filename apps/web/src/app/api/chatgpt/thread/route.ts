@@ -17,12 +17,12 @@ export const GET = async (req: NextRequest) => {
 }
 
 export const POST = async (req: NextRequest) => {
-  const { assistantId } = await req.json()
+  const { assistantId, threadName } = await req.json()
   if (!assistantId) return Response.json(false)
 
   const { user } = await getLoginSession()
   const userId = user.id
 
-  const threadId = await createChat(userId, assistantId)
+  const threadId = await createChat(userId, assistantId, threadName)
   return NextResponse.json(!!threadId)
 }

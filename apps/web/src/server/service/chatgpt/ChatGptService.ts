@@ -42,10 +42,10 @@ class ChatGptService {
   }
 
   // 채팅방 생성 및 실행
-  createChat = async (userId: string, assistantId: string) => {
+  createChat = async (userId: string, assistantId: string, threadName: string) => {
     try {
       const { id: threadId } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
-      await this.chatGptRepository.insertThread(userId, assistantId, threadId)
+      await this.chatGptRepository.insertThread(userId, assistantId, threadId, threadName)
       return threadId
     } catch (err) {
       console.error(err)
