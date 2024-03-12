@@ -45,7 +45,9 @@ class ChatGptService {
   createChat = async (userId: string, assistantId: string, threadName: string) => {
     try {
       const { id: threadId } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
-      await this.chatGptRepository.insertThread(userId, assistantId, threadId, threadName)
+      const { isSuccess, error } = await this.chatGptRepository.insertThread(userId, assistantId, threadId, threadName)
+
+      if (!isSuccess || error) throw new Error(JSON.stringify(error))
       return threadId
     } catch (err) {
       console.error(err)
@@ -56,11 +58,24 @@ class ChatGptService {
   // 채팅방 목록 가져오기
   getChats = async (userId: string, assistantId: string) => {
     try {
-      const threadIds = await this.chatGptRepository.getThreadIds(userId, assistantId)
-      return threadIds
+      const threads = await this.chatGptRepository.getThreadIds(userId, assistantId)
+      return threads
     } catch (err) {
       console.error(err)
       return []
+    }
+  }
+
+  // 채팅방 삭제
+  deleteChat = async (userId: string, threadId: string) => {
+    try {
+      const { isSuccess, error } = await this.chatGptRepository.deleteThread(userId, threadId)
+
+      if (!isSuccess || error) throw new Error(JSON.stringify(error))
+      return true
+    } catch (err) {
+      console.error(err)
+      return false
     }
   }
 

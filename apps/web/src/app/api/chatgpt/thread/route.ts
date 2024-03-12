@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getLoginSession } from '@/hooks/login'
 import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 
-const { getChats, createChat } = ChatGptService
+const { getChats, createChat, deleteChat } = ChatGptService
 
 export const GET = async (req: NextRequest) => {
   const assistantId = req.nextUrl.searchParams.get('assistantId')
@@ -12,8 +12,8 @@ export const GET = async (req: NextRequest) => {
   const { user } = await getLoginSession()
   const userId = user.id
 
-  const threadIds = await getChats(userId, assistantId)
-  return NextResponse.json(threadIds)
+  const threads = await getChats(userId, assistantId)
+  return NextResponse.json(threads)
 }
 
 export const POST = async (req: NextRequest) => {
@@ -25,4 +25,15 @@ export const POST = async (req: NextRequest) => {
 
   const threadId = await createChat(userId, assistantId, threadName)
   return NextResponse.json({ threadId, threadName })
+}
+
+export const DELETE = async (req: NextRequest) => {
+  const threadId = req.nextUrl.searchParams.get('threadId')
+  if (!threadId) return Response.json(false)
+
+  const { user } = await getLoginSession()
+  const userId = user.id
+
+  const result = await deleteChat(userId, threadId)
+  return NextResponse.json(result)
 }
