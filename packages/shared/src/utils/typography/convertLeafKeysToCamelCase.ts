@@ -14,7 +14,7 @@ export default function convertLeafKeysToCamelCase(obj: GenericObject): GenericO
       return Object.entries(current).reduce((acc: GenericObject, [key, value]) => {
         // 중간 노드에서는 키 변경 없이 재귀 호출
         if (isObject(value) || Array.isArray(value)) {
-          acc[key] = dfs(value)
+          acc[`.${key}`] = dfs(value)
         } else {
           // leaf 노드에서만 키를 camelCase로 변환
           const camelCaseKey = kebabToCamelCase(key)

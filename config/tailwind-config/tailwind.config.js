@@ -8,6 +8,10 @@ const { fontFamily } = require('tailwindcss/defaultTheme')
 
 const animated = require('tailwindcss-animate')
 
+
+console.log('123', TYPOGRAPHY)
+
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ['class'],

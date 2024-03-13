@@ -7,13 +7,15 @@ export default {
 }
 
 const TypographySample = ({ style, label }: any) => (
-  <div style={{ ...style, width: '100%', height: '150px' }}>{label}: The quick brown fox jumps over the lazy dog</div>
+  <div className={label} style={{ width: '100%', minHeight: '50px' }}>
+    {label}: The quick brown fox jumps over the lazy dog
+  </div>
 )
 
 export const TypographyStyles = () => (
   <div>
     {Object.entries(TYPOGRAPHY).map(([key, style]) => (
-      <TypographySample key={key} style={style} label={key} />
+      <TypographySample key={key} style={style} label={key.replace('.', '')} />
     ))}
   </div>
 )

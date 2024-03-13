@@ -1,6 +1,11 @@
 const postcss = require('tailwind-config/tailwind.config')
 
+const content = ['./src/**/*.{ts,tsx,js,tsx}', '../../packages/designsystem/**/*.{js,ts,jsx,tsx}']
+
 module.exports = {
   ...postcss,
-  content: ['./src/**/*.{ts,tsx,js,tsx}', '../../packages/designsystem/**/*.{js,ts,jsx,tsx}'],
+  purge: {
+    enabled: false,
+  },
+  content,
 }
