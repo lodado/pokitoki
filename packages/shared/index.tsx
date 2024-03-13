@@ -1,8 +1,5 @@
-import TYPOGRAPHY from './src/typography'
-import VARIABLES from './src/variables'
-
+export * from './src/designVariables'
 export * from './src/utils'
-export { TYPOGRAPHY, VARIABLES }
 
 /*
 export * from './src/hook'

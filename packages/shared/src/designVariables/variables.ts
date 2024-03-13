@@ -1,6 +1,6 @@
-import RAW_COLOR from 'designVariables/color'
-import SEMANTIC from 'designVariables/semantic'
-import SPACE from 'designVariables/space'
+import RAW_COLOR from './variables/color'
+import SEMANTIC from './variables/semantic'
+import SPACE from './variables/space'
 
 type ColorValue = string
 type NestedColorObject = { [key: string]: ColorValue | NestedColorObject }
