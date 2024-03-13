@@ -1,8 +1,8 @@
-import COLOR from './src/color'
 import TYPOGRAPHY from './src/typography'
+import VARIABLES from './src/variables'
 
 export * from './src/utils'
-export { COLOR, TYPOGRAPHY }
+export { TYPOGRAPHY, VARIABLES }
 
 /*
 export * from './src/hook'
