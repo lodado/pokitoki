@@ -1,4 +1,4 @@
-[data-theme="Light"] {
+[data-theme='light'] {
   /* colors */
   --amber-100: #ffe4b7;
   --amber-200: #ffc67c;
@@ -141,7 +141,7 @@
   --yellow-800: #795908;
   --yellow-900: #513a00;
 }
-[data-theme="Dark"] {
+[data-theme="dark"]  {
   /* colors */
   --amber-100: #6b4100;
   --amber-200: #904a07;
@@ -400,7 +400,7 @@
   --warning-02-focus: var(--orange-200);
   --warning-02-hover: var(--orange-100);
 }
-[data-theme="Dark"] {
+[data-theme="dark"]  {
   /* colors */
   --accent-01-default: var(--purple-400);
   --accent-01-focus: var(--purple-600);
