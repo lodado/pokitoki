@@ -6,10 +6,7 @@ const { VARIABLES } = shared
 const { COLOR, SPACE } = VARIABLES
 
 const plugin = require('tailwindcss/plugin')
-const { fontFamily } = require('tailwindcss/defaultTheme')
-
 const animated = require('tailwindcss-animate')
- 
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -28,27 +25,9 @@ export default {
   },
 
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
-    },
-
-    colors: {
-      COLOR,
-    },
-
     extend: {
-      borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
-        sm: 'calc(var(--radius) - 4px)',
-      },
-
-      fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
+      colors: {
+        ...COLOR.light,
       },
 
       keyframes: {

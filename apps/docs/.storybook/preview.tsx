@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react'
 import './index.css'
+import 'shared/index.css'
+
 import React from 'react'
 
 const preview: Preview = {

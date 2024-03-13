@@ -18,6 +18,10 @@ const LoginForm = () => {
 
   return (
     <LogScreen>
+      <button type="button" className="w-40 h-10 bg-warning-02-hover">
+        123213
+      </button>
+
       <form action={dispatch} className="space-y-3">
         <div className="flex-1 px-6 pt-8 pb-4 rounded-lg bg-gray-50">
           <h1 className={`  mb-3 text-2xl`}>Please log in to continue.</h1>

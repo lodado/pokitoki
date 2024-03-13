@@ -1,5 +1,6 @@
 import '../styles/global.scss'
 import 'tailwind-config/index.scss'
+import 'shared/index.css'
 
 import { LayoutProps } from '@/interface'
 import { i18nOption } from '@/lib/i18n'
