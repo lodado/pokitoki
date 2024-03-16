@@ -8,7 +8,8 @@
     "dev": "next dev",
     "start": "next start",
     "build:analyze": "cross-env ANALYZE=true pnpm run build",
-    "test": "jest --passWithNoTests --setupFilesAfterEnv=./setupTests.ts"
+    "test": "jest --passWithNoTests --setupFilesAfterEnv=./setupTests.ts",
+    "locale": "node --experimental-modules ./src/lib/i18n/locales.mjs"
   },
   "publishConfig": {
     "access": "public"

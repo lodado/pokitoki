@@ -1,10 +1,18 @@
 {
-  "Index": {
-    "title": "안녕 세상아",
-    "language": "ko"
+  "LOGIN": {
+    "SIGNIN_TITLE": "로그인",
+    "SIGNIN_WITH_GOOGLE_LABEL": "Google로 로그인",
+    "SIGNIN_WITH_APPLE_LABEL": "Apple로 로그인",
+    "SIGNIN_OR_LABEL": "또는",
+    "SIGNIN_EMAIL_LABEL": "이메일",
+    "SIGNIN_WITH_EMAIL_LABEL": "이메일로 로그인",
+    "SIGNIN_NOT_MEMBER_DESCRIPTION": "아직 회원이 아니신가요?",
+    "SIGNIN_SIGNUP_LABEL": "회원가입"
   },
-  "Menu": {
-    "home": "ㅇㄴㅁㅇ",
-    "about": "메뉴"
+  "TEST": {
+    "TITLE": "제목",
+    "DOUBLE": {
+      "TRIPLE": "하이"
+    }
   }
 }

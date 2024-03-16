@@ -1,12 +1,18 @@
 {
-  "language": "en",
-
-  "Index": {
-    "title": "Hello World",
-    "language": "en"
+  "LOGIN": {
+    "SIGNIN_TITLE": "Sign in",
+    "SIGNIN_WITH_GOOGLE_LABEL": "Sign in with Google",
+    "SIGNIN_WITH_APPLE_LABEL": "Sign in with Apple",
+    "SIGNIN_OR_LABEL": "Or",
+    "SIGNIN_EMAIL_LABEL": "Email",
+    "SIGNIN_WITH_EMAIL_LABEL": "Sign in with Email",
+    "SIGNIN_NOT_MEMBER_DESCRIPTION": "Not a member?",
+    "SIGNIN_SIGNUP_LABEL": "Sign up"
   },
-  "Menu": {
-    "home": "Home",
-    "about": "About"
+  "TEST": {
+    "TITLE": "title",
+    "DOUBLE": {
+      "TRIPLE": "hi"
+    }
   }
 }
