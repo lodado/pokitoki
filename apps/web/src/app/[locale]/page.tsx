@@ -44,6 +44,7 @@ const Page = () => {
 
   return (
     <div>
+      <div className="absolute top-0 h-12 w-[100%] bg-amber-100">2313213213</div>
       <h1>{t('title')}</h1>
 
       <Voice onChange={handleInput} />

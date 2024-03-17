@@ -47,7 +47,6 @@
       "outputs": ["./coverage/**"]
     },
     "storybook": {
-      "dependsOn": ["^gen:dev"],
       "persistent": true
     },
 
