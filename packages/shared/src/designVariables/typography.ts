@@ -82,7 +82,7 @@ const RAW_TYPOGRAPHY =
     },
     'body-03-long-r': {
       'font-size': '16px',
-      'font-family': 'Pretendard',
+      'font-family': 'Spoqa Han Sans Neo',
       'font-weight': 700,
       'letter-spacing': '0.0015000000596046448em',
     },
