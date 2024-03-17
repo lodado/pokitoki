@@ -81,11 +81,10 @@ const RAW_TYPOGRAPHY =
       'line-height': '24px',
     },
     'body-03-long-r': {
-      'font-size': '12px',
+      'font-size': '16px',
       'font-family': 'Pretendard',
       'font-weight': 700,
       'letter-spacing': '0.0015000000596046448em',
-      'line-height': '16px',
     },
     'body-03-r': {
       'font-size': '16px',
@@ -163,6 +162,24 @@ const RAW_TYPOGRAPHY =
       'font-weight': 400,
       'letter-spacing': '-0.30000001192092896px',
       'line-height': '18px',
+    },
+    'shadow-card-01': {
+      'box-shadow': '0px 2px 8px rgba(0, 0, 0, 0.1), 0px 8px 20px rgba(0, 0, 0, 0.1)',
+    },
+    'shadow-card-02': {
+      'box-shadow': '2px 2px 10px rgba(0, 0, 0, 0), 2px 2px 20px rgba(0, 0, 0, 0.1)',
+    },
+    'shadow-tab-02': {
+      'box-shadow': '0px 0px 4px rgba(0, 0, 0, 0.1), 2px 4px 12px rgba(0, 0, 0, 0.1)',
+    },
+    'shadow-profile': {
+      'box-shadow': '0px 0px 1px rgba(0, 0, 0, 0.3)',
+    },
+    'shadow-tooltip': {
+      'box-shadow': '2px 6px 12px rgba(0, 0, 0, 0.1), 0px 0px 4px rgba(0, 0, 0, 0.1)',
+    },
+    'shadow-float': {
+      'box-shadow': '4px 8px 28px rgba(0, 0, 0, 0.1), 0px 4px 12px rgba(0, 0, 0, 0.2)',
     },
   }
 
