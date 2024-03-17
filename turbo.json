@@ -20,15 +20,18 @@
   ],
 
   "pipeline": {
-    "gen:build": { "outputs": ["./dist/**"] },
+    "gen:build": {
+      "dependsOn": ["^gen:build"],
+      "outputs": ["./dist/**"]
+    },
 
     "build": {
-      "dependsOn": ["^gen:build"],
+      "dependsOn": ["gen:build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
 
     "build:analyze": {
-      "dependsOn": ["^gen:build"],
+      "dependsOn": ["gen:build"],
       "cache": false,
       "outputs": [".next/**", "!.next/cache/**"]
     },
@@ -37,7 +40,6 @@
     "locale": {},
     "gen:dev": {
       "dependsOn": ["^gen:dev"],
-
       "outputs": ["./dist/**"]
     },
 
@@ -45,7 +47,9 @@
       "cache": false,
       "outputs": ["./coverage/**"]
     },
-    "storybook": {},
+    "storybook": {
+      "persistent": true
+    },
 
     "dev": {
       "cache": false,
