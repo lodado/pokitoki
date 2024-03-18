@@ -54,7 +54,7 @@ class AuthService {
   }
 
   signIn = async ({ user, account }: SignInParams): Promise<boolean> => {
-    if (account?.provider && ['github', 'google'].includes(account.provider)) {
+    if (account?.provider && ['github', 'google', 'naver', 'kakao'].includes(account.provider)) {
       try {
         return await this.authRepository.findOrCreateUser({ user, account })
       } catch (e) {
