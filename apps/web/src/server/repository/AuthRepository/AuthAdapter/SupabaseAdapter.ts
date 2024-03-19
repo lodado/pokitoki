@@ -42,7 +42,9 @@ const supabaseAdapterWrapper = () => {
 
       const { id } = (await supaAdapter.createUser(clonedUser)) as { id: string }
 
-      const newAccount: { [key in string]: number | string } = { userId: id }
+      account.userId = id
+
+      const newAccount: { [key in string]: number | string } = {}
 
       // 특정 oauth의 경우 필요없는 key 값을 보내기도 함 (ex-google)
       columnNames.forEach((name) => {

@@ -45,6 +45,7 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      authorization: { params: { access_type: 'offline', prompt: 'consent' } },
     }),
     NaverProvider({
       clientId: process.env.NAVER_ID,

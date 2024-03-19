@@ -39,33 +39,31 @@ class AuthService {
 
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
     try {
-      const url = 'https://oauth2.googleapis.com/token'
-      const clientId = process.env.GOOGLE_ID
-      const clientSecret = process.env.GOOGLE_SECRET
-      const { refreshToken } = token
-
-      console.log('TEST!', token, refreshToken)
-
-      const response = await fetch(url, {
+      const response = await fetch('https://oauth2.googleapis.com/token', {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: process.env.GOOGLE_ID!,
+          client_secret: process.env.GOOGLE_SECRET!,
+          grant_type: 'refresh_token',
+          refresh_token: token.refresh_token,
+        }),
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`,
       })
 
-      const refreshedTokens = await response.json()
+      const tokens = await response.json()
 
-      if (!response.ok) {
-        throw refreshedTokens
-      }
+      if (!response.ok) throw tokens
 
       return {
-        ...token,
-        exp: Math.round(Date.now() / 1000) + 100000,
+        ...token, // Keep the previous token properties
+        access_token: tokens.access_token,
+        accessTokenExpires: tokens.expires_at,
+        // Fall back to old refresh token, but note that
+        // many providers may only allow using a refresh token once.
+        refresh_token: tokens.refresh_token ?? token.refresh_token,
       }
     } catch (err) {
-      console.log(`token error: ${err}`)
+      console.log(`token error: ${JSON.stringify(err)}`)
       return {
         ...token,
         error: 'RefreshAccessTokenError',
@@ -109,7 +107,9 @@ class AuthService {
       }
     }
 
-    const shouldRefreshTime = (token.exp as number) - 1 * 60 - nowTime
+    const shouldRefreshTime = (token.accessTokenExpires as number) - 70 * 60 - nowTime
+
+    console.log(shouldRefreshTime, 'ref')
 
     if (shouldRefreshTime > 0) {
       return token

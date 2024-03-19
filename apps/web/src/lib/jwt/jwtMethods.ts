@@ -1,15 +1,19 @@
 import jwt, { Jwt } from 'jsonwebtoken'
 
 const jwtMethods = {
-  async encode({ token, secret, maxAge }: { secret?: string; token?: string; maxAge?: number }) {
+  async encode({ token, secret, maxAge }: { secret?: string; token?: any; maxAge?: number }) {
     try {
       const secretValue = secret ?? process.env.AUTH_SECRET
       // `jsonwebtoken`의 `sign` 메소드를 사용하여 토큰 인코딩
+      let maxAgeValue = maxAge
 
-      // @ts-ignore
-      if (token?.exp) delete token.exp
+      if (token.exp) {
+        maxAgeValue = Math.min(maxAgeValue!, Number(token!.exp))
 
-      const encodedToken = jwt.sign(token!, secretValue!, { expiresIn: maxAge })
+        delete token!.exp
+      }
+
+      const encodedToken = jwt.sign(token!, secretValue!, { expiresIn: maxAgeValue })
 
       return encodedToken
     } catch (error) {
