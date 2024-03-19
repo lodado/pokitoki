@@ -2,6 +2,23 @@ import { SupabaseAdapter } from '@auth/supabase-adapter'
 
 import { SUPABASE_KEY, SUPABASE_URL } from '@/lib/supabase/supabase'
 
+const columnNames = [
+  'expires_at',
+  'type',
+  'provider',
+  'providerAccountId',
+  'refresh_token',
+  'access_token',
+  'token_type',
+  'scope',
+  'id_token',
+  'session_state',
+  'oauth_token_secret',
+  'oauth_token',
+  'id',
+  'userId',
+]
+
 const supabaseAdapterWrapper = () => {
   const supaAdapter = SupabaseAdapter({
     url: SUPABASE_URL,
@@ -25,11 +42,14 @@ const supabaseAdapterWrapper = () => {
 
       const { id } = (await supaAdapter.createUser(clonedUser)) as { id: string }
 
-      account.userId = id
+      const newAccount: { [key in string]: number | string } = { userId: id }
 
-      if (account.expires_in) account.expires_in = undefined
+      // 특정 oauth의 경우 필요없는 key 값을 보내기도 함 (ex-google)
+      columnNames.forEach((name) => {
+        newAccount[name] = account[name]
+      })
 
-      await supaAdapter.linkAccount(account)
+      await supaAdapter.linkAccount(newAccount)
 
       return true
     }
