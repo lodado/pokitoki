@@ -39,7 +39,27 @@ class AuthService {
 
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
     try {
-      // Refresh logic here
+      const url = 'https://oauth2.googleapis.com/token'
+      const clientId = process.env.GOOGLE_ID
+      const clientSecret = process.env.GOOGLE_SECRET
+      const { refreshToken } = token
+
+      console.log('TEST!', token, refreshToken)
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}&grant_type=refresh_token`,
+      })
+
+      const refreshedTokens = await response.json()
+
+      if (!response.ok) {
+        throw refreshedTokens
+      }
+
       return {
         ...token,
         exp: Math.round(Date.now() / 1000) + 100000,

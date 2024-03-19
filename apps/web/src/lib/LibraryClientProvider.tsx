@@ -8,7 +8,6 @@ import { useInitTTS } from './voice/tts'
 
 const LibraryClientProvider = ({ children, session }: any) => {
   useInitTTS()
-
   return (
     <ThemeProvider>
       <LoginSessionProvider session={session}>{children}</LoginSessionProvider>

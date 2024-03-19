@@ -14,8 +14,6 @@ const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
   const { data: session } = useLoginSession()
 
-  console.log(session)
-
   return (
     <LogScreen>
       <button type="button" className="w-40 h-10 bg-warning-02-hover">

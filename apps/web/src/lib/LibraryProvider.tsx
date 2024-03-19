@@ -6,6 +6,7 @@ import LibraryClientProvider from './LibraryClientProvider'
 
 const LibraryProvider = async ({ children }: { children: React.ReactNode }) => {
   const session = await getLoginSession()
+
   if (session?.user)
     session.user = {
       name: session.user.name,

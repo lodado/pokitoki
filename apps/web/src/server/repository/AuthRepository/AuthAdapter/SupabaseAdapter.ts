@@ -26,6 +26,9 @@ const supabaseAdapterWrapper = () => {
       const { id } = (await supaAdapter.createUser(clonedUser)) as { id: string }
 
       account.userId = id
+
+      if (account.expires_in) account.expires_in = undefined
+
       await supaAdapter.linkAccount(account)
 
       return true
