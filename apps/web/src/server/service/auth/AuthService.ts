@@ -38,6 +38,8 @@ class AuthService {
   }
 
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
+    const { provider } = token
+
     try {
       const response = await fetch('https://oauth2.googleapis.com/token', {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -54,11 +56,11 @@ class AuthService {
 
       if (!response.ok) throw tokens
 
-      console.log('refresh !!!', tokens)
+      console.log('refresh !!!', token, tokens)
 
       return {
         ...token, // Keep the previous token properties
-        access_token: tokens.access_token,
+        accessToken: tokens.access_token,
         expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
 
         // Fall back to old refresh token, but note that
