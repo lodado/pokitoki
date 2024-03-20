@@ -45,7 +45,7 @@ class AuthService {
           client_id: process.env.GOOGLE_ID!,
           client_secret: process.env.GOOGLE_SECRET!,
           grant_type: 'refresh_token',
-          refresh_token: token.refresh_token,
+          refresh_token: token.refreshToken,
         }),
         method: 'POST',
       })
@@ -54,13 +54,16 @@ class AuthService {
 
       if (!response.ok) throw tokens
 
+      console.log('refresh !!!', tokens)
+
       return {
         ...token, // Keep the previous token properties
         access_token: tokens.access_token,
-        accessTokenExpires: tokens.expires_at,
+        expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+
         // Fall back to old refresh token, but note that
         // many providers may only allow using a refresh token once.
-        refresh_token: tokens.refresh_token ?? token.refresh_token,
+        refreshToken: tokens.refresh_token ?? token.refreshToken,
       }
     } catch (err) {
       console.log(`token error: ${JSON.stringify(err)}`)
@@ -99,7 +102,7 @@ class AuthService {
       return {
         ...token,
         accessToken: account.access_token,
-        accessTokenExpires: account.expires_at,
+        expires_at: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
         refreshToken: account.refresh_token,
         user,
         userId: user.id,
@@ -107,7 +110,7 @@ class AuthService {
       }
     }
 
-    const shouldRefreshTime = (token.accessTokenExpires as number) - 70 * 60 - nowTime
+    const shouldRefreshTime = (token.expires_at as number) - 70 * 60 - nowTime
 
     console.log(shouldRefreshTime, 'ref')
 
