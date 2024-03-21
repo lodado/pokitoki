@@ -4,6 +4,8 @@ import { Account, Profile, Session, User } from 'next-auth/types'
 
 import { AuthRepository } from '@/server/repository'
 
+import refreshTokenFactory from './refresh/refreshTokenFactory'
+
 type JWT = any
 
 type SignInParams = {
@@ -36,37 +38,16 @@ class AuthService {
   constructor(authRepository: typeof AuthRepository) {
     this.authRepository = authRepository
   }
-
+  /**
+   * TO DO -
+   * next-auth의 supabaseAdapter interface에는 oauth의 token을 db에서 refresh 하는 로직이 들어 있지 않아
+   * 아마도 서비스 제공자에 토큰 유효기간이 지난 후 무언가를 요청하면 거절될거라고 예상됨
+   * 서비스 제공자와 연계기능이 필요한 순간이 오면 db에서 refresh하는 로직을 추가해야 할듯
+   */
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
-    const { provider } = token
-
     try {
-      const response = await fetch('https://oauth2.googleapis.com/token', {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          client_id: process.env.GOOGLE_ID!,
-          client_secret: process.env.GOOGLE_SECRET!,
-          grant_type: 'refresh_token',
-          refresh_token: token.refreshToken,
-        }),
-        method: 'POST',
-      })
-
-      const tokens = await response.json()
-
-      if (!response.ok) throw tokens
-
-      console.log('refresh !!!', token, tokens)
-
-      return {
-        ...token, // Keep the previous token properties
-        accessToken: tokens.access_token,
-        expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
-
-        // Fall back to old refresh token, but note that
-        // many providers may only allow using a refresh token once.
-        refreshToken: tokens.refresh_token ?? token.refreshToken,
-      }
+      const refreshToken = await refreshTokenFactory(token)
+      return refreshToken
     } catch (err) {
       console.log(`token error: ${JSON.stringify(err)}`)
       return {
@@ -109,12 +90,13 @@ class AuthService {
         user,
         userId: user.id,
         provider: account.provider ?? 'credentials',
+        providerAccountId: account.providerAccountId,
       }
     }
 
-    const shouldRefreshTime = (token.expires_at as number) - 70 * 60 - nowTime
+    const shouldRefreshTime = (token.expires_at as number) - 5 * 60 - nowTime
 
-    console.log(shouldRefreshTime, 'ref')
+    console.log(shouldRefreshTime, 'ref', token.provider)
 
     if (shouldRefreshTime > 0) {
       return token

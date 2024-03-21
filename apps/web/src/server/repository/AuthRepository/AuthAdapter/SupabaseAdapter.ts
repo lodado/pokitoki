@@ -15,6 +15,7 @@ const columnNames = [
   'session_state',
   'oauth_token_secret',
   'oauth_token',
+
   'id',
   'userId',
 ]
