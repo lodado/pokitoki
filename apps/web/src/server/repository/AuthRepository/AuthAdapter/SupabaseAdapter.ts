@@ -34,8 +34,6 @@ const supabaseAdapterWrapper = () => {
   })
 
   const updateAccount = async ({ newAccount }: any) => {
-    console.log(newAccount, 'ttt')
-
     const account: { [key in string]: number | string } = {}
 
     // 특정 oauth의 경우 필요없는 key 값을 보내기도 함 (ex-google)

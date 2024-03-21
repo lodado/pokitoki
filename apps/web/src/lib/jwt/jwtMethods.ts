@@ -26,10 +26,8 @@ const jwtMethods = {
       const secretValue = secret ?? process.env.AUTH_SECRET
       const decoded = jwt.verify(token!, secretValue!)
 
-      console.log('decoded!', decoded)
       return decoded
     } catch (error) {
-      console.error('Error decoding token:', error)
       // 디코딩 실패 시 null 반환
       return null
     }

@@ -16,8 +16,6 @@ export default async function googleRefreshToken({ token }: JWT) {
 
   if (!response.ok) throw tokens
 
-  console.log('refresh !!!', token, tokens)
-
   return {
     ...token, // Keep the previous token properties
     accessToken: tokens.access_token,

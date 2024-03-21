@@ -72,7 +72,7 @@ class AuthService {
       }
     }
 
-    console.log(`login ${user.id}, ${user.name} ${user.email}`)
+    // console.log(`login ${user.id}, ${user.name} ${user.email}`)
     return true
   }
 
@@ -101,7 +101,7 @@ class AuthService {
 
     const shouldRefreshTime = (token.expires_at as number) - 7 * 60 - nowTime
 
-    console.log(shouldRefreshTime, 'ref', token.provider)
+    // console.log(shouldRefreshTime, 'ref', token.provider)
 
     if (shouldRefreshTime > 0) {
       return token
