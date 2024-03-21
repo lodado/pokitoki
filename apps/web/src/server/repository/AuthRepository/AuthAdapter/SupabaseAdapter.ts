@@ -1,6 +1,8 @@
 import { SupabaseAdapter } from '@auth/supabase-adapter'
+import { createClient } from '@supabase/supabase-js'
 
 import { SUPABASE_KEY, SUPABASE_URL } from '@/lib/supabase/supabase'
+import Database from '@/lib/supabase/type'
 
 const columnNames = [
   'expires_at',
@@ -15,7 +17,6 @@ const columnNames = [
   'session_state',
   'oauth_token_secret',
   'oauth_token',
-
   'id',
   'userId',
 ]
@@ -25,6 +26,30 @@ const supabaseAdapterWrapper = () => {
     url: SUPABASE_URL,
     secret: SUPABASE_KEY,
   }) as any // 타입 지원이 잘 안됨;
+
+  const supabase = createClient<Database, 'next_auth'>(SUPABASE_URL, SUPABASE_KEY, {
+    db: { schema: 'next_auth' },
+    global: { headers: { 'X-Client-Info': '@auth/supabase-adapter' } },
+    auth: { persistSession: false },
+  })
+
+  const updateAccount = async ({ newAccount }: any) => {
+    console.log(newAccount, 'ttt')
+
+    const account: { [key in string]: number | string } = {}
+
+    // 특정 oauth의 경우 필요없는 key 값을 보내기도 함 (ex-google)
+    columnNames.forEach((name) => {
+      account[name] = newAccount[name]
+    })
+
+    const { error } = await supabase
+      .from('accounts')
+      .update(account)
+      .match({ providerAccountId: newAccount.providerAccountId })
+
+    if (error) throw error
+  }
 
   const preprocessedUserData = ({ user, account }: any) => {
     const providerId = `prov@@#!#@${account?.provider}`
@@ -57,7 +82,7 @@ const supabaseAdapterWrapper = () => {
       return true
     }
 
-    return { ...supaAdapter, findOrCreateUser } as any
+    return { ...supaAdapter, updateAccount, findOrCreateUser } as any
   }
 }
 

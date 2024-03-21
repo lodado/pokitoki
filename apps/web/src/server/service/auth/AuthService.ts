@@ -38,15 +38,20 @@ class AuthService {
   constructor(authRepository: typeof AuthRepository) {
     this.authRepository = authRepository
   }
-  /**
-   * TO DO -
-   * next-auth의 supabaseAdapter interface에는 oauth의 token을 db에서 refresh 하는 로직이 들어 있지 않아
-   * 아마도 서비스 제공자에 토큰 유효기간이 지난 후 무언가를 요청하면 거절될거라고 예상됨
-   * 서비스 제공자와 연계기능이 필요한 순간이 오면 db에서 refresh하는 로직을 추가해야 할듯
-   */
+
   refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
     try {
       const refreshToken = await refreshTokenFactory(token)
+
+      this.authRepository.updateAccount({
+        newAccount: {
+          ...token.account,
+          refresh_token: refreshToken.refreshToken,
+          access_token: refreshToken.accessToken,
+          expires_at: refreshToken.expires_at,
+        },
+      })
+
       return refreshToken
     } catch (err) {
       console.log(`token error: ${JSON.stringify(err)}`)
@@ -89,12 +94,12 @@ class AuthService {
         refreshToken: account.refresh_token,
         user,
         userId: user.id,
-        provider: account.provider ?? 'credentials',
-        providerAccountId: account.providerAccountId,
+        provider: account.provider,
+        account,
       }
     }
 
-    const shouldRefreshTime = (token.expires_at as number) - 5 * 60 - nowTime
+    const shouldRefreshTime = (token.expires_at as number) - 7 * 60 - nowTime
 
     console.log(shouldRefreshTime, 'ref', token.provider)
 
@@ -105,13 +110,13 @@ class AuthService {
     return this.refreshAccessToken(token, user!, nowTime)
   }
 
-  session = async ({ session: _session, token }: SessionParams): Promise<Session> => {
+  session = async ({ session: _session, token }: SessionParams) => {
     return {
       ..._session,
       user: token.user as User,
       accessToken: token.accessToken,
       error: token.error,
-      expires: token.exp,
+      expires_at: token.expires_at,
       provider: token.provider,
     }
   }

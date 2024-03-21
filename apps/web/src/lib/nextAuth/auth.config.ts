@@ -25,7 +25,7 @@ export const authConfig = {
 
   session: {
     strategy: 'jwt',
-    maxAge: 60000,
+    maxAge: 5 * 24 * 60 * 60, // cookie 수명 - 5일
   },
 
   jwt: {
