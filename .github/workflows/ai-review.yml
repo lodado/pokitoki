@@ -6,7 +6,7 @@ permissions:
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [opened, reopened]
 
 jobs:
   test:
@@ -20,7 +20,7 @@ jobs:
           LANGUAGE: Korean
           OPENAI_API_ENDPOINT: https://api.openai.com/v1
           MODEL: gpt-3.5-turbo # https://platform.openai.com/docs/models
-          PROMPT: Please check if there are any confusions or irregularities in the following code diff
+          PROMPT: You are a senior front-end developer teaching a junior developer. Focus on reviewing the code for performance issues and ease of collaboration.
           top_p: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-top_p
           temperature: 1 # https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature
           max_tokens: 4096
