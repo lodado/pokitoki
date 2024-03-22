@@ -1,12 +1,13 @@
+/* eslint-disable camelcase */
 import { NextRequest } from 'next/server'
+import { Provider } from 'next-auth/providers'
 import { CredentialInput } from 'next-auth/providers/credentials'
 import { Account, Profile, Session, User } from 'next-auth/types'
 
 import { AuthRepository } from '@/server/repository'
 
 import refreshTokenFactory from './refresh/refreshTokenFactory'
-
-type JWT = any
+import { JWT } from './type'
 
 type SignInParams = {
   user: User
@@ -39,9 +40,9 @@ class AuthService {
     this.authRepository = authRepository
   }
 
-  refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
+  refreshAccessToken = async (token: JWT): Promise<JWT> => {
     try {
-      const refreshToken = await refreshTokenFactory(token)
+      const refreshToken = (await refreshTokenFactory(token)) as JWT
 
       this.authRepository.updateAccount({
         newAccount: {
@@ -89,17 +90,17 @@ class AuthService {
     if (isSignIn && account) {
       return {
         ...token,
-        accessToken: account.access_token,
+        accessToken: account.access_token!,
         expires_at: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
         refreshToken: account.refresh_token,
         user,
         userId: user.id,
-        provider: account.provider,
+        provider: account.provider as JWT['provider'],
         account,
       }
     }
 
-    const shouldRefreshTime = (token.expires_at as number) - 7 * 60 - nowTime
+    const shouldRefreshTime = token.expires_at - 7 * 60 - nowTime
 
     // console.log(shouldRefreshTime, 'ref', token.provider)
 
@@ -107,7 +108,7 @@ class AuthService {
       return token
     }
 
-    return this.refreshAccessToken(token, user!, nowTime)
+    return this.refreshAccessToken(token)
   }
 
   session = async ({ session: _session, token }: SessionParams) => {

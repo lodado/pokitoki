@@ -1,8 +1,7 @@
+import { JWT } from '../type'
 import githubRefreshToken from './githubRefreshToken'
 import googleRefreshToken from './googleRefreshToken'
 import kakaoRefreshToken from './kakaoRefreshToken'
-
-type JWT = any
 
 export default async function refreshTokenFactory(token: JWT) {
   const { provider } = token

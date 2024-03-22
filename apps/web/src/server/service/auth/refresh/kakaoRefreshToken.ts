@@ -1,13 +1,13 @@
-type JWT = any
+import { JWT } from '../type'
 
-export default async function kakaoRefreshToken({ token }: JWT) {
+export default async function kakaoRefreshToken({ token }: { token: JWT }) {
   const response = await fetch('https://kauth.kakao.com/oauth/token', {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
       client_id: process.env.KAKAO_ID!,
       client_secret: process.env.KAKAO_SECRET!,
       grant_type: 'refresh_token',
-      refresh_token: token.refreshToken,
+      refresh_token: token.refreshToken!,
     }),
     method: 'POST',
   })
