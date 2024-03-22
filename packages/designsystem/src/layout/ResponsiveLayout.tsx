@@ -1,13 +1,14 @@
 import { ReactNode } from 'react'
 
-/**
- * Props for the ResponsiveLayout component.
- *
- * @property {ReactNode} children - The content to be rendered within the layout.
- * @property {string} [className] - Optional additional CSS classes to apply to the layout container.
- */
-interface DefaultLayoutProps {
+interface ResponsiveLayoutProps {
+  /**
+   * The content to be rendered within the layout.
+   */
   children: ReactNode
+
+  /**
+   * Optional additional CSS classes to apply to the layout container.
+   */
   className?: string
 }
 
@@ -16,10 +17,10 @@ interface DefaultLayoutProps {
  * It stretches to the full width of the screen on smaller devices, and fixes width to 768px on medium devices and up.
  * This component can be used to wrap pages or other components that need to be centered.
  *
- * @param {DefaultLayoutProps} props - The props for this component.
+ * @param {ResponsiveLayoutProps} props - The props for this component.
  * @returns {JSX.Element} The ResponsiveLayout component.
  */
-const ResponsiveLayout = ({ children, className = '' }: DefaultLayoutProps): JSX.Element => {
+const ResponsiveLayout = ({ children, className = '' }: ResponsiveLayoutProps): JSX.Element => {
   return <div className={`relative left-1/2 -translate-x-1/2 w-screen md:w-[768px] ${className}`}>{children}</div>
 }
 
