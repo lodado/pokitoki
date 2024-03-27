@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import NextAuth from 'next-auth'
 import createIntlMiddleware from 'next-intl/middleware'
 
-import { getLoginSession } from './hooks/login'
 import { i18nOption } from './lib/i18n'
-import { authConfig } from './lib/nextAuth'
+import { auth } from './lib/nextAuth'
 
 const STATIC_PATH_REGEX = /^(?!\/(api|_next\/static|_next\/image|.*\\.(?:png|jpg|jpeg|gif|webp|svg))).*$/
+export const runtime = 'nodejs'
+
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   if (STATIC_PATH_REGEX.test(path)) {
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  const session = await getLoginSession()
+  const session = await auth()
   if (path.startsWith('/api/chatgpt') && !session) {
     return NextResponse.json({ message: 'Login required.' }, { status: 401 })
   }
@@ -34,5 +34,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
   // matcher: ['/((?!api|_next/static|_next/image|.*\\.(?:png|jpg|jpeg|gif|webp|svg)$).*)'],
 }
-
-export default NextAuth(authConfig).auth as any
