@@ -1,9 +1,11 @@
 'use client'
 
 import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react'
-import React, { useEffect, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 
-const LoginSessionProvider = ({ children, session }: any) => {
+import { NextAuthSessionResponse } from '@/server/service/auth/AuthService'
+
+const LoginSessionProvider = ({ children, session }: { children: ReactNode; session: NextAuthSessionResponse }) => {
   const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000)
 
   useEffect(() => {

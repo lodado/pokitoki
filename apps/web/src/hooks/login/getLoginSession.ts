@@ -1,3 +1,5 @@
+import { NextAuthSessionResponse } from '@/server/service/auth/AuthService'
+
 import { auth } from '../../lib/nextAuth/auth'
 
 const getLoginSession = async () => {
@@ -10,7 +12,7 @@ const getLoginSession = async () => {
       picture: session.user.picture,
     } // filter out sensitive data
 
-  return session
+  return session as NextAuthSessionResponse
 }
 
 export default getLoginSession

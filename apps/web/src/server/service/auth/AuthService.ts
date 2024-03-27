@@ -9,7 +9,7 @@ import { AuthRepository } from '@/server/repository'
 import refreshTokenFactory from './refresh/refreshTokenFactory'
 import { JWT } from './type'
 
-type SignInParams = {
+export type SignInParams = {
   user: User
   account: Account | undefined
   profile: Profile | undefined
@@ -17,20 +17,27 @@ type SignInParams = {
   credentials: Record<string, CredentialInput> | undefined
 }
 
-type AuthorizedParams = {
+export type AuthorizedParams = {
   auth: Session | null
   request: NextRequest
 }
 
-type JWTParams = {
+export type JWTParams = {
   token: JWT
   account?: Account | null
   user?: User | null
 }
 
-type SessionParams = {
+export type SessionParams = {
   session: Session
   token: JWT
+}
+
+export type NextAuthSessionResponse = Session & {
+  user: User | null
+  error?: string
+  expiresAt: number
+  provider: Account['provider']
 }
 
 class AuthService {
@@ -111,11 +118,10 @@ class AuthService {
     return this.refreshAccessToken(token)
   }
 
-  session = async ({ session: _session, token }: SessionParams) => {
+  session = async ({ session: _session, token }: SessionParams): Promise<NextAuthSessionResponse> => {
     return {
       ..._session,
       user: token.user,
-      accessToken: token.accessToken,
       error: token.error,
       expiresAt: token.expiresAt,
       provider: token.provider,
@@ -124,5 +130,4 @@ class AuthService {
 }
 
 const AuthServiceInstance = new AuthService(AuthRepository)
-
 export default AuthServiceInstance
