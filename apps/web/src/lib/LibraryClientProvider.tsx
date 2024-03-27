@@ -3,7 +3,7 @@
 import { ThemeProvider } from 'next-themes'
 import React, { ReactNode } from 'react'
 
-import { NextAuthSessionResponse } from '@/server/service/auth/SignInParams'
+import { NextAuthSessionResponse } from '@/server/service/auth/type'
 
 import { LoginSessionProvider } from './nextAuth'
 import { useInitTTS } from './voice/tts'

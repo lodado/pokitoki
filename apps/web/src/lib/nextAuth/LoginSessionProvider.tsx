@@ -3,7 +3,7 @@
 import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react'
 import React, { ReactNode, useEffect, useState } from 'react'
 
-import { NextAuthSessionResponse } from '@/server/service/auth/SignInParams'
+import { NextAuthSessionResponse } from '@/server/service/auth/type'
 
 const LoginSessionProvider = ({ children, session }: { children: ReactNode; session: NextAuthSessionResponse }) => {
   const [sessionRefetchInterval, setSessionRefetchInterval] = useState(10000)
