@@ -71,8 +71,7 @@ class ChatGptService {
   // 특정 채팅 데이터 가져오기
   getChatDetail = async (threadId: string) => {
     try {
-      const threadMessages = await this.chatGptRepository.getThreadMessages(threadId)
-      const messages = threadMessages.map(({ content }) => content[0].text.value)
+      const messages = await this.chatGptRepository.getThreadMessages(threadId)
       return messages
     } catch (err) {
       console.error(err)
@@ -83,8 +82,7 @@ class ChatGptService {
   // 채팅 보내기
   sendChat = async (threadId: string, prompt: string) => {
     try {
-      const messageContents = await this.chatGptRepository.createThreadMessage(threadId, prompt)
-      const messages = messageContents.map(({ text }) => text.value)
+      const messages = await this.chatGptRepository.createThreadMessage(threadId, prompt)
       return messages
     } catch (err) {
       console.error(err)
