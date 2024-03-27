@@ -1,13 +1,5 @@
 /* eslint-disable no-console */
-import { OpenAI } from 'openai'
-
 import { ChatGptRepository } from '@/server/repository'
-
-import { MessageContentText } from './type'
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
 
 class ChatGptService {
   private chatGptRepository: typeof ChatGptRepository
@@ -17,14 +9,9 @@ class ChatGptService {
   }
 
   // 튜터 생성
-  createAssistant = async ({ name, instructions }: { name: string; instructions: string }) => {
+  createTutor = async ({ name, instructions }: { name: string; instructions: string }) => {
     try {
-      const { id: assistantId } = await openai.beta.assistants.create({
-        name,
-        instructions,
-        model: 'gpt-3.5-turbo-1106',
-        tools: [{ type: 'code_interpreter' }],
-      })
+      const assistantId = await this.chatGptRepository.createAssistant(name, instructions)
       return assistantId
     } catch (err) {
       console.error(err)
@@ -33,9 +20,9 @@ class ChatGptService {
   }
 
   // 튜터 목록 가져오기
-  getAssistants = async () => {
+  getTutors = async () => {
     try {
-      const { data: assistants } = await openai.beta.assistants.list()
+      const assistants = await this.chatGptRepository.getAssistants()
       return assistants
     } catch (err) {
       console.error(err)
@@ -46,7 +33,7 @@ class ChatGptService {
   // 채팅방 생성 및 실행
   createChat = async (userId: string, assistantId: string, threadName: string) => {
     try {
-      const { thread_id: threadId } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
+      const threadId = await this.chatGptRepository.createThread(assistantId)
       const { isSuccess, error } = await this.chatGptRepository.insertThread(userId, assistantId, threadId, threadName)
 
       if (!isSuccess || error) throw new Error(JSON.stringify(error))
@@ -84,8 +71,8 @@ class ChatGptService {
   // 특정 채팅 데이터 가져오기
   getChatDetail = async (threadId: string) => {
     try {
-      const { data } = await openai.beta.threads.messages.list(threadId)
-      const messages = data.map(({ content }) => (content as MessageContentText[])[0].text.value)
+      const threadMessages = await this.chatGptRepository.getThreadMessages(threadId)
+      const messages = threadMessages.map(({ content }) => content[0].text.value)
       return messages
     } catch (err) {
       console.error(err)
@@ -96,8 +83,8 @@ class ChatGptService {
   // 채팅 보내기
   sendChat = async (threadId: string, prompt: string) => {
     try {
-      const { content } = await openai.beta.threads.messages.create(threadId, { role: 'user', content: prompt })
-      const messages = (content as MessageContentText[]).map(({ text }) => text.value)
+      const messageContents = await this.chatGptRepository.createThreadMessage(threadId, prompt)
+      const messages = messageContents.map(({ text }) => text.value)
       return messages
     } catch (err) {
       console.error(err)
