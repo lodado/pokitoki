@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import type { NextAuthConfig } from 'next-auth'
+import { JwtPayload } from 'jsonwebtoken'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
@@ -9,6 +9,7 @@ import { z } from 'zod'
 
 import { AuthRepository } from '@/server/repository'
 import AuthService from '@/server/service/auth/AuthService'
+import { JWT } from '@/server/service/auth/type'
 
 import jwtMethods from '../jwt/jwtMethods'
 
@@ -29,11 +30,11 @@ export const authConfig = {
   },
 
   jwt: {
-    async encode({ token, secret, maxAge }) {
-      return jwtMethods.encode({ token: token as unknown as string, secret, maxAge })
+    async encode({ token, secret, maxAge }: { token: JWT & JwtPayload; secret: string; maxAge: number }) {
+      return jwtMethods.encode({ token, secret, maxAge })
     },
-    async decode({ token, secret }) {
-      return jwtMethods.decode({ token, secret })
+    async decode({ token, secret }: { token: string; secret: string }) {
+      return jwtMethods.decode({ token, secret }) as Promise<string>
     },
   },
 
@@ -83,4 +84,4 @@ export const authConfig = {
       },
     }),
   ],
-} as NextAuthConfig
+}

@@ -49,7 +49,7 @@ class AuthService {
           ...token.account,
           refresh_token: refreshToken.refreshToken,
           access_token: refreshToken.accessToken,
-          expires_at: refreshToken.expires_at,
+          expires_at: refreshToken.expiresAt,
         },
       })
 
@@ -91,7 +91,7 @@ class AuthService {
       return {
         ...token,
         accessToken: account.access_token!,
-        expires_at: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
+        expiresAt: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
         refreshToken: account.refresh_token,
         user,
         userId: user.id,
@@ -100,7 +100,7 @@ class AuthService {
       }
     }
 
-    const shouldRefreshTime = token.expires_at - 7 * 60 - nowTime
+    const shouldRefreshTime = token.expiresAt - 7 * 60 - nowTime
 
     // console.log(shouldRefreshTime, 'ref', token.provider)
 
@@ -114,10 +114,10 @@ class AuthService {
   session = async ({ session: _session, token }: SessionParams) => {
     return {
       ..._session,
-      user: token.user as User,
+      user: token.user,
       accessToken: token.accessToken,
       error: token.error,
-      expires_at: token.expires_at,
+      expiresAt: token.expiresAt,
       provider: token.provider,
     }
   }

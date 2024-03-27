@@ -9,7 +9,7 @@ const LoginSessionProvider = ({ children, session }: any) => {
   useEffect(() => {
     if (session) {
       const nowTime = Math.round(Date.now() / 1000)
-      const timeRemaining = (session.expires_at as number) - 5 * 60 - nowTime
+      const timeRemaining = (session.expiresAt as number) - 5 * 60 - nowTime
 
       setSessionRefetchInterval(timeRemaining > 0 ? timeRemaining : 0)
     }

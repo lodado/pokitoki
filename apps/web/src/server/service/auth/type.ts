@@ -6,9 +6,7 @@ export type JWT = {
   error?: string
 
   userId: string
-
-  // eslint-disable-next-line camelcase
-  expires_at: number
+  expiresAt: number
   accessToken: string
   refreshToken?: string // 깃허브는 존재하지 않음
   provider: 'github' | 'kakao' | 'google' | 'naver'
