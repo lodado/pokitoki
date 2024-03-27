@@ -1,44 +1,10 @@
 /* eslint-disable camelcase */
-import { NextRequest } from 'next/server'
 import { Provider } from 'next-auth/providers'
-import { CredentialInput } from 'next-auth/providers/credentials'
-import { Account, Profile, Session, User } from 'next-auth/types'
 
 import { AuthRepository } from '@/server/repository'
 
 import refreshTokenFactory from './refresh/refreshTokenFactory'
-import { JWT } from './type'
-
-export type SignInParams = {
-  user: User
-  account: Account | undefined
-  profile: Profile | undefined
-  email: string | undefined
-  credentials: Record<string, CredentialInput> | undefined
-}
-
-export type AuthorizedParams = {
-  auth: Session | null
-  request: NextRequest
-}
-
-export type JWTParams = {
-  token: JWT
-  account?: Account | null
-  user?: User | null
-}
-
-export type SessionParams = {
-  session: Session
-  token: JWT
-}
-
-export type NextAuthSessionResponse = Session & {
-  user: User | null
-  error?: string
-  expiresAt: number
-  provider: Account['provider']
-}
+import { AuthorizedParams, JWT, JWTParams, NextAuthSessionResponse, SessionParams, SignInParams } from './type'
 
 class AuthService {
   private authRepository: typeof AuthRepository

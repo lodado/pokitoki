@@ -1,4 +1,4 @@
-import { NextAuthSessionResponse } from '@/server/service/auth/AuthService'
+import { NextAuthSessionResponse } from '@/server/service/auth/SignInParams'
 
 import { auth } from '../../lib/nextAuth/auth'
 
