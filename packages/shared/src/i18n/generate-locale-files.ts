@@ -5,8 +5,8 @@ import path from 'node:path'
 import fetch from 'node-fetch'
 
 const KEY_MARKER = 'key'
-const DEPTH_SEPARATOR = '.'
-const SPREAD_SHEET_ID = '15NqugKxhd8qRfQBk07QywE0-A4_BDnecAi6JKDA4D_w'
+const DEPTH_SEPARATOR = '-'
+const SPREAD_SHEET_ID = '1d2YY2kb-riWGGJ905Gg0r1s1A7e4PTlKrymzGA1MVuE'
 
 const commaSplitterRegex = /(['"])((?:\\.|(?:(?!\1)[^\\]))*)\1/g
 const removeSideCommaRegex = /^"|"$/g
@@ -34,7 +34,12 @@ const mapKeysAndValues = ({ keys, rows, length }: { keys: string[]; rows: string
         keyName = value
       } else {
         let targetDepth = fileMap
-        const splittedKeys = [key, ...keyName.split(DEPTH_SEPARATOR)]
+        const indexOfFirstSeparator = keyName.indexOf(DEPTH_SEPARATOR)
+
+        const splittedKeys = [
+          key,
+          ...[keyName.slice(0, indexOfFirstSeparator), keyName.slice(indexOfFirstSeparator + 1)],
+        ]
         const targetKeyName = splittedKeys.pop() || ''
 
         for (const currentKey of splittedKeys) {
