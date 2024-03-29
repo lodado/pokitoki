@@ -34,6 +34,11 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
 
+    "build-storybook": {
+      "dependsOn": ["gen:build"],
+      "outputs": ["./storybook/**"]
+    },
+
     "build:analyze": {
       "dependsOn": ["gen:build"],
       "cache": false,
