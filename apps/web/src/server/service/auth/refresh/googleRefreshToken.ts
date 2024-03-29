@@ -19,7 +19,7 @@ export default async function googleRefreshToken({ token }: { token: JWT }) {
   return {
     ...token, // Keep the previous token properties
     accessToken: tokens.access_token,
-    expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+    expiresAt: Math.floor(Date.now() / 1000 + tokens.expires_in),
 
     // Fall back to old refresh token, but note that
     // many providers may only allow using a refresh token once.
