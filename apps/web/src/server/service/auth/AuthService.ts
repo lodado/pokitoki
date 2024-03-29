@@ -1,34 +1,10 @@
-import { NextRequest } from 'next/server'
-import { CredentialInput } from 'next-auth/providers/credentials'
-import { Account, Profile, Session, User } from 'next-auth/types'
+/* eslint-disable camelcase */
+import { Provider } from 'next-auth/providers'
 
 import { AuthRepository } from '@/server/repository'
 
-type JWT = any
-
-type SignInParams = {
-  user: User
-  account: Account | undefined
-  profile: Profile | undefined
-  email: string | undefined
-  credentials: Record<string, CredentialInput> | undefined
-}
-
-type AuthorizedParams = {
-  auth: Session | null
-  request: NextRequest
-}
-
-type JWTParams = {
-  token: JWT
-  account?: Account | null
-  user?: User | null
-}
-
-type SessionParams = {
-  session: Session
-  token: JWT
-}
+import refreshTokenFactory from './refresh/refreshTokenFactory'
+import { AuthorizedParams, JWT, JWTParams, NextAuthSessionResponse, SessionParams, SignInParams } from './type'
 
 class AuthService {
   private authRepository: typeof AuthRepository
@@ -37,15 +13,22 @@ class AuthService {
     this.authRepository = authRepository
   }
 
-  refreshAccessToken = async (token: JWT, user: User, nowTime: number): Promise<JWT> => {
+  refreshAccessToken = async (token: JWT): Promise<JWT> => {
     try {
-      // Refresh logic here
-      return {
-        ...token,
-        exp: Math.round(Date.now() / 1000) + 100000,
-      }
+      const refreshToken = (await refreshTokenFactory(token)) as JWT
+
+      this.authRepository.updateAccount({
+        newAccount: {
+          ...token.account,
+          refresh_token: refreshToken.refreshToken,
+          access_token: refreshToken.accessToken,
+          expires_at: refreshToken.expiresAt,
+        },
+      })
+
+      return refreshToken
     } catch (err) {
-      console.log(`token error: ${err}`)
+      console.log(`token error: ${JSON.stringify(err)}`)
       return {
         ...token,
         error: 'RefreshAccessTokenError',
@@ -54,7 +37,7 @@ class AuthService {
   }
 
   signIn = async ({ user, account }: SignInParams): Promise<boolean> => {
-    if (account?.provider && ['github', 'google'].includes(account.provider)) {
+    if (account?.provider && ['github', 'google', 'naver', 'kakao'].includes(account.provider)) {
       try {
         return await this.authRepository.findOrCreateUser({ user, account })
       } catch (e) {
@@ -63,7 +46,7 @@ class AuthService {
       }
     }
 
-    console.log(`login ${user.id}, ${user.name} ${user.email}`)
+    // console.log(`login ${user.id}, ${user.name} ${user.email}`)
     return true
   }
 
@@ -80,36 +63,37 @@ class AuthService {
     if (isSignIn && account) {
       return {
         ...token,
-        accessToken: account.access_token,
-        accessTokenExpires: account.expires_at,
+        accessToken: account.access_token!,
+        expiresAt: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
         refreshToken: account.refresh_token,
         user,
         userId: user.id,
-        provider: account.provider ?? 'credentials',
+        provider: account.provider as JWT['provider'],
+        account,
       }
     }
 
-    const shouldRefreshTime = (token.exp as number) - 1 * 60 - nowTime
+    const shouldRefreshTime = token.expiresAt - 7 * 60 - nowTime
+
+    // console.log(shouldRefreshTime, 'ref', token.provider)
 
     if (shouldRefreshTime > 0) {
       return token
     }
 
-    return this.refreshAccessToken(token, user!, nowTime)
+    return this.refreshAccessToken(token)
   }
 
-  session = async ({ session: _session, token }: SessionParams): Promise<Session> => {
+  session = async ({ session: _session, token }: SessionParams): Promise<NextAuthSessionResponse> => {
     return {
       ..._session,
-      user: token.user as User,
-      accessToken: token.accessToken,
+      user: token.user,
       error: token.error,
-      expires: token.exp,
+      expiresAt: token.expiresAt,
       provider: token.provider,
     }
   }
 }
 
 const AuthServiceInstance = new AuthService(AuthRepository)
-
 export default AuthServiceInstance

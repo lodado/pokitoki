@@ -16,7 +16,11 @@
     "GITHUB_ID",
     "GITHUB_SECRET",
     "GOOGLE_ID",
-    "GOOGLE_SECRET"
+    "GOOGLE_SECRET",
+    "NAVER_ID",
+    "NAVER_SECRET",
+    "KAKAO_ID",
+    "KAKAO_SECRET"
   ],
 
   "pipeline": {

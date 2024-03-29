@@ -1,1 +1,3 @@
-export default interface Database {}
+type Database = any
+
+export default Database

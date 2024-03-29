@@ -1,15 +1,21 @@
-import jwt, { Jwt } from 'jsonwebtoken'
+import jwt, { Jwt, JwtPayload } from 'jsonwebtoken'
+
+import { JWT } from '@/server/service/auth/type'
 
 const jwtMethods = {
-  async encode({ token, secret, maxAge }: { secret?: string; token?: string; maxAge?: number }) {
+  async encode({ token, secret, maxAge }: { secret?: string; token?: JWT & JwtPayload; maxAge?: number }) {
     try {
       const secretValue = secret ?? process.env.AUTH_SECRET
       // `jsonwebtoken`의 `sign` 메소드를 사용하여 토큰 인코딩
+      let maxAgeValue = maxAge
 
-      // @ts-ignore
-      if (token?.exp) delete token.exp
+      if (token!.exp) {
+        maxAgeValue = Math.min(maxAgeValue!, Number(token!.exp))
 
-      const encodedToken = jwt.sign(token!, secretValue!, { expiresIn: maxAge })
+        delete token!.exp
+      }
+
+      const encodedToken = jwt.sign(token!, secretValue!, { expiresIn: maxAgeValue })
 
       return encodedToken
     } catch (error) {
@@ -22,10 +28,8 @@ const jwtMethods = {
       const secretValue = secret ?? process.env.AUTH_SECRET
       const decoded = jwt.verify(token!, secretValue!)
 
-      console.log('decoded!', decoded)
       return decoded
     } catch (error) {
-      console.error('Error decoding token:', error)
       // 디코딩 실패 시 null 반환
       return null
     }

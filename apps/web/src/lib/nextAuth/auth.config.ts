@@ -1,12 +1,15 @@
 import bcrypt from 'bcrypt'
-import type { NextAuthConfig } from 'next-auth'
+import { JwtPayload } from 'jsonwebtoken'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
+import KakaoProvider from 'next-auth/providers/kakao'
+import NaverProvider from 'next-auth/providers/naver'
 import { z } from 'zod'
 
 import { AuthRepository } from '@/server/repository'
 import AuthService from '@/server/service/auth/AuthService'
+import { JWT } from '@/server/service/auth/type'
 
 import jwtMethods from '../jwt/jwtMethods'
 
@@ -23,15 +26,15 @@ export const authConfig = {
 
   session: {
     strategy: 'jwt',
-    maxAge: 100000,
+    maxAge: 5 * 24 * 60 * 60, // cookie 수명 - 5일
   },
 
   jwt: {
-    async encode({ token, secret, maxAge }) {
-      return jwtMethods.encode({ token: token as unknown as string, secret, maxAge })
+    async encode({ token, secret, maxAge }: { token: JWT & JwtPayload; secret: string; maxAge: number }) {
+      return jwtMethods.encode({ token, secret, maxAge })
     },
-    async decode({ token, secret }) {
-      return jwtMethods.decode({ token, secret })
+    async decode({ token, secret }: { token: string; secret: string }) {
+      return jwtMethods.decode({ token, secret }) as Promise<string>
     },
   },
 
@@ -43,6 +46,15 @@ export const authConfig = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      authorization: { params: { access_type: 'offline', prompt: 'consent' } },
+    }),
+    NaverProvider({
+      clientId: process.env.NAVER_ID,
+      clientSecret: process.env.NAVER_SECRET,
+    }),
+    KakaoProvider({
+      clientId: process.env.KAKAO_ID,
+      clientSecret: process.env.KAKAO_SECRET,
     }),
 
     /** FIXME
@@ -72,4 +84,4 @@ export const authConfig = {
       },
     }),
   ],
-} as NextAuthConfig
+}
