@@ -3,12 +3,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
 import { Button, LogEvent, LogScreen, ResponsiveLayout } from '@custompackages/designsystem'
-import { useTheme } from 'next-themes'
-import { useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
-import { authenticate } from '@/app/[locale]/login/aggregate/login'
+import { authenticate } from '@/app/[locale]/login/action/login'
 import { useLoginSession } from '@/hooks/login'
+
+import { LOGIN_METHOD } from './variable'
 
 const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
@@ -31,44 +31,44 @@ const LoginForm = () => {
         <div className="flex flex-col items-start gap-[24px] relative self-stretch w-full flex-[0_0_auto]">
           <form action={dispatch} className="space-y-3">
             <LogEvent>
-              <button type="submit" name="signup_method" value="kakao" className="!self-stretch !w-full">
+              <Button type="submit" name={LOGIN_METHOD} value="kakao" className="!self-stretch !w-full">
                 카카오로 회원가입하기
-              </button>
+              </Button>
             </LogEvent>
             <LogEvent>
-              <button
+              <Button
                 type="submit"
-                name="signup_method"
+                name={LOGIN_METHOD}
                 value="naver"
                 className="!self-stretch !w-full"
                 // icon={<Three className="!relative !w-[16px] !h-[16px]" />}
               >
                 네이버로 회원가입하기
-              </button>
+              </Button>
             </LogEvent>
 
             <LogEvent>
-              <button
+              <Button
                 type="submit"
-                name="signup_method"
+                name={LOGIN_METHOD}
                 value="google"
                 className="!self-stretch !w-full"
                 //  icon={<SocialIcons2 className="!relative !w-[18px] !h-[18px]" />}
               >
                 구글로 회원가입하기
-              </button>
+              </Button>
             </LogEvent>
 
             <LogEvent>
-              <button
+              <Button
                 type="submit"
-                name="signup_method"
+                name={LOGIN_METHOD}
                 value="github"
                 className="!self-stretch !w-full"
                 //  icon={<SocialIcons2 className="!relative !w-[18px] !h-[18px]" />}
               >
                 깃허브로 회원가입하기
-              </button>
+              </Button>
             </LogEvent>
           </form>
         </div>
