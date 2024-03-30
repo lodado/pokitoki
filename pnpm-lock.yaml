@@ -536,17 +536,10 @@ importers:
         version: 4.9.5
 
   packages/utilsForServer:
-    dependencies:
-      crypto:
-        specifier: ^1.0.1
-        version: 1.0.1
     devDependencies:
       '@babel/preset-typescript':
         specifier: ^7.21.0
         version: 7.23.3(@babel/core@7.24.0)
-      '@svgr/plugin-jsx':
-        specifier: ^8.0.1
-        version: 8.0.1(@svgr/core@8.0.0)
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.16.5
@@ -565,9 +558,6 @@ importers:
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
-      esbuild-plugin-svgr:
-        specifier: ^2.0.0
-        version: 2.0.0
       eslint:
         specifier: ^7.32.0
         version: 7.32.0
@@ -580,9 +570,6 @@ importers:
       node-fetch:
         specifier: ^3.3.2
         version: 3.3.2
-      react:
-        specifier: ^18.0.2
-        version: 18.2.0
       tsconfig:
         specifier: workspace:*
         version: link:../../config/tsconfig
