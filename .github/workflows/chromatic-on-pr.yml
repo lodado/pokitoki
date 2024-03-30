@@ -31,12 +31,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        
-      - name: Change to app directory
-        run: cd apps/docs
+      
+      - name: build repositories
+        run: pnpm build --filter=\!web --filter=\!docs
 
       - name: Run Chromatic
         uses: chromaui/action@latest
         with:
           # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          workingDir: apps/docs
