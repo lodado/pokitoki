@@ -16,7 +16,7 @@ const LoginForm = () => {
 
   return (
     <LogScreen>
-      <ResponsiveLayout className="flex bg-red-100 flex-col items-center justify-center gap-[10px] pt-0 pb-[60px] px-[30px] relative">
+      <ResponsiveLayout className="flex bg-[url('https://c.animaapp.com/jDt1VAaj/img/union.png')] bg-repeat bg-auto bg-center flex-col items-center justify-center gap-[10px] h-screen pt-0 pb-[60px] px-[30px] relative">
         <div className="flex flex-col w-[536px] items-center gap-[73px] relative flex-[0_0_auto]">
           <img
             className="absolute w-[54px] h-[18px] top-[23px] left-[14px]"
