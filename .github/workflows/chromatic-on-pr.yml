@@ -1,6 +1,6 @@
 # .github/workflows/chromatic.yml
 
-name: "ChromaticOnPR"
+name: "Chromatic-on-pr"
 
 on: push
 
