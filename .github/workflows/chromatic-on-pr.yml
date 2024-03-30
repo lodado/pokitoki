@@ -2,13 +2,19 @@
 
 name: "Chromatic-on-pr"
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, reopened, synchronize]
 
 jobs:
   chromatic:
     runs-on: ubuntu-latest
+    outputs:
+      status: ${{ job.status }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
