@@ -53,5 +53,5 @@ jobs:
       - name: Storybook Link
         uses: dannyhw/storybook-chromatic-link-comment@v0.10
         with:
-          app-id: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          app-id: ${{ secrets.CHROMATIC_APP_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
