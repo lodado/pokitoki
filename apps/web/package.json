@@ -34,11 +34,12 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-speech-recognition": "^3.10.0",
-    "shared": "workspace:*",
     "tailwind-config": "workspace:*",
+    "shared": "workspace:*",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "utilsforserver": "workspace:*",
     "@babel/preset-typescript": "^7.21.0",
     "@next/bundle-analyzer": "^14.1.0",
     "@sentry/nextjs": "^7.91.0",
