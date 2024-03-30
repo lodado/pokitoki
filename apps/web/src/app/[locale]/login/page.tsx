@@ -2,7 +2,7 @@
 
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { Button, LogEvent, LogScreen } from '@custompackages/designsystem'
+import { Button, LogEvent, LogScreen, ResponsiveLayout } from '@custompackages/designsystem'
 import { useTheme } from 'next-themes'
 import { useEffect } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
@@ -16,92 +16,64 @@ const LoginForm = () => {
 
   return (
     <LogScreen>
-      <button type="button" className="w-40 h-10 bg-warning-02-hover">
-        123213
-      </button>
-
-      <form action={dispatch} className="space-y-3">
-        <div className="flex-1 px-6 pt-8 pb-4 rounded-lg bg-gray-50">
-          <h1 className={`  mb-3 text-2xl`}>Please log in to continue.</h1>
-          <div className="w-full">
-            <div>
-              <LogEvent params="login dummy click">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    console.log('hi!')
-                  }}
-                >
-                  Button
-                </Button>
-              </LogEvent>
-              <label className="block mt-5 mb-3 text-xs font-medium text-gray-900" htmlFor="email">
-                Email
-              </label>
-              <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  id="email"
-                  type="email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  required
-                />
-                <div className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-              </div>
-            </div>
-            <div className="mt-4">
-              <label className="block mt-5 mb-3 text-xs font-medium text-gray-900" htmlFor="password">
-                Password
-              </label>
-              <div className="relative">
-                <input
-                  className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                  id="password"
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  required
-                  minLength={6}
-                />
-                <div className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-              </div>
-            </div>
-          </div>
-          <LoginButton />
-          <div className="flex items-end h-8 space-x-1" aria-live="polite" aria-atomic="true">
-            {errorMessage && (
-              <>
-                <div className="w-5 h-5 text-red-500" />
-                <p className="text-sm text-red-500">{errorMessage}</p>
-              </>
-            )}
-          </div>
+      <ResponsiveLayout className="flex bg-red-100 flex-col items-center justify-center gap-[10px] pt-0 pb-[60px] px-[30px] relative">
+        <div className="flex flex-col w-[536px] items-center gap-[73px] relative flex-[0_0_auto]">
+          <img
+            className="absolute w-[54px] h-[18px] top-[23px] left-[14px]"
+            alt="Frame"
+            src="https://c.animaapp.com/YfR8zSQn/img/frame-1000002635.svg"
+          />
+          <p className="relative w-fit font-body-03-long-r font-[number:var(--body-03-long-r-font-weight)] text-[color:var(--color-gray-12)] text-[length:var(--body-03-long-r-font-size)] tracking-[var(--body-03-long-r-letter-spacing)] leading-[var(--body-03-long-r-line-height)] [font-style:var(--body-03-long-r-font-style)]">
+            내 손안의 AI 스피킹 튜터
+          </p>
         </div>
-      </form>
+
+        <div className="flex flex-col items-start gap-[24px] relative self-stretch w-full flex-[0_0_auto]">
+          <form action={dispatch} className="space-y-3">
+            <LogEvent>
+              <button type="submit" name="signup_method" value="kakao" className="!self-stretch !w-full">
+                카카오로 회원가입하기
+              </button>
+            </LogEvent>
+            <LogEvent>
+              <button
+                type="submit"
+                name="signup_method"
+                value="naver"
+                className="!self-stretch !w-full"
+                // icon={<Three className="!relative !w-[16px] !h-[16px]" />}
+              >
+                네이버로 회원가입하기
+              </button>
+            </LogEvent>
+
+            <LogEvent>
+              <button
+                type="submit"
+                name="signup_method"
+                value="google"
+                className="!self-stretch !w-full"
+                //  icon={<SocialIcons2 className="!relative !w-[18px] !h-[18px]" />}
+              >
+                구글로 회원가입하기
+              </button>
+            </LogEvent>
+
+            <LogEvent>
+              <button
+                type="submit"
+                name="signup_method"
+                value="github"
+                className="!self-stretch !w-full"
+                //  icon={<SocialIcons2 className="!relative !w-[18px] !h-[18px]" />}
+              >
+                깃허브로 회원가입하기
+              </button>
+            </LogEvent>
+          </form>
+        </div>
+      </ResponsiveLayout>
     </LogScreen>
-  )
-}
-
-const LoginButton = () => {
-  const { theme, setTheme } = useTheme()
-
-  return (
-    <>
-      <button type="button" onClick={() => setTheme('light')}>
-        Light Mode
-      </button>
-      <button type="button" onClick={() => setTheme('dark')}>
-        Dark Mode
-      </button>
-
-      <LogEvent>
-        <button type="submit" className="w-full mt-4">
-          Log in <div className="w-5 h-5 ml-auto text-gray-50" />
-        </button>
-      </LogEvent>
-    </>
   )
 }
 
