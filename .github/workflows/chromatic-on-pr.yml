@@ -43,15 +43,18 @@ jobs:
       - name: build repositories
         run: pnpm build --filter=\!web --filter=\!docs
 
-      - name: Run Chromatic
+      - name: Publish to Chromatic
+        id: chromatic
         uses: chromaui/action@latest
         with:
-          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           workingDir: apps/docs
-      
-      - name: Storybook Link
+          exitOnceUploaded: true
+
+      - name: Publish Storybook Link in the comments
         uses: dannyhw/storybook-chromatic-link-comment@v0.10
         with:
-          app-id: ${{ secrets.CHROMATIC_APP_ID }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          review-url: ${{ steps.chromatic.outputs.url }}
+          build-url: ${{ steps.chromatic.outputs.buildUrl }}
+          storybook-url: ${{ steps.chromatic.outputs.storybookUrl }}
