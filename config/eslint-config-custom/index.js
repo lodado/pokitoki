@@ -48,6 +48,7 @@ module.exports = {
   },
   globals: {
     JSX: true,
+    RequestInit: true,
   },
   settings: {
     'import/resolver': {
