@@ -5,29 +5,30 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
+import request from '@/api'
+
 const Chatting = () => {
   const { threadId } = useParams()
   const [messages, setMessages] = useState<string[]>([])
   const messageRef = useRef<HTMLInputElement>(null)
 
   const handleGetChat = async () => {
-    const res = await fetch(`/api/chatgpt/message?threadId=${threadId}`)
-    const data: string[] = await res.json()
+    const { success, data } = await request<string[]>({ url: `/api/chatgpt/message?threadId=${threadId}` })
 
-    if (!data) return
+    if (!success || !data) return
     setMessages(data)
   }
 
   const handleSendChat = async () => {
     if (!messageRef.current) return
 
-    const res = await fetch('/api/chatgpt/message', {
+    const { success, data } = await request({
+      url: '/api/chatgpt/message',
       method: 'POST',
-      body: JSON.stringify({ threadId, message: messageRef.current?.value || '' }),
+      data: { threadId, message: messageRef.current?.value || '' },
     })
-    const data = await res.json()
 
-    if (!data) {
+    if (!success || !data) {
       alert('에러가 발생했습니다.')
       return
     }

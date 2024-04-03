@@ -35,5 +35,5 @@ export const DELETE = async (req: NextRequest) => {
   const userId = user.id
 
   const result = await deleteChat(userId, threadId)
-  return NextResponse.json({ success: true, data: result })
+  return NextResponse.json({ success: result })
 }
