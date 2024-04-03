@@ -6,12 +6,13 @@ const { getTutors, createTutor } = ChatGptService
 
 export const GET = async () => {
   const assistants = await getTutors()
-  return NextResponse.json(assistants)
+  return NextResponse.json({ success: !!assistants, data: assistants })
 }
 
 export const POST = async (req: NextRequest) => {
   const { name, instructions } = await req.json()
-  if (!name || !instructions) return Response.json(false)
+  if (!name || !instructions) return Response.json({ success: false })
+
   const assistantId = await createTutor({ name, instructions })
-  return NextResponse.json(!!assistantId)
+  return NextResponse.json({ success: !!assistantId })
 }
