@@ -8,6 +8,10 @@ const preview: Preview = {
   decorators: [(Story) => <>{Story()}</>],
 
   parameters: {
+    docs: {
+      toc: true, // 👈 Enables the table of contents
+    },
+
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import { JwtPayload } from 'jsonwebtoken'
+import { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
@@ -16,7 +17,6 @@ import jwtMethods from '../jwt/jwtMethods'
 const { signIn, authorized, jwt, session } = AuthService
 export const authConfig = {
   debug: true,
-
   adapter: AuthRepository,
 
   pages: {
@@ -84,4 +84,4 @@ export const authConfig = {
       },
     }),
   ],
-}
+} as unknown as NextAuthConfig

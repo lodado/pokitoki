@@ -1,0 +1,59 @@
+import { ArgsTable, Title,  Controls, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { IconButton, Button } from '@custompackages/designsystem';
+import TestIcon from './TestIcon.tsx'
+
+<Meta title="Example/Button"
+      component={Button}
+      tags={['autodocs']} 
+      argTypes={{
+        
+      }}
+      args={{
+        variant: 'primary',
+        size : 'medium'
+      }}
+/>
+
+<Title />
+
+`Button` 컴포넌트는 화면 크기에 따라 레이아웃을 조정하여 
+모든 디바이스에서 최적의 뷰잉 경험을 제공합니다. 
+
+최대 width는 768px이며, 넘어가게 되면 자동으로 양옆으로 확장됩니다.
+
+`className` prop을 통한 사용자 정의 스타일링을 지원합니다.
+
+## Basic Usage
+
+This example demonstrates a basic responsive layout with a red background filling the height of the screen.
+
+breakpoint: width - 768px
+
+<Canvas>
+  <Story name="BasicButton" args={{ children: 'text' }}>
+    {args => <Button {...args} />}
+  </Story>
+</Canvas>
+
+## Props
+
+<Controls />
+
+## Button With Left Icon
+ 
+<Canvas>
+  <Story name="ButtonWithLeftIcon" args={{ children: 'text', LeftIcon: <TestIcon/> }}>
+    {args => <Button {...args} />}
+  </Story>
+</Canvas>
+
+
+## Button With Right Icon
+ 
+<Canvas>
+  <Story name="ButtonWithRightIcon" args={{ children: 'text', RightIcon: <TestIcon/> }}>
+    {args => <Button {...args} />}
+  </Story>
+</Canvas>
+
+
