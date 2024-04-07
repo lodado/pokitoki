@@ -3,11 +3,9 @@ import { NextAuthSessionResponse } from '@/server/service/auth/type'
 import { auth } from '../../lib/nextAuth/auth'
 
 const getLoginSession = async () => {
-  let session
+  const session = await auth()
 
-  if (!session) {
-    session = await auth()
-
+  if (session?.user) {
     session.user = {
       name: session.user.name,
       email: session.user.email,
