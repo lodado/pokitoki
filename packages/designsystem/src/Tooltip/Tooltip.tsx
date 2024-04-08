@@ -13,7 +13,7 @@ interface TooltipProps {
 
 const Tooltip = ({ children, open, defaultOpen, onOpenChange }: TooltipProps) => {
   return (
-    <Provider>
+    <Provider delayDuration={0}>
       <Root open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
         {children}
       </Root>

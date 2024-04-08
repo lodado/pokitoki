@@ -8,19 +8,30 @@ export const TooltipTrigger = ({ children }: { children: ReactNode }) => {
 }
 
 export const TooltipContent = ({
+  className,
   children,
   side = 'top',
   align = 'center',
 }: {
+  className?: string
   children: ReactNode
   side: PopperContentProps['side']
   align: PopperContentProps['align']
 }) => {
+  const style = {
+    filter: 'drop-shadow(0 0 3px rgba(0, 0, 0, 0.2))',
+    clipPath: 'inset(0 -10px -10px -10px)',
+  }
+
   return (
     <Portal>
-      <Content side={side} align={align}>
+      <Content
+        className="flex rounded gap-spacing-3 flex-start pt-spacing-1 pb-spacing-2 pl-spacing-3 pr-spacing-3 detail-02-r w-60 min-w-60 bg-background-default shadow-tooltip fill-background-default"
+        side="top"
+        align={align}
+      >
         {children}
-        <Arrow width={11} height={5} />
+        <Arrow style={style} width="12px" height="8px" />
       </Content>
     </Portal>
   )
