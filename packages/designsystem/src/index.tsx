@@ -1,4 +1,5 @@
 export * from './Button'
 export * from './layout'
 export * from './logger'
+export * from './Tooltip'
 export * from './utils'

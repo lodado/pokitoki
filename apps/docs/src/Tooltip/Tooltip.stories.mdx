@@ -1,0 +1,35 @@
+import { ArgsTable, Title,  Controls, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Tooltip } from '@custompackages/designsystem';
+import  TooltipExample from './TooltipExample.tsx'
+
+<Meta title="Example/Tooltip"
+      component={Tooltip}
+      tags={['autodocs']} 
+/>
+
+<Story name="BasicTooltip"/>
+
+<Title />
+
+## 설치
+
+프로젝트에 @custompackages/designsystem이 설치되어 있는지 확인하세요. 
+
+다음과 같이 Tooltip 컴포넌트를 임포트할 수 있습니다
+
+```jsx
+import { Tooltip } from '@custompackages/designsystem';
+```
+  
+## TooltipExample
+
+<Canvas>
+  <Story name="BasicTooltipExample"  >
+    {args => <TooltipExample  {...args} />}
+  </Story>
+</Canvas>
+
+## Props
+
+<Controls />
+
