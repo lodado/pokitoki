@@ -36,19 +36,18 @@ import { Tooltip } from '@custompackages/designsystem';
 import { Tooltip } from '@custompackages/designsystem'
 import React from 'react'
 
-const TooltipExample = ({ side, align, ...rest }: any) => {
+const TooltipExample = ({ side, align, ...rest }) => {
   return (
     <Tooltip {...rest}>
       <Tooltip.Trigger>
         <button type="button">hover me!</button>
       </Tooltip.Trigger>
 
-      <Tooltip.Content side={'left'} align={'top'}>
+      <Tooltip.Content side={left} align={align}>
         Max width of tooltips is 240px - wrap text if necessary.
       </Tooltip.Content>
     </Tooltip>
-  )
-}
+  )}
 ```
 </details>
 

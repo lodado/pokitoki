@@ -1,7 +1,7 @@
 import { Tooltip } from '@custompackages/designsystem'
 import React from 'react'
 
-const TooltipExample = ({ side, align, ...rest }: any) => {
+const TooltipExample = ({ side = 'left', align = 'top', ...rest }: any) => {
   return (
     <Tooltip {...rest}>
       <Tooltip.Trigger>
