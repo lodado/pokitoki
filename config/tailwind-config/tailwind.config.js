@@ -56,6 +56,13 @@ export default {
       spacing: {
         ...SPACE.spacing,
       },
+
+      /* z-index 시멘틱하게 관리 */
+      zIndex: {
+        toast: '700',
+        dropdown: '500',
+        dialog: '100',
+      },
     },
   },
   /** @type {import('tailwindcss/types/config').PluginCreator} */
