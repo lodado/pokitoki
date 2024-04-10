@@ -1,9 +1,3 @@
-type RequestApiResponse<T> = {
-  success: boolean
-  data: T | null
-  error: unknown
-}
-
 const request = async <T>({
   method = 'GET',
   url = '',
@@ -17,7 +11,7 @@ const request = async <T>({
   headers?: RequestInit['headers']
   data?: Record<string, unknown> | Array<unknown>
   timeout?: number
-}): Promise<RequestApiResponse<T>> => {
+}): Promise<T> => {
   const controller = new AbortController()
   const body = ['GET', 'HEAD'].includes(method) ? undefined : JSON.stringify(data)
 
@@ -26,28 +20,19 @@ const request = async <T>({
   }, timeout)
   timeoutId?.unref?.()
 
-  try {
-    const response = await fetch(url, {
-      method,
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-        ...headers,
-      },
-      signal: controller.signal,
-      ...options,
-    })
+  const response = await fetch(url, {
+    method,
+    body,
+    headers: {
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    signal: controller.signal,
+    ...options,
+  })
 
-    return await response.json()
-  } catch (error: unknown) {
-    console.error(`api ${method} failed: ${url}`, error)
-
-    return {
-      success: false,
-      data: null,
-      error,
-    }
-  }
+  const responseData: T = await response.json()
+  return responseData
 }
 
 export default request

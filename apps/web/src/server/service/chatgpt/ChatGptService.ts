@@ -15,7 +15,7 @@ class ChatGptService {
       return assistantId
     } catch (err) {
       console.error(err)
-      return null
+      throw err
     }
   }
 
@@ -26,7 +26,7 @@ class ChatGptService {
       return assistants
     } catch (err) {
       console.error(err)
-      return []
+      throw err
     }
   }
 
@@ -40,7 +40,7 @@ class ChatGptService {
       return threadId
     } catch (err) {
       console.error(err)
-      return null
+      throw err
     }
   }
 
@@ -51,7 +51,7 @@ class ChatGptService {
       return threads
     } catch (err) {
       console.error(err)
-      return []
+      throw err
     }
   }
 
@@ -64,7 +64,7 @@ class ChatGptService {
       return true
     } catch (err) {
       console.error(err)
-      return false
+      throw err
     }
   }
 
@@ -75,7 +75,7 @@ class ChatGptService {
       return messages
     } catch (err) {
       console.error(err)
-      return []
+      throw err
     }
   }
 
@@ -86,7 +86,7 @@ class ChatGptService {
       return messages
     } catch (err) {
       console.error(err)
-      return null
+      throw err
     }
   }
 }
