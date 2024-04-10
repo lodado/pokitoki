@@ -10,6 +10,7 @@ const request = async <T>({
   headers,
   data,
   timeout = 5000,
+  ...options
 }: {
   method?: RequestInit['method']
   url: string
@@ -34,6 +35,7 @@ const request = async <T>({
         ...headers,
       },
       signal: controller.signal,
+      ...options,
     })
 
     return await response.json()
