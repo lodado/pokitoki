@@ -20,7 +20,7 @@ const jwtMethods = {
       const encodedToken = new SignJWT(token)
         .setProtectedHeader({ alg: 'HS256' })
         .setIssuedAt()
-        .setExpirationTime('2h')
+        .setExpirationTime(`${maxAgeValue}s`)
         .sign(secretValue)
 
       return encodedToken
