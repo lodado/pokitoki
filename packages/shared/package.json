@@ -5,26 +5,25 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "types": "./dist/es/type.d.ts",
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/es/index.js"
     },
-    "./index.css": "./index.css",
+    "./index.css": "./src/index.css",
     "./package.json": "./package.json"
   },
-  "source": "./index.tsx",
-  "main": "./index.tsx",
-  "module": "./index.tsx",
-  "types": "./dist/index.d.ts",
+  "source": "./src/index.tsx",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.js",
+  "types": "./dist/types/index.d.ts",
   "license": "MIT",
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "gen:build": "tsup ./index.tsx --format esm,cjs --dts --external react",
-    "gen:dev": "tsup ./index.tsx --format esm,cjs --watch --dts --external react",
-    "build": "pnpm run build:js",
-    "build:js": "rollup -c ./rollup.config.mjs",
+    "build": "pnpm run build:js && pnpm build:type",
+    "gen:build": "rollup -c ./rollup.config.mjs",
+    "gen:build:type": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
@@ -38,6 +37,7 @@
     "@babel/preset-env": "^7.23.9",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
+    "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
@@ -58,6 +58,7 @@
     "jest-config": "workspace:*",
     "node-fetch": "^3.3.2",
     "rollup": "^4.14.1",
+    "rollup-plugin-import-css": "^3.5.0",
     "rollup-plugin-node-externals": "^7.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.2",

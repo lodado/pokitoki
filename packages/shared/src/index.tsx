@@ -1,5 +1,8 @@
-export * from './src/designVariables'
-export * from './src/utils'
+import './index.css'
+
+export * from './designVariables'
+export * from './icons'
+export * from './utils'
 
 /*
 export * from './src/hook'
