@@ -1,5 +1,5 @@
 export * from './Button'
-// export * from './Dialog'
+export * from './Dialog'
 export * from './layout'
 export * from './logger'
 export * from './Tooltip'

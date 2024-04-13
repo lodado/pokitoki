@@ -1,6 +1,11 @@
 module.exports = {
   presets: [
-    ['@babel/preset-env', { useBuiltIns: 'entry', corejs: '3.36', bugfixes: true }],
+    [
+      '@babel/preset-env',
+      {
+        targets: '>0.2%, not dead, not op_mini all',
+      },
+    ],
     /**
      * Will use the native built-in instead of trying to polyfill behavior for any plugins that require one.
      * Remove the helper function for Object.assign.

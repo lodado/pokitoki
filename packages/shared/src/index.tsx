@@ -1,12 +1,12 @@
 import './index.css'
 
-import generateLocaleFiles from './i18n/generate-locale-files'
+// import { generateLocaleFiles } from './i18n/generate-locale-files'
 
 export * from './designVariables'
 export * from './icons'
 export * from './utils'
 
-export { generateLocaleFiles }
+// export { generateLocaleFiles }
 
 /*
 export * from './src/hook'

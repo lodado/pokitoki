@@ -10,13 +10,15 @@ import postcssImport from 'postcss-import'
 import { nodeExternals } from 'rollup-plugin-node-externals'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import postcss from 'rollup-plugin-postcss'
+import preserveDirectives from 'rollup-plugin-preserve-directives'
 import typescript from 'rollup-plugin-typescript2'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { fileURLToPath } from 'url'
 
-const BUILD_OUTPUT_LOCATION = 'dist'
-
 const dirname = '.' // fileURLToPath(new URL('.', import.meta.url))
+
+const BUILD_OUTPUT_LOCATION = `${dirname}/dist`
+
 const filename = fileURLToPath(import.meta.url)
 
 const ENTRY_POINT = `${dirname}/src/index.tsx`
@@ -40,7 +42,7 @@ const rollupConfigs = inputSrc.map(([input, format]) => {
     output: {
       dir: `${BUILD_OUTPUT_LOCATION}/${format}`,
       format,
-
+      preserveModulesRoot: `${dirname}/src`,
       preserveModules: isESMFormat,
       entryFileNames,
 
@@ -77,7 +79,7 @@ const rollupConfigs = inputSrc.map(([input, format]) => {
       babel({
         babelHelpers: 'bundled',
         exclude: 'node_modules/**',
-        presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+
         extensions,
       }),
 
@@ -96,6 +98,8 @@ const rollupConfigs = inputSrc.map(([input, format]) => {
       url(),
 
       terser(),
+
+      preserveDirectives({ exclude: ['**/*.scss', '**/*.pcss'] }),
     ],
   }
 })
