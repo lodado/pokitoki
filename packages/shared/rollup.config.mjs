@@ -7,8 +7,6 @@ import terser from '@rollup/plugin-terser'
 import url from '@rollup/plugin-url'
 import path from 'path'
 import postcssImport from 'postcss-import'
-import { dts } from 'rollup-plugin-dts'
-import css from 'rollup-plugin-import-css'
 import { nodeExternals } from 'rollup-plugin-node-externals'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import postcss from 'rollup-plugin-postcss'
@@ -18,10 +16,10 @@ import { fileURLToPath } from 'url'
 
 const BUILD_OUTPUT_LOCATION = 'dist'
 
-const ENTRY_POINT = './src/index.tsx'
-
 const dirname = fileURLToPath(new URL('.', import.meta.url))
 const filename = fileURLToPath(import.meta.url)
+
+const ENTRY_POINT = `${dirname}/src/index.tsx`
 
 const inputSrc = [
   [ENTRY_POINT, 'es'],
@@ -31,8 +29,11 @@ const inputSrc = [
 const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
 
 // eslint-disable-next-line import/no-mutable-exports
-let rollupConfigs = inputSrc.map(([input, format]) => {
+const rollupConfigs = inputSrc.map(([input, format]) => {
   const isESMFormat = format === 'es'
+  const entryFormat = isESMFormat ? 'mjs' : 'cjs'
+
+  const entryFileNames = `[name].${entryFormat}`
 
   return {
     input,
@@ -41,11 +42,10 @@ let rollupConfigs = inputSrc.map(([input, format]) => {
       format,
 
       preserveModules: isESMFormat,
+      entryFileNames,
 
       exports: 'named',
     },
-
-    external: ['react/jsx-runtime'],
 
     plugins: [
       /**
@@ -84,16 +84,30 @@ let rollupConfigs = inputSrc.map(([input, format]) => {
       postcss({
         extract: true,
         plugins: [postcssImport()],
+
+        watch: {
+          include: 'src/**',
+          clearScreen: false,
+        },
       }),
 
       visualizer({ filename: 'stats.html' }),
 
       url(),
-      css(),
+
       terser(),
     ],
   }
 })
+
+
+/*
+  타입은 rollup-plugin-typescript2에서 알아서 추출해주므로 명시적으로 타입을 추출해주는 dts 라이브러리를 쓰지 않아도 
+  상관 없을듯함
+
+  혹시 모르니 주석으로 첨부해둠.
+
+import { dts } from 'rollup-plugin-dts'
 
 rollupConfigs = rollupConfigs.concat(
   inputSrc.map(([input, format]) => {
@@ -107,5 +121,6 @@ rollupConfigs = rollupConfigs.concat(
     }
   }),
 )
+*/
 
 export default rollupConfigs

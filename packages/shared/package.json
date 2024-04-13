@@ -2,28 +2,33 @@
   "name": "shared",
   "version": "0.0.0",
   "private": true,
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "exports": {
     ".": {
-      "types": "./dist/es/type.d.ts",
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/es/index.js"
+      "import": {
+        "types": "./dist/es/index.d.ts",
+        "default": "./dist/es/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.cjs"
+      }
     },
-    "./index.css": "./src/index.css",
-    "./package.json": "./package.json"
+    "./index.css": "./dist/es/index.css"
   },
   "source": "./src/index.tsx",
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/es/index.mjs",
   "license": "MIT",
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "build": "pnpm run build:js && pnpm build:type",
-    "gen:build": "rollup -c ./rollup.config.mjs",
-    "gen:build:type": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "dev": "rollup -c --watch ./rollup.config.mjs",
+    "build": "rollup -c ./rollup.config.mjs",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
@@ -57,6 +62,7 @@
     "eslint-config-custom": "workspace:*",
     "jest-config": "workspace:*",
     "node-fetch": "^3.3.2",
+    "postcss-import": "^16.1.0",
     "rollup": "^4.14.1",
     "rollup-plugin-import-css": "^3.5.0",
     "rollup-plugin-node-externals": "^7.1.1",
