@@ -65,6 +65,8 @@ const rollupConfigFunc = (config) =>
         exports: 'named',
       },
 
+      external: [/@babel\/runtime/],
+
       plugins: [
         /**
          * **IMPORTANT**: Order matters!
@@ -96,10 +98,19 @@ const rollupConfigFunc = (config) =>
          */
         commonjs({}),
         babel({
-          babelHelpers: 'bundled',
+          babelHelpers: 'runtime',
           exclude: 'node_modules/**',
 
           extensions,
+
+          plugins: [
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                useESModules: isESMFormat,
+              },
+            ],
+          ],
         }),
 
         postcss({
@@ -118,7 +129,7 @@ const rollupConfigFunc = (config) =>
 
         terser(),
 
-        preserveDirectives({ exclude: ['**/*.scss', '**/*.pcss'] }),
+        preserveDirectives({ exclude: ['**/*.scss', '**/*.css'] }),
       ],
     }
   })

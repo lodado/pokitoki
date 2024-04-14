@@ -24,7 +24,7 @@
         "default": "./dist/server/cjs/index.server.cjs"
       }
     },
-    "./index.css": "./dist/es/index.css"
+    "./index.css": "./dist/es/client/index.css"
   },
   "source": "./src/index.ts",
   "main": "./dist/cjs/index.cjs",
@@ -67,7 +67,9 @@
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "react": "^18.0.2"
+    "react": "^18.0.2",
+    "@babel/plugin-transform-runtime": "^7.24.3",
+    "@babel/runtime": "^7.24.4"
   },
   "dependencies": {
     "crypto": "^1.0.1"
