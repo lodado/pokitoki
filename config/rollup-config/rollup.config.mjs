@@ -24,86 +24,89 @@ const filename = fileURLToPath(import.meta.url)
 const ENTRY_POINT = `${dirname}/src/index.tsx`
 
 const inputSrc = [
-  [ENTRY_POINT, 'es'],
-  [ENTRY_POINT, 'cjs'],
+  { input: ENTRY_POINT, format: 'es', additionalFolderDirectiory: 'client' },
+  { input: ENTRY_POINT, format: 'cjs', additionalFolderDirectiory: 'client' },
 ]
 
 const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
 
 // eslint-disable-next-line import/no-mutable-exports
-const rollupConfigs = inputSrc.map(([input, format]) => {
-  const isESMFormat = format === 'es'
-  const entryFormat = isESMFormat ? 'mjs' : 'cjs'
+const rollupConfigFunc = (config) =>
+  config.map(({ input, format, additionalFolderDirectiory = '' }) => {
+    const isESMFormat = format === 'es'
+    const entryFormat = isESMFormat ? 'mjs' : 'cjs'
 
-  const entryFileNames = `[name].${entryFormat}`
+    const entryFileNames = `[name].${entryFormat}`
 
-  return {
-    input,
-    output: {
-      dir: `${BUILD_OUTPUT_LOCATION}/${format}`,
-      format,
-      preserveModulesRoot: `${dirname}/src`,
-      preserveModules: isESMFormat,
-      entryFileNames,
+    return {
+      input,
+      output: {
+        dir: `${BUILD_OUTPUT_LOCATION}/${format}/${additionalFolderDirectiory}/`,
+        format,
+        preserveModulesRoot: `${dirname}/src`,
+        preserveModules: isESMFormat,
+        entryFileNames,
 
-      exports: 'named',
-    },
+        exports: 'named',
+      },
 
-    plugins: [
-      /**
-       * **IMPORTANT**: Order matters!
-       * If you're also using @rollup/plugin-node-resolve, make sure this plugin comes before it in the plugins array
-       * @see https://github.com/Septh/rollup-plugin-node-externals#3-order-matters
-       */
-      nodeExternals({
-        deps: false,
-        peerDeps: true,
-        packagePath: './package.json',
-      }),
-      nodeResolve({ extensions }),
+      plugins: [
+        /**
+         * **IMPORTANT**: Order matters!
+         * If you're also using @rollup/plugin-node-resolve, make sure this plugin comes before it in the plugins array
+         * @see https://github.com/Septh/rollup-plugin-node-externals#3-order-matters
+         */
+        nodeExternals({
+          deps: false,
+          peerDeps: true,
+          packagePath: './package.json',
+        }),
+        nodeResolve({ extensions }),
 
-      typescript(),
-      peerDepsExternal(),
+        typescript({
+          tsconfig: './tsconfig.json',
+          tsconfigOverride: {},
+        }),
+        peerDepsExternal(),
 
-      alias({
-        entries: [{ find: '@', replacement: path.resolve(dirname, 'src') }],
-      }),
+        alias({
+          entries: [{ find: '@', replacement: path.resolve(dirname, 'src') }],
+        }),
 
-      /**
-       * **IMPORTANT**: Order matters!
-       * When using @rollup/plugin-babel with @rollup/plugin-commonjs in the same Rollup configuration,
-       * it's important to note that @rollup/plugin-commonjs must be placed before this plugin in the plugins array for the two to work together properly.
-       * @see https://github.com/rollup/plugins/tree/master/packages/babel#using-with-rollupplugin-commonjs
-       */
-      commonjs({}),
-      babel({
-        babelHelpers: 'bundled',
-        exclude: 'node_modules/**',
+        /**
+         * **IMPORTANT**: Order matters!
+         * When using @rollup/plugin-babel with @rollup/plugin-commonjs in the same Rollup configuration,
+         * it's important to note that @rollup/plugin-commonjs must be placed before this plugin in the plugins array for the two to work together properly.
+         * @see https://github.com/rollup/plugins/tree/master/packages/babel#using-with-rollupplugin-commonjs
+         */
+        commonjs({}),
+        babel({
+          babelHelpers: 'bundled',
+          exclude: 'node_modules/**',
 
-        extensions,
-      }),
+          extensions,
+        }),
 
-      postcss({
-        extract: true,
-        plugins: [postcssImport()],
+        postcss({
+          extract: true,
+          plugins: [postcssImport()],
 
-        watch: {
-          include: 'src/**',
-          clearScreen: false,
-        },
-      }),
+          watch: {
+            include: 'src/**',
+            clearScreen: false,
+          },
+        }),
 
-      visualizer({ filename: 'stats.html' }),
+        visualizer({ filename: 'stats.html' }),
 
-      url(),
+        url(),
 
-      terser(),
+        terser(),
 
-      preserveDirectives({ exclude: ['**/*.scss', '**/*.pcss'] }),
-    ],
-  }
-})
-
+        preserveDirectives({ exclude: ['**/*.scss', '**/*.pcss'] }),
+      ],
+    }
+  })
 
 /*
   타입은 rollup-plugin-typescript2에서 알아서 추출해주므로 명시적으로 타입을 추출해주는 dts 라이브러리를 쓰지 않아도 
@@ -127,4 +130,8 @@ rollupConfigs = rollupConfigs.concat(
 )
 */
 
-export default rollupConfigs
+const defaultConfig = (additionalConfig = []) => {
+  return rollupConfigFunc([...inputSrc, ...additionalConfig])
+}
+
+export { defaultConfig, rollupConfigFunc }

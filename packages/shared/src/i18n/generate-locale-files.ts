@@ -54,7 +54,7 @@ const mapKeysAndValues = ({ keys, rows, length }: { keys: string[]; rows: string
   return fileMap
 }
 
-const generateLocaleFiles = async (saveLocation: string) => {
+export const generateLocaleFiles = async (saveLocation: string) => {
   const response = await fetch(`https://docs.google.com/spreadsheets/d/${SPREAD_SHEET_ID}/gviz/tq?tqx=out:csv`)
   const csvText = await response.text()
 
@@ -70,5 +70,3 @@ const generateLocaleFiles = async (saveLocation: string) => {
     console.info(`✅   type file "${fileName}" created in ${fileDir}`)
   }
 }
-
-export default generateLocaleFiles
