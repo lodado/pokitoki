@@ -16,10 +16,9 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { fileURLToPath } from 'url'
 
 const dirname = '.' // fileURLToPath(new URL('.', import.meta.url))
+// const filename = fileURLToPath(import.meta.url)
 
 const BUILD_OUTPUT_LOCATION = `${dirname}/dist`
-
-const filename = fileURLToPath(import.meta.url)
 
 const ENTRY_POINT = `${dirname}/src/index.tsx`
 
@@ -29,7 +28,20 @@ const inputSrc = [
 ]
 
 const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
-
+/**
+ * Generates an array of Rollup configuration objects based on the provided array of configuration parameters.
+ * Each configuration parameter object includes options for input, format, and optionally an additional directory path.
+ * 
+ * @param {Object[]} config - An array of configuration objects. Each object must have an `input` and `format` property.
+ *                            `additionalFolderDirectiory` is optional and defaults to an empty string.
+ * @returns {Object[]} An array of Rollup configuration objects tailored to the specifications provided in the `config` parameter.
+ * 
+ * @example
+ * rollupConfigFunc([
+ *   { input: 'src/index.js', format: 'es', additionalFolderDirectiory: 'dist' },
+ *   { input: 'src/api.js', format: 'cjs' }
+ * ]);
+ */
 // eslint-disable-next-line import/no-mutable-exports
 const rollupConfigFunc = (config) =>
   config.map(({ input, format, additionalFolderDirectiory = '' }) => {
@@ -37,11 +49,14 @@ const rollupConfigFunc = (config) =>
     const entryFormat = isESMFormat ? 'mjs' : 'cjs'
 
     const entryFileNames = `[name].${entryFormat}`
+    const dir = `${BUILD_OUTPUT_LOCATION}/${format}/${
+      additionalFolderDirectiory ? `${additionalFolderDirectiory}/` : ''
+    }`
 
     return {
       input,
       output: {
-        dir: `${BUILD_OUTPUT_LOCATION}/${format}/${additionalFolderDirectiory}/`,
+        dir,
         format,
         preserveModulesRoot: `${dirname}/src`,
         preserveModules: isESMFormat,
