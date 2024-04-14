@@ -1,8 +1,8 @@
 'use client'
 
 import React, { Dispatch, FormEvent, ReactComponentElement, ReactElement, ReactNode, useState } from 'react'
+import { contextBuildHelper, noop } from 'shared'
 
-import { contextBuildHelper, noop } from '../../../../shared/dist/es'
 import { Close, Content, Overlay, Portal, Root, Trigger } from './radix'
 
 export const [DialogProvider, useDialogContext] = contextBuildHelper<{

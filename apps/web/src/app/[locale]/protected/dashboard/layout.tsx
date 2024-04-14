@@ -5,13 +5,11 @@ import React from 'react'
 import PokiTokiNavigation from '@/components/Navigator/Navigator'
 import { LayoutProps } from '@/interface/type'
 
-import { ICON_ARROW_DOWN } from '../../../../../../../packages/shared/dist/es'
-
 const Layout: React.FunctionComponent<LayoutProps> = ({ children, params: { locale } }) => {
   return (
     <ResponsiveLayout className="min-h-screen">
       {children}
-      <ICON_ARROW_DOWN />
+
       <PokiTokiNavigation />
     </ResponsiveLayout>
   )
