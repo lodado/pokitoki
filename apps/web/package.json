@@ -1,8 +1,9 @@
 {
-  "name": "web",
+  "name": "@pokitoki/web",
   "version": "1.0.0",
-  "private": false,
   "sideEffects": false,
+  "main": "./index.tsx",
+  "source": "./index.tsx",
   "scripts": {
     "build": "next build",
     "dev": "next dev",

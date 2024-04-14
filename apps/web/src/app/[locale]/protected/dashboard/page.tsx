@@ -11,7 +11,7 @@ import { getMetadata } from '@/utils'
 export async function generateMetadata(): Promise<Metadata> {
   return getMetadata({
     title: 'pokitoki dashboard',
-    description: 'login하는 page입니다.',
+    description: 'dashboard page',
     path: '/login',
   })
 }
