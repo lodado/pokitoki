@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react'
 import './index.css'
+
 import 'tailwind-config/index.css'
 
 import React from 'react'
