@@ -16,7 +16,7 @@ jobs:
     secrets: inherit
   
   
-  storybook-deploy:
-    needs: test
-    uses: ./.github/workflows/chromatic-on-pr.yml
-    secrets: inherit
+#  storybook-deploy:
+#    needs: test
+#    uses: ./.github/workflows/chromatic-on-pr.yml
+#    secrets: inherit
