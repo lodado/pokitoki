@@ -5,7 +5,7 @@
   "sideEffects": false,
   "scripts": {
     "lint": "next lint",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6007",
     "build": "storybook build",
     "build-storybook": "storybook build"
   },
@@ -33,6 +33,7 @@
     "jest-config": "workspace:*",
     "sass": "^1.63.3",
     "shared": "workspace:*",
+    "@pokitoki/web": "workspace:*",
     "storybook": "7.0.27",
     "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*",

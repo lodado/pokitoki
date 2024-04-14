@@ -6,7 +6,7 @@ const NavigationLinkButton = ({
   children,
   className,
   ...rest
-}: { className?: string; children: ReactNode } & LinkProps) => {
+}: { className?: string; children: ReactNode } & Partial<LinkProps>) => {
   return (
     <Link href="/" {...rest}>
       <button type="button" className={`w-[75px] h-12 color-text-01 ${className}`}>

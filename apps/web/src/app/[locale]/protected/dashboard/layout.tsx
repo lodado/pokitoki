@@ -2,7 +2,7 @@ import { ResponsiveLayout } from '@custompackages/designsystem'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
-import PokiTokiNavigation from '@/components/Navigator/Navigator'
+import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
 import { LayoutProps } from '@/interface/type'
 
 const Layout: React.FunctionComponent<LayoutProps> = ({ children, params: { locale } }) => {
