@@ -16,20 +16,20 @@
     },
     "./server": {
       "import": {
-        "types": "./dist/server/es/index.server.d.ts",
-        "default": "./dist/server/es/index.server.mjs"
+        "types": "./dist/es/server/index.server.d.ts",
+        "default": "./dist/es/server/index.server.mjs"
       },
       "require": {
-        "types": "./dist/server/cjs/index.server.d.ts",
-        "default": "./dist/server/cjs/index.server.cjs"
+        "types": "./dist/cjs/server/index.server.d.ts",
+        "default": "./dist/cjs/server/index.server.cjs"
       }
     },
     "./index.css": "./dist/es/client/index.css"
   },
   "source": "./src/index.ts",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/es/index.mjs",
-  "types": "./dist/es/index.d.ts",
+  "main": "./dist/cjs/client/index.cjs",
+  "module": "./dist/es/client/index.mjs",
+  "types": "./dist/es/client/index.d.ts",
   "license": "MIT",
   "files": [
     "dist/**"
