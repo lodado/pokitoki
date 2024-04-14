@@ -1,5 +1,6 @@
-export * from './src/designVariables'
-export * from './src/utils'
+import { generateLocaleFiles } from './i18n/generate-locale-files'
+
+export { generateLocaleFiles }
 
 /*
 export * from './src/hook'

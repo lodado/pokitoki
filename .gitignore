@@ -26,6 +26,8 @@ workbox*.js*
 *.pem
 **/storybook-static/*
 
+stats.html
+
 # debug
 npm-debug.log*
 yarn-debug.log*

@@ -1,8 +1,11 @@
 {
   "extends": "tsconfig/react-library.json",
-  "include": [".", "./src/icons/svg.d.ts"],
+  "include": ["src/**/*", "./src/icons/svg.d.ts"],
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": "./",
+
+    "noImplicitAny": false,
+
     "paths": {
       "@/*": ["src/*"]
     }

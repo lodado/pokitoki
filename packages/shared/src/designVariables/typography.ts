@@ -1,4 +1,4 @@
-import convertLeafKeysToCamelCase from 'utils/typography/convertLeafKeysToCamelCase'
+import convertLeafKeysToCamelCase from 'src/utils/typography/convertLeafKeysToCamelCase'
 
 const RAW_TYPOGRAPHY =
   // text style
