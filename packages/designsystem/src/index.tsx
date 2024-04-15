@@ -1,6 +1,7 @@
 export * from './Button'
 export * from './Card'
 export * from './Dialog'
+export * from './ErrorBoundary'
 export * from './Image'
 export * from './layout'
 export * from './logger'
