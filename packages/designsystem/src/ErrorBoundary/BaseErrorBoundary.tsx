@@ -18,6 +18,8 @@ export type ErrorBoundaryProps<ErrorType extends Error = Error> = {
   onError?(error: ErrorType, info: ErrorInfo): void
   onReset?(): void
   ignoreError?: IgnoreErrorType
+
+  children: ReactNode
 }
 
 const initialState: State = {
