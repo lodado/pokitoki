@@ -10,7 +10,7 @@ import fetch from 'node-fetch'
 dotenv.config()
 
 const TOKEN = process.env.FIGMA_WEBHOOK
-const FILE_KEY = 'v2LAIwRuECBSb24aIFDKwB'
+const FILE_KEY = 'wWbRPgyfiIRRsbRluUZrbC'
 
 const fetchFigmaFile = (key) => {
   return fetch(`https://api.figma.com/v1/files/${key}`, { headers: { 'X-Figma-Token': TOKEN } }).then((response) =>
