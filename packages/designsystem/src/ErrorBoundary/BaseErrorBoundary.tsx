@@ -6,7 +6,9 @@ export type RenderFallbackProps<ErrorType extends Error = Error> = {
   reset: () => void
 }
 export type IgnoreErrorType = <ErrorType extends Error = Error>(error: ErrorType) => boolean
-export type RenderFallbackType = <ErrorType extends Error>(props: RenderFallbackProps<ErrorType>) => ReactNode
+export type RenderFallbackType = <ErrorType extends Error>(
+  props: RenderFallbackProps<ErrorType>,
+) => ReactNode | ReactNode
 
 export interface State<ErrorType extends Error = Error> {
   error: ErrorType | null

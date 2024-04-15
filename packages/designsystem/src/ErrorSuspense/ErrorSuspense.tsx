@@ -4,7 +4,7 @@ import { ErrorBoundary, ErrorBoundaryProps } from '../ErrorBoundary'
 
 export interface ErrorSuspenseProps extends Omit<ErrorBoundaryProps, 'fallback'> {
   ErrorFallback: ErrorBoundaryProps['fallback']
-  LoadingFallback: SuspenseProps['fallback']
+  LoadingFallback: JSX.Element
 
   children: ReactNode
 }
