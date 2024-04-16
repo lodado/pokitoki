@@ -1,8 +1,9 @@
 {
-  "name": "web",
+  "name": "@pokitoki/web",
   "version": "1.0.0",
-  "private": false,
   "sideEffects": false,
+  "main": "./index.tsx",
+  "source": "./index.tsx",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -26,7 +27,7 @@
     "bcrypt": "^5.1.1",
     "jose": "^5.2.3",
     "jotai": "^2.6.0",
-    "next": "^14.0.4",
+    "next": "^14.1.4",
     "next-auth": "5.0.0-beta.4",
     "next-intl": "^3.5.2",
     "next-themes": "^0.2.1",
@@ -39,8 +40,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "utilsforserver": "workspace:*",
-    "@babel/preset-typescript": "^7.21.0",
     "@next/bundle-analyzer": "^14.1.0",
     "@sentry/nextjs": "^7.91.0",
     "@types/bcrypt": "^5.0.2",

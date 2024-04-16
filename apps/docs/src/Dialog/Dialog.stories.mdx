@@ -1,0 +1,103 @@
+import { ArgsTable, Title,  Controls, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { AlertDialog } from '@custompackages/designsystem';
+import AlertDialogExample from './AlertDialogExample'
+import AlertDialogExample2 from './AlertDialogExample2'
+
+<Meta title="Example/AlertDialog"
+      component={AlertDialog}
+      tags={['autodocs']} 
+/>
+
+<Story name="BasicDialog" args={{}}/>
+
+<Title />
+
+## 설치
+
+프로젝트에 @custompackages/designsystem이 설치되어 있는지 확인하세요. 
+
+다음과 같이 AlertDialog 컴포넌트를 임포트할 수 있습니다
+
+```jsx
+import { AlertDialog } from '@custompackages/designsystem';
+```
+
+## AlertDialogExample 
+
+<AlertDialogExample />
+ 
+<details>
+  <summary>코드 예시</summary>
+   ```jsx
+
+  const AlertDialogExample  = () => {
+    const [isVisible, setVisible] = useState(false)
+
+    return (
+      <>
+        <button
+          type="button"
+          onClick={() => {
+            setVisible(true)
+          }}
+        >
+          click button !
+        </button>
+      <AlertDialog isVisible={isVisible} onChangeVisible={setVisible}>
+        <AlertDialog.Header>Test</AlertDialog.Header>
+        <AlertDialog.Body>Test Body</AlertDialog.Body>
+        <AlertDialog.SubmitForm submitText="확인" cancelText="취소" onSubmit={async (e) => {}} />
+      </AlertDialog>
+      </>
+    )
+  }
+  ```
+</details>
+
+첫번째 예시로는 isVisible과 onChangeVisible 상태관리로 dialog를 open/close 합니다.
+
+
+## AlertDialogExample 2
+
+<AlertDialogExample2 />
+
+<details>
+  <summary>코드 예시</summary>
+   ```jsx
+import { AlertDialog } from '@custompackages/designsystem'
+import React, { useState } from 'react'
+
+const TriggerButton = () => {
+  return <button type="button">click button !</button>
+}
+
+const AssembledDialogExample2 = () => {
+  return (
+    <>
+      <AlertDialog Trigger={TriggerButton}>
+        <AlertDialog.Header>Test</AlertDialog.Header>
+        <AlertDialog.Body>Test Body</AlertDialog.Body>
+        <AlertDialog.SubmitForm submitText="확인" cancelText="취소" onSubmit={async (e) => {}} />
+      </AlertDialog>
+    </>
+  )
+}
+
+export default AssembledDialogExample2
+
+  ```
+</details>
+
+
+두번째 예시로는 Trigger란 컴포넌트를 누르면 dialog가 open/close 됩니다. (Radix의 Trigger component 사용)
+
+두 방식을 구현한 이유는 Trigger or state 방식이 필요한 경우가 각각 생겼었기 때문에 
+해당 방식으로 구현했습니다.
+
+참고로 두가지 방식을 동시에 적용해도 작동합니다.
+
+## Props
+
+<Controls />
+
+ 

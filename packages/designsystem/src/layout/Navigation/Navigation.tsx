@@ -21,13 +21,7 @@ interface NavigationProps {
  * @returns {JSX.Element} The Navigation component.
  */
 const Navigation = ({ children, className }: NavigationProps): JSX.Element => {
-  return (
-    <nav
-      className={`fixed left-1/2 -translate-x-1/2 bottom-0 flex w-screen md:w-[768px] max-h-98px flex-row justify-around transform ${className}`}
-    >
-      {children}
-    </nav>
-  )
+  return <nav className={`fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] ${className}`}>{children}</nav>
 }
 
 export default Navigation

@@ -64,6 +64,7 @@
       "cache": false,
       "persistent": true
     },
-    "start": {}
+    "start": {},
+    "icon": {}
   }
 }

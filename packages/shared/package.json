@@ -5,23 +5,38 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "types": "./dist/es/client/index.d.ts",
+        "default": "./dist/es/client/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/client/index.d.ts",
+        "default": "./dist/cjs/client/index.cjs"
+      }
     },
-    "./index.css": "./index.css",
-    "./package.json": "./package.json"
+    "./server": {
+      "import": {
+        "types": "./dist/es/server/index.server.d.ts",
+        "default": "./dist/es/server/index.server.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/server/index.server.d.ts",
+        "default": "./dist/cjs/server/index.server.cjs"
+      }
+    },
+    "./index.css": "./dist/es/client/index.css"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "main": "./dist/cjs/client/index.cjs",
+  "module": "./dist/es/client/index.mjs",
+  "types": "./dist/es/client/index.d.ts",
   "license": "MIT",
   "files": [
     "dist/**"
   ],
   "scripts": {
-    "gen:build": "tsup ./index.tsx --format esm,cjs --dts --external react",
-    "gen:dev": "tsup ./index.tsx --format esm,cjs --watch --dts --external react",
+    "dev": "rollup -c --watch ./rollup.config.mjs",
+    "build": "rollup -c ./rollup.config.mjs",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
@@ -30,10 +45,11 @@
     "convert": "node ./src/icons/profiles/generator.mjs"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.21.0",
     "@svgr/plugin-jsx": "^8.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@types/babel__plugin-transform-runtime": "^7.9.5",
+    "@types/node": "^20.12.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.6",
     "@types/testing-library__jest-dom": "^5.14.8",
@@ -43,10 +59,17 @@
     "eslint-config-custom": "workspace:*",
     "jest-config": "workspace:*",
     "node-fetch": "^3.3.2",
-    "react": "^18.0.2",
+    "postcss-import": "^16.1.0",
+    "rollup-config": "workspace:*",
     "tsconfig": "workspace:*",
+    "tslib": "^2.6.2",
     "tsup": "^5.10.1",
-    "typescript": "^4.5.2"
+    "typescript": "^4.9.5"
+  },
+  "peerDependencies": {
+    "react": "^18.0.2",
+    "@babel/plugin-transform-runtime": "^7.24.3",
+    "@babel/runtime": "^7.24.4"
   },
   "dependencies": {
     "crypto": "^1.0.1"

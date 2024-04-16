@@ -1,0 +1,58 @@
+import { ArgsTable, Title,  Controls, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { Tooltip } from '@custompackages/designsystem';
+import  TooltipExample from './TooltipExample.tsx'
+
+<Meta title="Example/Tooltip"
+      component={Tooltip}
+      tags={['autodocs']} 
+/>
+
+
+
+<Title />
+
+## 설치
+
+프로젝트에 @custompackages/designsystem이 설치되어 있는지 확인하세요. 
+
+다음과 같이 Tooltip 컴포넌트를 임포트할 수 있습니다
+
+```jsx
+import { Tooltip } from '@custompackages/designsystem';
+```
+  
+## TooltipExample
+
+<Canvas>
+  <Story name="BasicTooltipExample"  >
+    {args => <TooltipExample  {...args} />}
+  </Story>
+</Canvas>
+ 
+<details>
+  <summary>코드 예시 </summary>
+  
+```
+import { Tooltip } from '@custompackages/designsystem'
+import React from 'react'
+
+const TooltipExample = ({ side, align, ...rest }) => {
+  return (
+    <Tooltip {...rest}>
+      <Tooltip.Trigger>
+        <button type="button">hover me!</button>
+      </Tooltip.Trigger>
+
+      <Tooltip.Content side={left} align={align}>
+        Max width of tooltips is 240px - wrap text if necessary.
+      </Tooltip.Content>
+    </Tooltip>
+  )}
+```
+</details>
+
+## Props
+
+<Controls />
+
+ 

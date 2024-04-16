@@ -14,7 +14,6 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "@babel/preset-typescript": "^7.21.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "jest-config": "workspace:*",

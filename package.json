@@ -11,7 +11,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
-    "locale": "pnpm --filter web locale"
+    "locale": "pnpm --filter web locale",
+    "icon": "dotenv -- turbo run icon"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
@@ -29,5 +30,8 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint --cache --fix",
     "*.{ts,tsx,md}": "prettier --write"
+  },
+  "engines": {
+    "node": ">=18.18.1"
   }
 }

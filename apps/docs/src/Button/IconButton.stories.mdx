@@ -1,0 +1,34 @@
+import { ArgsTable, Title,  Controls, Meta, Story, Canvas } from '@storybook/addon-docs';
+import { IconButton } from '@custompackages/designsystem';
+import TestIcon from './TestIcon.tsx'
+
+<Meta title="Example/IconButton"
+      component={IconButton}
+      tags={['autodocs']} 
+      argTypes={{
+        
+      }}
+      args={{
+        variant: 'primary',
+        size : 'medium'
+      }}
+/>
+
+<Title />
+
+## Basic Usage
+
+This example demonstrates a icon button
+
+<Canvas>
+  <Story name="BasicButton" args={{ children: <TestIcon /> }}>
+    {args => <IconButton {...args} />}
+  </Story>
+</Canvas>
+
+## Props
+
+<Controls />
+
+
+
