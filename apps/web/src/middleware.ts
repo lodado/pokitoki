@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
-import NextAuth from 'next-auth'
 import createIntlMiddleware from 'next-intl/middleware'
 
 import { i18nOption } from './lib/i18n'
-import { authConfig } from './lib/nextAuth'
+import { auth } from './lib/nextAuth'
+
+export const runtime = 'nodejs'
 
 export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname
+  const session = await auth()
+
+  if (path.startsWith('/api') && !session) {
+    return NextResponse.json({ message: 'Login required.' }, { status: 401 })
+  }
+
   // Step 1: Use the incoming request (example)
   // const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
 
@@ -18,8 +26,7 @@ export async function middleware(request: NextRequest) {
 
   return response
 }
-export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.(?:png|jpg|jpeg|gif|webp|svg)$).*)'],
-}
 
-export default NextAuth(authConfig).auth as any
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|.*\\.(?:png|jpg|jpeg|gif|webp|svg)$).*)'],
+}
