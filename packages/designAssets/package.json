@@ -71,6 +71,7 @@
     "@babel/runtime": "^7.24.4"
   },
   "dependencies": {
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.1",
+    "@custompackages/shared": "workspace:*"
   }
 }

@@ -16,6 +16,7 @@
     "access": "public"
   },
   "dependencies": {
+    "class-variance-authority": "^0.7.0",
     "@auth/supabase-adapter": "^0.5.0",
     "@custompackages/clientlogger": "workspace:*",
     "@custompackages/designsystem": "workspace:*",

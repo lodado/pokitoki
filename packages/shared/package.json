@@ -72,6 +72,8 @@
     "react": "^18.0.2"
   },
   "dependencies": {
-    "crypto": "^1.0.1"
+    "clsx": "^2.1.0",
+    "tailwind-merge": "^2.2.0",
+    "class-variance-authority": "^0.7.0"
   }
 }
