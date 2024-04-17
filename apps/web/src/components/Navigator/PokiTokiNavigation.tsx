@@ -1,7 +1,7 @@
-import { cn, Navigation } from '@custompackages/designsystem'
+import { Navigation } from '@custompackages/designsystem'
 import React, { useRef } from 'react'
 
-import { NavigationLinkButton } from './NavigationLinkButton'
+import NavigationLinkButton from './NavigationLinkButton'
 
 const PokiTokiNavigation = () => {
   return (
@@ -11,7 +11,9 @@ const PokiTokiNavigation = () => {
           <NavigationLinkButton href="/">포키토키</NavigationLinkButton>
 
           <div className="hidden sm:flex">
-            <NavigationLinkButton className="pt-1 pb-0 ">학습 현황</NavigationLinkButton>
+            <NavigationLinkButton className="pt-1 pb-0 " isCurrentUrl="./protected/dashboard">
+              학습 현황
+            </NavigationLinkButton>
             <NavigationLinkButton className="pt-1 pb-0.5">선택 학습</NavigationLinkButton>
           </div>
 

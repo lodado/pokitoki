@@ -1,5 +1,4 @@
 import { ResponsiveLayout } from '@custompackages/designsystem'
-import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
 import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
