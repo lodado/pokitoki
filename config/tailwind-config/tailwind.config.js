@@ -1,4 +1,4 @@
-const shared = require('shared')
+const shared = require('@custompackages/design-assets')
 
 const { TYPOGRAPHY } = shared
 const { VARIABLES } = shared

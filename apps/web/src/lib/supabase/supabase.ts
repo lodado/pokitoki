@@ -1,5 +1,5 @@
+import { isServerSide } from '@custompackages/shared'
 import { createClient } from '@supabase/supabase-js'
-import { isServerSide } from 'shared'
 
 import Database from './type'
 

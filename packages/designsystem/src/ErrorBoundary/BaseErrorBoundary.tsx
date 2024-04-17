@@ -1,3 +1,5 @@
+'use client'
+
 /* eslint-disable react/no-unused-class-component-methods */
 import { Component, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode } from 'react'
 

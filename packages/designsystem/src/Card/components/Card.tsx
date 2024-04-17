@@ -1,5 +1,5 @@
+import { contextBuildHelper } from '@custompackages/shared'
 import { Children, cloneElement, HTMLAttributes, MouseEvent, MouseEventHandler, ReactNode, useId } from 'react'
-import { contextBuildHelper } from 'shared'
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {}
 

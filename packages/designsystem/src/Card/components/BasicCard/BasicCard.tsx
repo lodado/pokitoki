@@ -1,5 +1,5 @@
+import { noop } from '@custompackages/design-assets'
 import React from 'react'
-import { noop } from 'shared'
 
 import { BasicCardTemplate } from './Template'
 

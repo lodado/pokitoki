@@ -45,7 +45,7 @@ const nextConfig = {
     hideSourceMaps: true,
     transpileClientSDK: true,
   },
-  transpilePackages: ['shared'],
+  transpilePackages: ['@custompackages/design-assets'],
 }
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry webpack plugin. Keep in mind that

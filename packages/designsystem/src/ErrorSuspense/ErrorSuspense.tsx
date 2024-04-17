@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode, Suspense, SuspenseProps } from 'react'
 
 import { ErrorBoundary, ErrorBoundaryProps } from '../ErrorBoundary'

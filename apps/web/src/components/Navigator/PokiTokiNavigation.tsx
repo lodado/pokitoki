@@ -1,20 +1,7 @@
-import { Navigation } from '@custompackages/designsystem'
-import Link, { LinkProps } from 'next/link'
-import React, { ReactNode } from 'react'
+import { cn, Navigation } from '@custompackages/designsystem'
+import React, { useRef } from 'react'
 
-const NavigationLinkButton = ({
-  children,
-  className,
-  ...rest
-}: { className?: string; children: ReactNode } & Partial<LinkProps>) => {
-  return (
-    <Link href="/" {...rest}>
-      <button type="button" className={`w-[75px] h-12 color-text-01 ${className}`}>
-        {children}
-      </button>
-    </Link>
-  )
-}
+import { NavigationLinkButton } from './NavigationLinkButton'
 
 const PokiTokiNavigation = () => {
   return (
@@ -24,7 +11,7 @@ const PokiTokiNavigation = () => {
           <NavigationLinkButton href="/">포키토키</NavigationLinkButton>
 
           <div className="hidden sm:flex">
-            <NavigationLinkButton className="pt-1 pb-0.5">학습 현황</NavigationLinkButton>
+            <NavigationLinkButton className="pt-1 pb-0 ">학습 현황</NavigationLinkButton>
             <NavigationLinkButton className="pt-1 pb-0.5">선택 학습</NavigationLinkButton>
           </div>
 

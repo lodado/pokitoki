@@ -1,7 +1,7 @@
 'use client'
 
+import { contextBuildHelper, noop } from '@custompackages/shared'
 import React, { Dispatch, FormEvent, ReactComponentElement, ReactElement, ReactNode, useState } from 'react'
-import { contextBuildHelper, noop } from 'shared'
 
 import { Close, Content, Overlay, Portal, Root, Trigger } from './radix'
 
