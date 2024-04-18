@@ -29,7 +29,7 @@ export const TooltipContent = ({
   return (
     <Portal>
       <Content
-        className="flex rounded gap-spacing-3 flex-start pt-spacing-1 pb-spacing-2 pl-spacing-3 pr-spacing-3 detail-02-r w-60 min-w-60 bg-background-default shadow-tooltip fill-background-default"
+        className="flex rounded gap-spacing-3 flex-start pt-spacing-1 pb-spacing-2 pl-spacing-3 pr-spacing-3 detail-02-r bg-background-default shadow-tooltip fill-background-default"
         side="top"
         align={align}
         {...rest}

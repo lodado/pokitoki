@@ -5,7 +5,7 @@ import React, { Dispatch, FormEvent, ReactComponentElement, ReactElement, ReactN
 
 import { Close, Content, Overlay, Portal, Root, Trigger } from './radix'
 
-export const [DialogProvider, useDialogContext] = contextBuildHelper<{
+const [DialogProvider, useDialogContext] = contextBuildHelper<{
   isDialogVisible: boolean
   onChangeVisibleStatus: (newVisibleStatus: boolean) => void
 }>({ id: 'dialog' })
@@ -170,3 +170,5 @@ Dialog.Trigger = DialogTrigger
 Dialog.SubmitForm = SubmitForm
 Dialog.Content = DialogContent
 Dialog.Close = DialogClose
+
+export { DialogProvider, useDialogContext }

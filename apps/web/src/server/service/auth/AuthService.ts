@@ -50,8 +50,10 @@ class AuthService {
     return true
   }
 
+  // unused
   authorized = ({ auth, request: { nextUrl } }: AuthorizedParams): boolean => {
     const isLoggedIn = !!auth?.user
+
     const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
     return isOnDashboard || isLoggedIn
   }
