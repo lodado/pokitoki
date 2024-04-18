@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/nextjs'
+import path from 'path'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -55,7 +56,8 @@ const config: StorybookConfig = {
 
         alias: {
           ...config.resolve?.alias,
-          '@': './src',
+
+          '@': path.resolve(__dirname, '../../web/src'),
           'next/router': require.resolve('./__mocks__/next/router.tsx'),
           'next/link': require.resolve('./__mocks__/next/link.tsx'),
           'next/image': require.resolve('./__mocks__/next/image.tsx'),
