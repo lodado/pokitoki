@@ -12,7 +12,7 @@ const LoginForm = () => {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
 
   return (
-    <div className="flex flex-col items-start gap-[24px] relative self-stretch w-full flex-[0_0_auto]">
+    <div className="flex flex-col items-start gap-[24px] relative self-stretch w-full h-[220px] flex-[0_0_auto]">
       <form action={dispatch} className="flex flex-col w-full gap-2 space-y-3">
         <LoginButton value="kakao">
           <ICON_KAKAO /> 카카오로 회원가입하기

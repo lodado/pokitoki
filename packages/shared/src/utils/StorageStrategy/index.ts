@@ -1,4 +1,4 @@
-import StorageManager from './StorageManager'
+import StorageController from './StorageController'
 
-export { StorageManager }
+export { StorageController }
 export * from './Strategy'

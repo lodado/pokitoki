@@ -1,8 +1,9 @@
 'use client'
 
 import { Button, LogEvent, Tooltip } from '@custompackages/designsystem'
+import { LocalStorageStrategy, StorageController } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
-import React, { FC, ReactNode, useEffect, useState } from 'react'
+import React, { FC, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
 import { LOGIN_METHOD } from '../variable'
 
@@ -25,15 +26,35 @@ const LoginButtonStyles = cva(
   },
 )
 
+const userInfo = new StorageController<LoginButtonProps['value']>(new LocalStorageStrategy('/login/userinfo'))
+
 const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
   const [isClient, setIsClient] = useState(false)
-  const [lastLoginInfo, setLastLoginInfo] = useState<LoginButtonProps['value'] | undefined>(undefined)
+  const [lastLoginInfo, _] = useState(userInfo.read())
 
+  const handleUpdateLoginUserInfo = () => {
+    userInfo.update(value)
+  }
+
+  /** radix tooltip에 해결되지 않는 hydration bug가 있음.. */
   useEffect(() => {
     setIsClient(true)
   }, [])
 
-  if (!isClient) return null
+  if (!isClient)
+    return (
+      <Button
+        type="submit"
+        name={LOGIN_METHOD}
+        variant="custom"
+        size="large"
+        value={value}
+        className={LoginButtonStyles({ value })}
+        onClick={handleUpdateLoginUserInfo}
+      >
+        {children}
+      </Button>
+    )
 
   return (
     <Tooltip defaultOpen={lastLoginInfo === value}>
@@ -43,14 +64,15 @@ const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
           name={LOGIN_METHOD}
           variant="custom"
           size="large"
-          value="kakao"
+          value={value}
           className={LoginButtonStyles({ value })}
+          onClick={handleUpdateLoginUserInfo}
         >
           {children}
         </Button>
       </Tooltip.Trigger>
 
-      <Tooltip.Content side="bottom" align="center" className="text-text-01 detail-02-r">
+      <Tooltip.Content side="bottom" align="center" className="z-100 text-text-01 detail-02-r">
         {lastLoginInfo === value ? '🔑 최근 로그인' : '⚡️ 3초만에 로그인으로 시작하세요'}
       </Tooltip.Content>
     </Tooltip>
