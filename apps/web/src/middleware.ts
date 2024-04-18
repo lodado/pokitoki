@@ -2,29 +2,52 @@ import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
 import { i18nOption } from './lib/i18n'
-import { auth } from './lib/nextAuth'
+import { auth, authConfig, NextAuth } from './lib/nextAuth'
 
 export const runtime = 'nodejs'
 
-export async function middleware(request: NextRequest) {
-  const path = request.nextUrl.pathname
-  const session = await auth()
-
-  if (path.startsWith('/api') && !session) {
-    return NextResponse.json({ message: 'Login required.' }, { status: 401 })
-  }
-
-  // Step 1: Use the incoming request (example)
-  // const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
-
-  // Step 2: Create and call the next-intl middleware (example)
+const i18nMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
   const handleI18nRouting = createIntlMiddleware(i18nOption as any)
   const response = handleI18nRouting(request)
 
-  // Step 3: Alter the response (example)
-  // response.headers.set('x-your-custom-locale', defaultLocale)
+  response.headers.set('x-your-custom-locale', defaultLocale)
 
   return response
+}
+
+const withAuthMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
+  const session = await auth()
+  const response = NextResponse.next()
+
+  // private page
+  if (!session && (path.startsWith('/protected') || path.startsWith('/api/protected'))) {
+    if (!session) return NextResponse.json({ message: 'Login required.' }, { status: 401 })
+  }
+
+  if (path.endsWith('/login')) {
+    // after login
+    if (session) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/protected/dashboard'
+      return NextResponse.redirect(url)
+    }
+
+    // before login
+    return i18nMiddleware(request, path, defaultLocale)
+  }
+
+  return response
+}
+
+export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname
+  const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
+
+  if (path.startsWith('/api') || path.endsWith('/login')) {
+    return withAuthMiddleware(request, path, defaultLocale)
+  }
+
+  return i18nMiddleware(request, path, defaultLocale)
 }
 
 export const config = {

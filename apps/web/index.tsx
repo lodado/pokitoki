@@ -1,3 +1,3 @@
-import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
+import PokiTokiNavigation from './src/components/Navigator/PokiTokiNavigation'
 
 export { PokiTokiNavigation }

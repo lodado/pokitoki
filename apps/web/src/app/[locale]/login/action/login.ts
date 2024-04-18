@@ -4,14 +4,14 @@ import { AuthError } from 'next-auth'
 
 import { signIn } from '@/lib/nextAuth'
 
+import { LOGIN_METHOD } from '../variable'
+
 // eslint-disable-next-line consistent-return
 export async function authenticate(prevState: any, formData: FormData) {
+  const signupMethod = formData.get(LOGIN_METHOD)
+
   try {
-    // await signIn('credentials', formData)
-    // await signIn('github', formData)
-    await signIn('google', formData)
-    // await signIn('naver', formData)
-    // await signIn('kakao', formData)
+    await signIn(signupMethod, formData)
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

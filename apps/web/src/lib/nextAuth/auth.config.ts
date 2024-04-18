@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt'
-import { JwtPayload } from 'jsonwebtoken'
 import { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
@@ -22,21 +21,14 @@ export const authConfig = {
   pages: {
     signIn: '/login',
   },
-  callbacks: { signIn, authorized, jwt, session },
+  callbacks: { signIn, jwt, session },
 
   session: {
     strategy: 'jwt',
     maxAge: 5 * 24 * 60 * 60, // cookie 수명 - 5일
   },
 
-  jwt: {
-    async encode({ token, secret, maxAge }: { token: JWT & JwtPayload; secret: string; maxAge: number }) {
-      return jwtMethods.encode({ token, secret, maxAge })
-    },
-    async decode({ token, secret }: { token: string; secret: string }) {
-      return jwtMethods.decode({ token, secret }) as Promise<string>
-    },
-  },
+  jwt: {},
 
   providers: [
     GithubProvider({
