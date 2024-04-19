@@ -9,7 +9,7 @@ import { cn, cva } from '@/lib/cva'
 const IsCurrentPage = cva('w-[75px] h-12 color-text-01', {
   variants: {
     isCurrentUrl: {
-      true: 'border-b-2 border-red-100',
+      true: '',
       false: '',
     },
   },
@@ -19,27 +19,28 @@ const IsCurrentPage = cva('w-[75px] h-12 color-text-01', {
 })
 
 export interface NavigationLinkButtonProps extends Partial<LinkProps> {
+  href: string
   children: ReactNode
   className?: string
   isCurrentUrl?: string
 }
 
-const NavigationLinkButton = ({ children, className, isCurrentUrl, ...rest }: NavigationLinkButtonProps) => {
+const NavigationLinkButton = ({ children, className, isCurrentUrl, href, ...rest }: NavigationLinkButtonProps) => {
   const { isSameUrl } = useUrl()
 
   return (
-    <Link href="/" {...rest}>
+    <div href={href} {...rest}>
       <button
         type="button"
         className={cn(
           IsCurrentPage({ isCurrentUrl: isSameUrl(isCurrentUrl!) }),
-          `w-[75px] h-12 color-text-01`,
+          `w-[90px] h-12 color-text-01`,
           className,
         )}
       >
         {children}
       </button>
-    </Link>
+    </div>
   )
 }
 

@@ -17,7 +17,7 @@ const i18nMiddleware = async (request: NextRequest, path: string, defaultLocale:
   const handleI18nRouting = createIntlMiddleware(i18nOption as any)
   const response = handleI18nRouting(request)
 
-  response.headers.set('x-your-custom-locale', defaultLocale)
+  // response.headers.set('x-your-custom-locale', defaultLocale)
 
   return response
 }
