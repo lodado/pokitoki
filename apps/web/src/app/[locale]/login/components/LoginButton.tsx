@@ -5,6 +5,8 @@ import { LocalStorageStrategy, StorageController } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
 import React, { FC, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
+import { useI18n } from '@/hooks/i18n'
+
 import { LOGIN_METHOD } from '../variable'
 
 interface LoginButtonProps {
@@ -31,6 +33,7 @@ const userInfo = new StorageController<LoginButtonProps['value']>(new LocalStora
 const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
   const [isClient, setIsClient] = useState(false)
   const [lastLoginInfo, _] = useState(userInfo.read())
+  const t = useI18n('LOGIN')
 
   const handleUpdateLoginUserInfo = () => {
     userInfo.update(value)
@@ -73,7 +76,7 @@ const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
       </Tooltip.Trigger>
 
       <Tooltip.Content side="bottom" align="center" className="z-100 text-text-01 detail-02-r">
-        {lastLoginInfo === value ? '🔑 최근 로그인' : '⚡️ 3초만에 로그인으로 시작하세요'}
+        {lastLoginInfo === value ? t('TOOLTIP-LASTLOGINTEXT') : t('TOOLTIP-TEXT')}
       </Tooltip.Content>
     </Tooltip>
   )

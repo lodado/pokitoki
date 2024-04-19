@@ -1,16 +1,11 @@
 {
   "LOGIN": {
-    "SIGNIN-TITLE": "로그인",
-    "SIGNIN-WITH-GOOGLE-LABEL": "Google로 로그인",
-    "SIGNIN-WITH-APPLE-LABEL": "Apple로 로그인",
-    "SIGNIN-OR-LABEL": "또는",
-    "SIGNIN-EMAIL-LABEL": "이메일",
-    "SIGNIN_WITH_EMAIL_LABEL": "이메일로 로그인",
-    "SIGNIN-WITH-EMAIL-LABEL": "아직 회원이 아니신가요?",
-    "SIGNIN-NOT-MEMBER-DESCRIPTION": "회원가입"
-  },
-  "TEST": {
-    "TITLE": "제목",
-    "DOUBLE-TRIPLE": "하이"
+    "KAKAO": "카카오로 회원가입하기",
+    "GOOGLE": "구글로 회원가입하기",
+    "GITHUB": "깃허브로 회원가입하기",
+    "TOOLTIP-LASTLOGINTEXT": "🔑 최근 로그인",
+    "TOOLTIP-TEXT": "⚡️ 3초만에 로그인으로 시작하세요",
+    "SUBTITLE": "내 손안의 AI 스피킹 튜터",
+    "TITLE": "Pokitoki"
   }
 }

@@ -1,20 +1,28 @@
 import { Navigation } from '@custompackages/designsystem'
 import React, { useRef } from 'react'
 
-import NavigationLinkButton from './NavigationLinkButton'
+import NavigationLinkButton from './components/NavigationLinkButton'
+import NavigationTab from './components/NavigationTab'
 
 const PokiTokiNavigation = () => {
   return (
-    <>
-      <header className="fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] justify-between align-middle top-0 shadow-profile bg-surface-up h-12 px-spacing-4 border border-solid border-border-01">
+    <header className="fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] justify-between align-middle top-0 shadow-profile bg-surface-up h-12 px-spacing-4 border border-solid border-border-01">
+      <nav className="flex justify-between w-full h-full align-middle">
+        <div className="hidden sm:flex">
+          <NavigationTab />
+        </div>
+      </nav>
+    </header>
+  )
+}
+
+/**
+ *       <header className="fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] justify-between align-middle top-0 shadow-profile bg-surface-up h-12 px-spacing-4 border border-solid border-border-01">
         <nav className="flex justify-between w-full h-full align-middle">
           <NavigationLinkButton href="/">포키토키</NavigationLinkButton>
 
           <div className="hidden sm:flex">
-            <NavigationLinkButton className="pt-1 pb-0 " isCurrentUrl="./protected/dashboard">
-              학습 현황
-            </NavigationLinkButton>
-            <NavigationLinkButton className="pt-1 pb-0.5">선택 학습</NavigationLinkButton>
+            <NavigationTab />
           </div>
 
           <div>
@@ -28,8 +36,6 @@ const PokiTokiNavigation = () => {
 
         <NavigationLinkButton className="pt-1 pb-0.5">선택 학습</NavigationLinkButton>
       </Navigation>
-    </>
-  )
-}
-
+ * 
+ */
 export default PokiTokiNavigation

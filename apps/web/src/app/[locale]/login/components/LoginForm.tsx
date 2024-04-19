@@ -4,26 +4,28 @@ import { ICON_GITHUB, ICON_GOOGLE, ICON_KAKAO } from '@custompackages/design-ass
 import React from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
-import { authenticate } from '@/app/[locale]/login/action/login'
+import { useI18n } from '@/hooks/i18n'
 
+import { authenticate } from '../action/login'
 import LoginButton from './LoginButton'
 
 const LoginForm = () => {
+  const t = useI18n('LOGIN')
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
 
   return (
     <div className="flex flex-col items-start gap-[24px] relative self-stretch w-full h-[220px] flex-[0_0_auto]">
       <form action={dispatch} className="flex flex-col w-full gap-2 space-y-3">
         <LoginButton value="kakao">
-          <ICON_KAKAO /> 카카오로 회원가입하기
+          <ICON_KAKAO /> {t('KAKAO')}
         </LoginButton>
 
         <LoginButton value="google">
-          <ICON_GOOGLE /> 구글로 회원가입하기
+          <ICON_GOOGLE /> {t('GOOGLE')}
         </LoginButton>
 
         <LoginButton value="github">
-          <ICON_GITHUB /> 깃허브로 회원가입하기
+          <ICON_GITHUB /> {t('GITHUB')}
         </LoginButton>
       </form>
     </div>

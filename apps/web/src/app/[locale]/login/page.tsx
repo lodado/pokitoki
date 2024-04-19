@@ -1,8 +1,12 @@
 import { LogScreen, ResponsiveLayout } from '@custompackages/designsystem'
 
+import { getI18n } from '@/lib/i18n'
+
 import LoginForm from './components/LoginForm'
 
-const Page = () => {
+const Page = async () => {
+  const t = await getI18n('LOGIN')
+
   return (
     <LogScreen>
       <ResponsiveLayout className="flex bg-[url('https://c.animaapp.com/jDt1VAaj/img/union.png')] bg-repeat bg-auto bg-center flex-col justify-center items-center h-screen relative">
@@ -12,7 +16,7 @@ const Page = () => {
               style={{ fontSize: '54px' }}
               className="heading-09 w-full h-[5rem] flex justify-center items-center ml-[4rem]"
             >
-              포키토키
+              {t('TITLE')}
               <img
                 className="w-[54px] h-[18px] ml-2 mb-[1.2rem]"
                 alt="pokitokiimage"
@@ -20,7 +24,7 @@ const Page = () => {
               />
             </span>
 
-            <p className="body-01-r text-gray-12">내 손안의 AI 스피킹 튜터</p>
+            <p className="body-01-r text-gray-12">{t('SUBTITLE')}</p>
           </header>
 
           <LoginForm />

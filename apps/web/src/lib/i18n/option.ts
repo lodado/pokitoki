@@ -1,5 +1,5 @@
 const i18nOption = {
-  locales: ['en', 'ko'],
+  locales: ['en', 'ko', 'jp', 'cn'],
   defaultLocale: 'en',
   localePrefix: 'always',
 }
