@@ -1,16 +1,11 @@
 {
   "LOGIN": {
-    "SIGNIN-TITLE": "Sign in",
-    "SIGNIN-WITH-GOOGLE-LABEL": "Sign in with Google",
-    "SIGNIN-WITH-APPLE-LABEL": "Sign in with Apple",
-    "SIGNIN-OR-LABEL": "Or",
-    "SIGNIN-EMAIL-LABEL": "Email",
-    "SIGNIN_WITH_EMAIL_LABEL": "Sign in with Email",
-    "SIGNIN-WITH-EMAIL-LABEL": "Not a member?",
-    "SIGNIN-NOT-MEMBER-DESCRIPTION": "Sign up"
-  },
-  "TEST": {
-    "TITLE": "title",
-    "DOUBLE-TRIPLE": "hi"
+    "KAKAO": "Sign in with Kakao",
+    "GOOGLE": "Sign in with Google",
+    "GITHUB": "Sign in with GitHub",
+    "TOOLTIP-LASTLOGINTEXT": "🔑 Last login",
+    "TOOLTIP-TEXT": "⚡️ Start signing in 3 seconds",
+    "SUBTITLE": "Your AI Speaking Tutor in Hand",
+    "TITLE": "Pokitoki"
   }
 }

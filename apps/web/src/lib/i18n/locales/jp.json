@@ -1,0 +1,11 @@
+{
+  "LOGIN": {
+    "KAKAO": "Kakaoでサインイン",
+    "GOOGLE": "Googleでサインイン",
+    "GITHUB": "GitHubでサインイン",
+    "TOOLTIP-LASTLOGINTEXT": "🔑 最後のログイン",
+    "TOOLTIP-TEXT": "⚡️ 3秒でログインを開始",
+    "SUBTITLE": "手の中のAIスピーキングチューター",
+    "TITLE": "Pokitoki"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "LOGIN": {
+    "KAKAO": "通过Kakao登录",
+    "GOOGLE": "通过Google登录",
+    "GITHUB": "通过GitHub登录",
+    "TOOLTIP-LASTLOGINTEXT": "🔑 最近登录",
+    "TOOLTIP-TEXT": "⚡️ 3秒内开始登录",
+    "SUBTITLE": "手中的AI口语教练",
+    "TITLE": "Pokitoki"
+  }
+}
