@@ -1,2 +1,10 @@
 @import url('//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css');
 .spoka * { font-family: 'Spoqa Han Sans', 'Spoqa Han Sans JP', 'Sans-serif'; }
+
+@font-face {
+  font-family: 'Binggrae-Two';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Binggrae-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  display: swap;
+}

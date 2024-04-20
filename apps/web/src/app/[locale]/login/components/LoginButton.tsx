@@ -15,7 +15,7 @@ interface LoginButtonProps {
 }
 
 const LoginButtonStyles = cva(
-  'flex gap-2 body-03-m justify-center align-middle mx-spacing-6 p-spacing-4 h-14 rounded-md',
+  'shadow-card-02 flex gap-2 body-03-m justify-center align-middle mx-spacing-6 p-spacing-4 h-14 rounded-md',
   {
     variants: {
       value: {
