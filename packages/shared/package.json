@@ -40,9 +40,7 @@
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
-    "design-token": "node ./src/designTokens/generator.mjs",
-    "icon": "node ./src/icons/generator.mjs",
-    "convert": "node ./src/icons/profiles/generator.mjs"
+    "design-token": "node ./src/designTokens/generator.mjs"
   },
   "devDependencies": {
     "@svgr/plugin-jsx": "^8.0.1",

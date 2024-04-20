@@ -9,13 +9,10 @@ const Page = async () => {
 
   return (
     <LogScreen>
-      <ResponsiveLayout className="flex bg-[url('https://c.animaapp.com/jDt1VAaj/img/union.png')] bg-repeat bg-auto bg-center flex-col justify-center items-center h-screen relative">
+      <ResponsiveLayout className="flex bg-[length:150px_150px] bg-[url('https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/login_bg.png')] bg-repeat-round bg-center flex-col justify-center items-center h-screen relative">
         <div className="flex flex-col items-center justify-center w-full h-3/5">
           <header className="flex flex-col items-center justify-center w-full h-[40rem] mt-[-3.5rem]">
-            <span
-              style={{ fontSize: '54px' }}
-              className="heading-09 w-full h-[5rem] flex justify-center items-center ml-[4rem]"
-            >
+            <span style={{ fontSize: '54px' }} className="heading-09 w-full h-[5rem] flex justify-center items-center ">
               {t('TITLE')}
               <img
                 className="w-[54px] h-[18px] ml-2 mb-[1.2rem]"
