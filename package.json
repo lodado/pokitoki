@@ -7,7 +7,7 @@
     "dev": "dotenv -- turbo run gen:dev dev --concurrency 15 --filter !^docs",
     "storybook": "dotenv -- turbo run gen:dev storybook --concurrency 15",
     "build-storybook": "dotenv -- turbo run gen:build build-storybook",
-    "start": "turbo run start",
+    "start": "dotenv -- turbo run start",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "test": "turbo run test",
