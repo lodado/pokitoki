@@ -45,16 +45,16 @@
     "convert": "node ./src/icons/profiles/generator.mjs"
   },
   "devDependencies": {
-    "@svgr/plugin-jsx": "^8.0.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.3.1",
     "@types/babel__plugin-transform-runtime": "^7.9.5",
     "@types/node": "^20.12.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.6",
-    "@types/testing-library__jest-dom": "^5.14.8",
-    "dotenv": "^16.3.1",
-    "esbuild-plugin-svgr": "^2.0.0",
+    "@types/testing-library__jest-dom": "^5.14.9",
+    "dotenv": "^16.4.5",
+    "esbuild-plugin-svgr": "^2.1.0",
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "jest-config": "workspace:*",
@@ -62,16 +62,16 @@
     "postcss-import": "^16.1.0",
     "rollup-config": "workspace:*",
     "tsconfig": "workspace:*",
-    "tsup": "^5.10.1",
+    "tsup": "^5.12.9",
     "typescript": "^4.9.5"
   },
   "peerDependencies": {
-    "react": "^18.0.2",
     "@babel/plugin-transform-runtime": "^7.24.3",
-    "@babel/runtime": "^7.24.4"
+    "@babel/runtime": "^7.24.4",
+    "react": "^18.0.2"
   },
   "dependencies": {
-    "crypto": "^1.0.1",
-    "@custompackages/shared": "workspace:*"
+    "@custompackages/shared": "workspace:*",
+    "crypto": "^1.0.1"
   }
 }
