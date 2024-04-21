@@ -1,7 +1,7 @@
 'use client'
 
 import { Button, LogEvent, Tooltip } from '@custompackages/designsystem'
-import { LocalStorageStrategy, StorageController } from '@custompackages/shared'
+import { LocalStorageStrategy, StorageController, useIsClient } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
 import React, { FC, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
@@ -31,7 +31,7 @@ const LoginButtonStyles = cva(
 const userInfo = new StorageController<LoginButtonProps['value']>(new LocalStorageStrategy('/login/userinfo'))
 
 const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
-  const [isClient, setIsClient] = useState(false)
+  const isClient = useIsClient()
   const [lastLoginInfo, _] = useState(userInfo.read())
   const t = useI18n('LOGIN')
 
@@ -39,11 +39,7 @@ const LoginButton: FC<LoginButtonProps> = ({ value, children }) => {
     userInfo.update(value)
   }
 
-  /** radix tooltip에 해결되지 않는 hydration bug가 있음.. */
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
-
+  /** radix ToolTip에 hydration bug가 있음 */
   if (!isClient)
     return (
       <Button
