@@ -20,6 +20,10 @@ const StyledTitle = ({ title }: { title?: string }) => {
   )
 }
 
+/**
+ * next-intl 버그로 인해 ssg로 제공해야하지만 일시적으로 ssr로 제공함
+ * https://github.com/amannn/next-intl/discussions/819
+ */
 const Page = async () => {
   const t = await getI18n('LOGIN')
 
