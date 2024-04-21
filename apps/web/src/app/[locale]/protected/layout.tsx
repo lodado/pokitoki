@@ -12,9 +12,7 @@ const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: 
   return (
     <LibraryClientProvider session={session}>
       <ResponsiveLayout className="min-h-screen">
-        {children}
-
-        <PokiTokiNavigation />
+        <PokiTokiNavigation>{children}</PokiTokiNavigation>
       </ResponsiveLayout>
     </LibraryClientProvider>
   )

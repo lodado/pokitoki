@@ -62,6 +62,7 @@ export default {
         toast: '700',
         dropdown: '500',
         dialog: '100',
+        portal: '50',
       },
     },
   },

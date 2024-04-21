@@ -35,7 +35,7 @@
     "eslint-plugin-storybook": "^0.6.15",
     "jest-config": "workspace:*",
     "sass": "^1.75.0",
-    "storybook": "7.0.27",
+    "storybook": "^7.6.17",
     "tailwind-config": "workspace:*",
     "tsconfig": "workspace:*",
     "typescript": "^4.9.5"
