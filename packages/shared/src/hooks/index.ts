@@ -1,1 +1,1 @@
-export * from './isClient'
+export * from './useIsClient'

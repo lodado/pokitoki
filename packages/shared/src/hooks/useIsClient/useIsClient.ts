@@ -1,15 +1,17 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 
-export interface useIsClientParams {
-  callback?: Function
-}
+import { noop } from '@/utils'
 
-const useIsClient = ({ callback }: useIsClientParams) => {
+export type useIsClientParams = Function
+
+const useIsClient = (callback: Function = noop) => {
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
-    callback?.()
+    callback()
   }, [])
 
   return isClient
