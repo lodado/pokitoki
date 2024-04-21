@@ -29,7 +29,8 @@ const NavigationLinkButton = ({ children, className, isCurrentUrl, href, ...rest
   const { isSameUrl } = useUrl()
 
   return (
-    <div href={href} {...rest}>
+    // @ts-ignore
+    <div {...rest}>
       <button
         type="button"
         className={cn(

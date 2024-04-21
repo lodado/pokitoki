@@ -53,7 +53,7 @@ const NavigationTab = () => {
             {tab.toUpperCase()}
           </NavigationLinkButton>
         ))}
-        <span className={indicatorStyles({ position: activeTab })} />
+        <span className={indicatorStyles({ position: activeTab! as any })} />
       </div>
     </div>
   )

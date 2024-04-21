@@ -13,22 +13,22 @@ const Chatting = () => {
   const messageRef = useRef<HTMLInputElement>(null)
 
   const handleGetChat = async () => {
-    const { success, data } = await request<string[]>({ url: `/api/chatgpt/message?threadId=${threadId}` })
+    const data = await request<string[]>({ url: `/api/chatgpt/message?threadId=${threadId}` })
 
-    if (!success || !data) return
+    if (!data) return
     setMessages(data)
   }
 
   const handleSendChat = async () => {
     if (!messageRef.current) return
 
-    const { success, data } = await request({
+    const data = await request({
       url: '/api/chatgpt/message',
       method: 'POST',
       data: { threadId, message: messageRef.current?.value || '' },
     })
 
-    if (!success || !data) {
+    if (!data) {
       alert('에러가 발생했습니다.')
       return
     }

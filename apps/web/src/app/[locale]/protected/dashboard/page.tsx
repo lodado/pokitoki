@@ -5,7 +5,6 @@ import { Metadata } from 'next'
 
 import { getLoginSession } from '@/hooks/login'
 import { getI18n } from '@/lib/i18n'
-import { signOut } from '@/lib/nextAuth'
 import { getMetadata } from '@/utils'
 
 export async function generateMetadata(): Promise<Metadata> {

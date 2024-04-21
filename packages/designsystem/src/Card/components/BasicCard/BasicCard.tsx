@@ -1,4 +1,3 @@
-import { noop } from '@custompackages/design-assets'
 import React from 'react'
 
 import { BasicCardTemplate } from './Template'

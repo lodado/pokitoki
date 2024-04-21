@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { ImageProps } from '@/Image'
+import { ImageProps } from '../Image'
 
 export interface BasicCardProps {
   children: ReactNode

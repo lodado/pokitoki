@@ -2,7 +2,7 @@ import { OpenAI } from 'openai'
 
 import { supabaseInstance } from '@/lib/supabase'
 
-type MessageContentText = OpenAI.Beta.Threads.MessageContentText
+type MessageContentText = OpenAI.Beta.Threads.TextContentBlock
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

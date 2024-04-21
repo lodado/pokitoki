@@ -18,13 +18,13 @@ const ChatGpt = () => {
   const chatTitleRef = useRef<HTMLInputElement>(null)
 
   const handleGetAssistants = async () => {
-    const { success, data } = await request<Assistant[]>({ url: '/api/chatgpt/assistant' })
-    if (!success || !data) return
+    const data = await request<Assistant[]>({ url: '/api/chatgpt/assistant' })
+    if (!data) return
     setAssistants(data)
   }
 
   const handleInsertAssistant = async () => {
-    const { success, data } = await request({
+    const data = await request({
       method: 'POST',
       url: '/api/chatgpt/assistant',
       data: {
@@ -33,7 +33,7 @@ const ChatGpt = () => {
       },
     })
 
-    if (!success || !data) {
+    if (!data) {
       alert('에러가 발생했습니다.')
       return
     }
@@ -46,9 +46,9 @@ const ChatGpt = () => {
   }
 
   const handleGetThreads = async ({ id, name }: { id: string; name: string }) => {
-    const { success, data } = await request<Thread[]>({ url: `/api/chatgpt/thread?assistantId=${id}` })
+    const data = await request<Thread[]>({ url: `/api/chatgpt/thread?assistantId=${id}` })
 
-    if (!success || !data) return
+    if (!data) return
     setThreads(data)
     setSelectedAssistant({ id, name })
   }
@@ -56,20 +56,20 @@ const ChatGpt = () => {
   const handleInsertThread = async () => {
     if (!selectedAssistant) return
 
-    const { success, data } = await request<Thread>({
+    const data = await request<Thread>({
       method: 'POST',
       url: '/api/chatgpt/thread',
       data: { assistantId: selectedAssistant.id, threadName: chatTitleRef.current?.value || '' },
     })
 
-    if (!success || !data || !chatTitleRef.current) return
+    if (!data || !chatTitleRef.current) return
     chatTitleRef.current.value = ''
     alert(`채팅방이 생성되었습니다.`)
     handleGetThreads(selectedAssistant)
   }
 
   const handleDeleteThread = async (id: string) => {
-    const { success } = await request({ url: `/api/chatgpt/thread?threadId=${id}`, method: 'DELETE' })
+    const success = await request({ url: `/api/chatgpt/thread?threadId=${id}`, method: 'DELETE' })
 
     if (!success || !selectedAssistant) {
       alert('삭제에 실패했습니다. 다시 시도해 주세요.')
