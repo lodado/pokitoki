@@ -1,6 +1,5 @@
 'use client'
 
-import { ICON_GNB_1, ICON_GNB_2 } from '@custompackages/design-assets'
 import React, { cloneElement, ReactElement, useMemo, useState } from 'react'
 
 import { cva } from '@/lib/cva'
