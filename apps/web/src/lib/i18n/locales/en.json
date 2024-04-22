@@ -7,5 +7,12 @@
     "TOOLTIP-TEXT": "⚡️ Start signing in 3 seconds",
     "SUBTITLE": "Your AI Speaking Tutor in Hand",
     "TITLE": "Pokitoki"
+  },
+  "DASHBOARD": {
+    "LEARNING-STATUS": "Learning Status",
+    "SELECTIVE-LEARNING": "Selective Learning"
+  },
+  "COMMON": {
+    "LOGO": "Pokitoki"
   }
 }

@@ -2,18 +2,10 @@ import { ResponsiveLayout } from '@custompackages/designsystem'
 import React from 'react'
 
 import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
-import { getLoginSession } from '@/hooks/login'
 import { LayoutProps } from '@/interface/type'
-import LibraryClientProvider from '@/lib/LibraryClientProvider'
 
 const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: { locale } }) => {
-  const session = await getLoginSession()
-
-  return (
-    <LibraryClientProvider session={session}>
-      <ResponsiveLayout className="min-h-screen">{children}</ResponsiveLayout>
-    </LibraryClientProvider>
-  )
+  return <PokiTokiNavigation>{children}</PokiTokiNavigation>
 }
 
 export default Layout

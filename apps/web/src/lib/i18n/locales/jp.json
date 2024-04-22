@@ -7,5 +7,12 @@
     "TOOLTIP-TEXT": "⚡️ 3秒でログインを開始",
     "SUBTITLE": "手の中のAIスピーキングチューター",
     "TITLE": "Pokitoki"
+  },
+  "DASHBOARD": {
+    "LEARNING-STATUS": "学習状況",
+    "SELECTIVE-LEARNING": "選択学習"
+  },
+  "COMMON": {
+    "LOGO": "Pokitoki"
   }
 }

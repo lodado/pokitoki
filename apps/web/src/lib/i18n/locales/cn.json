@@ -7,5 +7,12 @@
     "TOOLTIP-TEXT": "⚡️ 3秒内开始登录",
     "SUBTITLE": "手中的AI口语教练",
     "TITLE": "Pokitoki"
+  },
+  "DASHBOARD": {
+    "LEARNING-STATUS": "学习现状",
+    "SELECTIVE-LEARNING": "选择性学习"
+  },
+  "COMMON": {
+    "LOGO": "Pokitoki"
   }
 }

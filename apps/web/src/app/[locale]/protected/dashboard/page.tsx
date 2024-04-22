@@ -19,15 +19,15 @@ const List = () => {
   const ls = [1, 2, 3, 4, 5]
 
   return (
-    <ul className="flex flex-col bg-white-white gap-[20px]">
+    <div className="flex flex-col bg-white-white gap-[20px]">
       {ls.map((ele) => {
         return (
-          <li key={ele} className={`Step${ele} justify-center align-middle flex w-[200px] h-[200px]`}>
+          <div key={ele} className={`Step${ele} justify-center align-middle flex h-[30vh]`}>
             {ele}
-          </li>
+          </div>
         )
       })}
-    </ul>
+    </div>
   )
 }
 

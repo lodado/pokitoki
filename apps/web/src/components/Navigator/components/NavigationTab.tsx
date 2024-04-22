@@ -1,8 +1,10 @@
 'use client'
 
+import { ICON_GNB_1, ICON_GNB_2 } from '@custompackages/design-assets'
 import React, { useState } from 'react'
 
 import { cva } from '@/lib/cva'
+import { useI18n } from '@/lib/i18n'
 
 import NavigationLinkButton from './NavigationLinkButton'
 
@@ -10,12 +12,13 @@ type TabTypes = string
 
 const indicatorStyles = cva(
   [
-    'w-[90px]',
+    'w-[115px]',
     'absolute',
     'bottom-0',
-    'border-0',
-    'h-0.5',
-    'bg-blue-500',
+    'mb-[0.15rem]',
+    'rounded-lg',
+    'h-[0.2rem]',
+    'bg-primary-01-default',
     'transition-all',
     'duration-300',
     'ease-in-out',
@@ -23,38 +26,44 @@ const indicatorStyles = cva(
   {
     variants: {
       position: {
-        학습현황: 'translate-x-0',
-        선택학습: 'translate-x-[90px]',
+        'LEARNING-STATUS': 'translate-x-[-5px]',
+        'SELECTIVE-LEARNING': 'translate-x-[115px]',
       },
     },
     defaultVariants: {
-      position: '학습현황',
+      position: 'LEARNING-STATUS',
     },
   },
 )
 
+const NavigationTabList = (t: any) => [
+  { key: 'LEARNING-STATUS', value: t('LEARNING-STATUS'), Icon: <ICON_GNB_1 /> },
+  { key: 'SELECTIVE-LEARNING', value: t('SELECTIVE-LEARNING'), Icon: <ICON_GNB_2 /> },
+]
+
 const NavigationTab = () => {
-  const [activeTab, setActiveTab] = useState<TabTypes>('tab1')
+  const t = useI18n('DASHBOARD')
+  const [activeTab, setActiveTab] = useState<TabTypes>(t('LEARNING-STATUS'))
 
   const handleTabClick = (tab: TabTypes) => {
     setActiveTab(tab)
   }
 
   return (
-    <div>
-      <div className="relative flex ">
-        {['학습 현황', '선택학습'].map((tab: string) => (
-          <NavigationLinkButton
-            key={tab}
-            className={`p-2 cursor-pointer ${activeTab === tab ? 'text-blue-500 font-bold' : 'text-gray-500'}`}
-            onClick={() => handleTabClick(tab as TabTypes)}
-            href={`/${tab}`}
-          >
-            {tab.toUpperCase()}
-          </NavigationLinkButton>
-        ))}
-        <span className={indicatorStyles({ position: activeTab! as any })} />
-      </div>
+    <div className="relative flex">
+      {NavigationTabList(t).map(({ key, value, Icon }) => (
+        <NavigationLinkButton
+          key={key}
+          className={`flex gap-1 items-center flex-row p-2 cursor-pointer w-[120px] text-secondary-default ${
+            activeTab === value ? '' : ''
+          }`}
+          onClick={() => handleTabClick(key as TabTypes)}
+        >
+          {Icon}
+          {value.toUpperCase()}
+        </NavigationLinkButton>
+      ))}
+      <span className={indicatorStyles({ position: activeTab! as any })} />
     </div>
   )
 }
