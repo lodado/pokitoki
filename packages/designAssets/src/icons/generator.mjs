@@ -44,26 +44,48 @@ const hash = (path) => path.replace(/^.*\/img\//g, '').replace(/\//g, '_')
 
 let fileIndex = 0
 
+const camelCaseSVGAttributes = (svgString) => {
+  // 모든 태그의 속성을 카멜 케이스로 변환
+  return svgString.replace(/<(\w+)([^>]+)>/g, function (match, tagName, attributes) {
+    const camelCasedAttributes = attributes.replace(/([-][a-z])/gi, function ($1) {
+      return $1.toUpperCase().replace('-', '')
+    })
+    return `<${tagName}${camelCasedAttributes}>`
+  })
+}
+
 const generateFiles = (ele) => {
   if (!ele) return ''
   const { name, fileName, svg } = ele
 
   fileIndex += 1
 
-  const component = `
-  import * as React from "react";
+  const camelCasedSVG = camelCaseSVGAttributes(svg)
 
-  const ${name} = (props: React.SVGProps<SVGSVGElement>) => {
-    return (${svg
-      .replace(/<svg([^>]+)>/, '<svg$1 {...props}>')
-      .replace(/url\(#pattern(\d+)\)/g, function (match, p1) {
-        return `url(#pattern${fileIndex})`
-      })
-      .replace(/pattern id="pattern\d+"/g, function (match, p1) {
-        return `pattern id="pattern${fileIndex}"`
-      })}
-      )
-}; 
+  const component = `
+  import react, { Children, cloneElement, isValidElement, memo, ReactNode, SVGProps } from 'react'
+
+  import processNode from './processNode'
+
+  interface SVGPropsExtended extends SVGProps<SVGSVGElement> {
+    fillOverwrite?: string;
+  }
+
+  const ${name} = memo((props: SVGPropsExtended) => {
+    const { fillOverwrite, ...rest } = props
+
+    return <>
+      {Children.map(${camelCasedSVG
+        .replace(/<svg([^>]+)>/, '<svg$1 {...rest}>')
+
+        .replace(/url\(#pattern(\d+)\)/g, function (match, p1) {
+          return `url(#pattern${fileIndex})`
+        })
+        .replace(/pattern id="pattern\d+"/g, function (match, p1) {
+          return `pattern id="pattern${fileIndex}"`
+        })}, child => processNode(child, fillOverwrite))}
+    </>
+}); 
 
 
   export default ${name};

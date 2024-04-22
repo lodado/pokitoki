@@ -37,7 +37,7 @@ const indicatorStyles = cva(
 )
 
 const NavigationTabList = (t: any) => [
-  { key: 'LEARNING-STATUS', value: t('LEARNING-STATUS'), Icon: <ICON_GNB_1 /> },
+  { key: 'LEARNING-STATUS', value: t('LEARNING-STATUS'), Icon: <ICON_GNB_1 fillOverwrite="red" /> },
   { key: 'SELECTIVE-LEARNING', value: t('SELECTIVE-LEARNING'), Icon: <ICON_GNB_2 /> },
 ]
 
