@@ -30,13 +30,7 @@ const getComponentsFromNode = (node) => {
   return []
 }
 
-const formatIconsSVG = (svg) =>
-  svg
-    .replace('fill-rule', 'fillRule')
-    .replace('clip-rule', 'clipRule')
-    .replace('clip-path', 'clipPath')
-    .replace(/xlink:href/g, 'xlinkHref')
-    .replace(/xmlns:xlink/g, 'xmlnsXlink')
+const formatIconsSVG = (svg) => svg.replace(/xlink:href/g, 'xlinkHref').replace(/xmlns:xlink/g, 'xmlnsXlink')
 
 const formatName = (name) => name?.toUpperCase().replace(/-/g, '_').replace(/ /g, '_') // replaces '/' by '_'
 
@@ -62,7 +56,8 @@ const generateFiles = (ele) => {
 
   const camelCasedSVG = camelCaseSVGAttributes(svg)
 
-  const component = `
+  const component = `'use client'
+  
   import react, { Children, cloneElement, isValidElement, memo, ReactNode, SVGProps } from 'react'
 
   import processNode from './processNode'

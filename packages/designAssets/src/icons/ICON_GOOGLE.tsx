@@ -1,3 +1,5 @@
+'use client'
+
 import react, { Children, cloneElement, isValidElement, memo, ReactNode, SVGProps } from 'react'
 
 import processNode from './processNode'

@@ -1,18 +1,28 @@
 'use client'
 
 import { ICON_GNB_1, ICON_GNB_2 } from '@custompackages/design-assets'
-import React, { cloneElement, useMemo, useState } from 'react'
+import React, { cloneElement, ReactElement, useMemo, useState } from 'react'
 
 import { cva } from '@/lib/cva'
 import { useI18n } from '@/lib/i18n'
 
 import NavigationLinkButton from './NavigationLinkButton'
 
-type TabTypes = string
+export interface TabItem {
+  key: string
+  value: string
+  Icon: ReactElement
+}
+
+// NavigationTab 컴포넌트의 props 타입을 정의
+export interface NavigationTabProps {
+  tabList: TabItem[] // 외부에서 주입받는 탭 리스트
+}
+
+export type TabTypes = string
 
 const indicatorStyles = cva(
   [
-    'w-[90px]',
     'absolute',
     'bottom-0',
     'mb-[0.15rem]',
@@ -26,8 +36,8 @@ const indicatorStyles = cva(
   {
     variants: {
       position: {
-        'LEARNING-STATUS': 'translate-x-[0px]',
-        'SELECTIVE-LEARNING': 'translate-x-[90px]',
+        'LEARNING-STATUS': 'translate-x-0',
+        'SELECTIVE-LEARNING': 'translate-x-full',
       },
     },
     defaultVariants: {
@@ -36,41 +46,32 @@ const indicatorStyles = cva(
   },
 )
 
-const NavigationTab = () => {
-  const t = useI18n('DASHBOARD')
-  const [activeTab, setActiveTab] = useState<TabTypes>('LEARNING-STATUS')
-
-  const NavigationTabList = useMemo(
-    () => [
-      {
-        key: 'LEARNING-STATUS',
-        value: t('LEARNING-STATUS'),
-        Icon: <ICON_GNB_1 fillOverwrite="inherit" />,
-      },
-      { key: 'SELECTIVE-LEARNING', value: t('SELECTIVE-LEARNING'), Icon: <ICON_GNB_2 fillOverwrite="inherit" /> },
-    ],
-    [activeTab],
-  )
+const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
+  const [activeTab, setActiveTab] = useState<TabTypes>(tabList[0].key)
+  const tabWidth = 100 / tabList.length
 
   const handleTabClick = (tab: TabTypes) => {
     setActiveTab(tab)
   }
 
   return (
-    <div className="relative flex">
-      {NavigationTabList.map(({ key, value, Icon }) => (
+    <div className="relative body-01-r flex w-full max-w-[50vw]">
+      {tabList.map(({ key, value, Icon }) => (
         <NavigationLinkButton
           key={key}
-          className={`flex gap-1 items-center flex-row p-2 cursor-pointer w-[90px] body-01-r text-secondary-default ${
-            activeTab === key ? '' : ''
+          style={{ width: `${tabWidth}%` }}
+          className={`w-full flex justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
+            activeTab === key ? 'font-bold' : ''
           }`}
           onClick={() => handleTabClick(key as TabTypes)}
         >
-          {cloneElement(Icon, { className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default' })}
-          <span className="min-w-[40px] text-center ">{value.toUpperCase()}</span>
+          {cloneElement(Icon, {
+            className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default',
+          })}
+          <span className="w-full text-center">{value.toUpperCase()}</span>
         </NavigationLinkButton>
       ))}
-      <span className={indicatorStyles({ position: activeTab! as any })} />
+      <span className={indicatorStyles({ position: activeTab! as any })} style={{ width: `${tabWidth}%` }} />
     </div>
   )
 }
