@@ -13,9 +13,9 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <header className="fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] justify-between align-middle top-0 shadow-profile bg-surface-up h-12 px-spacing-4 border border-solid border-border-01">
+      <header className="fixed left-1/2 -translate-x-1/2 w-screen md:w-[768px] justify-between align-middle top-0 bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01">
         <nav className="flex justify-between w-full h-full align-middle">
-          <NavigationLinkButton className="flex flex-row items-center w-max">
+          <NavigationLinkButton className=" flex flex-row items-center w-max">
             <Logo title={t('LOGO')} />
             <ICON_LOGO width="30px" height="30px" className="mb-2" />
           </NavigationLinkButton>

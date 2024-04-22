@@ -11,6 +11,11 @@ const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: 
 
   return (
     <LibraryClientProvider session={session}>
+      <div
+        className="absolute border-b h-12 w-full border-b-1 border-solid border-border-01"
+        role="presentation none"
+      />
+
       <ResponsiveLayout className="min-h-screen">{children}</ResponsiveLayout>
     </LibraryClientProvider>
   )

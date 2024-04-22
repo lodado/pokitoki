@@ -1,7 +1,7 @@
 'use client'
 
 import { ICON_GNB_1, ICON_GNB_2 } from '@custompackages/design-assets'
-import React, { useState } from 'react'
+import React, { cloneElement, useMemo, useState } from 'react'
 
 import { cva } from '@/lib/cva'
 import { useI18n } from '@/lib/i18n'
@@ -12,7 +12,7 @@ type TabTypes = string
 
 const indicatorStyles = cva(
   [
-    'w-[115px]',
+    'w-[90px]',
     'absolute',
     'bottom-0',
     'mb-[0.15rem]',
@@ -26,8 +26,8 @@ const indicatorStyles = cva(
   {
     variants: {
       position: {
-        'LEARNING-STATUS': 'translate-x-[-5px]',
-        'SELECTIVE-LEARNING': 'translate-x-[115px]',
+        'LEARNING-STATUS': 'translate-x-[0px]',
+        'SELECTIVE-LEARNING': 'translate-x-[90px]',
       },
     },
     defaultVariants: {
@@ -36,14 +36,21 @@ const indicatorStyles = cva(
   },
 )
 
-const NavigationTabList = (t: any) => [
-  { key: 'LEARNING-STATUS', value: t('LEARNING-STATUS'), Icon: <ICON_GNB_1 fillOverwrite="red" /> },
-  { key: 'SELECTIVE-LEARNING', value: t('SELECTIVE-LEARNING'), Icon: <ICON_GNB_2 /> },
-]
-
 const NavigationTab = () => {
   const t = useI18n('DASHBOARD')
-  const [activeTab, setActiveTab] = useState<TabTypes>(t('LEARNING-STATUS'))
+  const [activeTab, setActiveTab] = useState<TabTypes>('LEARNING-STATUS')
+
+  const NavigationTabList = useMemo(
+    () => [
+      {
+        key: 'LEARNING-STATUS',
+        value: t('LEARNING-STATUS'),
+        Icon: <ICON_GNB_1 fillOverwrite="inherit" />,
+      },
+      { key: 'SELECTIVE-LEARNING', value: t('SELECTIVE-LEARNING'), Icon: <ICON_GNB_2 fillOverwrite="inherit" /> },
+    ],
+    [activeTab],
+  )
 
   const handleTabClick = (tab: TabTypes) => {
     setActiveTab(tab)
@@ -51,16 +58,16 @@ const NavigationTab = () => {
 
   return (
     <div className="relative flex">
-      {NavigationTabList(t).map(({ key, value, Icon }) => (
+      {NavigationTabList.map(({ key, value, Icon }) => (
         <NavigationLinkButton
           key={key}
-          className={`flex gap-1 items-center flex-row p-2 cursor-pointer w-[120px] text-secondary-default ${
-            activeTab === value ? '' : ''
+          className={`flex gap-1 items-center flex-row p-2 cursor-pointer w-[90px] body-01-r text-secondary-default ${
+            activeTab === key ? '' : ''
           }`}
           onClick={() => handleTabClick(key as TabTypes)}
         >
-          {Icon}
-          {value.toUpperCase()}
+          {cloneElement(Icon, { className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default' })}
+          <span className="min-w-[40px] text-center ">{value.toUpperCase()}</span>
         </NavigationLinkButton>
       ))}
       <span className={indicatorStyles({ position: activeTab! as any })} />
