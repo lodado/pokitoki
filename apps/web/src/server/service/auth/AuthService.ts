@@ -71,7 +71,7 @@ class AuthService {
       }
     }
 
-    const shouldRefreshTime = token.expiresAt - 1000000 * 60 - nowTime
+    const shouldRefreshTime = token.expiresAt - 7 * 60 - nowTime
 
     // console.log(shouldRefreshTime, 'ref', token.provider)
 
