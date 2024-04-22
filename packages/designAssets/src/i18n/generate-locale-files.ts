@@ -1,3 +1,4 @@
+/* eslint-disable no-continue */
 import { writeFileSync } from 'node:fs'
 import path from 'node:path'
 
@@ -13,7 +14,7 @@ const removeSideCommaRegex = /^"|"$/g
 
 const getKeysAndRows = (text: string) => {
   const [head, ...body] = text.split('\n')
-  const keys = head.match(commaSplitterRegex)?.map((key) => key.replace(removeSideCommaRegex, '')) || []
+  const keys = head.match(commaSplitterRegex)?.map((key) => key?.replace(removeSideCommaRegex, '')) || []
   const rows = body.map((row) => row.match(commaSplitterRegex) as string[])
 
   return { keys, rows, length: keys.length }
@@ -28,6 +29,10 @@ const mapKeysAndValues = ({ keys, rows, length }: { keys: string[]; rows: string
 
     for (let i = 0; i < length; i += 1) {
       const key = keys[i]
+      if (!row[i] || !key) {
+        continue
+      }
+
       const value = row[i].replace(removeSideCommaRegex, '')
 
       if (key.includes(KEY_MARKER)) {

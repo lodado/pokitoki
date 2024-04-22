@@ -26,7 +26,6 @@ const ReactTutorial = ({ steps, run = true, ...rest }: ReactTutorialProps) => {
     <>
       {isClient && (
         <Joyride
-          tooltipComponent={TutorialTooltip}
           steps={preprocessedSteps}
           continuous
           run={run}

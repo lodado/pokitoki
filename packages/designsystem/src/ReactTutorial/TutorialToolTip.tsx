@@ -14,8 +14,6 @@ const TutorialTooltip = ({
   primaryProps,
   tooltipProps,
 }: TooltipRenderProps) => {
-  console.log(step.locale)
-
   return (
     <>
       <div className="bg-white-white" {...tooltipProps}>

@@ -34,16 +34,15 @@ const supabaseAdapterWrapper = () => {
   })
 
   const updateAccount = async ({ newAccount }: any) => {
-    const account: { [key in string]: number | string } = {}
-
-    // 특정 oauth의 경우 필요없는 key 값을 보내기도 함 (ex-google)
-    columnNames.forEach((name) => {
-      account[name] = newAccount[name]
-    })
+    const updatedValue = {
+      refresh_token: newAccount.refreshToken,
+      access_token: newAccount.accessToken,
+      expires_at: newAccount.expiresAt,
+    }
 
     const { error } = await supabase
       .from('accounts')
-      .update(account)
+      .update(updatedValue)
       .match({ providerAccountId: newAccount.providerAccountId })
 
     if (error) throw error

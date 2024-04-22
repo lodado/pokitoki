@@ -11,6 +11,7 @@ const LoginSessionProvider = ({ children, session }: { children: ReactNode; sess
   useEffect(() => {
     if (session?.error) {
       signOut({ callbackUrl: '/login' })
+      return
     }
 
     if (session) {

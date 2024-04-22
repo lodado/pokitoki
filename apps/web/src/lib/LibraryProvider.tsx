@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { JotaiProvider } from './jotai'
+import LibraryClientProvider from './LibraryClientProvider'
 
-const LibraryProvider = async ({ children }: { children: React.ReactNode }) => {
-  return <JotaiProvider>{children}</JotaiProvider>
+const LibraryProvider = ({ children }: { children: React.ReactNode }) => {
+  return <LibraryClientProvider>{children}</LibraryClientProvider>
 }
 
 export default LibraryProvider

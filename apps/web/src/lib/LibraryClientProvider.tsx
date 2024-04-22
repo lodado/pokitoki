@@ -3,16 +3,14 @@
 import { ThemeProvider } from 'next-themes'
 import React, { ReactNode } from 'react'
 
-import { NextAuthSessionResponse } from '@/server/service/auth/type'
-
-import { LoginSessionProvider } from './nextAuth'
+import { JotaiProvider } from './jotai'
 import { useInitTTS } from './voice/tts'
 
-const LibraryClientProvider = ({ children, session }: { children: ReactNode; session: NextAuthSessionResponse }) => {
+const LibraryClientProvider = ({ children }: { children: ReactNode }) => {
   useInitTTS()
   return (
     <ThemeProvider>
-      <LoginSessionProvider session={session}>{children}</LoginSessionProvider>
+      <JotaiProvider>{children}</JotaiProvider>
     </ThemeProvider>
   )
 }

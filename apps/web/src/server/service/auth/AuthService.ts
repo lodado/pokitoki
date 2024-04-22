@@ -19,7 +19,6 @@ class AuthService {
 
       this.authRepository.updateAccount({
         newAccount: {
-          ...token.account,
           refresh_token: refreshToken.refreshToken,
           access_token: refreshToken.accessToken,
           expires_at: refreshToken.expiresAt,
@@ -64,18 +63,15 @@ class AuthService {
 
     if (isSignIn && account) {
       return {
-        ...token,
         accessToken: account.access_token!,
         expiresAt: account.expires_at ?? Math.floor(Date.now() / 1000 + (account?.expires_in ?? 60000)),
         refreshToken: account.refresh_token,
         user,
-        userId: user.id,
         provider: account.provider as JWT['provider'],
-        account,
       }
     }
 
-    const shouldRefreshTime = token.expiresAt - 7 * 60 - nowTime
+    const shouldRefreshTime = token.expiresAt - 1000000 * 60 - nowTime
 
     // console.log(shouldRefreshTime, 'ref', token.provider)
 
