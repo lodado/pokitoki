@@ -1,4 +1,5 @@
 import NextImage from 'next/image'
+import { ComponentProps } from 'react'
 
 /**
  * Interface for the properties of a image component.
@@ -14,7 +15,7 @@ import NextImage from 'next/image'
  * @property {number} [width] - The width of the image in pixels. This is an optional property.
  * @property {number} [height] - The height of the image in pixels. This is an optional property.
  */
-export interface ImageProps {
+export interface ImageProps extends ComponentProps<typeof NextImage> {
   src: string
   alt: string
   width?: number
@@ -42,9 +43,9 @@ export interface ImageProps {
  * />
  * ```
  */
-const Image = ({ src, alt, width, height }: ImageProps) => {
+const Image = ({ src, alt, width, height, ...rest }: ImageProps) => {
   // Render the Image component from Next.js with provided props or default size.
-  return <NextImage src={src} alt={alt} width={width || 500} height={height || 500} />
+  return <NextImage src={src} alt={alt} width={width || 500} height={height || 500} {...rest} />
 }
 
 export default Image

@@ -1,4 +1,4 @@
-import BasicCardTemplate from './components/BasicCard/BasicCard'
+import Card from './components/Card'
 
-export { BasicCardTemplate as BasicCard }
+export { Card }
 export * from './type'

@@ -3,6 +3,7 @@
 
 'use client'
 
+import { BasicCard } from '@custompackages/designsystem'
 import { useState } from 'react'
 
 import { useI18n } from '@/lib/i18n'
@@ -11,8 +12,6 @@ import { getSpeech } from '@/lib/voice'
 import Voice from './test/Voice'
 
 const Page = () => {
-  const t = useI18n('Index')
-
   const [input, setInput] = useState('')
   const [responseList, setResponseList] = useState<any[]>([])
 
@@ -43,25 +42,15 @@ const Page = () => {
 
   return (
     <div>
-      <div className="absolute top-0 h-12 w-[100%] bg-amber-100">2313213213</div>
-      <h1>{t('title')}</h1>
-
-      <Voice onChange={handleInput} />
-      <form onSubmit={handleSubmit}>
-        <button type="submit">Submit</button>
-      </form>
-      <p>
-        Response:{' '}
-        {responseList.map((ele) => (
-          <div
-            onClick={() => {
-              getSpeech(ele)
-            }}
-          >
-            {ele}
-          </div>
-        ))}
-      </p>
+      <BasicCard
+        {...{
+          id: 1,
+          subTitle: 'apple',
+          mainTitle: 'apple',
+          alt: '1',
+          url: 'https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/QBnOOoLaAfKPirc.png',
+        }}
+      />
     </div>
   )
 }
