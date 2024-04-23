@@ -1,3 +1,4 @@
+import { ICON_MENU } from '@custompackages/design-assets'
 import React from 'react'
 
 import { BasicCardTemplate } from './templates/Template'
@@ -48,9 +49,14 @@ const MediumCard: React.FC<CardImageProps> = ({ subTitle, mainTitle, alt, url })
         height={176}
       />
 
-      <div className="w-full h-[48px] pl-4 pt-1 shadow-card-02">
-        <BasicCardTemplate.MainTitle title={mainTitle} />
-        <BasicCardTemplate.SubTitle title={subTitle} />
+      <div className="flex justify-between w-full h-[48px] pl-4 pr-4 pt-1 shadow-card-02">
+        <div>
+          <BasicCardTemplate.MainTitle title={mainTitle} />
+          <BasicCardTemplate.SubTitle title={subTitle} />
+        </div>
+        <div className="flex flex-col justify-center h-full">
+          <ICON_MENU />
+        </div>
       </div>
     </BasicCardTemplate>
   )
@@ -67,9 +73,14 @@ const LargeCard: React.FC<CardImageProps> = ({ subTitle, mainTitle, alt, url }) 
         height={156}
       />
 
-      <div className="w-full h-[48px] pl-4 pt-1 shadow-card-02">
-        <BasicCardTemplate.MainTitle title={mainTitle} />
-        <BasicCardTemplate.SubTitle title={subTitle} />
+      <div className="flex justify-between w-full h-[48px] pl-4 pr-4 pt-1 shadow-card-02">
+        <div>
+          <BasicCardTemplate.MainTitle title={mainTitle} />
+          <BasicCardTemplate.SubTitle title={subTitle} />
+        </div>
+        <div className="flex flex-col justify-center h-full">
+          <ICON_MENU />
+        </div>
       </div>
     </BasicCardTemplate>
   )
