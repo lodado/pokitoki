@@ -58,7 +58,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
         <NavigationLinkButton
           key={key}
           style={{ width: `${tabWidth}%` }}
-          className={`w-full flex justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
+          className={`w-full flex gap-1 justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
             activeTab === key ? 'font-bold' : ''
           }`}
           onClick={() => handleTabClick(key as TabTypes)}
@@ -66,7 +66,7 @@ const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
           {cloneElement(Icon, {
             className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default',
           })}
-          <span className="w-full text-center">{value.toUpperCase()}</span>
+          <span className="w-full text-center">{value}</span>
         </NavigationLinkButton>
       ))}
       <span className={indicatorStyles({ position: activeTab! as any })} style={{ width: `${tabWidth}%` }} />
