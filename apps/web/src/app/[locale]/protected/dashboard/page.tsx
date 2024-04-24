@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import { LogScreen, ReactTutorial } from '@custompackages/designsystem'
+import { LogScreen } from '@custompackages/designsystem'
 import { Metadata } from 'next'
 import { useRef } from 'react'
 
 import TutorialConnector from '@/components/Tutorial/TutorialConnector'
-import { getLoginSession } from '@/hooks/login'
-import { getI18n } from '@/lib/i18n'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 

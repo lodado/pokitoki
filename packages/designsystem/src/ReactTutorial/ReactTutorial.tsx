@@ -2,16 +2,29 @@
 
 import { useIsClient } from '@custompackages/shared'
 import { ComponentProps, useEffect, useMemo, useRef, useState } from 'react'
-import Joyride from 'react-joyride'
+import Joyride, { CallBackProps, STATUS } from 'react-joyride'
 
 import TutorialTooltip from './TutorialToolTip'
 
 interface ReactTutorialProps extends Omit<ComponentProps<typeof Joyride>, 'run'> {
   run?: boolean
+  onChangeRun: (newRunState: boolean) => void
 }
 
-const ReactTutorial = ({ steps, run = true, ...rest }: ReactTutorialProps) => {
+interface JoyrideCallbackData extends CallBackProps {}
+
+const ReactTutorial = ({ steps, run, onChangeRun, ...rest }: ReactTutorialProps) => {
   const isClient = useIsClient()
+
+  const handleJoyrideCallback = (data: JoyrideCallbackData) => {
+    const { status, type } = data
+    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
+
+    // @ts-ignore
+    if (finishedStatuses.includes(status)) {
+      onChangeRun(false)
+    }
+  }
 
   const preprocessedSteps = useMemo(() => {
     return steps.map((step) => {
@@ -38,6 +51,7 @@ const ReactTutorial = ({ steps, run = true, ...rest }: ReactTutorialProps) => {
             },
           }}
           {...rest}
+          callback={handleJoyrideCallback}
         />
       )}
     </>

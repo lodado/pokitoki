@@ -17,11 +17,13 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
       key: 'LEARNING-STATUS',
       value: dashboardI18n('LEARNING-STATUS'),
       Icon: <ICON_GNB_1 fillOverwrite="inherit" />,
+      link: '/protected/dashboard',
     },
     {
       key: 'SELECTIVE-LEARNING',
       value: dashboardI18n('SELECTIVE-LEARNING'),
       Icon: <ICON_GNB_2 fillOverwrite="inherit" />,
+      link: '/protected/dashboard/selfstudy',
     },
   ]
 

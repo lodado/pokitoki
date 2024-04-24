@@ -5,8 +5,8 @@ import React, { ReactNode, useEffect } from 'react'
 export interface TutorialStep {
   target: string
   content: ReactNode
-  locale: {
-    skip?: ReactNode
+  locale?: {
+    skip: ReactNode
   }
   disableBeacon: boolean
 }

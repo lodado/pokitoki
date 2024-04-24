@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import React, { cloneElement, ReactElement, useMemo, useState } from 'react'
 
 import { cva } from '@/lib/cva'
@@ -10,6 +11,8 @@ export interface TabItem {
   key: string
   value: string
   Icon: ReactElement
+
+  link: string
 }
 
 // NavigationTab 컴포넌트의 props 타입을 정의
@@ -54,20 +57,21 @@ const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
 
   return (
     <div className="relative body-01-r flex w-full max-w-[50vw]">
-      {tabList.map(({ key, value, Icon }) => (
-        <NavigationLinkButton
-          key={key}
-          style={{ width: `${tabWidth}%` }}
-          className={`w-full flex gap-1 justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
-            activeTab === key ? 'font-bold' : ''
-          }`}
-          onClick={() => handleTabClick(key as TabTypes)}
-        >
-          {cloneElement(Icon, {
-            className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default',
-          })}
-          <span className="w-full text-center">{value}</span>
-        </NavigationLinkButton>
+      {tabList.map(({ key, value, Icon, link }) => (
+        <Link href={link} style={{ width: `${tabWidth}%` }} className="w-full">
+          <NavigationLinkButton
+            key={key}
+            className={`w-full flex gap-1 justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
+              activeTab === key ? 'font-bold' : ''
+            }`}
+            onClick={() => handleTabClick(key as TabTypes)}
+          >
+            {cloneElement(Icon, {
+              className: activeTab === key ? 'fill-primary-01-default' : 'fill-cancel-default',
+            })}
+            <span className="w-full text-center">{value}</span>
+          </NavigationLinkButton>
+        </Link>
       ))}
       <span className={indicatorStyles({ position: activeTab! as any })} style={{ width: `${tabWidth}%` }} />
     </div>
