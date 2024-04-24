@@ -12,7 +12,7 @@ export default meta
 
 type Story = StoryObj<typeof Badge>
 
-export const NavigationExample: Story = {
+export const BadgeExample: Story = {
   args: {
     children: (
       <>
