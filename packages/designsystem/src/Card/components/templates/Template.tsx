@@ -17,7 +17,14 @@ export const BasicCardTemplate = ({ children, className, isSelected, onClick, ..
     }
   }
   return (
-    <div className={className} onClick={onClick} onKeyDown={handleKeyDown} {...rest}>
+    <div
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={0}
+      className={`rounded shadow-card-02 bg-tertiary-default ${className}`}
+      onClick={onClick}
+      onKeyDown={handleKeyDown}
+      {...rest}
+    >
       {children}
     </div>
   )

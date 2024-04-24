@@ -46,7 +46,7 @@ const Page = () => {
         variant="medium"
         subTitle="apple"
         mainTitle="apple"
-        url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/QBnOOoLaAfKPirc.png"
+        url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
         alt=""
       />
     </div>
