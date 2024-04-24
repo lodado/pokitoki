@@ -3,7 +3,7 @@
 
 'use client'
 
-import { BasicCard } from '@custompackages/designsystem'
+import { Card } from '@custompackages/designsystem'
 import { useState } from 'react'
 
 import { useI18n } from '@/lib/i18n'
@@ -42,14 +42,12 @@ const Page = () => {
 
   return (
     <div>
-      <BasicCard
-        {...{
-          id: 1,
-          subTitle: 'apple',
-          mainTitle: 'apple',
-          alt: '1',
-          url: 'https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/QBnOOoLaAfKPirc.png',
-        }}
+      <Card
+        variant="medium"
+        subTitle="apple"
+        mainTitle="apple"
+        url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/QBnOOoLaAfKPirc.png"
+        alt=""
       />
     </div>
   )

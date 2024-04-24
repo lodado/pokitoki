@@ -1,17 +1,27 @@
 {
-  "name": "Myll",
-  "short_name": "My local trip",
-  "theme_color": "#007AFF",
-  "background_color": "#007AFF",
-  "display": "fullscreen",
-  "orientation": "portrait",
-  "scope": "/",
-  "start_url": "/",
+  "name": "PWA App",
+  "short_name": "App",
   "icons": [
     {
-      "src": "icons/Illust_Intro.png",
+      "src": "/icons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/android-chrome-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "theme_color": "#FFFFFF",
+  "background_color": "#FFFFFF",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
 }
