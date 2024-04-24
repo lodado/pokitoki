@@ -16,7 +16,7 @@ export const NavigationExample: Story = {
   args: {
     children: (
       <>
-        <div style={{ width: '4px', height: '4px', background: 'white' }}> </div> <span>test text</span>
+        <div style={{ width: '4px', height: '4px', background: 'red' }}> </div> <span>test text</span>
       </>
     ),
   },
