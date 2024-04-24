@@ -20,6 +20,11 @@ const webUrl = process.env.NEXT_PUBLIC_CLIENT_URL
 
 const defaultImage = '/icons/Profile_Icon_1.svg'
 
+export interface MetadataParams {
+  params: {
+    locale: string
+  }
+}
 export default function getMetadata(props: MetadataProps): Metadata {
   const { title, description: desc, path, image, label1, label2, locale = 'KO' } = props
   const description = `${desc}`

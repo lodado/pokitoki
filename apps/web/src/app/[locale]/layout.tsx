@@ -1,6 +1,7 @@
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
+import Tutorial from '@/components/Tutorial/Tutorial'
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
 import { GA } from '@/lib/GA'
@@ -40,7 +41,11 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
 
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <LibraryProvider>{children}</LibraryProvider>
+          <LibraryProvider>
+            {children}
+
+            <Tutorial />
+          </LibraryProvider>
           <GA />
         </NextIntlClientProvider>
       </body>

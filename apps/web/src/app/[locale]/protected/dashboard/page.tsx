@@ -4,15 +4,18 @@ import { LogScreen, ReactTutorial } from '@custompackages/designsystem'
 import { Metadata } from 'next'
 import { useRef } from 'react'
 
+import TutorialConnector from '@/components/Tutorial/TutorialConnector'
 import { getLoginSession } from '@/hooks/login'
 import { getI18n } from '@/lib/i18n'
 import { getMetadata } from '@/utils'
+import { MetadataParams } from '@/utils/metadata/metadata'
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params: { locale } }: MetadataParams): Promise<Metadata> {
   return getMetadata({
     title: 'pokitoki dashboard',
     description: 'dashboard page',
-    path: '/login',
+    path: `${locale}/protected/dashboard`,
+    locale,
   })
 }
 const List = () => {
@@ -52,7 +55,7 @@ const Page = async () => {
   return (
     <LogScreen>
       <List />
-      <ReactTutorial steps={steps} />
+      <TutorialConnector steps={steps} />
     </LogScreen>
   )
 }
