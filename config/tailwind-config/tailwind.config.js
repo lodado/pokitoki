@@ -26,6 +26,10 @@ export default {
 
   theme: {
     extend: {
+      screens: {
+        sm: '550px',
+      },
+
       colors: {
         ...COLOR.light,
       },

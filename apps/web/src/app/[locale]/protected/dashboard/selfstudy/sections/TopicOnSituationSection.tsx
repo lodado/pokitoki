@@ -13,7 +13,7 @@ import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
 
 const TopicOnSituationSection = () => {
   return (
-    <section className="flex flex-col px-4">
+    <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
         <SelfStudySectionTitle
           title="주제별 상황 토킹"
