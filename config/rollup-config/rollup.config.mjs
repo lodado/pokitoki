@@ -5,7 +5,8 @@ import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import terser from '@rollup/plugin-terser'
 import url from '@rollup/plugin-url'
-import path from 'path'
+import { readFileSync } from 'fs'
+import path, { join } from 'path'
 import postcssImport from 'postcss-import'
 import { nodeExternals } from 'rollup-plugin-node-externals'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
@@ -18,9 +19,27 @@ import { fileURLToPath } from 'url'
 const dirname = '.' // fileURLToPath(new URL('.', import.meta.url))
 // const filename = fileURLToPath(import.meta.url)
 
+const packagePath = join(dirname, 'package.json')
+const packageJSON = JSON.parse(readFileSync(packagePath, 'utf8'))
+
+if (!packageJSON.source) {
+  throw new Error('source must be specified in package.json')
+}
+
+if (!packageJSON.exports) {
+  console.warn('\x1b[31m%s', 'WARNING: exports must be specified in package.json')
+}
+
+if (!packageJSON.publishConfig) {
+  /* npm에 배포할 계획은 없다 */
+  // console.warn('\x1b[31m%s', 'WARNING: publishConfig must be specified in package.json')
+}
+
 const BUILD_OUTPUT_LOCATION = `${dirname}/dist`
 
-const ENTRY_POINT = `${dirname}/src/index.tsx`
+const ENTRY_POINT = `${dirname}/${packageJSON.source}`
+
+console.log(`your ${packageJSON.name}@${packageJSON.version} library entry point: ${ENTRY_POINT}`)
 
 const inputSrc = [
   { input: ENTRY_POINT, format: 'es', additionalFolderDirectiory: 'client' },
@@ -31,11 +50,11 @@ const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
 /**
  * Generates an array of Rollup configuration objects based on the provided array of configuration parameters.
  * Each configuration parameter object includes options for input, format, and optionally an additional directory path.
- * 
+ *
  * @param {Object[]} config - An array of configuration objects. Each object must have an `input` and `format` property.
  *                            `additionalFolderDirectiory` is optional and defaults to an empty string.
  * @returns {Object[]} An array of Rollup configuration objects tailored to the specifications provided in the `config` parameter.
- * 
+ *
  * @example
  * rollupConfigFunc([
  *   { input: 'src/index.js', format: 'es', additionalFolderDirectiory: 'dist' },
@@ -47,8 +66,8 @@ const rollupConfigFunc = (config) =>
   config.map(({ input, format, additionalFolderDirectiory = '' }) => {
     const isESMFormat = format === 'es'
     const entryFormat = isESMFormat ? 'mjs' : 'cjs'
-
     const entryFileNames = `[name].${entryFormat}`
+
     const dir = `${BUILD_OUTPUT_LOCATION}/${format}/${
       additionalFolderDirectiory ? `${additionalFolderDirectiory}/` : ''
     }`
@@ -58,11 +77,9 @@ const rollupConfigFunc = (config) =>
       output: {
         dir,
         format,
-        preserveModulesRoot: `${dirname}/src`,
-        preserveModules: isESMFormat,
-        entryFileNames,
 
-        exports: 'named',
+        entryFileNames,
+        ...(isESMFormat ? { preserveModulesRoot: `.`, preserveModules: isESMFormat } : {}),
       },
 
       external: [/@babel\/runtime/],
@@ -78,17 +95,18 @@ const rollupConfigFunc = (config) =>
           peerDeps: true,
           packagePath: './package.json',
         }),
-        nodeResolve({ extensions }),
+
+        /**
+         * modulesOnly 옵션이 있어야 turbo repo에서 타입에러나지 않고 번들링됨
+         */
+        nodeResolve({ extensions, modulesOnly: true }),
 
         typescript({
           tsconfig: './tsconfig.json',
           tsconfigOverride: {},
+          useTsconfigDeclarationDir: true,
         }),
         peerDepsExternal(),
-
-        alias({
-          entries: [{ find: '@', replacement: path.resolve(dirname, 'src') }],
-        }),
 
         /**
          * **IMPORTANT**: Order matters!
@@ -97,6 +115,14 @@ const rollupConfigFunc = (config) =>
          * @see https://github.com/rollup/plugins/tree/master/packages/babel#using-with-rollupplugin-commonjs
          */
         commonjs({}),
+
+        babel({
+          babelHelpers: 'bundled',
+          exclude: 'node_modules/**',
+          extensions,
+        }),
+
+        /*
         babel({
           babelHelpers: 'runtime',
           exclude: 'node_modules/**',
@@ -112,6 +138,7 @@ const rollupConfigFunc = (config) =>
             ],
           ],
         }),
+        */
 
         postcss({
           extract: true,
@@ -133,29 +160,7 @@ const rollupConfigFunc = (config) =>
       ],
     }
   })
-
-/*
-  타입은 rollup-plugin-typescript2에서 알아서 추출해주므로 명시적으로 타입을 추출해주는 dts 라이브러리를 쓰지 않아도 
-  상관 없을듯함
-
-  혹시 모르니 주석으로 첨부해둠.
-
-import { dts } from 'rollup-plugin-dts'
-
-rollupConfigs = rollupConfigs.concat(
-  inputSrc.map(([input, format]) => {
-    const typeScriptFormat = format === 'es' ? 'ts' : 'cts'
-
-    return {
-      input,
-      output: [{ file: `${BUILD_OUTPUT_LOCATION}/${format}/type.d.${typeScriptFormat}`, format }],
-      plugins: [dts()],
-      external: [/\.(css|scss)$/u],
-    }
-  }),
-)
-*/
-
+  
 const defaultConfig = (additionalConfig = []) => {
   return rollupConfigFunc([...inputSrc, ...additionalConfig])
 }

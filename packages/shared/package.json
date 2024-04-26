@@ -37,6 +37,7 @@
   "scripts": {
     "dev": "rollup -c --watch ./rollup.config.mjs",
     "build": "rollup -c ./rollup.config.mjs",
+    "postbuild": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
