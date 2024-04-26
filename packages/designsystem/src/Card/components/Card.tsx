@@ -1,9 +1,13 @@
+'use client'
+
 import { ICON_MENU } from '@custompackages/design-assets'
+import { cn } from '@custompackages/shared'
 import React from 'react'
 
 import { BasicCardTemplate } from './templates/Template'
 
 interface CardPropsBase {
+  className?: string
   subTitle: string
   mainTitle: string
 }
@@ -21,26 +25,26 @@ type VariantPropsMapping = {
 }
 
 /** TO DO - 디자인 시안이 필요함 */
-const SmallCard: React.FC<CardPropsBase> = ({ subTitle, mainTitle }) => {
+const SmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle }) => {
   return (
-    <BasicCardTemplate>
+    <BasicCardTemplate className={className}>
       <BasicCardTemplate.Description subTitle={subTitle} mainTitle={mainTitle} />
     </BasicCardTemplate>
   )
 }
 
 /** TO DO - 디자인 시안이 필요함 */
-const XSmallCard: React.FC<CardPropsBase> = ({ subTitle, mainTitle }) => {
+const XSmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle }) => {
   return (
-    <BasicCardTemplate>
+    <BasicCardTemplate className={className}>
       <BasicCardTemplate.Description subTitle={subTitle} mainTitle={mainTitle} />
     </BasicCardTemplate>
   )
 }
 
-const MediumCard: React.FC<CardImageProps> = ({ subTitle, mainTitle, alt, url }) => {
+const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url }) => {
   return (
-    <BasicCardTemplate className="w-[280px] ">
+    <BasicCardTemplate className={cn(`w-[280px]`, className)}>
       <BasicCardTemplate.CardImage
         className="w-[280px] h-[108px]"
         alt={alt ?? mainTitle}
@@ -62,9 +66,9 @@ const MediumCard: React.FC<CardImageProps> = ({ subTitle, mainTitle, alt, url })
   )
 }
 
-const LargeCard: React.FC<CardImageProps> = ({ subTitle, mainTitle, alt, url }) => {
+const LargeCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url }) => {
   return (
-    <BasicCardTemplate className="w-[396px]">
+    <BasicCardTemplate className={cn(`w-[396px]`, className)}>
       <BasicCardTemplate.CardImage
         className="w-full h-[108px]"
         alt={alt ?? mainTitle}

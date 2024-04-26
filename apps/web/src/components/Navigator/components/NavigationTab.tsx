@@ -58,9 +58,8 @@ const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
   return (
     <div className="relative body-01-r flex w-full max-w-[50vw]">
       {tabList.map(({ key, value, Icon, link }) => (
-        <Link href={link} style={{ width: `${tabWidth}%` }} className="w-full">
+        <Link key={key} href={link} style={{ width: `${tabWidth}%` }} className="w-full" scroll={false}>
           <NavigationLinkButton
-            key={key}
             className={`w-full flex gap-1 justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
               activeTab === key ? 'font-bold' : ''
             }`}

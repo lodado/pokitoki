@@ -21,6 +21,10 @@
     "jest-environment-jsdom": "29.5.0",
     "ts-jest": "29.0.5"
   },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
   "resolutions": {
     "ts-jest": "29.0.5",
     "babel-jest": "29.5.0",
