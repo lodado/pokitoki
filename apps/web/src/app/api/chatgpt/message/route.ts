@@ -15,9 +15,14 @@ export const GET = async (req: NextRequest) => {
 }
 
 export const POST = async (req: NextRequest) => {
-  const { threadId, message } = await req.json()
-  if (!threadId || !message) return Response.json({ success: false })
+  try {
+    const { threadId, message } = await req.json()
+    if (!threadId || !message) throw new Error('invalid threadId, message')
 
-  const messages = await sendChat(threadId, message)
-  return NextResponse.json({ success: true, data: messages })
+    const messages = await sendChat(threadId, message)
+
+    return NextResponse.json({ data: messages })
+  } catch (e) {
+    return Response.json({}, { status: 400 })
+  }
 }

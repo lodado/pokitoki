@@ -10,6 +10,8 @@ import ChatGptServiceInstance from '@/server/service/chatgpt/ChatGptService'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import { ChatInput } from './ChatInput'
+
 interface ChatPageProps extends MetadataParams {
   params: {
     locale: string
@@ -30,13 +32,15 @@ export async function generateMetadata({
 }
 
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
-  const chat = await ChatGptServiceInstance.getChatLatestResponse(assistantId, threadId)
+  const chat = await ChatGptServiceInstance.getChatDetail(assistantId, threadId)
 
   console.log(chat)
 
   return (
     <LogScreen>
       <ul>{chat}</ul>
+
+      <ChatInput />
 
       {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>

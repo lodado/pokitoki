@@ -72,7 +72,14 @@ export const getThreadMessages = async (assistantId: string, threadId: string) =
 }
 
 export const createThreadMessage = async (threadId: string, content: string) => {
-  const { content: messageContents } = await openai.beta.threads.messages.create(threadId, { role: 'user', content })
+  const {
+    content: messageContents,
+    assistant_id: assistantId,
+    id,
+  } = await openai.beta.threads.messages.create(threadId, { role: 'user', content })
+
+  await ThreadPolling(assistantId!, threadId, id)
+
   const messages = (messageContents as MessageContentText[]).map(({ text }) => text.value)
   return messages
 }
