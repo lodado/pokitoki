@@ -2,40 +2,34 @@
 
 import React, { useEffect, useState } from 'react'
 
-import request from '@/api'
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
+import { useQuery } from '@/lib/useQuery'
 
 const ChatContent = () => {
-  const [messages, setMessages] = useState<string[]>([])
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
-
-  // TO DO - react query
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-
   const { threadId, assistantId } = params
+  const [isFetchAllowed, setFetchAllowed] = useState(false)
 
-  const handleGetChatList = async () => {
-    try {
-      setIsLoading(true)
+  // Setting up the query for fetching messages
+  const {
+    data: messages,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useQuery(['protected/chat/freetalking', assistantId, threadId], () => getAIMessages({ assistantId, threadId }), {
+    enabled: isFetchAllowed && !!threadId && !!assistantId,
+    select: (data) => data.data,
+  })
 
-      const { data } = await getAIMessages({ assistantId, threadId })
-
-      setMessages(data)
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setIsLoading(false)
-    }
+  const handleRefresh = () => {
+    setFetchAllowed(true)
   }
-
-  useEffect(() => {
-    // handleGetChatList()
-  }, [])
 
   return (
     <div>
-      <button type="button" onClick={handleGetChatList}>
+      <button type="button" onClick={handleRefresh}>
         refresh
       </button>
       <h4>
@@ -44,7 +38,7 @@ const ChatContent = () => {
 
       {isLoading && <div>loading..</div>}
 
-      {messages.length === 0 ? (
+      {!messages ? (
         <p>채팅 내용이 존재하지 않습니다.</p>
       ) : (
         <ul>
