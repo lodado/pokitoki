@@ -72,7 +72,8 @@ class ChatGptService {
   getChatDetail = async (assistantId: string, threadId: string) => {
     try {
       const messages = await this.chatGptRepository.getThreadMessages(assistantId, threadId)
-      return messages
+
+      return messages.reverse()
     } catch (err) {
       console.error(err)
       throw err
@@ -83,7 +84,7 @@ class ChatGptService {
   getChatLatestResponse = async (assistantId: string, threadId: string) => {
     try {
       const messages = await this.getChatDetail(assistantId, threadId)
-      return messages ? messages[0] : []
+      return messages.length > 0 ? messages[messages.length - 1] : []
     } catch (err) {
       console.error(err)
       throw err
