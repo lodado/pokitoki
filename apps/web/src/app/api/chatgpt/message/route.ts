@@ -5,10 +5,12 @@ import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 const { getChatDetail, sendChat } = ChatGptService
 
 export const GET = async (req: NextRequest) => {
-  const threadId = req.nextUrl.searchParams.get('threadId')
+  const threadId = req.nextUrl.searchParams.get('threadId')!
+  const assistantId = req.nextUrl.searchParams.get('assistantId')!
+
   if (!threadId) return Response.json({ success: false })
 
-  const messages = await getChatDetail(threadId)
+  const messages = await getChatDetail(assistantId, threadId)
   return NextResponse.json({ success: true, data: messages })
 }
 

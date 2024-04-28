@@ -8,6 +8,29 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
+const sleep = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+
+export const ThreadPolling = async (assistantId: string, threadId: string) => {
+  let waitCount = 0
+
+  const run = await openai.beta.threads.runs.create(threadId, {
+    assistant_id: assistantId,
+  })
+
+  while (waitCount < 500) {
+    // eslint-disable-next-line no-await-in-loop
+    const { status } = await openai.beta.threads.runs.retrieve(threadId, run.id)
+
+    if (status === 'completed') break
+    // eslint-disable-next-line no-await-in-loop
+    sleep(500)
+    waitCount += 10
+  }
+}
+
 // ---------- openai func ----------
 
 export const createAssistant = async (name: string, instructions: string) => {
@@ -27,11 +50,21 @@ export const getAssistants = async () => {
 
 export const createThread = async (assistantId: string) => {
   const { thread_id: threadId } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
+
+  await ThreadPolling(assistantId, threadId)
+
   return threadId
 }
 
-export const getThreadMessages = async (threadId: string) => {
+export const getThreadMessages = async (assistantId: string, threadId: string) => {
   const { data: threadMessages } = await openai.beta.threads.messages.list(threadId)
+
+  await ThreadPolling(assistantId, threadId)
+
+  if (!threadMessages || threadMessages.length === 0) {
+    return []
+  }
+
   const convertedMessages = threadMessages.map(({ content }) => (content as MessageContentText[])[0].text.value)
   return convertedMessages
 }

@@ -7,7 +7,7 @@ import TutorialConnector from '@/components/Tutorial/TutorialConnector'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
-import FreeTalkingSection from './sections/FreeTalkingSection'
+import FreeTalkingSection from './sections/freeTalking/FreeTalkingSection'
 import PersonaSection from './sections/PersonaSection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
 

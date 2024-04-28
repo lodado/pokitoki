@@ -1,5 +1,12 @@
 import { Button } from '@custompackages/designsystem'
+import { redirect } from 'next/navigation'
 import React from 'react'
+
+import request from '@/api'
+import { Thread } from '@/server/service/chatgpt/type'
+import { MetadataParams } from '@/utils/metadata/metadata'
+
+import RedirectToFreeTalkingButton from './RedirectButton'
 
 const FreeTalkingSection = () => {
   return (
@@ -14,15 +21,11 @@ const FreeTalkingSection = () => {
           </h2>
           <p className="body-01-r text-text-03">자유롭게 프리토킹을 시작하세요</p>
 
-          <Button className="w-full sm:hidden" size="small" variant="primary">
-            주제별 상황 토킹
-          </Button>
+          <RedirectToFreeTalkingButton className="w-full sm:hidden">주제별 상황 토킹</RedirectToFreeTalkingButton>
         </div>
       </div>
 
-      <Button className="hidden w-40 sm:flex" size="small" variant="primary">
-        주제별 상황 토킹
-      </Button>
+      <RedirectToFreeTalkingButton className="hidden w-40 sm:flex">주제별 상황 토킹</RedirectToFreeTalkingButton>
     </section>
   )
 }

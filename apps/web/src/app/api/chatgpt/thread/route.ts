@@ -6,25 +6,41 @@ import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 const { getChats, createChat, deleteChat } = ChatGptService
 
 export const GET = async (req: NextRequest) => {
-  const assistantId = req.nextUrl.searchParams.get('assistantId')
-  if (!assistantId) return Response.json({ success: false })
+  try {
+    const assistantId = req.nextUrl.searchParams.get('assistantId')
+    if (!assistantId) throw new Error('Invalid assistant Id')
 
-  const { user } = await getLoginSession()
-  const userId = user.id
+    const { user } = await getLoginSession()
+    const userId = user.id
 
-  const threads = await getChats(userId, assistantId)
-  return NextResponse.json({ success: true, data: threads })
+    const threads = await getChats(userId, assistantId)
+    return NextResponse.json({ success: true, data: threads })
+  } catch (e) {
+    console.log('WTF?', e)
+
+    return Response.json({ state: 400, success: false })
+  }
 }
 
 export const POST = async (req: NextRequest) => {
-  const { assistantId, threadName } = await req.json()
-  if (!assistantId) return Response.json({ success: false })
+  try {
+    const { assistantId, threadName } = await req.json()
+    if (!assistantId) throw new Error('Invalid assistant Id')
 
-  const { user } = await getLoginSession()
-  const userId = user.id
+    const { user } = await getLoginSession()
 
-  const threadId = await createChat(userId, assistantId, threadName)
-  return NextResponse.json({ success: true, data: threadId })
+    const userId = user.id
+
+    const threadId = await createChat(userId, assistantId, threadName)
+
+    console.log('threadName!!', threadId)
+
+    return NextResponse.json({ threadId })
+  } catch (e) {
+    console.log(e)
+
+    return Response.json({ state: 400, success: false })
+  }
 }
 
 export const DELETE = async (req: NextRequest) => {

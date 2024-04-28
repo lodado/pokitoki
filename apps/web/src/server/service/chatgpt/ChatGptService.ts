@@ -69,10 +69,21 @@ class ChatGptService {
   }
 
   // 특정 채팅 데이터 가져오기
-  getChatDetail = async (threadId: string) => {
+  getChatDetail = async (assistantId: string, threadId: string) => {
     try {
-      const messages = await this.chatGptRepository.getThreadMessages(threadId)
+      const messages = await this.chatGptRepository.getThreadMessages(assistantId, threadId)
       return messages
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+
+  // 특정 채팅 데이터 가져오기
+  getChatLatestResponse = async (assistantId: string, threadId: string) => {
+    try {
+      const messages = await this.getChatDetail(assistantId, threadId)
+      return messages ? messages[0] : []
     } catch (err) {
       console.error(err)
       throw err
