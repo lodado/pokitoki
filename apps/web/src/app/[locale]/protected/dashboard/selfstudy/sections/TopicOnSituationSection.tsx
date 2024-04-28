@@ -2,6 +2,7 @@ import { Card } from '@custompackages/designsystem'
 import React from 'react'
 
 import request from '@/api'
+import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
 import { Assistant } from '@/server/service/chatgpt/type'
 
 import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
@@ -15,9 +16,7 @@ import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
       /> */
 
 const TopicOnSituationSection = async () => {
-  const { data } = await request<Assistant[]>({ url: '/api/chatgpt/assistant', cache: 'force-cache' })
-
-  // const data = [{ name: 'test', description: 'abc!' }]
+  const { assistants } = await getAssistantList()
 
   return (
     <section className="flex flex-col">
@@ -31,7 +30,7 @@ const TopicOnSituationSection = async () => {
       </div>
 
       <div className="flex flex-row gap-2 overflow-x-scroll overflow-y-hidden">
-        {data.map(({ name, description }: Assistant) => {
+        {assistants.map(({ name, description }: Assistant) => {
           return (
             <Card
               key={name}

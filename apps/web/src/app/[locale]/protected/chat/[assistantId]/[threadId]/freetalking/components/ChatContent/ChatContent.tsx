@@ -3,11 +3,14 @@
 import React, { useEffect, useState } from 'react'
 
 import request from '@/api'
+import { getAIMessages } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
 
 const ChatContent = () => {
   const [messages, setMessages] = useState<string[]>([])
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
+
+  // TO DO - react query
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const { threadId, assistantId } = params
@@ -15,10 +18,8 @@ const ChatContent = () => {
   const handleGetChatList = async () => {
     try {
       setIsLoading(true)
-      const { data } = await request<{ data: string[] }>({
-        url: `/api/chatgpt/message`,
-        params: { assistantId, threadId },
-      })
+
+      const { data } = await getAIMessages({ assistantId, threadId })
 
       setMessages(data)
     } catch (error) {

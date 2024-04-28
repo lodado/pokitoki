@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import React, { ReactNode } from 'react'
 
 import request from '@/api'
+import { createThread, getThread } from '@/app/api/chatgpt/thread/api'
 import useUrl from '@/hooks/useUrl'
 import { Thread } from '@/server/service/chatgpt/type'
 
@@ -16,30 +17,16 @@ interface RedirectToFreeTalkingButtonProps {
 const assistantId = 'asst_5ypeuMs1rQIPpRWF6YJwEJ9c'
 
 const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalkingButtonProps) => {
-  const { params, push } = useUrl()
+  const { params, push } = useUrl<{ locale: string }>()
   const { locale } = params
 
   const handleCreateFreeTalkingThread = async () => {
     try {
-      const { threads } = await request<{ threads: Thread[] }>({
-        method: 'GET',
-        url: '/api/chatgpt/thread',
-        params: { assistantId },
-      })
-
-      let threadId = threads?.[0]?.threadId
-
-      console.log('TEST!', threadId, threads, !threadId)
+      const thread = await getThread({ assistantId })
+      let threadId = thread?.threadId
 
       if (!threadId) {
-        const b = await request<Thread>({
-          method: 'POST',
-          url: '/api/chatgpt/thread',
-          data: { assistantId, threadName: 'free-talking' },
-          timeout: 20000,
-        })
-
-        const { threadId: _threadId } = b
+        const { threadId: _threadId } = await createThread({ assistantId, threadName: 'free-talking' })
 
         threadId = _threadId
       }

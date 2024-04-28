@@ -15,8 +15,6 @@ export const GET = async (req: NextRequest) => {
     const messages = await getChatDetail(assistantId, threadId)
     return NextResponse.json({ data: messages })
   } catch (err) {
-    console.log('error')
-
     return Response.json({}, { status: 400 })
   }
 }

@@ -5,8 +5,12 @@ import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 const { getTutors, createTutor } = ChatGptService
 
 export const GET = async () => {
-  const assistants = await getTutors()
-  return NextResponse.json({ success: !!assistants, data: assistants })
+  try {
+    const assistants = await getTutors()
+    return NextResponse.json({ assistants })
+  } catch (e) {
+    return Response.json({}, { status: 400 })
+  }
 }
 
 export const POST = async (req: NextRequest) => {
