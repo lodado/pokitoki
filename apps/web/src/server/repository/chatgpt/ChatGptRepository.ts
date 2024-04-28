@@ -13,12 +13,14 @@ const sleep = (ms: number) =>
     setTimeout(resolve, ms)
   })
 
-export const ThreadPolling = async (assistantId: string, threadId: string) => {
+export const ThreadPolling = async (assistantId: string, threadId: string, runId?: string) => {
   let waitCount = 0
 
-  const run = await openai.beta.threads.runs.create(threadId, {
-    assistant_id: assistantId,
-  })
+  const run = runId
+    ? { id: runId }
+    : await openai.beta.threads.runs.create(threadId, {
+        assistant_id: assistantId,
+      })
 
   while (waitCount < 500) {
     // eslint-disable-next-line no-await-in-loop
@@ -49,9 +51,9 @@ export const getAssistants = async () => {
 }
 
 export const createThread = async (assistantId: string) => {
-  const { thread_id: threadId } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
+  const { thread_id: threadId, id } = await openai.beta.threads.createAndRun({ assistant_id: assistantId })
 
-  await ThreadPolling(assistantId, threadId)
+  await ThreadPolling(assistantId, threadId, id)
 
   return threadId
 }

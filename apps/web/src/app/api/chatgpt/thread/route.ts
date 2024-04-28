@@ -14,11 +14,11 @@ export const GET = async (req: NextRequest) => {
     const userId = user.id
 
     const threads = await getChats(userId, assistantId)
-    return NextResponse.json({ success: true, data: threads })
+    return NextResponse.json({ threads })
   } catch (e) {
-    console.log('WTF?', e)
+    console.log('error', e)
 
-    return Response.json({ state: 400, success: false })
+    return Response.json({}, { status: 400 })
   }
 }
 
@@ -28,18 +28,13 @@ export const POST = async (req: NextRequest) => {
     if (!assistantId) throw new Error('Invalid assistant Id')
 
     const { user } = await getLoginSession()
-
     const userId = user.id
 
     const threadId = await createChat(userId, assistantId, threadName)
 
-    console.log('threadName!!', threadId)
-
     return NextResponse.json({ threadId })
   } catch (e) {
-    console.log(e)
-
-    return Response.json({ state: 400, success: false })
+    return Response.json({}, { status: 400 })
   }
 }
 

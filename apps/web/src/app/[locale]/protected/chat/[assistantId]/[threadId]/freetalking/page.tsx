@@ -32,6 +32,8 @@ export async function generateMetadata({
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
   const chat = await ChatGptServiceInstance.getChatLatestResponse(assistantId, threadId)
 
+  console.log(chat)
+
   return (
     <LogScreen>
       <ul>{chat}</ul>
