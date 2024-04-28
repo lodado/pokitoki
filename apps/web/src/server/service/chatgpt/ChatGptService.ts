@@ -91,9 +91,9 @@ class ChatGptService {
   }
 
   // 채팅 보내기
-  sendChat = async (threadId: string, prompt: string) => {
+  sendChat = async (assistantId: string, threadId: string, prompt: string) => {
     try {
-      const messages = await this.chatGptRepository.createThreadMessage(threadId, prompt)
+      const messages = await this.chatGptRepository.createThreadMessage(assistantId, threadId, prompt)
       return messages
     } catch (err) {
       console.error(err)

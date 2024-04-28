@@ -6,11 +6,11 @@ import { useRef } from 'react'
 
 import request from '@/api'
 import TutorialConnector from '@/components/Tutorial/TutorialConnector'
-import ChatGptServiceInstance from '@/server/service/chatgpt/ChatGptService'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
-import { ChatInput } from './ChatInput'
+import { ChatContent } from './components/ChatContent'
+import { ChatInput } from './components/ChatInput'
 
 interface ChatPageProps extends MetadataParams {
   params: {
@@ -32,14 +32,9 @@ export async function generateMetadata({
 }
 
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
-  const chat = await ChatGptServiceInstance.getChatDetail(assistantId, threadId)
-
-  console.log(chat)
-
   return (
     <LogScreen>
-      <ul>{chat}</ul>
-
+      <ChatContent />
       <ChatInput />
 
       {/* <TutorialConnector steps={steps} /> */}

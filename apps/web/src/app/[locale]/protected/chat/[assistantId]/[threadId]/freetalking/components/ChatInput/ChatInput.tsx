@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import { useFormState } from 'react-dom'
 
 import useUrl from '@/hooks/useUrl'
@@ -8,15 +8,18 @@ import useUrl from '@/hooks/useUrl'
 import { submitInputMessage } from './submitInputMessage'
 
 const ChatInput = () => {
-  const { params } = useUrl<{ threadId: string }>()
-  const { threadId } = params
-
-  const [errorMessage, dispatch] = useFormState(submitInputMessage, threadId)
-
+  const { params } = useUrl<{ threadId: string; assistantId: string }>()
+  const { assistantId, threadId } = params
   const [value, setValue] = useState('')
 
+  const handleSubmitMessage = async (e: SyntheticEvent) => {
+    e.preventDefault()
+
+    await submitInputMessage(assistantId, threadId, value)
+  }
+
   return (
-    <form action={dispatch}>
+    <form onSubmit={handleSubmitMessage}>
       <input
         name="message"
         value={value}

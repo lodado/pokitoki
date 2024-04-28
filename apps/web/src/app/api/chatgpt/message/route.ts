@@ -5,21 +5,28 @@ import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 const { getChatDetail, sendChat } = ChatGptService
 
 export const GET = async (req: NextRequest) => {
-  const threadId = req.nextUrl.searchParams.get('threadId')!
-  const assistantId = req.nextUrl.searchParams.get('assistantId')!
+  try {
+    const threadId = req.nextUrl.searchParams.get('threadId')!
+    const assistantId = req.nextUrl.searchParams.get('assistantId')!
 
-  if (!threadId) return Response.json({ success: false })
+    if (!threadId) throw new Error(`Could not find threadId`)
+    if (!assistantId) throw new Error(`Could not find assistantId`)
 
-  const messages = await getChatDetail(assistantId, threadId)
-  return NextResponse.json({ success: true, data: messages })
+    const messages = await getChatDetail(assistantId, threadId)
+    return NextResponse.json({ data: messages })
+  } catch (err) {
+    console.log('error')
+
+    return Response.json({}, { status: 400 })
+  }
 }
 
 export const POST = async (req: NextRequest) => {
   try {
-    const { threadId, message } = await req.json()
-    if (!threadId || !message) throw new Error('invalid threadId, message')
+    const { assistantId, threadId, message } = await req.json()
+    if (!assistantId || !threadId || !message) throw new Error('invalid assistantId, threadId, message')
 
-    const messages = await sendChat(threadId, message)
+    const messages = await sendChat(assistantId, threadId, message)
 
     return NextResponse.json({ data: messages })
   } catch (e) {
