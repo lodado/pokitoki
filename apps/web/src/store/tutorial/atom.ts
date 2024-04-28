@@ -1,5 +1,5 @@
-import { atom, useAtom, useSetAtom } from 'jotai'
-import React, { ReactNode, useEffect } from 'react'
+import { atom } from 'jotai'
+import React, { ReactNode } from 'react'
 
 // Step 타입 정의
 export interface TutorialStep {

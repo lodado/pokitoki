@@ -1,3 +1,3 @@
-import { Provider as JotaiProvider } from 'jotai'
+import { atom, Provider as JotaiProvider, useAtom, useAtomValue, useSetAtom } from 'jotai'
 
-export { JotaiProvider }
+export { atom, JotaiProvider, useAtom, useAtomValue, useSetAtom }

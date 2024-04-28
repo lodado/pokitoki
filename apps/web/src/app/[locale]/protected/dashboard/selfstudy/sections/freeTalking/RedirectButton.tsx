@@ -1,13 +1,10 @@
 'use client'
 
 import { Button } from '@custompackages/designsystem'
-import { redirect } from 'next/navigation'
 import React, { ReactNode } from 'react'
 
-import request from '@/api'
 import { createThread, getThread } from '@/app/api/chatgpt/thread/api'
 import useUrl from '@/hooks/useUrl'
-import { Thread } from '@/server/service/chatgpt/type'
 
 interface RedirectToFreeTalkingButtonProps {
   children: ReactNode

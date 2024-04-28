@@ -1,14 +1,20 @@
 'use client'
 
+import { useAtomValue } from 'jotai'
 import React, { useEffect, useState } from 'react'
 
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
 import { useQuery } from '@/lib/useQuery'
 
+import { refreshChatContentAtom } from '../../store'
+
 const ChatContent = () => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { threadId, assistantId } = params
+
+  const refreshChatContent = useAtomValue(refreshChatContentAtom)
+  const [initChatContent] = useState(refreshChatContent)
   const [isFetchAllowed, setFetchAllowed] = useState(false)
 
   // Setting up the query for fetching messages
@@ -18,10 +24,14 @@ const ChatContent = () => {
     isError,
     error,
     refetch,
-  } = useQuery(['protected/chat/freetalking', assistantId, threadId], () => getAIMessages({ assistantId, threadId }), {
-    enabled: isFetchAllowed && !!threadId && !!assistantId,
-    select: (data) => data.data,
-  })
+  } = useQuery(
+    ['protected/chat/freetalking', assistantId, threadId, refreshChatContent],
+    () => getAIMessages({ assistantId, threadId }),
+    {
+      enabled: (initChatContent !== refreshChatContent || isFetchAllowed) && !!threadId && !!assistantId,
+      select: (data) => data.data,
+    },
+  )
 
   const handleRefresh = () => {
     setFetchAllowed(true)
