@@ -1,3 +1,11 @@
+import { isServerSide } from '@custompackages/shared'
+
+import { ROOT_URL } from './constant'
+
+class MockController {
+  abort() {}
+}
+
 const request = async <T>({
   method = 'GET',
   url = '',
@@ -6,32 +14,32 @@ const request = async <T>({
   timeout = 5000,
   ...options
 }: {
-  method?: RequestInit['method']
   url: string
-  headers?: RequestInit['headers']
   data?: Record<string, unknown> | Array<unknown>
   timeout?: number
-}): Promise<T> => {
-  const controller = new AbortController()
+} & RequestInit) => {
+  const controller = isServerSide() ? new AbortController() : (new MockController() as AbortController)
   const body = ['GET', 'HEAD'].includes(method) ? undefined : JSON.stringify(data)
 
-  const timeoutId = setTimeout(() => {
-    controller.abort()
-  }, timeout)
-  timeoutId?.unref?.()
+  if (!isServerSide()) {
+    const timeoutId = setTimeout(() => {
+      controller.abort()
+    }, timeout)
+    timeoutId?.unref?.()
+  }
 
-  const response = await fetch(url, {
+  const response = await fetch(ROOT_URL + url, {
     method,
     body,
     headers: {
       'Content-Type': 'application/json',
       ...headers,
     },
-    signal: controller.signal,
+    ...(isServerSide() ? { signal: controller.signal } : {}),
     ...options,
   })
 
-  const responseData: T = await response.json()
+  const responseData = await response.json()
   return responseData
 }
 

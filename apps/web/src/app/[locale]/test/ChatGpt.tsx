@@ -18,8 +18,9 @@ const ChatGpt = () => {
   const chatTitleRef = useRef<HTMLInputElement>(null)
 
   const handleGetAssistants = async () => {
-    const data = await request<Assistant[]>({ url: '/api/chatgpt/assistant' })
+    const { data } = await request<Assistant[]>({ url: '/api/chatgpt/assistant' })
     if (!data) return
+
     setAssistants(data)
   }
 
@@ -46,7 +47,7 @@ const ChatGpt = () => {
   }
 
   const handleGetThreads = async ({ id, name }: { id: string; name: string }) => {
-    const data = await request<Thread[]>({ url: `/api/chatgpt/thread?assistantId=${id}` })
+    const { data } = await request<Thread[]>({ url: `/api/chatgpt/thread?assistantId=${id}` })
 
     if (!data) return
     setThreads(data)
@@ -92,7 +93,7 @@ const ChatGpt = () => {
           <p>튜터가 존재하지 않습니다.</p>
         ) : (
           <ul>
-            {assistants.map(({ id, name }) => (
+            {assistants?.map(({ id, name }) => (
               <li key={id}>
                 <button type="button" onClick={() => handleGetThreads({ id, name: name || '' })}>
                   {name}

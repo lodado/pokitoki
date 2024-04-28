@@ -1,6 +1,9 @@
 import { Card } from '@custompackages/designsystem'
 import React from 'react'
 
+import request from '@/api'
+import { Assistant } from '@/server/service/chatgpt/type'
+
 import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
 
 /** <Card
@@ -11,7 +14,11 @@ import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
         alt=""
       /> */
 
-const TopicOnSituationSection = () => {
+const TopicOnSituationSection = async () => {
+  const { data } = await request<Assistant[]>({ url: '/api/chatgpt/assistant', cache: 'force-cache' })
+
+  // const data = [{ name: 'test', description: 'abc!' }]
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
@@ -24,6 +31,20 @@ const TopicOnSituationSection = () => {
       </div>
 
       <div className="flex flex-row gap-2 overflow-x-scroll overflow-y-hidden">
+        {data.map(({ name, description }: Assistant) => {
+          return (
+            <Card
+              key={name}
+              className="shrink-0"
+              variant="medium"
+              subTitle={description!}
+              mainTitle={name!}
+              url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
+              alt=""
+            />
+          )
+        })}
+
         <Card
           className="shrink-0"
           variant="medium"
