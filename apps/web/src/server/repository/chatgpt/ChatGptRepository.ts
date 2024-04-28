@@ -28,8 +28,8 @@ export const ThreadPolling = async (assistantId: string, threadId: string, runId
 
     if (status === 'completed') break
     // eslint-disable-next-line no-await-in-loop
-    sleep(500)
-    waitCount += 10
+    sleep(1000)
+    waitCount += 100
   }
 }
 

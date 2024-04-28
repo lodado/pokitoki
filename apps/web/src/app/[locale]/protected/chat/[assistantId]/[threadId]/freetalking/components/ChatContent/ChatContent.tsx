@@ -8,10 +8,13 @@ import useUrl from '@/hooks/useUrl'
 const ChatContent = () => {
   const [messages, setMessages] = useState<string[]>([])
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   const { threadId, assistantId } = params
 
   const handleGetChatList = async () => {
     try {
+      setIsLoading(true)
       const { data } = await request<{ data: string[] }>({
         url: `/api/chatgpt/message`,
         params: { assistantId, threadId },
@@ -20,6 +23,8 @@ const ChatContent = () => {
       setMessages(data)
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -30,12 +35,13 @@ const ChatContent = () => {
   return (
     <div>
       <button type="button" onClick={handleGetChatList}>
-        {' '}
-        refresh{' '}
+        refresh
       </button>
       <h4>
         <b>채팅 내용</b>
       </h4>
+
+      {isLoading && <div>loading..</div>}
 
       {messages.length === 0 ? (
         <p>채팅 내용이 존재하지 않습니다.</p>
