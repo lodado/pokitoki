@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import React from 'react'
 
 import request from '@/api'
+import { Profile } from '@/components'
 import { Thread } from '@/server/service/chatgpt/type'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
@@ -12,7 +13,12 @@ const FreeTalkingSection = () => {
   return (
     <section className="flex flex-row items-center justify-between px-4 rounded bg-primary-02-default shadow-card-02 py-spacing-5">
       <div className="flex flex-row justify-between w-full gap-spacing-6 sm:justify-start">
-        <div className="flex items-center h-full">프로필</div>
+        <div className="flex items-center h-full">
+          <Profile
+            src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
+            alt="user profile"
+          />
+        </div>
 
         <div className="flex flex-col gap-0.5">
           <h2 className="text-text-01 body-03-m">
