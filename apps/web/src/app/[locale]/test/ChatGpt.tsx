@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import request from '@/api'
 import type { Assistant, Thread } from '@/server/service/chatgpt/type'
-
+/*
 const ChatGpt = () => {
   const [assistants, setAssistants] = useState<Assistant[]>([])
   const [threads, setThreads] = useState<Thread[]>([])
@@ -179,3 +179,4 @@ const ChatGpt = () => {
 }
 
 export default ChatGpt
+*/
