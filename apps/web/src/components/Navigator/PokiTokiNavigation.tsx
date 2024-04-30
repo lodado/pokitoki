@@ -5,6 +5,7 @@ import React, { ReactNode, useMemo, useRef } from 'react'
 import { getI18n } from '@/lib/i18n'
 
 import { Logo } from '../Logo'
+import { Profile } from '../Profile'
 import NavigationLinkButton from './components/NavigationLinkButton'
 import NavigationTab from './components/NavigationTab'
 
@@ -40,7 +41,14 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
             <NavigationTab tabList={dashboardTabList} />
           </div>
 
-          <NavigationLinkButton>프로필</NavigationLinkButton>
+          <NavigationLinkButton>
+            <Profile
+              src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
+              alt="user profile"
+              width={28}
+              height={28}
+            />
+          </NavigationLinkButton>
         </nav>
       </header>
 

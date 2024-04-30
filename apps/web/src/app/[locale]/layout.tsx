@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
@@ -11,6 +12,7 @@ import { GA } from '@/lib/GA'
  */
 const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { locale } }) => {
   const messages = useMessages()
+  const nonce = headers().get('x-nonce')!
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -36,7 +38,6 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#5bbad5" />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
       </head>
 
       <body>
@@ -46,8 +47,9 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
 
             <Tutorial />
           </LibraryProvider>
-          <GA />
         </NextIntlClientProvider>
+
+        <GA nonce={nonce} />
       </body>
     </html>
   )

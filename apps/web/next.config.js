@@ -40,11 +40,12 @@ const nextConfig = {
   images: {
     remotePatterns: [parseURL(process.env.NEXT_PUBLIC_SUPABASE_URL)],
 
-    // loader: 'custom',
-    // loaderFile: './src/lib/supabase/supabaseLoader.ts',
+    /** vercel에 과금해야해서 supabase image loader 사용 */
+    loader: 'custom',
+    loaderFile: './src/lib/supabase/supabaseLoader.ts',
 
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [32, 48, 64, 96, 128, 256, 384],
+    deviceSizes: [550, 768],
   },
 
   reactStrictMode: false,
@@ -54,6 +55,70 @@ const nextConfig = {
     transpileClientSDK: true,
   },
   transpilePackages: ['@custompackages/design-assets'],
+
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+
+        // nginx 쓰면 기본적으로 제공해주긴 함
+        headers: [
+          /*
+            This header helps prevent cross-site scripting (XSS),
+            clickjacking and other code injection attacks.
+            Content Security Policy (CSP) can specify allowed origins for content including scripts, stylesheets,
+            images, fonts, objects, media (audio, video), iframes, and more
+          */
+
+          /*
+          {
+            key: 'Content-Security-Policy',
+            value: CSP.replace(/\n/g, '')
+              .replace(/\s{2,}/g, ' ')
+              .trim(),
+          },
+          */
+
+          /*
+             it provide protection for older web browsers that don't support CSP.
+          */
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          /*
+            This header indicates whether
+            the site should be allowed to be displayed within an iframe.
+            This header has been superseded by CSP's
+            frame-ancestors option, which has better support in modern browsers
+          */
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          /*
+            This is an extended header proposed by Microsoft,
+            which restricts the interpretation to beyond the MIME types
+            sent by the web server as a defense against cross-site scripting.
+          */
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          /*
+            refererer 정책
+            When using HTTPS, the full address is retained if the websites are the same,
+            and only the domain address is retained if they are different.
+            For websites using HTTP, the address is not retained.
+          */
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
+    ]
+  },
 }
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry webpack plugin. Keep in mind that
@@ -72,9 +137,6 @@ const sentryWebpackPluginOptions = {
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
   silent: false, // Suppresses all logs
-
-  // For all available options, see:
-  // https://github.com/getsentry/sentry-webpack-plugin#options.
 }
 
 module.exports = withPWA(withBundleAnalyzer(withNextIntl(withSentryConfig(nextConfig, sentryWebpackPluginOptions))))

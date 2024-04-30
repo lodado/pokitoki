@@ -1,6 +1,8 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
+import { supabaseProjectId } from '../misc'
 import { i18nOption } from './lib/i18n'
 import { auth, authConfig, NextAuth } from './lib/nextAuth'
 
@@ -13,13 +15,42 @@ const redirectPath = (request: NextRequest, newPath: string) => {
   return NextResponse.redirect(url)
 }
 
-const i18nMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
-  const handleI18nRouting = createIntlMiddleware(i18nOption as any)
-  const response = handleI18nRouting(request)
+const cspMiddleware = (request: NextRequest, response: NextResponse) => {
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
+  const cspHeader = `
+    default-src 'self';
+    style-src 'self' 'unsafe-inline' spoqa.github.io cdn.jsdelivr.net;
+    img-src 'self' blob: data: ${supabaseProjectId}.supabase.co;
+    font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net;
+    script-src 'self' ${
+      process.env.NODE_ENV !== 'production' ? `'unsafe-eval'` : ''
+    } 'nonce-${nonce}' 'strict-dynamic' cdn.jsdelivr.net;
+    script-src-elem 'self' 'nonce-${nonce}';
+    object-src 'none';
+    connect-src 'self' https://www.google-analytics.com;
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+    manifest-src 'self';
+`
+  // Replace newline characters and spaces
+  const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim()
 
-  // response.headers.set('x-your-custom-locale', defaultLocale)
+  request.headers.set('x-nonce', nonce)
+  request.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
+
+  response.headers.set('x-nonce', nonce)
+  response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
   return response
+}
+
+const i18nMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
+  const handleI18nRouting = await createIntlMiddleware(i18nOption as any)
+  const response = handleI18nRouting(request)
+
+  return cspMiddleware(request, response)
 }
 
 const withAuthApiMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
