@@ -7,7 +7,14 @@ import { auth, authConfig, NextAuth } from './lib/nextAuth'
 
 export const runtime = 'nodejs'
 
-const getCspHeaderValue = (request: NextRequest) => {
+const redirectPath = (request: NextRequest, newPath: string) => {
+  const url = request.nextUrl.clone()
+  url.pathname = newPath
+
+  return NextResponse.redirect(url)
+}
+
+const cspMiddleware = (request: NextRequest, response: NextResponse) => {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'none';
@@ -27,28 +34,19 @@ const getCspHeaderValue = (request: NextRequest) => {
   const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim()
 
   const requestHeaders = new Headers(request.headers)
+
   requestHeaders.set('x-nonce', nonce)
   requestHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
+  response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
-  return contentSecurityPolicyHeaderValue
-}
-
-const redirectPath = (request: NextRequest, newPath: string) => {
-  const url = request.nextUrl.clone()
-  url.pathname = newPath
-
-  return NextResponse.redirect(url)
+  return response
 }
 
 const i18nMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
   const handleI18nRouting = await createIntlMiddleware(i18nOption as any)
   const response = handleI18nRouting(request)
 
-  const contentSecurityPolicyHeaderValue = getCspHeaderValue(request)
-
-  response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
-
-  return response
+  return cspMiddleware(request, response)
 }
 
 const withAuthApiMiddleware = async (request: NextRequest, path: string, defaultLocale: string) => {
