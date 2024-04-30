@@ -1,3 +1,5 @@
+'use client'
+
 import { headers } from 'next/headers'
 import Script from 'next/script'
 import React from 'react'

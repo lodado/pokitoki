@@ -22,6 +22,7 @@ const cspMiddleware = (request: NextRequest, response: NextResponse) => {
     img-src 'self' blob: data: ${supabaseProjectId}.supabase.co;
     font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net;
     script-src 'self' 'unsafe-eval' 'nonce-${nonce}' 'strict-dynamic' cdn.jsdelivr.net;
+    script-src-elem 'self' 'nonce-${nonce}';
     object-src 'none';
     connect-src 'self' https://www.google-analytics.com;
     base-uri 'self';

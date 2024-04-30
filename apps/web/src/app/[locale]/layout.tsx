@@ -14,8 +14,6 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
   const messages = useMessages()
   const nonce = headers().get('x-nonce')!
 
-  console.log(nonce, 'abc')
-
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
@@ -49,8 +47,9 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
 
             <Tutorial />
           </LibraryProvider>
-          <GA />
         </NextIntlClientProvider>
+
+        <GA nonce={nonce} />
       </body>
     </html>
   )
