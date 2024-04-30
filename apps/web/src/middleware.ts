@@ -17,13 +17,13 @@ const redirectPath = (request: NextRequest, newPath: string) => {
 const cspMiddleware = (request: NextRequest, response: NextResponse) => {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
-    default-src 'none';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' www.googletagmanager.com;
-    style-src 'self' 'nonce-${nonce}';
+    default-src 'self';
+    style-src 'self' 'unsafe-inline' spoqa.github.io cdn.jsdelivr.net;
     img-src 'self' blob: data: ${supabaseProjectId}.supabase.co;
     font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net;
-    script-src 'self' 'unsafe-eval' 'nonce-${nonce}' 'strict-dynamic';
+    script-src 'self' 'unsafe-eval' 'nonce-${nonce}' 'strict-dynamic' cdn.jsdelivr.net;
     object-src 'none';
+    connect-src 'self' https://www.google-analytics.com;
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
@@ -33,10 +33,10 @@ const cspMiddleware = (request: NextRequest, response: NextResponse) => {
   // Replace newline characters and spaces
   const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim()
 
-  const requestHeaders = new Headers(request.headers)
+  request.headers.set('x-nonce', nonce)
+  request.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
-  requestHeaders.set('x-nonce', nonce)
-  requestHeaders.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
+  response.headers.set('x-nonce', nonce)
   response.headers.set('Content-Security-Policy', contentSecurityPolicyHeaderValue)
 
   return response
