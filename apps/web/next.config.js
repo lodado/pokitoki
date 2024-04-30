@@ -57,11 +57,12 @@ const nextConfig = {
   images: {
     remotePatterns: [parseURL(process.env.NEXT_PUBLIC_SUPABASE_URL)],
 
-    // loader: 'custom',
-    // loaderFile: './src/lib/supabase/supabaseLoader.ts',
+    /** vercel에 과금해야해서 supabase image loader 사용 */
+    loader: 'custom',
+    loaderFile: './src/lib/supabase/supabaseLoader.ts',
 
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [32, 48, 64, 96, 128, 256, 384],
+    deviceSizes: [550, 768],
   },
 
   reactStrictMode: false,
@@ -85,12 +86,14 @@ const nextConfig = {
             Content Security Policy (CSP) can specify allowed origins for content including scripts, stylesheets,
             images, fonts, objects, media (audio, video), iframes, and more
           */
-          {
+          /*
+            {
             key: 'Content-Security-Policy',
             value: CSP.replace(/\n/g, '')
               .replace(/\s{2,}/g, ' ')
               .trim(),
           },
+          */
 
           /*
              it provide protection for older web browsers that don't support CSP.
