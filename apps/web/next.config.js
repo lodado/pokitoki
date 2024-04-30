@@ -18,23 +18,6 @@ const Sentry = require('@sentry/nextjs')
 const withNextIntl = createNextIntlPlugin()
 const { withSentryConfig } = Sentry
 
-const CSP = `
-default-src 'none';
-font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net;
-script-src 'self' 'unsafe-eval';
-script-src-elem 'self';
-connect-src 'self' cdnjs.cloudflare.com;
-style-src 'self' 'unsafe-inline';
-style-src-elem 'self' 'unsafe-inline' cdnjs.cloudflare.com;
-img-src 'self';
-manifest-src 'self';
-base-uri 'self';
-form-action 'self';
-frame-src 'self';
-frame-ancestors 'none';
-object-src 'none'; 
-`
-
 function parseURL(rawUrl) {
   const url = new URL(process.env.NODE_ENV !== 'test' ? rawUrl : 'https://www.mock.com/')
 
@@ -86,8 +69,9 @@ const nextConfig = {
             Content Security Policy (CSP) can specify allowed origins for content including scripts, stylesheets,
             images, fonts, objects, media (audio, video), iframes, and more
           */
+
           /*
-            {
+          {
             key: 'Content-Security-Policy',
             value: CSP.replace(/\n/g, '')
               .replace(/\s{2,}/g, ' ')

@@ -1,5 +1,3 @@
-const projectId = 'qmwtuvttspuxwuwrsuci' // your supabase project id
-
 export interface SupabaseLoaderParams {
   src: string
   width?: number
