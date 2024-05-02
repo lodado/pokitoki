@@ -1,8 +1,6 @@
 import { Provider } from 'jotai'
 import { ReactNode } from 'react'
 
-import { getMessageController, messageControllerAtom } from '@/store/message'
-
 import { HydrateAtoms } from './HydrateAtoms'
 
 export interface JotaiProviderProps {
@@ -12,7 +10,7 @@ export interface JotaiProviderProps {
 export const JotaiProvider = ({ children }: JotaiProviderProps) => {
   return (
     <Provider>
-      <HydrateAtoms initialValues={[[messageControllerAtom, getMessageController()]]}>{children}</HydrateAtoms>
+      <HydrateAtoms initialValues={[]}>{children}</HydrateAtoms>
     </Provider>
   )
 }
