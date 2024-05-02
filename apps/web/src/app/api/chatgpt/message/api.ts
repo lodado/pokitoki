@@ -1,11 +1,7 @@
 import request from '@/api'
-import {
-  appendMessageStorageById,
-  createMessageStorageById,
-  getMessageStorageById,
-} from '@/app/[locale]/protected/chat/utils/messageStorage'
 
 import { MessageApi } from './type'
+import { appendMessageStorageById, createMessageStorageById, getMessageStorageById } from './utils/messageStorage'
 
 // Wrapper for fetching chat details
 export const getAIMessages = async ({ assistantId, threadId }: { assistantId: string; threadId: string }) => {
@@ -40,5 +36,5 @@ export const postAIMessages = async ({
     data: { assistantId, threadId, message },
   })
 
-  appendMessageStorageById({ threadId, data: [message] })
+  await appendMessageStorageById({ threadId, data: [message] })
 }

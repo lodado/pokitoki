@@ -14,12 +14,14 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
 
+  const query = useQueryClient()
+
   const { mutate: submitText } = useMutation({
     mutationFn: async () => postAIMessages({ assistantId, threadId, message: value }),
 
     onSuccess: () => {
-      /** refresh를 막는 또다른 속성이 필요해서 queryClient.invalidQuery를 사용하지 않음  */
       triggerRefreshChatContent()
+      query.invalidateQueries(['protected/chat/freetalking', assistantId, threadId])
     },
   })
 

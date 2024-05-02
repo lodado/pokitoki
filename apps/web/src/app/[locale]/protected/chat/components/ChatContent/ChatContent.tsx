@@ -4,7 +4,6 @@ import { useAtomValue } from 'jotai'
 import React, { useEffect, useState } from 'react'
 
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
-import { useMessageStorage } from '@/hooks'
 import useUrl from '@/hooks/useUrl'
 import { useQuery } from '@/lib/tanstackQuery'
 
@@ -26,14 +25,10 @@ const ChatContent = () => {
     isError,
     error,
     refetch,
-  } = useQuery(
-    ['protected/chat/freetalking', assistantId, threadId, refreshChatContent],
-    () => getAIMessages({ assistantId, threadId }),
-    {
-      enabled: (initChatContent !== refreshChatContent || isFetchAllowed) && !!threadId && !!assistantId,
-      select: (data) => data.data,
-    },
-  )
+  } = useQuery(['protected/chat/freetalking', assistantId, threadId], () => getAIMessages({ assistantId, threadId }), {
+    enabled: (initChatContent !== refreshChatContent || isFetchAllowed) && !!threadId && !!assistantId,
+    select: (data) => data.data,
+  })
 
   const handleRefresh = () => {
     setFetchAllowed(true)

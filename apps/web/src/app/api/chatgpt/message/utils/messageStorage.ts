@@ -2,6 +2,8 @@
 
 import { IndexedDBController, isServerSide } from '@custompackages/shared'
 
+import { ChatMessage } from '../type'
+
 export interface MessageParams {
   threadId: string
 }
@@ -9,13 +11,13 @@ export interface MessageParams {
 export const messageController = (!isServerSide() &&
   new IndexedDBController('pokitoki-storage', 1)) as IndexedDBController
 
-export const getMessageStorageById = async ({ threadId }: MessageParams) => {
+export const getMessageStorageById = async <T>({ threadId }: MessageParams) => {
   return messageController.read({
     id: threadId,
-  })
+  }) as T
 }
 
-export const createMessageStorageById = async ({ threadId, data }: MessageParams & { data: string[] }) => {
+export const createMessageStorageById = async ({ threadId, data }: MessageParams & { data: ChatMessage[] }) => {
   messageController.put({
     id: threadId,
     timestamp: Date.now(),
@@ -23,10 +25,10 @@ export const createMessageStorageById = async ({ threadId, data }: MessageParams
   })
 }
 
-export const appendMessageStorageById = async ({ threadId, data }: MessageParams & { data: string[] }) => {
-  const { data: previousData } = (await getMessageStorageById({ threadId })) ?? { data: [] }
+export const appendMessageStorageById = async ({ threadId, data }: MessageParams & { data: ChatMessage[] }) => {
+  const { data: previousData }: { data: ChatMessage[] } = (await getMessageStorageById({ threadId })) ?? { data: [] }
 
-  messageController.put({
+  await messageController.put({
     id: threadId,
     timestamp: Date.now(),
     data: [...previousData, ...data],
