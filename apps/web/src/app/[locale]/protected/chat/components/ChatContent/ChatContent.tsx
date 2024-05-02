@@ -4,8 +4,9 @@ import { useAtomValue } from 'jotai'
 import React, { useEffect, useState } from 'react'
 
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
+import { useMessageStorage } from '@/hooks'
 import useUrl from '@/hooks/useUrl'
-import { useQuery } from '@/lib/useQuery'
+import { useQuery } from '@/lib/tanstackQuery'
 
 import { refreshChatContentAtom } from '../../store'
 
@@ -14,6 +15,7 @@ const ChatContent = () => {
   const { threadId, assistantId } = params
 
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
+
   const [initChatContent] = useState(refreshChatContent)
   const [isFetchAllowed, setFetchAllowed] = useState(false)
 

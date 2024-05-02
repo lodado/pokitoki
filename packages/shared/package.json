@@ -6,27 +6,27 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/es/client/index.d.ts",
+        "types": "./dist/types/client/index.d.ts",
         "default": "./dist/es/client/index.mjs"
       },
       "require": {
-        "types": "./dist/cjs/client/index.d.ts",
+        "types": "./dist/types/client/index.d.ts",
         "default": "./dist/cjs/client/index.cjs"
       }
     },
     "./server": {
       "import": {
-        "types": "./dist/es/server/index.server.d.ts",
+        "types": "./dist/types/server/index.server.d.ts",
         "default": "./dist/es/server/index.server.mjs"
       },
       "require": {
-        "types": "./dist/cjs/server/index.server.d.ts",
+        "types": "./dist/types/server/index.server.d.ts",
         "default": "./dist/cjs/server/index.server.cjs"
       }
     },
     "./index.css": "./dist/es/client/index.css"
   },
-  "source": "./src/index.ts",
+  "source": "./index.ts",
   "main": "./dist/cjs/client/index.cjs",
   "module": "./dist/es/client/index.mjs",
   "types": "./dist/es/client/index.d.ts",
@@ -37,7 +37,7 @@
   "scripts": {
     "dev": "rollup -c --watch ./rollup.config.mjs",
     "build": "rollup -c ./rollup.config.mjs",
-    "postbuild": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types",
+    "postbuild": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types/client",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",

@@ -1,4 +1,4 @@
-import IndexedDBController from './indexedDBController'
+import IndexedDBController from './IndexedDBController'
 import StorageController from './StorageController'
 
 export { IndexedDBController, StorageController }
