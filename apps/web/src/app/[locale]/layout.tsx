@@ -41,14 +41,13 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
       </head>
 
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <LibraryProvider>
+        <LibraryProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
 
             <Tutorial />
-          </LibraryProvider>
-        </NextIntlClientProvider>
-
+          </NextIntlClientProvider>
+        </LibraryProvider>
         <GA nonce={nonce} />
       </body>
     </html>

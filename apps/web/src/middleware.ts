@@ -19,9 +19,9 @@ const cspMiddleware = (request: NextRequest, response: NextResponse) => {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
-    style-src 'self' 'unsafe-inline' spoqa.github.io cdn.jsdelivr.net;
+    style-src 'self' 'unsafe-inline' spoqa.github.io cdn.jsdelivr.net data:;
     img-src 'self' blob: data: ${supabaseProjectId}.supabase.co;
-    font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net;
+    font-src 'self' cdnjs.cloudflare.com spoqa.github.io cdn.jsdelivr.net data:;
     script-src 'self' ${
       process.env.NODE_ENV !== 'production' ? `'unsafe-eval'` : ''
     } 'nonce-${nonce}' 'strict-dynamic' cdn.jsdelivr.net;
@@ -31,7 +31,6 @@ const cspMiddleware = (request: NextRequest, response: NextResponse) => {
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
-    upgrade-insecure-requests;
     manifest-src 'self';
 `
   // Replace newline characters and spaces
