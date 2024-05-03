@@ -11,10 +11,10 @@ import { refreshChatContentAtom } from '../../../store'
 import { getChatMessageKey } from '../../../utils'
 
 export interface useChatContentQueryProps {
-  isFetchAllowed: boolean
+  isInitFetchAllowed: boolean
 }
 
-export const useChatContentQuery = ({ isFetchAllowed }: { isFetchAllowed: boolean }) => {
+export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed: boolean }) => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { threadId, assistantId } = params
 
@@ -39,8 +39,6 @@ export const useChatContentQuery = ({ isFetchAllowed }: { isFetchAllowed: boolea
       enabled: !!threadId && !!assistantId,
       select: (messages) => messages.data,
 
-      staleTime: 0,
-      cacheTime: 0,
       refetchOnMount: true,
 
       onSuccess: async (cachedMessages) => {
@@ -54,6 +52,12 @@ export const useChatContentQuery = ({ isFetchAllowed }: { isFetchAllowed: boolea
 
         queryClient.setQueryData(chatMessageKey, updatedData)
       },
+      ...(isInitFetchAllowed
+        ? {}
+        : {
+            staleTime: 0,
+            cacheTime: 0,
+          }),
     },
   )
 

@@ -8,19 +8,10 @@ import { Message } from '@/components/Message'
 import { useChatContentQuery } from './hooks'
 
 const ChatContent = () => {
-  const [isFetchAllowed, setFetchAllowed] = useState(false)
-
-  const { data: messages, isLoading } = useChatContentQuery({ isFetchAllowed })
-
-  const handleRefresh = () => {
-    setFetchAllowed(true)
-  }
+  const { data: messages, isLoading } = useChatContentQuery({ isInitFetchAllowed: false })
 
   return (
     <div>
-      <button type="button" onClick={handleRefresh}>
-        refresh
-      </button>
       <h4>
         <b>채팅 내용</b>
       </h4>
