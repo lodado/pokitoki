@@ -20,6 +20,10 @@ export const ThreadPolling = async (assistantId: string, threadId: string, runId
     ? { id: runId }
     : await openai.beta.threads.runs.create(threadId, {
         assistant_id: assistantId,
+        truncation_strategy: {
+          type: 'last_messages',
+          last_messages: 6,
+        },
       })
 
   while (waitCount < 500) {
@@ -73,8 +77,6 @@ export const getThreadMessages = async (
   if (!threadMessages || threadMessages.length === 0) {
     return []
   }
-
-  console.log(threadMessages)
 
   const convertedMessages = threadMessages.map(({ content }) => (content as MessageContentText[])[0].text.value)
   return convertedMessages
