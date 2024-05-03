@@ -1,34 +1,16 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
+import { Virtuoso } from '@custompackages/designsystem'
 import React, { useEffect, useState } from 'react'
 
-import { getAIMessages } from '@/app/api/chatgpt/message/api'
-import useUrl from '@/hooks/useUrl'
-import { useQuery } from '@/lib/tanstackQuery'
+import { Message } from '@/components/Message'
 
-import { refreshChatContentAtom } from '../../store'
+import { useChatContentQuery } from './hooks'
 
 const ChatContent = () => {
-  const { params } = useUrl<{ threadId: string; assistantId: string }>()
-  const { threadId, assistantId } = params
-
-  const refreshChatContent = useAtomValue(refreshChatContentAtom)
-
-  const [initChatContent] = useState(refreshChatContent)
   const [isFetchAllowed, setFetchAllowed] = useState(false)
 
-  // Setting up the query for fetching messages
-  const {
-    data: messages,
-    isLoading,
-    isError,
-    error,
-    refetch,
-  } = useQuery(['protected/chat/freetalking', assistantId, threadId], () => getAIMessages({ assistantId, threadId }), {
-    enabled: (initChatContent !== refreshChatContent || isFetchAllowed) && !!threadId && !!assistantId,
-    select: (data) => data.data,
-  })
+  const { data: messages, isLoading } = useChatContentQuery({ isFetchAllowed })
 
   const handleRefresh = () => {
     setFetchAllowed(true)
@@ -45,14 +27,17 @@ const ChatContent = () => {
 
       {isLoading && <div>loading..</div>}
 
-      {!messages ? (
+      {messages.length === 0 ? (
         <p>채팅 내용이 존재하지 않습니다.</p>
       ) : (
-        <ul>
-          {messages.map((message, i) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <li key={`${message}_${i}`}>{message}</li>
-          ))}
+        <ul className="w-screen h-screen">
+          <Virtuoso
+            // eslint-disable-next-line react/no-unstable-nested-components
+            itemContent={(index) => {
+              return <Message index={index} message={messages[index]} />
+            }}
+            totalCount={Math.max(0, messages.length)}
+          />
         </ul>
       )}
     </div>

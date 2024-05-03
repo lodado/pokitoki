@@ -3,6 +3,7 @@
 import { Button } from '@custompackages/designsystem'
 import React, { ReactNode } from 'react'
 
+import { DeleteMessageStorageById } from '@/app/api/chatgpt/message/utils/messageStorage'
 import { createThread, getThread } from '@/app/api/chatgpt/thread/api'
 import useUrl from '@/hooks/useUrl'
 
@@ -27,6 +28,8 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
 
         threadId = _threadId
       }
+
+      await DeleteMessageStorageById({ threadId })
 
       push(`/${locale}/protected/chat/${assistantId}/${threadId}/freetalking`)
     } catch (error) {

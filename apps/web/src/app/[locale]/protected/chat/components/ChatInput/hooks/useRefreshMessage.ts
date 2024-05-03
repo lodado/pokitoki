@@ -7,6 +7,7 @@ import { useSetAtom } from '@/lib/jotai'
 import { useMutation, useQueryClient } from '@/lib/tanstackQuery'
 
 import { triggerRefreshChatContentAtom } from '../../../store'
+import { getChatMessageKey } from '../../../utils'
 
 const useRefreshMessage = ({ value }: { value: string }) => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
@@ -14,14 +15,15 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
 
-  const query = useQueryClient()
+  const queryClient = useQueryClient()
+  const chatMessageKey = getChatMessageKey({ threadId, assistantId })
 
   const { mutate: submitText } = useMutation({
     mutationFn: async () => postAIMessages({ assistantId, threadId, message: value }),
 
     onSuccess: () => {
       triggerRefreshChatContent()
-      query.invalidateQueries(['protected/chat/freetalking', assistantId, threadId])
+      queryClient.invalidateQueries(chatMessageKey)
     },
   })
 

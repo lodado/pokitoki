@@ -1,23 +1,45 @@
 import request from '@/api'
 
-import { MessageApi } from './type'
+import { ChatMessage, MessageApi } from './type'
 import { appendMessageStorageById, createMessageStorageById, getMessageStorageById } from './utils/messageStorage'
 
 // Wrapper for fetching chat details
-export const getAIMessages = async ({ assistantId, threadId }: { assistantId: string; threadId: string }) => {
-  const cachedData = await getMessageStorageById({ threadId })
 
-  if (cachedData) return cachedData as unknown as { data: string[] }
+export const getAIMessagesByStorage = async ({ assistantId, threadId }: { assistantId: string; threadId: string }) => {
+  const cachedData: { data: ChatMessage[] } = (await getMessageStorageById({ threadId })) ?? { data: [] }
 
-  const response = await request<MessageApi>({
-    method: 'GET',
-    url: `/api/chatgpt/message`,
-    params: { assistantId, threadId },
-  })
+  return cachedData
+}
 
-  createMessageStorageById({ threadId, data: response.data })
+export const getAIMessages = async ({
+  assistantId,
+  threadId,
+  isFirstLoad,
+  runRequired = false,
+  cachedData,
+}: {
+  cachedData: ChatMessage[]
+  assistantId: string
+  threadId: string
+  isFirstLoad: boolean
+  runRequired?: boolean
+}) => {
+  let data = cachedData
 
-  return response
+  if (runRequired) {
+    const dataLimit = isFirstLoad ? 60 : 1
+
+    const { data: updatedData } = await request<MessageApi>({
+      method: 'GET',
+      url: `/api/chatgpt/message`,
+      params: { assistantId, threadId, dataLimit, runRequired },
+    })
+
+    data = [...data, ...updatedData]
+    createMessageStorageById({ threadId, data })
+  }
+
+  return { data } as MessageApi
 }
 
 // Wrapper for sending a chat message
@@ -30,11 +52,11 @@ export const postAIMessages = async ({
   threadId: string
   message: string
 }) => {
-  const response = await request({
+  await appendMessageStorageById({ threadId, data: [message] })
+
+  const response = request({
     method: 'POST',
     url: '/api/chatgpt/message',
     data: { assistantId, threadId, message },
   })
-
-  await appendMessageStorageById({ threadId, data: [message] })
 }

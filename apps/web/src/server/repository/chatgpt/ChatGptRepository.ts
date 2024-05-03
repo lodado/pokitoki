@@ -28,7 +28,7 @@ export const ThreadPolling = async (assistantId: string, threadId: string, runId
 
     if (status === 'completed') break
     // eslint-disable-next-line no-await-in-loop
-    sleep(1000)
+    await sleep(1000)
     waitCount += 100
   }
 }
@@ -58,14 +58,23 @@ export const createThread = async (assistantId: string) => {
   return threadId
 }
 
-export const getThreadMessages = async (assistantId: string, threadId: string) => {
-  const { data: threadMessages } = await openai.beta.threads.messages.list(threadId)
+export const getThreadMessages = async (
+  assistantId: string,
+  threadId: string,
+  dataLimit: number,
+  runRequired: boolean,
+) => {
+  if (runRequired) await ThreadPolling(assistantId, threadId)
 
-  await ThreadPolling(assistantId, threadId)
+  const { data: threadMessages } = await openai.beta.threads.messages.list(threadId, {
+    limit: dataLimit,
+  })
 
   if (!threadMessages || threadMessages.length === 0) {
     return []
   }
+
+  console.log(threadMessages)
 
   const convertedMessages = threadMessages.map(({ content }) => (content as MessageContentText[])[0].text.value)
   return convertedMessages
@@ -73,8 +82,6 @@ export const getThreadMessages = async (assistantId: string, threadId: string) =
 
 export const createThreadMessage = async (assistantId: string, threadId: string, content: string) => {
   const { content: messageContents } = await openai.beta.threads.messages.create(threadId, { role: 'user', content })
-
-  await ThreadPolling(assistantId, threadId)
 
   const messages = (messageContents as MessageContentText[]).map(({ text }) => text.value)
   return messages

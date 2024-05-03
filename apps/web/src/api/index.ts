@@ -17,7 +17,7 @@ const request = async <T>({
 }: {
   url: string
   data?: Record<string, unknown> | Array<unknown>
-  params?: Record<string, string>
+  params?: Record<string, unknown>
   timeout?: number
 } & RequestInit): Promise<T> => {
   const controller = isServerSide() ? new AbortController() : (new MockController() as AbortController)
@@ -33,7 +33,7 @@ const request = async <T>({
   const urlObject = new URL(ROOT_URL + url)
 
   if (params) {
-    const searchParams = new URLSearchParams(params)
+    const searchParams = new URLSearchParams(params as Record<string, string>)
     urlObject.search = searchParams.toString()
   }
 

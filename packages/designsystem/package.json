@@ -17,7 +17,6 @@
     "@custompackages/clientlogger": "workspace:*",
     "@custompackages/design-assets": "workspace:*",
     "@custompackages/shared": "workspace:*",
-    "react-joyride": "^2.8.1",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.6",
@@ -29,6 +28,7 @@
     "next": "^14.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-joyride": "^2.8.1",
     "tailwind-config": "workspace:*",
     "tailwind-merge": "^2.3.0",
     "tsconfig": "workspace:*",
@@ -40,6 +40,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
     "lottie-react": "^2.4.0",
-    "lucide-react": "^0.303.0"
+    "lucide-react": "^0.303.0",
+    "react-virtuoso": "^4.7.10"
   }
 }

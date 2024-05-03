@@ -34,3 +34,9 @@ export const appendMessageStorageById = async ({ threadId, data }: MessageParams
     data: [...previousData, ...data],
   })
 }
+
+export const DeleteMessageStorageById = async ({ threadId }: MessageParams) => {
+  messageController.delete({
+    id: threadId,
+  })
+}
