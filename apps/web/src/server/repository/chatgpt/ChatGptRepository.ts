@@ -1,5 +1,6 @@
 import { OpenAI } from 'openai'
 
+import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { supabaseInstance } from '@/lib/supabase'
 
 type MessageContentText = OpenAI.Beta.Threads.TextContentBlock
@@ -79,9 +80,16 @@ export const getThreadMessages = async (
   }
 
   const convertedMessages = threadMessages
-    .map(({ content }) => (content as MessageContentText[])[0]?.text.value)
+    .map(({ id, created_at: createdAt, content }) => {
+      return {
+        id,
+        createdAt,
+        content: (content as MessageContentText[])[0]?.text.value,
+      }
+    })
     .filter((content) => content)
-  return convertedMessages
+
+  return convertedMessages as ChatMessage[]
 }
 
 export const createThreadMessage = async (assistantId: string, threadId: string, content: string) => {

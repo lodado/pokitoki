@@ -8,7 +8,7 @@ export interface MessageProps {
 }
 
 const Message = ({ index, message }: MessageProps) => {
-  return <li>{message}</li>
+  return <li>{message.content}</li>
 }
 
 export default Message
