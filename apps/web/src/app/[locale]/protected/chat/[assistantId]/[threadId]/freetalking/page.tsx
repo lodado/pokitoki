@@ -34,9 +34,10 @@ export async function generateMetadata({
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
   return (
     <LogScreen>
-      <FreetalkingChatContent />
-      <ChatInput />
-
+      <main className="w-full h-full min-h-[inherit]">
+        <FreetalkingChatContent />
+        <ChatInput />
+      </main>
       {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>
   )

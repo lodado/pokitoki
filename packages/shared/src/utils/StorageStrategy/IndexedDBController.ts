@@ -19,12 +19,7 @@ export default class IndexedDBController {
     this.indexedDBKey = 'IndexedDBController'
   }
 
-  async open(): Promise<void> {
-    if (this.db || isServerSide())
-      return new Promise((resolve, reject) => {
-        resolve()
-      })
-
+  open = () => {
     return new Promise((resolve, reject) => {
       const request = indexedDB.open(this.dbName, this.version)
 
@@ -39,7 +34,7 @@ export default class IndexedDBController {
       request.onsuccess = (event: Event) => {
         this.db = (event.target as IDBOpenDBRequest).result
 
-        resolve()
+        resolve(1)
       }
 
       request.onerror = (event: Event) => {
@@ -48,29 +43,33 @@ export default class IndexedDBController {
     })
   }
 
-  async put(data: DataWithTimestamp): Promise<void> {
+  put = async (data: DataWithTimestamp) => {
     if (!this.db) {
       await this.open()
     }
 
     return new Promise((resolve, reject) => {
+      if (!this.db) return
+
       const transaction = this.db!.transaction([this.indexedDBKey], 'readwrite')
       const store = transaction.objectStore(this.indexedDBKey)
       const request = store.put(data)
 
       request.onsuccess = () => {
-        resolve()
+        resolve(1)
       }
       request.onerror = (event: Event) => reject((event.target as IDBRequest).error)
     })
   }
 
-  async read({ id }: { id: string }): Promise<DataWithTimestamp | undefined> {
+  read = async ({ id }: { id: string }) => {
     if (!this.db) {
       await this.open()
     }
 
     return new Promise((resolve, reject) => {
+      if (!this.db) return
+
       const transaction = this.db!.transaction([this.indexedDBKey])
       const store = transaction.objectStore(this.indexedDBKey)
       const request = store.get(id)
@@ -83,13 +82,15 @@ export default class IndexedDBController {
     })
   }
 
-  async delete({ id }: { id: string }): Promise<void> {
+  delete = ({ id }: { id: string }) => {
     return new Promise((resolve, reject) => {
+      if (!this.db) return
+
       const transaction = this.db!.transaction([this.indexedDBKey], 'readwrite')
       const store = transaction.objectStore(this.indexedDBKey)
       const request = store.delete(id)
 
-      request.onsuccess = () => resolve()
+      request.onsuccess = () => resolve(1)
       request.onerror = (event: Event) => reject((event.target as IDBRequest).error)
     })
   }

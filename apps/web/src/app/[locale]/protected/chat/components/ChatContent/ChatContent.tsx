@@ -21,7 +21,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
         <b>채팅 내용</b>
       </h4>
 
-      <ul className="w-[600px] h-[600px]">
+      <ul className="w-full bg-red-100 h-[85vh]">
         <Virtuoso
           // eslint-disable-next-line react/no-unstable-nested-components
           itemContent={(index) => {

@@ -12,10 +12,7 @@ const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: 
 
   return (
     <LoginSessionProvider session={session}>
-      <div
-        className="absolute w-full h-12 border-b border-solid border-b-1 border-border-01"
-        role="presentation none"
-      />
+      <div className="fixed w-full h-12 border-b border-solid border-b-1 border-border-01" role="presentation none" />
 
       <ResponsiveLayout className="min-h-screen">{children}</ResponsiveLayout>
     </LoginSessionProvider>
