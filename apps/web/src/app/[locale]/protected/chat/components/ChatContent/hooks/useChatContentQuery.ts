@@ -15,6 +15,9 @@ export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
 }
 
+/**
+ * tanstack query가 next14에서 불완전해서 일시적으로 삭제하고, jotai로 구현함
+ */
 export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed: boolean }) => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { threadId, assistantId } = params
