@@ -1,14 +1,14 @@
 'use client'
 
 import { useAtomValue } from 'jotai'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { getAIMessages, getAIMessagesByStorage } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
 import { useQuery, useQueryClient, useSuspenseQuery } from '@/lib/tanstackQuery'
 
+import { useChatMessageKey } from '../../../hooks'
 import { refreshChatContentAtom } from '../../../store'
-import { getChatMessageKey } from '../../../utils'
 
 export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
@@ -22,25 +22,11 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const [initChatContent] = useState(refreshChatContent)
 
   const queryClient = useQueryClient()
-  const chatMessageKey = getChatMessageKey({ threadId, assistantId })
+  const chatMessageKey = useChatMessageKey({ threadId, assistantId })
+  const cursorRef = useRef({ cursor: '1' })
 
-  /**
-   *  onSuccess: async (cachedMessages: string[]) => {
-      const updatedData = await getAIMessages({
-        assistantId,
-        threadId,
-        isFirstLoad: initChatContent === refreshChatContent,
-        runRequired: initChatContent !== refreshChatContent,
-        cachedData: cachedMessages,
-      })
-
-      queryClient.setQueryData(chatMessageKey, updatedData)
-    },
-   * 
-   */
-
-  // TODO - suspense로 변경
-  const { data } = useSuspenseQuery({
+  // next14에서 useInfinityQuery가 동작을 안함..;
+  const { data, refetch } = useQuery({
     queryKey: chatMessageKey,
     queryFn: () =>
       getAIMessages({
@@ -51,14 +37,15 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       }),
 
     select: (messages) => messages.data,
-
-    ...(isInitFetchAllowed
-      ? {}
-      : {
-          staleTime: 0,
-          cacheTime: 0,
-        }),
   })
+
+  useEffect(() => {
+    cursorRef.current.cursor = data?.at(-1)?.id!
+
+    console.log(cursorRef.current.cursor, data)
+
+    refetch()
+  }, [refreshChatContent])
 
   return { data }
 }
