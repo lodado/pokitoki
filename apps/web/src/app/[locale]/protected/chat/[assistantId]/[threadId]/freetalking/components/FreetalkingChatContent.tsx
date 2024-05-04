@@ -6,7 +6,7 @@ import { ChatContent } from '../../../../components/ChatContent'
 import { useChatContentQuery } from '../../../../components/ChatContent/hooks'
 
 const FreetalkingChatContent = () => {
-  const { data: messages } = useChatContentQuery({ isInitFetchAllowed: false })
+  const { messages } = useChatContentQuery({ isInitFetchAllowed: false })
 
   return <ChatContent messages={messages} />
 }

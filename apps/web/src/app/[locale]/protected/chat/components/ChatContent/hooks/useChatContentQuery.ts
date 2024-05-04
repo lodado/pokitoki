@@ -1,14 +1,15 @@
 'use client'
 
-import { useAtomValue } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { getAIMessages, getAIMessagesByStorage } from '@/app/api/chatgpt/message/api'
+import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import useUrl from '@/hooks/useUrl'
 import { useQuery, useQueryClient, useSuspenseQuery } from '@/lib/tanstackQuery'
 
 import { useChatMessageKey } from '../../../hooks'
-import { refreshChatContentAtom } from '../../../store'
+import { chatMessageAtom, refreshChatContentAtom } from '../../../store'
 
 export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
@@ -18,34 +19,35 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { threadId, assistantId } = params
 
+  const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
+
   const [initChatContent] = useState(refreshChatContent)
+  useEffect(() => {
+    const isFirstLoad = initChatContent === refreshChatContent
+    const runRequired = initChatContent !== refreshChatContent
 
-  const queryClient = useQueryClient()
-  const chatMessageKey = useChatMessageKey({ threadId, assistantId })
-  const cursorRef = useRef({ cursor: '1' })
-
-  // next14에서 useInfinityQuery가 동작을 안함..;
-  const { data, refetch } = useQuery({
-    queryKey: chatMessageKey,
-    queryFn: () =>
-      getAIMessages({
+    const requestAiMessages = async () => {
+      const { data } = await getAIMessages({
         assistantId,
         threadId,
-        isFirstLoad: initChatContent === refreshChatContent,
-        runRequired: initChatContent !== refreshChatContent,
-      }),
+        isFirstLoad,
+        runRequired,
+      })
 
-    select: (messages) => messages.data,
-  })
+      setChatMessages(data)
+    }
 
-  useEffect(() => {
-    cursorRef.current.cursor = data?.at(-1)?.id!
-
-    console.log(cursorRef.current.cursor, data)
-
-    refetch()
+    requestAiMessages()
   }, [refreshChatContent])
 
-  return { data }
+  useEffect(() => {
+    return () => {
+      setChatMessages([])
+    }
+  }, [])
+
+  useEffect(() => {}, [refreshChatContent])
+
+  return { messages: chatMessage }
 }
