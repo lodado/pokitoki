@@ -1,7 +1,7 @@
 'use client'
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 
 import ReactQueryProvider from './reactQueryProvider'
 
-export { ReactQueryProvider, useMutation, useQuery, useQueryClient }
+export { ReactQueryProvider, useMutation, useQuery, useQueryClient, useSuspenseQuery }

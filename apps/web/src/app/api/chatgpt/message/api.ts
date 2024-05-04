@@ -16,28 +16,19 @@ export const getAIMessages = async ({
   threadId,
   isFirstLoad,
   runRequired = false,
-  cachedData,
 }: {
-  cachedData: ChatMessage[]
   assistantId: string
   threadId: string
   isFirstLoad: boolean
   runRequired?: boolean
 }) => {
-  let data = cachedData
+  const dataLimit = 60
 
-  if (runRequired) {
-    const dataLimit = isFirstLoad ? 60 : 1
-
-    const { data: updatedData } = await request<MessageApi>({
-      method: 'GET',
-      url: `/api/chatgpt/message`,
-      params: { assistantId, threadId, dataLimit, runRequired },
-    })
-
-    data = [...data, ...updatedData]
-    createMessageStorageById({ threadId, data })
-  }
+  const { data } = await request<MessageApi>({
+    method: 'GET',
+    url: `/api/chatgpt/message`,
+    params: { assistantId, threadId, dataLimit, runRequired },
+  })
 
   return { data } as MessageApi
 }
@@ -52,7 +43,7 @@ export const postAIMessages = async ({
   threadId: string
   message: string
 }) => {
-  await appendMessageStorageById({ threadId, data: [message] })
+  // await appendMessageStorageById({ threadId, data: [message] })
 
   const response = request({
     method: 'POST',

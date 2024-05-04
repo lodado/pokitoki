@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
     const assistantId = req.nextUrl.searchParams.get('assistantId')!
 
     const dataLimit = Number(req.nextUrl.searchParams.get('dataLimit') ?? 1)
-    const runRequired = Boolean(req.nextUrl.searchParams.get('runRequired') ?? false)
+    const runRequired = Boolean(req.nextUrl.searchParams.get('runRequired') === 'true')
 
     if (!threadId) throw new Error(`Could not find threadId`)
     if (!assistantId) throw new Error(`Could not find assistantId`)

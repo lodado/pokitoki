@@ -10,6 +10,7 @@ import { MetadataParams } from '@/utils/metadata/metadata'
 
 import { ChatContent } from '../../../components/ChatContent'
 import { ChatInput } from '../../../components/ChatInput'
+import FreetalkingChatContent from './components/FreetalkingChatContent'
 
 interface ChatPageProps extends MetadataParams {
   params: {
@@ -33,7 +34,7 @@ export async function generateMetadata({
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
   return (
     <LogScreen>
-      <ChatContent />
+      <FreetalkingChatContent />
       <ChatInput />
 
       {/* <TutorialConnector steps={steps} /> */}

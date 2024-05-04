@@ -9,7 +9,7 @@ const ChatInput = () => {
   const { handleSubmitMessage } = useRefreshMessage({ value })
 
   return (
-    <form onSubmit={handleSubmitMessage}>
+    <form className="w-full h-[5vh] sticky" onSubmit={handleSubmitMessage}>
       <input
         name="message"
         value={value}

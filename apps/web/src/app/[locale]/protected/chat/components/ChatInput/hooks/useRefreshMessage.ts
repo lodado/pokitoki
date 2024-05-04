@@ -23,7 +23,6 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
     onSuccess: () => {
       triggerRefreshChatContent()
-      queryClient.invalidateQueries(chatMessageKey)
     },
   })
 

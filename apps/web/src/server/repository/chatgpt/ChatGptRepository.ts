@@ -78,14 +78,16 @@ export const getThreadMessages = async (
     return []
   }
 
-  const convertedMessages = threadMessages.map(({ content }) => (content as MessageContentText[])[0].text.value)
+  const convertedMessages = threadMessages
+    .map(({ content }) => (content as MessageContentText[])[0]?.text.value)
+    .filter((content) => content)
   return convertedMessages
 }
 
 export const createThreadMessage = async (assistantId: string, threadId: string, content: string) => {
   const { content: messageContents } = await openai.beta.threads.messages.create(threadId, { role: 'user', content })
 
-  const messages = (messageContents as MessageContentText[]).map(({ text }) => text.value)
+  const messages = (messageContents as MessageContentText[]).map(({ text }) => text?.value)
   return messages
 }
 

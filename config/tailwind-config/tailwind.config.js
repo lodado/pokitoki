@@ -67,6 +67,7 @@ export default {
         dropdown: '500',
         dialog: '100',
         portal: '50',
+        nav: '30',
       },
     },
   },

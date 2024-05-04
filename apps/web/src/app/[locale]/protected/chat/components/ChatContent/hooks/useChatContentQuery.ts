@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 
 import { getAIMessages, getAIMessagesByStorage } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
-import { useQuery, useQueryClient } from '@/lib/tanstackQuery'
+import { useQuery, useQueryClient, useSuspenseQuery } from '@/lib/tanstackQuery'
 
 import { refreshChatContentAtom } from '../../../store'
 import { getChatMessageKey } from '../../../utils'
@@ -24,42 +24,41 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const queryClient = useQueryClient()
   const chatMessageKey = getChatMessageKey({ threadId, assistantId })
 
-  // TODO - suspense로 변경
-  const { data, isLoading, isError, error, refetch } = useQuery(
-    chatMessageKey,
-    () =>
-      getAIMessagesByStorage({
+  /**
+   *  onSuccess: async (cachedMessages: string[]) => {
+      const updatedData = await getAIMessages({
         assistantId,
         threadId,
-      }),
-    {
-      initialData: () => {
-        return { data: [] }
-      },
-      enabled: !!threadId && !!assistantId,
-      select: (messages) => messages.data,
+        isFirstLoad: initChatContent === refreshChatContent,
+        runRequired: initChatContent !== refreshChatContent,
+        cachedData: cachedMessages,
+      })
 
-      refetchOnMount: true,
-
-      onSuccess: async (cachedMessages) => {
-        const updatedData = await getAIMessages({
-          assistantId,
-          threadId,
-          isFirstLoad: initChatContent === refreshChatContent,
-          runRequired: initChatContent !== refreshChatContent,
-          cachedData: cachedMessages,
-        })
-
-        queryClient.setQueryData(chatMessageKey, updatedData)
-      },
-      ...(isInitFetchAllowed
-        ? {}
-        : {
-            staleTime: 0,
-            cacheTime: 0,
-          }),
+      queryClient.setQueryData(chatMessageKey, updatedData)
     },
-  )
+   * 
+   */
 
-  return { data, isLoading, isError }
+  // TODO - suspense로 변경
+  const { data } = useSuspenseQuery({
+    queryKey: chatMessageKey,
+    queryFn: () =>
+      getAIMessages({
+        assistantId,
+        threadId,
+        isFirstLoad: initChatContent === refreshChatContent,
+        runRequired: initChatContent !== refreshChatContent,
+      }),
+
+    select: (messages) => messages.data,
+
+    ...(isInitFetchAllowed
+      ? {}
+      : {
+          staleTime: 0,
+          cacheTime: 0,
+        }),
+  })
+
+  return { data }
 }

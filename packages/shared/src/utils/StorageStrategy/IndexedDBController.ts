@@ -1,3 +1,5 @@
+import { isServerSide } from '../isServerSide'
+
 export interface DataWithTimestamp {
   id: string
   timestamp: number
@@ -18,7 +20,7 @@ export default class IndexedDBController {
   }
 
   async open(): Promise<void> {
-    if (this.db)
+    if (this.db || isServerSide())
       return new Promise((resolve, reject) => {
         resolve()
       })

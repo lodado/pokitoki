@@ -1,36 +1,35 @@
 'use client'
 
 import { Virtuoso } from '@custompackages/designsystem'
+import { Messages } from 'openai/resources/beta/threads/messages.mjs'
 import React, { useEffect, useState } from 'react'
 
+import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { Message } from '@/components/Message'
 
-import { useChatContentQuery } from './hooks'
+interface ChatContentProps {
+  messages: ChatMessage[]
+}
 
-const ChatContent = () => {
-  const { data: messages, isLoading } = useChatContentQuery({ isInitFetchAllowed: false })
+const ChatContent = ({ messages }: ChatContentProps) => {
+  // virtuoso 및 server component에 에러가 있는듯?
+  const length = messages ? messages.length : 0
 
   return (
-    <div>
+    <div className="w-full h-full">
       <h4>
         <b>채팅 내용</b>
       </h4>
 
-      {isLoading && <div>loading..</div>}
-
-      {messages.length === 0 ? (
-        <p>채팅 내용이 존재하지 않습니다.</p>
-      ) : (
-        <ul className="w-screen h-screen">
-          <Virtuoso
-            // eslint-disable-next-line react/no-unstable-nested-components
-            itemContent={(index) => {
-              return <Message index={index} message={messages[index]} />
-            }}
-            totalCount={Math.max(0, messages.length)}
-          />
-        </ul>
-      )}
+      <ul className="w-[600px] h-[600px]">
+        <Virtuoso
+          // eslint-disable-next-line react/no-unstable-nested-components
+          itemContent={(index) => {
+            return <Message index={index} message={messages[index]} />
+          }}
+          totalCount={Math.max(0, length)}
+        />
+      </ul>
     </div>
   )
 }
