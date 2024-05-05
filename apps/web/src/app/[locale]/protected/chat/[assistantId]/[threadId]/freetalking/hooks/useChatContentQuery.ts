@@ -1,15 +1,14 @@
 'use client'
 
-import { useAtom, useAtomValue } from 'jotai'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { getAIMessages, getAIMessagesByStorage } from '@/app/api/chatgpt/message/api'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import useUrl from '@/hooks/useUrl'
-import { useQuery, useQueryClient, useSuspenseQuery } from '@/lib/tanstackQuery'
+import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 
-import { useChatMessageKey } from '../../../hooks'
-import { chatMessageAtom, refreshChatContentAtom } from '../../../store'
+import { useChatMessageKey } from '../../../../hooks'
+import { chatMessageAtom, hasChatMoreAtom, isChatLoadingAtom, refreshChatContentAtom } from '../../../../store'
 
 export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
@@ -24,13 +23,17 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
+  const setLoading = useSetAtom(isChatLoadingAtom)
+  const setHasChatMore = useSetAtom(hasChatMoreAtom)
 
   const [initChatContent] = useState(refreshChatContent)
   useEffect(() => {
     const isFirstLoad = initChatContent === refreshChatContent
-    const runRequired = initChatContent !== refreshChatContent
+    const runRequired = false // initChatContent !== refreshChatContent
 
     const requestAiMessages = async () => {
+      setLoading(true)
+
       const { data } = await getAIMessages({
         assistantId,
         threadId,
@@ -39,6 +42,8 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       })
 
       setChatMessages(data)
+      setLoading(false)
+      setHasChatMore(data.length > 0)
     }
 
     requestAiMessages()
@@ -49,8 +54,6 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       setChatMessages([])
     }
   }, [])
-
-  useEffect(() => {}, [refreshChatContent])
 
   return { messages: chatMessage }
 }

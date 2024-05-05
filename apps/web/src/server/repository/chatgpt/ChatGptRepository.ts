@@ -87,7 +87,7 @@ export const getThreadMessages = async (
         content: (content as MessageContentText[])[0]?.text.value,
       }
     })
-    .filter((content) => content)
+    .filter(({ content }) => content)
 
   return convertedMessages as ChatMessage[]
 }
