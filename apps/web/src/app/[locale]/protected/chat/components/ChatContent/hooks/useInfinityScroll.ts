@@ -1,13 +1,15 @@
 'use client'
 
+import debounce from 'lodash-es/debounce'
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 
 import {
+  chatMessageAtom,
+  chatMessageScrollIndexAtom,
   hasChatMoreAtom,
   isChatLoadingAtom,
-  previousChatMessageIndexAtom,
   triggerRefreshChatContentAtom,
 } from '../../../store'
 
@@ -15,21 +17,24 @@ const useInfinityScroll = () => {
   const observerRef = useRef<any>()
   const [isLoading, setLoading] = useAtom(isChatLoadingAtom)
   const [hasMore, setHasMore] = useAtom(hasChatMoreAtom)
+
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
-  const previousChatMessageIndex = useAtomValue(previousChatMessageIndexAtom)
 
-  const lastMessageRef = () => {
-    setTimeout(() => {
-      if (isLoading) return
+  const previousChatMessageIndex = useAtomValue(chatMessageScrollIndexAtom)
 
-      if (hasMore) {
-        triggerRefreshChatContent()
-      }
-    }, 500)
-  }
+  const lastMessageRef = debounce(() => {
+    if (isLoading) return
+    if (hasMore) {
+      triggerRefreshChatContent()
+    }
+  }, 500)
+
+  const moveScroll = debounce(() => {
+    observerRef.current?.scrollToIndex({ index: previousChatMessageIndex })
+  }, 0)
 
   useEffect(() => {
-    observerRef.current?.scrollToIndex({ index: previousChatMessageIndex })
+    moveScroll()
   }, [previousChatMessageIndex])
 
   return { observerRef, lastMessageRef }

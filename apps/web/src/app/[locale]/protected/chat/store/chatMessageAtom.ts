@@ -8,4 +8,4 @@ export const isChatLoadingAtom = atom<boolean>(false)
 
 export const hasChatMoreAtom = atom<boolean>(true)
 
-export const previousChatMessageIndexAtom = atom<number>(0)
+export const chatMessageScrollIndexAtom = atom<number>(0)

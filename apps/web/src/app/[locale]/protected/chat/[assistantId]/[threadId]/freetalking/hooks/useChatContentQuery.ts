@@ -10,9 +10,9 @@ import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 import { useChatMessageKey } from '../../../../hooks'
 import {
   chatMessageAtom,
+  chatMessageScrollIndexAtom,
   hasChatMoreAtom,
   isChatLoadingAtom,
-  previousChatMessageIndexAtom,
   refreshChatContentAtom,
   refreshForAiAnswerAtom,
 } from '../../../../store'
@@ -35,7 +35,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
-  const setPreviousChatMessageIndex = useSetAtom(previousChatMessageIndexAtom)
+  const setPreviousChatMessageIndex = useSetAtom(chatMessageScrollIndexAtom)
 
   const [initChatContentCount] = useState(refreshChatContent)
   const [initAiAnswerCount] = useState(refreshForAiAnswer)
@@ -82,12 +82,15 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
         assistantId,
         threadId,
         isFirstLoad,
-        runRequired: false,
+        runRequired,
         dataLimit,
         cursor: undefined,
       })
 
-      setChatMessages((oldData) => [...oldData, ...data])
+      const newData = [...chatMessage, ...data]
+
+      setChatMessages(newData)
+      setPreviousChatMessageIndex(newData.length)
       setLoading(false)
     }
 
