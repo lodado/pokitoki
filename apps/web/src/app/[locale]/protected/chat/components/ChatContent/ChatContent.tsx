@@ -32,9 +32,13 @@ const ChatContent = ({ messages }: ChatContentProps) => {
             itemContent={(index) => {
               return <Message index={index} message={messages[index]} />
             }}
-            startReached={lastMessageRef}
             totalCount={Math.max(0, length)}
             initialTopMostItemIndex={length - 1}
+            rangeChanged={({ startIndex, endIndex }) => {
+              if (startIndex <= 3) {
+                lastMessageRef()
+              }
+            }}
           />
         )}
       </ul>

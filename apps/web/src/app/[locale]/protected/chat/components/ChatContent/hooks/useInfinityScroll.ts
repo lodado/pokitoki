@@ -2,25 +2,35 @@
 
 import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
-import { useAtom, useSetAtom } from '@/lib'
+import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 
-import { hasChatMoreAtom, isChatLoadingAtom, triggerRefreshChatContentAtom } from '../../../store'
+import {
+  hasChatMoreAtom,
+  isChatLoadingAtom,
+  previousChatMessageIndexAtom,
+  triggerRefreshChatContentAtom,
+} from '../../../store'
 
 const useInfinityScroll = () => {
   const observerRef = useRef<any>()
   const [isLoading, setLoading] = useAtom(isChatLoadingAtom)
   const [hasMore, setHasMore] = useAtom(hasChatMoreAtom)
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
+  const previousChatMessageIndex = useAtomValue(previousChatMessageIndexAtom)
 
-  const lastMessageRef = useCallback(() => {
-    if (isLoading) return
+  const lastMessageRef = () => {
+    setTimeout(() => {
+      if (isLoading) return
 
-    if (hasMore) {
-      triggerRefreshChatContent()
-    }
-  }, [isLoading, hasMore])
+      if (hasMore) {
+        triggerRefreshChatContent()
+      }
+    }, 500)
+  }
 
-  useEffect(() => {}, [isLoading])
+  useEffect(() => {
+    observerRef.current?.scrollToIndex({ index: previousChatMessageIndex })
+  }, [previousChatMessageIndex])
 
   return { observerRef, lastMessageRef }
 }

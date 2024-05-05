@@ -77,7 +77,7 @@ export const getThreadMessages = async (
     threadId,
     getNotNullableObject({
       limit: dataLimit,
-      before: cursor,
+      after: cursor,
     }),
   )
 

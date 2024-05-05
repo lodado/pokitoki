@@ -12,6 +12,7 @@ import {
   chatMessageAtom,
   hasChatMoreAtom,
   isChatLoadingAtom,
+  previousChatMessageIndexAtom,
   refreshChatContentAtom,
   refreshForAiAnswerAtom,
 } from '../../../../store'
@@ -30,10 +31,11 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
   const refreshForAiAnswer = useAtomValue(refreshForAiAnswerAtom)
 
-  const setLoading = useSetAtom(isChatLoadingAtom)
+  const [isLoading, setLoading] = useAtom(isChatLoadingAtom)
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
+  const setPreviousChatMessageIndex = useSetAtom(previousChatMessageIndexAtom)
 
   const [initChatContentCount] = useState(refreshChatContent)
   const [initAiAnswerCount] = useState(refreshForAiAnswer)
@@ -46,6 +48,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       setLoading(true)
 
       const cursor = chatMessage[0]?.id
+
       const dataLimit = 60
 
       const { data } = await getAIMessages({
@@ -57,12 +60,13 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
         dataLimit,
       })
 
-      setChatMessages((oldData) => [...oldData, ...data])
+      setPreviousChatMessageIndex(data.length)
+      setChatMessages((oldData) => [...data, ...oldData])
       setLoading(false)
       setHasChatMore(data.length > 0)
     }
 
-    if (hasChatMore) requestAiMessages()
+    if (hasChatMore && !isLoading) requestAiMessages()
   }, [refreshChatContent])
 
   useEffect(() => {
@@ -78,7 +82,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
         assistantId,
         threadId,
         isFirstLoad,
-        runRequired,
+        runRequired: false,
         dataLimit,
         cursor: undefined,
       })
