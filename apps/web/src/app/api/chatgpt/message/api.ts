@@ -1,3 +1,5 @@
+import { getNotNullableObject } from '@custompackages/shared'
+
 import request from '@/api'
 
 import { ChatMessage, MessageApi } from './type'
@@ -15,19 +17,23 @@ export const getAIMessages = async ({
   assistantId,
   threadId,
   isFirstLoad,
+  cursor,
+  dataLimit,
   runRequired = false,
 }: {
   assistantId: string
   threadId: string
   isFirstLoad: boolean
+  dataLimit: number
+  cursor?: string
   runRequired?: boolean
 }) => {
-  const dataLimit = 60
+  const params = getNotNullableObject({ assistantId, threadId, dataLimit, runRequired, cursor })
 
   const { data } = await request<MessageApi>({
     method: 'GET',
     url: `/api/chatgpt/message`,
-    params: { assistantId, threadId, dataLimit, runRequired },
+    params,
   })
 
   return { data } as MessageApi

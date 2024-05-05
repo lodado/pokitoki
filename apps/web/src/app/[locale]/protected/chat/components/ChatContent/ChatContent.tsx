@@ -19,7 +19,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
   const { lastMessageRef } = useInfinityScroll()
 
   return (
-    <div className="w-full h-full">
+    <>
       <h4>
         <b>채팅 내용</b>
       </h4>
@@ -37,7 +37,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
           />
         )}
       </ul>
-    </div>
+    </>
   )
 }
 

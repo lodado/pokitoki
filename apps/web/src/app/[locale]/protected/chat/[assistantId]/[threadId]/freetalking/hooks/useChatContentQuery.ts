@@ -24,7 +24,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
   const setLoading = useSetAtom(isChatLoadingAtom)
-  const setHasChatMore = useSetAtom(hasChatMoreAtom)
+  const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
 
   const [initChatContent] = useState(refreshChatContent)
   useEffect(() => {
@@ -34,19 +34,24 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
     const requestAiMessages = async () => {
       setLoading(true)
 
+      const cursor = chatMessage[0]?.id
+      const dataLimit = 60
+
       const { data } = await getAIMessages({
         assistantId,
         threadId,
         isFirstLoad,
         runRequired,
+        cursor,
+        dataLimit,
       })
 
-      setChatMessages(data)
+      setChatMessages((oldData) => [...oldData, ...data])
       setLoading(false)
       setHasChatMore(data.length > 0)
     }
 
-    requestAiMessages()
+    if (hasChatMore) requestAiMessages()
   }, [refreshChatContent])
 
   useEffect(() => {

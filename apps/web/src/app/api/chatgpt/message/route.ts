@@ -11,11 +11,11 @@ export const GET = async (req: NextRequest) => {
 
     const dataLimit = Number(req.nextUrl.searchParams.get('dataLimit') ?? 1)
     const runRequired = Boolean(req.nextUrl.searchParams.get('runRequired') === 'true')
-
+    const cursor = req.nextUrl.searchParams.get('cursor') ?? undefined
     if (!threadId) throw new Error(`Could not find threadId`)
     if (!assistantId) throw new Error(`Could not find assistantId`)
 
-    const messages = await getChatDetail(assistantId, threadId, dataLimit, runRequired)
+    const messages = await getChatDetail(assistantId, threadId, dataLimit, runRequired, cursor)
     return NextResponse.json({ data: messages })
   } catch (err) {
     return Response.json({}, { status: 400 })

@@ -1,3 +1,4 @@
+import { getNotNullableObject } from '@custompackages/shared'
 import { OpenAI } from 'openai'
 
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
@@ -68,12 +69,17 @@ export const getThreadMessages = async (
   threadId: string,
   dataLimit: number,
   runRequired: boolean,
+  cursor?: string,
 ) => {
   if (runRequired) await ThreadPolling(assistantId, threadId)
 
-  const { data: threadMessages } = await openai.beta.threads.messages.list(threadId, {
-    limit: dataLimit,
-  })
+  const { data: threadMessages } = await openai.beta.threads.messages.list(
+    threadId,
+    getNotNullableObject({
+      limit: dataLimit,
+      before: cursor,
+    }),
+  )
 
   if (!threadMessages || threadMessages.length === 0) {
     return []

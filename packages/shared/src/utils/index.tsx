@@ -1,4 +1,5 @@
 export * from './ContextBuildHelper'
+export * from './getNotNullableObject'
 export * from './isServerSide'
 export * from './noop'
 export * from './StorageStrategy'
