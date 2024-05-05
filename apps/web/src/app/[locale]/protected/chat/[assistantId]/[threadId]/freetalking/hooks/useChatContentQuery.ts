@@ -35,7 +35,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
-  const setPreviousChatMessageIndex = useSetAtom(chatMessageScrollIndexAtom)
+  const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
 
   const [initChatContentCount] = useState(refreshChatContent)
   const [initAiAnswerCount] = useState(refreshForAiAnswer)
@@ -60,7 +60,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
         dataLimit,
       })
 
-      setPreviousChatMessageIndex(data.length)
+      setChatMessageScrollIndex(data.length)
       setChatMessages((oldData) => [...data, ...oldData])
       setLoading(false)
       setHasChatMore(data.length > 0)
@@ -90,7 +90,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       const newData = [...chatMessage, ...data]
 
       setChatMessages(newData)
-      setPreviousChatMessageIndex(newData.length)
+      setChatMessageScrollIndex(newData.length)
       setLoading(false)
     }
 

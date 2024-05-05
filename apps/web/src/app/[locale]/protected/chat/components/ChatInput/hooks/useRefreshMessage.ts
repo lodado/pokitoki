@@ -18,14 +18,14 @@ const useRefreshMessage = ({ value }: { value: string }) => {
   const { assistantId, threadId } = params
 
   const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
-  const setPreviousChatMessageIndex = useSetAtom(chatMessageScrollIndexAtom)
+  const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
 
   const setChatMessages = useSetAtom(chatMessageAtom)
 
   const handleSubmitMessage = async (e: SyntheticEvent) => {
     e.preventDefault()
     setChatMessages((oldData: ChatMessage[]) => {
-      setPreviousChatMessageIndex(oldData.length + 1)
+      setChatMessageScrollIndex(oldData.length + 1)
 
       return [...oldData, { id: 'none', content: value, createdAt: Date.now() }]
     })

@@ -20,7 +20,7 @@ const useInfinityScroll = () => {
 
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
 
-  const previousChatMessageIndex = useAtomValue(chatMessageScrollIndexAtom)
+  const chatMessageScrollIndex = useAtomValue(chatMessageScrollIndexAtom)
 
   const lastMessageRef = debounce(() => {
     if (isLoading) return
@@ -29,13 +29,13 @@ const useInfinityScroll = () => {
     }
   }, 500)
 
-  const moveScroll = debounce(() => {
-    observerRef.current?.scrollToIndex({ index: previousChatMessageIndex })
+  const moveChatContentScroll = debounce(() => {
+    observerRef.current?.scrollToIndex({ index: chatMessageScrollIndex })
   }, 0)
 
   useEffect(() => {
-    moveScroll()
-  }, [previousChatMessageIndex])
+    moveChatContentScroll()
+  }, [chatMessageScrollIndex])
 
   return { observerRef, lastMessageRef }
 }
