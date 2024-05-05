@@ -5,16 +5,16 @@ import { postAIMessages } from '@/app/api/chatgpt/message/api'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import useUrl from '@/hooks/useUrl'
 import { useAtom, useSetAtom } from '@/lib/jotai'
-import { useMutation, useQueryClient } from '@/lib/tanstackQuery'
 
-import { useChatMessageKey } from '../../../hooks'
-import { chatMessageAtom, triggerRefreshChatContentAtom } from '../../../store'
+import { chatMessageAtom, triggerRefreshChatContentAtom, triggerRefreshForAiAnswerAtom } from '../../../store'
 
 const useRefreshMessage = ({ value }: { value: string }) => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { assistantId, threadId } = params
 
-  const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
+  // const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
+  const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
+
   const setChatMessages = useSetAtom(chatMessageAtom)
 
   const handleSubmitMessage = async (e: SyntheticEvent) => {
@@ -25,7 +25,7 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
     await postAIMessages({ assistantId, threadId, message: value })
 
-    triggerRefreshChatContent()
+    triggerRefreshForAiAnswer()
   }
 
   return { handleSubmitMessage }

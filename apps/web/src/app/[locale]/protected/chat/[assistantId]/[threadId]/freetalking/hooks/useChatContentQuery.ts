@@ -8,7 +8,13 @@ import useUrl from '@/hooks/useUrl'
 import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 
 import { useChatMessageKey } from '../../../../hooks'
-import { chatMessageAtom, hasChatMoreAtom, isChatLoadingAtom, refreshChatContentAtom } from '../../../../store'
+import {
+  chatMessageAtom,
+  hasChatMoreAtom,
+  isChatLoadingAtom,
+  refreshChatContentAtom,
+  refreshForAiAnswerAtom,
+} from '../../../../store'
 
 export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
@@ -21,15 +27,20 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { threadId, assistantId } = params
 
-  const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const refreshChatContent = useAtomValue(refreshChatContentAtom)
+  const refreshForAiAnswer = useAtomValue(refreshForAiAnswerAtom)
+
   const setLoading = useSetAtom(isChatLoadingAtom)
+
+  const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
 
-  const [initChatContent] = useState(refreshChatContent)
+  const [initChatContentCount] = useState(refreshChatContent)
+  const [initAiAnswerCount] = useState(refreshForAiAnswer)
+
   useEffect(() => {
-    const isFirstLoad = initChatContent === refreshChatContent
-    const runRequired = false // initChatContent !== refreshChatContent
+    const isFirstLoad = initChatContentCount === refreshChatContent
+    const runRequired = false
 
     const requestAiMessages = async () => {
       setLoading(true)
@@ -53,6 +64,31 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
     if (hasChatMore) requestAiMessages()
   }, [refreshChatContent])
+
+  useEffect(() => {
+    const isFirstLoad = initAiAnswerCount === refreshForAiAnswer
+    const runRequired = true
+
+    const requestAiAnswerMessages = async () => {
+      setLoading(true)
+
+      const dataLimit = 1
+
+      const { data } = await getAIMessages({
+        assistantId,
+        threadId,
+        isFirstLoad,
+        runRequired,
+        dataLimit,
+        cursor: undefined,
+      })
+
+      setChatMessages((oldData) => [...oldData, ...data])
+      setLoading(false)
+    }
+
+    if (!isFirstLoad) requestAiAnswerMessages()
+  }, [refreshForAiAnswer])
 
   useEffect(() => {
     return () => {

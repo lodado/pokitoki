@@ -1,6 +1,6 @@
 'use client'
 
-import React, { RefObject, useCallback, useRef, useState } from 'react'
+import React, { RefObject, useCallback, useEffect, useRef, useState } from 'react'
 
 import { useAtom, useSetAtom } from '@/lib'
 
@@ -13,8 +13,6 @@ const useInfinityScroll = () => {
   const triggerRefreshChatContent = useSetAtom(triggerRefreshChatContentAtom)
 
   const lastMessageRef = useCallback(() => {
-    console.log('retriggered')
-
     if (isLoading) return
 
     if (hasMore) {
@@ -22,7 +20,9 @@ const useInfinityScroll = () => {
     }
   }, [isLoading, hasMore])
 
-  return { lastMessageRef }
+  useEffect(() => {}, [isLoading])
+
+  return { observerRef, lastMessageRef }
 }
 
 export default useInfinityScroll

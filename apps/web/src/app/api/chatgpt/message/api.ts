@@ -51,7 +51,7 @@ export const postAIMessages = async ({
 }) => {
   // await appendMessageStorageById({ threadId, data: [message] })
 
-  const response = request({
+  const response = await request({
     method: 'POST',
     url: '/api/chatgpt/message',
     data: { assistantId, threadId, message },

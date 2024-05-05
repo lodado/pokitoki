@@ -16,7 +16,7 @@ interface ChatContentProps {
 const ChatContent = ({ messages }: ChatContentProps) => {
   // virtuoso 및 server component에 에러가 있는듯?
   const length = messages ? messages.length : 0
-  const { lastMessageRef } = useInfinityScroll()
+  const { lastMessageRef, observerRef } = useInfinityScroll()
 
   return (
     <>
@@ -27,6 +27,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
       <ul className="w-full bg-red-100 h-[85vh]">
         {length > 0 && (
           <Virtuoso
+            ref={observerRef}
             // eslint-disable-next-line react/no-unstable-nested-components
             itemContent={(index) => {
               return <Message index={index} message={messages[index]} />
