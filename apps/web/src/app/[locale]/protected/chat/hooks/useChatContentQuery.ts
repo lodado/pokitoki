@@ -2,12 +2,10 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 
-import { getAIMessages, getAIMessagesByStorage } from '@/app/api/chatgpt/message/api'
-import { ChatMessage } from '@/app/api/chatgpt/message/type'
+import { getAIMessages } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
 import { useAtom, useAtomValue, useSetAtom } from '@/lib'
 
-import { useChatMessageKey } from '../../../../hooks'
 import {
   chatMessageAtom,
   chatMessageScrollIndexAtom,
@@ -15,7 +13,7 @@ import {
   isChatLoadingAtom,
   refreshChatContentAtom,
   refreshForAiAnswerAtom,
-} from '../../../../store'
+} from '../store'
 
 export interface useChatContentQueryProps {
   isInitFetchAllowed: boolean
@@ -40,6 +38,9 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const [initChatContentCount] = useState(refreshChatContent)
   const [initAiAnswerCount] = useState(refreshForAiAnswer)
 
+  /**
+   * 무한스크롤로 데이터를 fetch해오는 부분
+   */
   useEffect(() => {
     const isFirstLoad = initChatContentCount === refreshChatContent
     const runRequired = false
@@ -69,6 +70,9 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
     if (hasChatMore && !isLoading) requestAiMessages()
   }, [refreshChatContent])
 
+  /**
+   * ai한테 채팅을 보낸 후, 답장을 받아오는 부분
+   */
   useEffect(() => {
     const isFirstLoad = initAiAnswerCount === refreshForAiAnswer
     const runRequired = true

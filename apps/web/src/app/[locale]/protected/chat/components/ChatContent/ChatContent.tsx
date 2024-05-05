@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { Message } from '@/components/Message'
 
-import useInfinityScroll from './hooks/useInfinityScroll'
+import { useInfinityScroll } from './hooks'
 
 interface ChatContentProps {
   messages: ChatMessage[]
