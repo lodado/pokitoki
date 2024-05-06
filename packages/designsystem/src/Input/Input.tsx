@@ -24,7 +24,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) => {
   const { className, ...rest } = props
 
-  return <input className={cn(InputStyleVariants({ variant: 'default', size: 'medium' }), className)} {...rest} />
+  const dataInvalid = props['data-invalid']
+  const variant = dataInvalid ? 'invalid' : 'default'
+
+  return <input className={cn(InputStyleVariants({ variant, size: 'medium' }), className)} {...rest} />
 })
 
 export default Input

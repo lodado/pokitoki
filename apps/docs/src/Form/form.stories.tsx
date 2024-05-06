@@ -1,6 +1,6 @@
 import './example.css'
 
-import { Form } from '@custompackages/designsystem'
+import { Form, Input } from '@custompackages/designsystem'
 import type { Meta, StoryObj } from '@storybook/react'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
@@ -8,12 +8,16 @@ const meta: Meta<typeof Form> = {
   title: 'example/Form',
   component: Form,
   argTypes: {},
+  tags: ['autodocs'],
 }
 
 export default meta
 
 type Story = StoryObj<typeof Form>
 
+/**
+ * Code Example
+ */
 export const FormExample: Story = {
   render: () => {
     return (
@@ -29,7 +33,7 @@ export const FormExample: Story = {
             </Form.Message>
           </div>
           <Form.Control asChild>
-            <input className="Input" type="email" required />
+            <Input type="email" required />
           </Form.Control>
         </Form.Field>
         <Form.Field className="FormField" name="question">
@@ -40,7 +44,7 @@ export const FormExample: Story = {
             </Form.Message>
           </div>
           <Form.Control asChild>
-            <textarea className="Textarea" required />
+            <Input required />
           </Form.Control>
         </Form.Field>
         <Form.Submit asChild>
