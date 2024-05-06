@@ -27,7 +27,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) 
   const dataInvalid = props['data-invalid']
   const variant = dataInvalid ? 'invalid' : 'default'
 
-  return <input className={cn(InputStyleVariants({ variant, size: 'medium' }), className)} {...rest} />
+  return <input ref={ref} className={cn(InputStyleVariants({ variant, size: 'medium' }), className)} {...rest} />
 })
 
 export default Input
