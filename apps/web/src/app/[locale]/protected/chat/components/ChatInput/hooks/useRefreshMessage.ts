@@ -27,7 +27,7 @@ const useRefreshMessage = ({ value }: { value: string }) => {
     setChatMessages((oldData: ChatMessage[]) => {
       setChatMessageScrollIndex(oldData.length + 1)
 
-      return [...oldData, { id: 'none', content: value, createdAt: Date.now() }]
+      return [...oldData, { id: 'none', role: 'user', content: value, createdAt: Date.now() }]
     })
 
     await postAIMessages({ assistantId, threadId, message: value })
