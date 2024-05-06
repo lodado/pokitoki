@@ -4,7 +4,7 @@ export const InputStyleVariants = cva(`flex px-3 items-center gap-3 rounded bord
   variants: {
     variant: {
       default: `text-text-01 border-border-01 bg-tertiary-default placeholder-text-placeholder hover:bg-tertiary-hover
-        active:bg-tertiary-press focus:border-border-primary-01 disabled:bg-text-disabled 
+        active:bg-tertiary-press focus-within:outline focus-within:outline-1 focus-within:outline-border-primary-01 disabled:bg-text-disabled 
         read-only:bg-text-readonly
         [&[data-invalid='true']]:border-border-error-01
       `,
