@@ -1,5 +1,5 @@
-import React from 'react'
 import { TYPOGRAPHY } from '@custompackages/design-assets'
+import React from 'react'
 
 export default {
   title: 'Design System/Typography',

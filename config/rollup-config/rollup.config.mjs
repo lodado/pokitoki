@@ -63,7 +63,7 @@ const extensions = [...DEFAULT_EXTENSIONS, '.ts', '.tsx']
  */
 // eslint-disable-next-line import/no-mutable-exports
 const rollupConfigFunc = (config) =>
-  config.map(({ input, format, additionalFolderDirectiory = '' }) => {
+  config.map(({ input, format, additionalFolderDirectiory = '', useTsconfigDeclarationDir = true }) => {
     const isESMFormat = format === 'es'
     const entryFormat = isESMFormat ? 'mjs' : 'cjs'
     const entryFileNames = `[name].${entryFormat}`
@@ -104,7 +104,7 @@ const rollupConfigFunc = (config) =>
         typescript({
           tsconfig: './tsconfig.json',
           tsconfigOverride: {},
-          useTsconfigDeclarationDir: true,
+          useTsconfigDeclarationDir,
         }),
         peerDepsExternal(),
 
