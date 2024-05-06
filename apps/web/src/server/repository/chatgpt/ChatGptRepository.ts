@@ -86,8 +86,9 @@ export const getThreadMessages = async (
   }
 
   const convertedMessages = threadMessages
-    .map(({ id, created_at: createdAt, content }) => {
+    .map(({ role, id, created_at: createdAt, content }) => {
       return {
+        role,
         id,
         createdAt,
         content: (content as MessageContentText[])[0]?.text.value,
