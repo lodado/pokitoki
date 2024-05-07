@@ -14,5 +14,17 @@
   },
   "COMMON": {
     "LOGO": "Pokitoki"
+  },
+  "LEARN": {
+    "FREETALKING": "Freetalking",
+    "FREETALKING-BUTTON-TEXT": "Start freetalking freely",
+    "TOPIC-BASED-SITUATION-TALKING-BUTTON": "Topic-based talking",
+    "SELECT-TOPIC-BASED-SITUATION-TALKING": "Please select topic-based situational talking",
+    "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "Customize conversation partner persona",
+    "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "Customize the conversation partner directly or choose a recommended persona",
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "Customize persona"
+  },
+  "DIFFICULTY": {
+    "RATING": "Difficulty {rating}"
   }
 }

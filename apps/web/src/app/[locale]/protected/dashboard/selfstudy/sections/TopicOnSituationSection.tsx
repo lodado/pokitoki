@@ -3,6 +3,7 @@ import React from 'react'
 
 import request from '@/api'
 import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
+import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
 import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
@@ -18,14 +19,17 @@ import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
 const TopicOnSituationSection = async () => {
   const { assistants } = await getAssistantList()
 
+  const i18nLearn = await getI18n('LEARN')
+  const i18nDifficulty = await getI18n('DIFFICULTY')
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
         <SelfStudySectionTitle
-          title="주제별 상황 토킹"
-          subTitle="주제별 상황 토킹을 선택해 주세요"
-          ButtonText="주제별 상황 토킹"
-          difficulty="난이도 별별별"
+          title={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
+          subTitle={i18nLearn('SELECT-TOPIC-BASED-SITUATION-TALKING')}
+          ButtonText={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
+          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
         />
       </div>
 

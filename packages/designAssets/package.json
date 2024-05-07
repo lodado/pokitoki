@@ -16,12 +16,12 @@
     },
     "./server": {
       "import": {
-        "types": "./dist/es/server/index.server.d.ts",
-        "default": "./dist/es/server/index.server.mjs"
+        "types": "./dist/server/index.server.d.ts",
+        "default": "./dist/server/index.server.mjs"
       },
       "require": {
-        "types": "./dist/cjs/server/index.server.d.ts",
-        "default": "./dist/cjs/server/index.server.cjs"
+        "types": "./dist/server/index.server.d.ts",
+        "default": "./dist/server/index.server.js"
       }
     },
     "./index.css": "./dist/es/client/index.css"
@@ -37,6 +37,7 @@
   "scripts": {
     "dev": "rollup -c --watch ./rollup.config.mjs",
     "build": "rollup -c ./rollup.config.mjs",
+    "postbuild": "tsup ./index.server.ts --format esm,cjs --dts --external react --outDir ./dist/server",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",

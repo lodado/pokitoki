@@ -14,5 +14,17 @@
   },
   "COMMON": {
     "LOGO": "Pokitoki"
+  },
+  "LEARN": {
+    "FREETALKING": "프리토킹",
+    "FREETALKING-BUTTON-TEXT": "자유롭게 프리토킹을 시작하세요",
+    "TOPIC-BASED-SITUATION-TALKING-BUTTON": "주제별 상황 토킹",
+    "SELECT-TOPIC-BASED-SITUATION-TALKING": "주제별 상황 토킹을 선택해 주세요",
+    "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "대화 상대 페르소나 커스텀",
+    "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "대화 상대를 직접 커스텀하거나 추천 페르소나를 선택해주세요",
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "페르소나 커스텀"
+  },
+  "DIFFICULTY": {
+    "RATING": "난이도 {rating}"
   }
 }

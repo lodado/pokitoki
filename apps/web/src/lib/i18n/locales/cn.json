@@ -14,5 +14,17 @@
   },
   "COMMON": {
     "LOGO": "Pokitoki"
+  },
+  "LEARN": {
+    "FREETALKING": "自由对话",
+    "FREETALKING-BUTTON-TEXT": "自由开始自由对话",
+    "TOPIC-BASED-SITUATION-TALKING-BUTTON": "按主题情境对话",
+    "SELECT-TOPIC-BASED-SITUATION-TALKING": "请选择主题情境对话",
+    "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "自定义对话伙伴角色",
+    "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "直接自定义对话伙伴或选择推荐角色",
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "自定义角色"
+  },
+  "DIFFICULTY": {
+    "RATING": "难度 {rating}"
   }
 }

@@ -1,17 +1,22 @@
 import { Card } from '@custompackages/designsystem'
 import React from 'react'
 
+import { getI18n } from '@/lib/i18n'
+
 import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
 
-const PersonaSection = () => {
+const PersonaSection = async () => {
+  const i18nLearn = await getI18n('LEARN')
+  const i18nDifficulty = await getI18n('DIFFICULTY')
+
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
         <SelfStudySectionTitle
-          title="대화 상대 페르소나 커스텀"
-          subTitle="대화 상대를 직접 커스텀하거나 추천 페르소나를 선택해주세요"
-          ButtonText="페르소나 커스텀"
-          difficulty="난이도 별별별"
+          title={i18nLearn('CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE')}
+          subTitle={i18nLearn('CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA')}
+          ButtonText={i18nLearn('BUTTON-FOR-CUSTOMIZING-PERSONA')}
+          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
         />
       </div>
 
