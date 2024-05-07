@@ -22,6 +22,8 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
     try {
       const { threadId } = await createThread({ assistantId, threadName: 'free-talking' })
 
+      await DeleteMessageStorageById({ threadId })
+
       push(`/${locale}/protected/chat/${assistantId}/${threadId}/freetalking`)
     } catch (error) {
       console.log(error)
