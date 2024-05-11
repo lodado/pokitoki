@@ -41,14 +41,14 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
             <NavigationTab tabList={dashboardTabList} />
           </div>
 
-          <NavigationLinkButton>
+          <button type="button">
             <Profile
               src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
               alt="user profile"
               width={28}
               height={28}
             />
-          </NavigationLinkButton>
+          </button>
         </nav>
       </header>
 
