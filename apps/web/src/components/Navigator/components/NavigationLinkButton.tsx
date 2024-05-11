@@ -5,7 +5,7 @@ import React, { HTMLAttributes, ReactNode } from 'react'
 import useUrl from '@/hooks/useUrl'
 import { cn, cva } from '@/lib/cva'
 
-const IsCurrentPage = cva('w-[75px] h-12 color-text-01', {
+const IsCurrentPage = cva('w-[90px] h-12 color-text-01', {
   variants: {
     isCurrentUrl: {
       true: '',
