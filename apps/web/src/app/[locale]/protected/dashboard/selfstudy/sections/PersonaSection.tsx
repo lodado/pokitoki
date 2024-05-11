@@ -3,7 +3,7 @@ import React from 'react'
 
 import { getI18n } from '@/lib/i18n'
 
-import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
+import { ResponsiveSectionTitle } from '../../components/ResponsiveSectionTitle'
 
 const PersonaSection = async () => {
   const i18nLearn = await getI18n('LEARN')
@@ -12,7 +12,7 @@ const PersonaSection = async () => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
-        <SelfStudySectionTitle
+        <ResponsiveSectionTitle
           title={i18nLearn('CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE')}
           subTitle={i18nLearn('CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA')}
           ButtonText={i18nLearn('BUTTON-FOR-CUSTOMIZING-PERSONA')}

@@ -2,7 +2,8 @@ import React from 'react'
 
 import { getI18n } from '@/lib/i18n'
 
-import { ResponsiveSectionTitle } from '../components/ResponsiveSectionTitle'
+import { ResponsiveSectionTitle } from '../../components/ResponsiveSectionTitle'
+import HistoryList from '../components/HistoryList'
 
 const HistorySection = async () => {
   const i18nStat = await getI18n('STAT')
@@ -17,6 +18,13 @@ const HistorySection = async () => {
           difficulty=""
         />
       </div>
+
+      <ul className="flex flex-col gap-4">
+        <HistoryList />
+        <HistoryList />
+        <HistoryList />
+        <HistoryList />
+      </ul>
     </section>
   )
 }

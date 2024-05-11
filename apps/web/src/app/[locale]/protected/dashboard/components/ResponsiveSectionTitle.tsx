@@ -8,7 +8,7 @@ export interface SelfStudySectionTitleProps {
   ButtonText: string
 }
 
-export const SelfStudySectionTitle = ({ title, subTitle, difficulty, ButtonText }: SelfStudySectionTitleProps) => {
+export const ResponsiveSectionTitle = ({ title, subTitle, difficulty, ButtonText }: SelfStudySectionTitleProps) => {
   return (
     <>
       <div className="flex flex-row justify-between w-full mb-spacing-2 gap-spacing-6 sm:justify-start ">

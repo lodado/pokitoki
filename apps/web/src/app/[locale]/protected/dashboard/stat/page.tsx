@@ -33,7 +33,7 @@ const Page = async ({ params }: LocaleProps) => {
         <UserInfoSection />
         <TopicOnSituationSection />
         <HistorySection />
-        <AttendanceSection params={params} />
+        <AttendanceSection />
       </main>
 
       {/* <TutorialConnector steps={steps} /> */}

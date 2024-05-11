@@ -6,7 +6,7 @@ import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
-import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
+import { ResponsiveSectionTitle } from '../../components/ResponsiveSectionTitle'
 
 /** <Card
         variant="medium"
@@ -25,7 +25,7 @@ const TopicOnSituationSection = async () => {
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
-        <SelfStudySectionTitle
+        <ResponsiveSectionTitle
           title={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
           subTitle={i18nLearn('SELECT-TOPIC-BASED-SITUATION-TALKING')}
           ButtonText={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}

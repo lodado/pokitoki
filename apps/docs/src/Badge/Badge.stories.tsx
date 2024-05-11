@@ -6,6 +6,7 @@ const meta: Meta<typeof Badge> = {
   title: 'example/Badge',
   component: Badge,
   argTypes: {},
+  tags: ['autodocs'],
 }
 
 export default meta

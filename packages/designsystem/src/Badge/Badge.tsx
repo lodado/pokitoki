@@ -1,3 +1,4 @@
+import { cn } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
 import React, { ReactNode } from 'react'
 
@@ -27,7 +28,7 @@ const BadgeStyles = cva(
 )
 
 const Badge = ({ variant = 'filled', color = 'brand', children, className }: BadgeProps) => {
-  return <div className={`${BadgeStyles({ variant: `${variant}-${color}` })}`}>{children}</div>
+  return <div className={cn(BadgeStyles({ variant: `${variant}-${color}` }), className)}>{children}</div>
 }
 
 export default Badge

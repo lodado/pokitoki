@@ -6,8 +6,6 @@ import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
-import { ResponsiveSectionTitle } from '../components/ResponsiveSectionTitle'
-
 /** <Card
         variant="medium"
         subTitle="apple"
