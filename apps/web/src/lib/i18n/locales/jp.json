@@ -26,5 +26,17 @@
   },
   "DIFFICULTY": {
     "RATING": "難易度 {rating}"
+  },
+  "STAT": {
+    "USERNAME": "{username}様",
+    "CHEERUP-MESSAGE": "今日もポキトキと一緒に走りましょう😊",
+    "RECOMMEND-TITLE": "今日の推奨学習",
+    "RECOMMEND-DESCRIPTION": "今日のテーマ別トーキング学習を完了しましょう！",
+    "HISTORY-SCRIPT-TITLE": "最近のヒストリースクリプト",
+    "HISTORY-SCRIPT-BUTTON": "ヒストリー",
+    "HISTORY-SCRIPT-DESCRIPTION": "最近のヒストリースクリプトを確認しましょう",
+    "ATTENDANCE-TITLE": "{month}月の出席確認",
+    "ATTENDANCE-BUTTON": "出席確認",
+    "ATTENDANCE-DESCRIPTION": "{username}様の出席を確認してください。"
   }
 }

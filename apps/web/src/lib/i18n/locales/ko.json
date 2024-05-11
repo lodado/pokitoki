@@ -26,5 +26,17 @@
   },
   "DIFFICULTY": {
     "RATING": "난이도 {rating}"
+  },
+  "STAT": {
+    "USERNAME": "{username}님",
+    "CHEERUP-MESSAGE": "오늘도 포키토키와 함께 달려보아요😊",
+    "RECOMMEND-TITLE": "오늘의 추천 학습",
+    "RECOMMEND-DESCRIPTION": "오늘의 주제별 토킹 학습을 모두 달성해보아요!",
+    "HISTORY-SCRIPT-TITLE": "최근 히스토리 스트립트",
+    "HISTORY-SCRIPT-BUTTON": "히스토리",
+    "HISTORY-SCRIPT-DESCRIPTION": "최근 히스토리 스크립트를 확인해보아요",
+    "ATTENDANCE-TITLE": "{month}월 출석 확인",
+    "ATTENDANCE-BUTTON": "출석 확인",
+    "ATTENDANCE-DESCRIPTION": "{username}님의 출석을 확인하세요."
   }
 }

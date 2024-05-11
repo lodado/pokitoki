@@ -8,7 +8,9 @@ import TutorialConnector from '@/components/Tutorial/TutorialConnector'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import HistorySection from './sections/HistorySection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
+import UserInfoSection from './sections/UserInfoSection'
 
 export async function generateMetadata({ params: { locale } }: MetadataParams): Promise<Metadata> {
   return getMetadata({
@@ -25,13 +27,13 @@ const Page = async () => {
 
   return (
     <LogScreen>
-      {
-        <main className="flex flex-col gap-spacing-7">
-          <TopicOnSituationSection />
-        </main>
+      <main className="flex flex-col pt-1 gap-spacing-7">
+        <UserInfoSection />
+        <TopicOnSituationSection />
+        <HistorySection />
+      </main>
 
-        /* <TutorialConnector steps={steps} /> */
-      }
+      {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>
   )
 }

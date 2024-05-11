@@ -20,34 +20,18 @@ const TopicOnSituationSection = async () => {
   const { assistants } = await getAssistantList()
 
   const i18nLearn = await getI18n('LEARN')
-  const i18nDifficulty = await getI18n('DIFFICULTY')
+  const i18nStat = await getI18n('STAT')
+
+  // const i18nDifficulty = await getI18n('DIFFICULTY')
 
   return (
-    <section className="flex flex-col">
-      <div className="flex flex-row items-center justify-between">
-        <SelfStudySectionTitle
-          title={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
-          subTitle={i18nLearn('SELECT-TOPIC-BASED-SITUATION-TALKING')}
-          ButtonText={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
-          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
-        />
+    <section className="flex flex-col gap-2">
+      <div className="flex flex-col justify-between gap-1">
+        <h2 className="body-03-m text-text-01">{i18nStat('RECOMMEND-TITLE')}</h2>
+        <p className="text-text-03 body-01-r">{i18nStat('RECOMMEND-DESCRIPTION')}</p>
       </div>
 
       <div className="flex flex-row gap-2 overflow-x-scroll overflow-y-hidden">
-        {assistants.map(({ name, description }: Assistant) => {
-          return (
-            <Card
-              key={name}
-              className="shrink-0"
-              variant="medium"
-              subTitle={description!}
-              mainTitle={name!}
-              url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
-              alt=""
-            />
-          )
-        })}
-
         <Card
           className="shrink-0"
           variant="medium"

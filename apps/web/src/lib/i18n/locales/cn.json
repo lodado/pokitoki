@@ -26,5 +26,17 @@
   },
   "DIFFICULTY": {
     "RATING": "难度 {rating}"
+  },
+  "STAT": {
+    "USERNAME": "{username}您好",
+    "CHEERUP-MESSAGE": "今天也请与波奇托奇一起努力吧😊",
+    "RECOMMEND-TITLE": "今日推荐的学习",
+    "RECOMMEND-DESCRIPTION": "完成今天的主题对话学习！",
+    "HISTORY-SCRIPT-TITLE": "最近的历史剧本",
+    "HISTORY-SCRIPT-BUTTON": "历史",
+    "HISTORY-SCRIPT-DESCRIPTION": "查看您的最近历史剧本",
+    "ATTENDANCE-TITLE": "{month}月考勤检查",
+    "ATTENDANCE-BUTTON": "检查考勤",
+    "ATTENDANCE-DESCRIPTION": "检查{username}的考勤。"
   }
 }

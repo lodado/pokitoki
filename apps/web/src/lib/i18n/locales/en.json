@@ -26,5 +26,17 @@
   },
   "DIFFICULTY": {
     "RATING": "Difficulty {rating}"
+  },
+  "STAT": {
+    "USERNAME": "{username}",
+    "CHEERUP-MESSAGE": "Let's keep going with Pokitoki today 😊",
+    "RECOMMEND-TITLE": "Today's Recommended Learning",
+    "RECOMMEND-DESCRIPTION": "Complete all of today's topic-based learning sessions!",
+    "HISTORY-SCRIPT-TITLE": "Recent History Script",
+    "HISTORY-SCRIPT-BUTTON": "History",
+    "HISTORY-SCRIPT-DESCRIPTION": "Check your recent history scripts",
+    "ATTENDANCE-TITLE": "{month} Attendance Check",
+    "ATTENDANCE-BUTTON": "Check Attendance",
+    "ATTENDANCE-DESCRIPTION": "Check {username}'s attendance."
   }
 }
