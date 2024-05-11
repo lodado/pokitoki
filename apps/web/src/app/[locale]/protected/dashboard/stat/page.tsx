@@ -5,9 +5,11 @@ import { Metadata } from 'next'
 import { useRef } from 'react'
 
 import TutorialConnector from '@/components/Tutorial/TutorialConnector'
+import { LocaleProps } from '@/interface'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import AttendanceSection from './sections/AttendanceSection'
 import HistorySection from './sections/HistorySection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
 import UserInfoSection from './sections/UserInfoSection'
@@ -21,7 +23,7 @@ export async function generateMetadata({ params: { locale } }: MetadataParams): 
   })
 }
 
-const Page = async () => {
+const Page = async ({ params }: LocaleProps) => {
   // const t = await getI18n('Index')
   // const session = await getLoginSession()
 
@@ -31,6 +33,7 @@ const Page = async () => {
         <UserInfoSection />
         <TopicOnSituationSection />
         <HistorySection />
+        <AttendanceSection params={params} />
       </main>
 
       {/* <TutorialConnector steps={steps} /> */}

@@ -5,3 +5,5 @@ export type LayoutProps = {
 
   params: any
 }
+
+export type LocaleProps = { params: { locale: string } }

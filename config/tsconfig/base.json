@@ -17,6 +17,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
 
     "paths": {
       "@/*": ["../../apps/web/src/*", "../../packages/modules/src/*", "../../packages/shared/src/*"]

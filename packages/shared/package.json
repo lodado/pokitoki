@@ -35,7 +35,8 @@
     "dist/**"
   ],
   "scripts": {
-    "dev": "rollup -c --watch ./rollup.config.mjs",
+    "dev": "rollup -c ./rollup.config.mjs",
+    "postdev": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types/client",
     "build": "rollup -c ./rollup.config.mjs",
     "postbuild": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types/client",
     "lint": "eslint \"**/*.ts*\"",
@@ -73,6 +74,7 @@
   "dependencies": {
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dayjs": "^1.11.11",
     "tailwind-merge": "^2.3.0"
   }
 }

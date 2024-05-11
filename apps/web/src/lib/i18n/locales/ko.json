@@ -35,7 +35,7 @@
     "HISTORY-SCRIPT-TITLE": "최근 히스토리 스트립트",
     "HISTORY-SCRIPT-BUTTON": "히스토리",
     "HISTORY-SCRIPT-DESCRIPTION": "최근 히스토리 스크립트를 확인해보아요",
-    "ATTENDANCE-TITLE": "{month}월 출석 확인",
+    "ATTENDANCE-TITLE": "{month} 출석 확인",
     "ATTENDANCE-BUTTON": "출석 확인",
     "ATTENDANCE-DESCRIPTION": "{username}님의 출석을 확인하세요."
   }

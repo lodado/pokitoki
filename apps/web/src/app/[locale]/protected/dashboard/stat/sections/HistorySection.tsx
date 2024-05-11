@@ -2,20 +2,19 @@ import React from 'react'
 
 import { getI18n } from '@/lib/i18n'
 
-import { SelfStudySectionTitle } from '../components/SelfStudySectionTitle'
+import { ResponsiveSectionTitle } from '../components/ResponsiveSectionTitle'
 
 const HistorySection = async () => {
-  const i18nLearn = await getI18n('LEARN')
-  const i18nDifficulty = await getI18n('DIFFICULTY')
+  const i18nStat = await getI18n('STAT')
 
   return (
     <section className="flex flex-col">
       <div className="flex flex-row items-center justify-between">
-        <SelfStudySectionTitle
-          title={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
-          subTitle={i18nLearn('SELECT-TOPIC-BASED-SITUATION-TALKING')}
-          ButtonText={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
-          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
+        <ResponsiveSectionTitle
+          title={i18nStat('HISTORY-SCRIPT-TITLE')}
+          subTitle={i18nStat('HISTORY-SCRIPT-DESCRIPTION')}
+          ButtonText={i18nStat('HISTORY-SCRIPT-BUTTON')}
+          difficulty=""
         />
       </div>
     </section>
