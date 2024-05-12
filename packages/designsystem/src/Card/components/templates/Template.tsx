@@ -20,7 +20,7 @@ export const BasicCardTemplate = ({ children, className, isSelected, onClick, ..
     <div
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
-      className={`rounded shadow-card-02 bg-tertiary-default ${className}`}
+      className={`rounded shadow-card-02 bg-tertiary-default outline-0 focus-within:ring-2  focus-within:ring-border-primary-02 focus-within:bg-primary-02-default   ${className}`}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       {...rest}

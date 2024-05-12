@@ -19,7 +19,8 @@ const HistorySection = async () => {
         />
       </div>
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 p-2 min-h-[300px]">
+        <HistoryList />
         <HistoryList />
         <HistoryList />
         <HistoryList />

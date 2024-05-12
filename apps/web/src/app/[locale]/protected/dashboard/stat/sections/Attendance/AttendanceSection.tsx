@@ -25,7 +25,7 @@ const AttendanceSection = async () => {
           difficulty=""
         />
       </div>
-      <ul className="flex flex-row flex-shrink-0 gap-4 pb-2 overflow-x-scroll">
+      <ul className="flex flex-row flex-shrink-0 gap-4 p-2 overflow-x-scroll">
         <AttendanceCardList />
       </ul>
     </section>
