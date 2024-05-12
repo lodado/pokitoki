@@ -90,12 +90,6 @@ export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
 
-  console.log(
-    path,
-    cookies().getAll(),
-    '22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222',
-  )
-
   if (path.startsWith('/api')) {
     return withAuthApiMiddleware(request, path, defaultLocale)
   }

@@ -6,19 +6,18 @@ const readUserAttendance = async ({ userId, year, month }: Omit<Attendance, 'att
   const { data, error } = await supabaseInstance
     .from('attendance')
     .select('*')
-    .eq('userId', userId)
+    .eq('userid', userId)
     .eq('year', year)
     .eq('month', month)
-    .single()
 
   if (error) {
     throw new Error(error.message)
   }
 
-  if (!data) {
+  if (data.length === 0) {
     return { attendance: 0 }
   }
-  return data
+  return data[0]
 }
 
 const upsertUserAttendance = async ({ userId, year, month, attendance }: NonNullable<Attendance>) => {
