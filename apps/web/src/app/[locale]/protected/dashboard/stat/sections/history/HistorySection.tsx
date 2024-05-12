@@ -2,8 +2,8 @@ import React from 'react'
 
 import { getI18n } from '@/lib/i18n'
 
-import { ResponsiveSectionTitle } from '../../components/ResponsiveSectionTitle'
-import HistoryList from '../components/HistoryList'
+import { ResponsiveSectionTitle } from '../../../components/ResponsiveSectionTitle'
+import HistoryList from './components/HistoryList'
 
 const HistorySection = async () => {
   const i18nStat = await getI18n('STAT')

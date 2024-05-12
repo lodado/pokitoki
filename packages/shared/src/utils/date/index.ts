@@ -2,7 +2,7 @@ import 'dayjs/locale/ko' // 한국어
 import 'dayjs/locale/zh-cn' // 중국어 간체
 import 'dayjs/locale/ja' // 일본어
 
-import dayjs, { Dayjs } from 'dayjs'
+import dayjs, { ConfigType, Dayjs } from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
 
@@ -21,4 +21,8 @@ const i18nLocale = (locale: string) => {
 
 const dayjsExt = dayjs
 
-export { dayjsExt as dayjs, i18nLocale }
+const i18nDate = (locale: string, option?: ConfigType) => {
+  return dayjsExt(option).locale(i18nLocale(locale))
+}
+
+export { dayjsExt as dayjs, i18nDate, i18nLocale }

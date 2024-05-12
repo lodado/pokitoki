@@ -1,13 +1,13 @@
 import { Badge, BasicCardTemplate } from '@custompackages/designsystem'
-import { dayjs, i18nLocale } from '@custompackages/shared'
+import { i18nDate } from '@custompackages/shared'
 import React from 'react'
 
 import { getLocale } from '@/lib/next-inti'
 
 const HistoryList = async () => {
   const locale = await getLocale()
+  const dateFormat = i18nDate(locale, Date.now()).format()
 
-  const dateFormat = dayjs(Date.now()).locale(i18nLocale(locale)).format()
   return (
     <BasicCardTemplate className="flex flex-row items-center justify-between px-2 h-11">
       <div className="flex flex-row gap-1">

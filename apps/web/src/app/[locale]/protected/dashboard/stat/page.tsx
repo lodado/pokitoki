@@ -9,8 +9,8 @@ import { LocaleProps } from '@/interface'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
-import AttendanceSection from './sections/AttendanceSection'
-import HistorySection from './sections/HistorySection'
+import AttendanceSection from './sections/Attendance/AttendanceSection'
+import HistorySection from './sections/history/HistorySection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
 import UserInfoSection from './sections/UserInfoSection'
 
