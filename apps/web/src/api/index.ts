@@ -1,4 +1,5 @@
 import { isServerSide } from '@custompackages/shared'
+import { cookies } from 'next/headers'
 
 import { ROOT_URL } from './constant'
 
@@ -9,7 +10,7 @@ class MockController {
 const request = async <T>({
   method = 'GET',
   url = '',
-  headers,
+  headers = {},
   data,
   params,
   timeout = 5000,
@@ -22,12 +23,24 @@ const request = async <T>({
 } & RequestInit): Promise<T> => {
   const controller = isServerSide() ? new AbortController() : (new MockController() as AbortController)
   const body = ['GET', 'HEAD'].includes(method) ? undefined : JSON.stringify(data)
+  const requestHeaders: Record<string, any> = { 'Content-Type': 'application/json', ...headers }
 
   if (!isServerSide()) {
     const timeoutId = setTimeout(() => {
       controller.abort()
     }, timeout)
     timeoutId?.unref?.()
+  } else {
+    /**
+     * server component에서 서버에 api 호출시 cookie 정보를 빼먹어서 명시적으로 넣어줌
+     */
+    const cookieString = cookies()
+      .getAll()
+      .filter(({ name }) => name.startsWith('authjs'))
+      .map(({ name, value }) => `${name}=${value}`)
+      .join('; ')
+
+    requestHeaders.Cookie = cookieString
   }
 
   const urlObject = new URL(ROOT_URL + url)
@@ -40,10 +53,7 @@ const request = async <T>({
   const response = await fetch(urlObject.toString(), {
     method,
     body,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
+    headers: requestHeaders,
     ...(isServerSide() ? { signal: controller.signal } : {}),
     ...options,
   })

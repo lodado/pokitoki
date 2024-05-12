@@ -1,33 +1,22 @@
 import request from '@/api'
-import { Thread } from '@/server/service/chatgpt/type'
+import { Attendance } from '@/server/repository'
 
-// Wrapper for fetching chats
-export const getThreadList = async ({ assistantId }: { assistantId: string }) => {
-  const response = request<{ threads: Thread[] }>({
+type AttendanceExceptUserData = Omit<Attendance, 'userId'>
+
+export const getAttendance = async (attendance: AttendanceExceptUserData) => {
+  const response = request<Attendance>({
     method: 'GET',
-    url: '/api/chatgpt/thread',
-    params: { assistantId },
+    url: '/api/protected/attendance',
+    params: { ...attendance },
   })
   return response
 }
 
-export const getThread = async ({ assistantId }: { assistantId: string }) => {
-  const { threads } = await getThreadList({ assistantId })
-  return threads?.[0]
-}
-
-// Wrapper for creating a chat
-export const createThread = async ({ assistantId, threadName }: { assistantId: string; threadName: string }) => {
-  return request<{ threadId: string }>({
-    method: 'POST',
-    url: '/api/chatgpt/thread',
-    data: { assistantId, threadName },
+export const putAttendance = async (attendance: Required<AttendanceExceptUserData>) => {
+  const response = request<Attendance>({
+    method: 'PUT',
+    url: '/api/protected/attendance',
+    params: { ...attendance },
   })
+  return response
 }
-
-// TO DO - 쓰이면 구현
-/* 
-export const deleteChat = async (params: { userId: string; threadId: string }) => {
-   
-}
-*/

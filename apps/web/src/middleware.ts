@@ -1,4 +1,5 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
+import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
@@ -88,6 +89,12 @@ const withAuthMiddleware = async (request: NextRequest, path: string, defaultLoc
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
+
+  console.log(
+    path,
+    cookies().getAll(),
+    '22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222',
+  )
 
   if (path.startsWith('/api')) {
     return withAuthApiMiddleware(request, path, defaultLocale)
