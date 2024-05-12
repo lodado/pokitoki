@@ -2,19 +2,26 @@
 
 import { ICON_MENU } from '@custompackages/design-assets'
 import { cn } from '@custompackages/shared'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { BasicCardTemplate } from './templates/Template'
 
 interface CardPropsBase {
   className?: string
-  subTitle: string
-  mainTitle: string
+  subTitle: ReactNode
+  mainTitle: ReactNode
 }
 
 interface CardImageProps extends CardPropsBase {
   alt?: string
   url: string
+
+  subTitle: string
+  mainTitle: string
+}
+
+interface CheckListProps extends CardPropsBase {
+  icon: ReactNode
 }
 
 type VariantPropsMapping = {
@@ -22,6 +29,23 @@ type VariantPropsMapping = {
   xsmall: CardPropsBase
   medium: CardImageProps
   large: CardImageProps
+  checkList: CheckListProps
+}
+
+const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTitle }) => {
+  return (
+    <BasicCardTemplate className={`${className} flex flex-col items-center justify-between p-spacing-4 h-[7.5rem]`}>
+      <BasicCardTemplate.MainTitle title={mainTitle} />
+
+      {icon}
+
+      <span>
+        <span>
+          <BasicCardTemplate.SubTitle title={subTitle} />
+        </span>
+      </span>
+    </BasicCardTemplate>
+  )
 }
 
 /** TO DO - 디자인 시안이 필요함 */
@@ -97,6 +121,7 @@ const variantComponentMapping: {
   xsmall: XSmallCard,
   medium: MediumCard,
   large: LargeCard,
+  checkList: CheckList,
 }
 
 const Card = <V extends keyof VariantPropsMapping>(props: { variant: V } & VariantPropsMapping[V]) => {

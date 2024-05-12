@@ -9,7 +9,7 @@ export interface BasicCardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface DescriptionProps {
-  mainTitle: string
-  subTitle: string
+  mainTitle: ReactNode
+  subTitle: ReactNode
   isSelected?: boolean
 }

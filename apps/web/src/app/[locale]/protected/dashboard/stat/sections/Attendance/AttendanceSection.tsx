@@ -7,6 +7,7 @@ import { getI18n } from '@/lib/i18n'
 import { getLocale } from '@/lib/next-inti'
 
 import { ResponsiveSectionTitle } from '../../../components/ResponsiveSectionTitle'
+import AttendanceCardList from './components/AttendanceCardList'
 
 const AttendanceSection = async () => {
   const { user } = await getLoginSession()
@@ -15,7 +16,7 @@ const AttendanceSection = async () => {
   const monthName = i18nDate(locale).format('MMMM') // 'MMMM' 포맷으로 월 이름 추출
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col ">
       <div className="flex flex-row items-center justify-between">
         <ResponsiveSectionTitle
           title={i18nStat('ATTENDANCE-TITLE', { month: monthName })}
@@ -24,6 +25,9 @@ const AttendanceSection = async () => {
           difficulty=""
         />
       </div>
+      <ul className="flex flex-row flex-shrink-0 gap-4 pb-2 overflow-x-scroll">
+        <AttendanceCardList />
+      </ul>
     </section>
   )
 }

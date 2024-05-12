@@ -1,7 +1,11 @@
+'use client'
+
+import { ReactNode } from 'react'
+
 import { Image } from '../../../Image'
 
 export interface TitleProps {
-  title: string
+  title: ReactNode
   className?: string
 }
 
