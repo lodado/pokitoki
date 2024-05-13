@@ -2,6 +2,7 @@ import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
+import { AttendanceAdapter } from '@/components'
 import Tutorial from '@/components/Tutorial/Tutorial'
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
@@ -46,6 +47,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
             {children}
 
             <Tutorial />
+            <AttendanceAdapter />
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />

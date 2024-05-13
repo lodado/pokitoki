@@ -1,3 +1,5 @@
+import { timezone, utc } from '@custompackages/shared'
+
 import request from '@/api'
 import { Attendance } from '@/server/repository'
 
@@ -12,11 +14,14 @@ export const getAttendance = async (attendance: AttendanceExceptUserData) => {
   return response
 }
 
-export const putAttendance = async (attendance: Required<AttendanceExceptUserData>) => {
+export const putAttendance = async () => {
+  const localTime = utc().local().format()
+  const offset = localTime.match(/[+-]\d\d:\d\d$/)[0]
+
   const response = request<Attendance>({
     method: 'PUT',
     url: '/api/protected/attendance',
-    params: { ...attendance },
+    params: { offset, attendance: 10 },
   })
   return response
 }

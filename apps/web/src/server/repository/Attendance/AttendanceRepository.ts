@@ -21,9 +21,11 @@ const readUserAttendance = async ({ userId, year, month }: Omit<Attendance, 'att
 }
 
 const upsertUserAttendance = async ({ userId, year, month, attendance }: NonNullable<Attendance>) => {
-  const { data, error } = await supabaseInstance.from('attendance').upsert([{ userId, year, month, attendance }], {
-    onConflict: 'userId,year,month',
-  })
+  const { data, error } = await supabaseInstance
+    .from('attendance')
+    .upsert([{ userid: userId, year, month, attendance }], {
+      onConflict: 'userid,year,month',
+    })
 
   if (error) {
     throw new Error(error.message)

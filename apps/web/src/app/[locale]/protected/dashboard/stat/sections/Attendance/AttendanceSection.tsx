@@ -15,10 +15,6 @@ const AttendanceSection = async () => {
   const locale = await getLocale()
   const monthName = i18nDate(locale).format('MMMM') // 'MMMM' 포맷으로 월 이름 추출
 
-  const monthName123 = timezone.guess()
-
-  console.log(monthName123)
-
   return (
     <section className="flex flex-col ">
       <div className="flex flex-row items-center justify-between">
