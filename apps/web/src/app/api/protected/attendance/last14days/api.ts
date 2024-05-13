@@ -4,13 +4,11 @@ import request from '@/api'
 import { getLoginSession } from '@/hooks/login'
 import { Attendance } from '@/server/repository'
 
-type AttendanceExceptUserData = Omit<Attendance, 'userId'>
-
-export const getUserAttendanceWithinLast14days = async ({ year, month, day }: AttendanceExceptUserData) => {
+export const getUserAttendanceWithinLast14days = async ({ timestamp }: { timestamp: number }) => {
   const response = await request<{ data: Attendance[] }>({
     method: 'GET',
     url: '/api/protected/attendance/last14days',
-    params: { year, month, day },
+    params: { timestamp },
   })
 
   return response

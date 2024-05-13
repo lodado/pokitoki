@@ -46,16 +46,17 @@ const getUnixTimestamp = ({
 }
 const getDate = (locale: string) => (params?: any) => {
   const i18nDayJs = i18nDate(locale, params)
-  const { year, month, day, hour, minute, second } = {
+  const { year, month, day, hour, minute, second, unix } = {
     year: i18nDayJs.year(),
     month: i18nDayJs.month() + 1,
     day: i18nDayJs.date(),
     hour: i18nDayJs.hour(),
     minute: i18nDayJs.minute(),
     second: i18nDayJs.second(),
+    unix: i18nDayJs.unix(),
   }
 
-  return { year, month, day, hour, minute, second }
+  return { year, month, day, hour, minute, second, unix }
 }
 
 const { tz, utc } = dayjs

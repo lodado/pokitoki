@@ -1,4 +1,4 @@
-import { getUnixTimestamp } from '@custompackages/shared'
+import { dayjs, getUnixTimestamp } from '@custompackages/shared'
 
 import { supabaseInstance } from '@/lib/supabase'
 
@@ -16,12 +16,15 @@ const readUserAttendance = async ({ userId }: Attendance) => {
 
 const readUserAttendanceWithinLast14days = async ({ userId, year, month, day }: Attendance) => {
   const timestamp = getUnixTimestamp({ year, day, month })
+  const firstDayOfMonth = dayjs(timestamp).startOf('month').unix()
+  const fourteenDaysAgo = dayjs().subtract(14, 'day').unix()
 
   const { data, error } = await supabaseInstance
     .from('attendance')
     .select('id,studyTime,timestamp')
     .eq('userId', userId)
-    .lte('timestamp', timestamp)
+    .gte('timestamp', firstDayOfMonth) // 이번 달 첫 번째 날 0시 0분 0초 이상
+    .lte('timestamp', fourteenDaysAgo) // 현재 시간까지
     .order('timestamp', { ascending: false })
     .limit(14)
 

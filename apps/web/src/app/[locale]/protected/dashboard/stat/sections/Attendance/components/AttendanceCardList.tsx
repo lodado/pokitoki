@@ -8,8 +8,8 @@ import { getLocale } from '@/lib/next-inti'
 const AttendanceCardList = async () => {
   const locale = await getLocale()
 
-  const { year, month, day } = getDate(locale)()
-  const { data } = await getUserAttendanceWithinLast14days({ year, month, day })
+  const { unix } = getDate(locale)()
+  const { data } = await getUserAttendanceWithinLast14days({ timestamp: unix })
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { utc } from '@custompackages/shared'
+import { getDate, utc } from '@custompackages/shared'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { getLoginSession } from '@/hooks/login'
@@ -8,13 +8,12 @@ const { readUserAttendanceWithinLast14days } = AttendanceServiceInstance
 
 export const GET = async (req: NextRequest) => {
   try {
-    const year = Number(req.nextUrl.searchParams.get('year'))
-    const month = Number(req.nextUrl.searchParams.get('month'))
-    const day = Number(req.nextUrl.searchParams.get('day'))
+    const timestamp = Number(req.nextUrl.searchParams.get('timestamp'))
+
+    const { year, month, day } = getDate('en')(timestamp * 1000)
 
     const { user } = await getLoginSession()
     const userId = user.id
-
     const data = await readUserAttendanceWithinLast14days({ userId, year, month, day })
 
     return NextResponse.json(
