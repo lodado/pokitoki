@@ -25,6 +25,15 @@ const i18nDate = (locale: string, option?: ConfigType) => {
   return dayjs(option).locale(i18nLocale(locale))
 }
 
+const getOffset = () => {
+  const userTimezone = tz.guess()
+  const offset = tz(userTimezone).utcOffset()
+
+  console.log('!!!!!!!!!!!!!!!!', offset)
+
+  return offset
+}
+
 const getUnixTimestamp = ({
   year,
   month,
@@ -44,6 +53,7 @@ const getUnixTimestamp = ({
 
   return date.unix()
 }
+
 const getDate = (locale: string) => (params?: any) => {
   const i18nDayJs = i18nDate(locale, params)
   const { year, month, day, hour, minute, second, unix } = {
@@ -61,4 +71,4 @@ const getDate = (locale: string) => (params?: any) => {
 
 const { tz, utc } = dayjs
 
-export { dayjs, getDate, getUnixTimestamp, i18nDate, i18nLocale, tz as timezone, utc }
+export { dayjs, getDate, getOffset, getUnixTimestamp, i18nDate, i18nLocale, tz, utc }

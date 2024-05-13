@@ -9,27 +9,26 @@ class AttendanceService {
     this.attendanceRepository = attendanceRepository
   }
 
-  readAttendance = async ({ userId, year, month, day }: Attendance) => {
-    const data = await this.attendanceRepository.readUserAttendance({ userId, year, month, day })
+  readAttendance = async ({ userId, timestamp }: Attendance) => {
+    const data = await this.attendanceRepository.readUserAttendance({ userId, timestamp })
 
     return data
   }
 
-  readUserAttendanceWithinLast14days = async ({ userId, year, month, day }: Attendance) => {
-    const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, year, month, day })
-    const timestamp = getUnixTimestamp({ year, day, month })
+  readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
+    const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, timestamp })
 
     const twentyFourHoursInSeconds = 24 * 60 * 60
 
-    const array = Array.from({ length: Math.min(14 - data.length, day) }).map((_, index) => {
+    const array = Array.from({ length: Math.min(14 - data.length) }).map((_, index) => {
       return { id: 'None', studyTime: 0, timestamp: timestamp - (index + data.length) * twentyFourHoursInSeconds }
     })
 
     return [...data, ...array]
   }
 
-  upsertAttendance = async ({ userId, year, month, day }: Attendance) => {
-    const data = await this.attendanceRepository.upsertUserAttendance({ userId, year, month, day })
+  upsertAttendance = async ({ userId, timestamp }: Attendance) => {
+    const data = await this.attendanceRepository.upsertUserAttendance({ userId, timestamp })
 
     return data
   }

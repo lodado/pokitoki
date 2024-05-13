@@ -14,10 +14,9 @@ const readUserAttendance = async ({ userId }: Attendance) => {
   return data
 }
 
-const readUserAttendanceWithinLast14days = async ({ userId, year, month, day }: Attendance) => {
-  const timestamp = getUnixTimestamp({ year, day, month })
+const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
   const firstDayOfMonth = dayjs(timestamp).startOf('month').unix()
-  const fourteenDaysAgo = dayjs().subtract(14, 'day').unix()
+  const fourteenDaysAgo = dayjs(timestamp).subtract(14, 'day').unix()
 
   const { data, error } = await supabaseInstance
     .from('attendance')
@@ -36,9 +35,7 @@ const readUserAttendanceWithinLast14days = async ({ userId, year, month, day }: 
   return data
 }
 
-const upsertUserAttendance = async ({ userId, year, month, day }: Attendance) => {
-  const timestamp = getUnixTimestamp({ year, day, month })
-
+const upsertUserAttendance = async ({ userId, timestamp }: Attendance) => {
   const { data, error } = await supabaseInstance.from('attendance').upsert([{ userId, timestamp }], {
     onConflict: 'timestamp',
   })

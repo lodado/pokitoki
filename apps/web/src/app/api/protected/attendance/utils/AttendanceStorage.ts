@@ -19,17 +19,11 @@ export const getAttendanceByUserId = async <T>({ userId, year, day, month }: Att
   }) as T
 }
 
-export const updateAttendanceByUserId = async ({
-  userId,
-  year,
-  day,
-  month,
-  attendance,
-}: AttendanceParams & { attendance: number }) => {
+export const updateAttendanceByUserId = async ({ userId, year, day, month }: AttendanceParams) => {
   messageController.put({
     id: `${userId}-${year}-${month}-${day}`,
     timestamp: Date.now(),
-    data: attendance,
+    data: true,
   })
 }
 

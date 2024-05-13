@@ -27,9 +27,7 @@ const AttendanceCardList = async () => {
             subTitle={
               <span className="text-text-01">
                 {'학습 시간 '}
-                <span className="body-01-r text-text-03">
-                  {minute + second > 0 && `${minute}:${second / minute}`}1:52
-                </span>
+                <span className="body-01-r text-text-03">1:52</span>
               </span>
             }
             icon={<span className="text-4xl">{fontIcon}</span>}

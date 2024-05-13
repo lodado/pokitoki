@@ -10,11 +10,9 @@ export const GET = async (req: NextRequest) => {
   try {
     const timestamp = Number(req.nextUrl.searchParams.get('timestamp'))
 
-    const { year, month, day } = getDate('en')(timestamp * 1000)
-
     const { user } = await getLoginSession()
     const userId = user.id
-    const data = await readUserAttendanceWithinLast14days({ userId, year, month, day })
+    const data = await readUserAttendanceWithinLast14days({ userId, timestamp })
 
     return NextResponse.json(
       { data },

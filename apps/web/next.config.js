@@ -115,6 +115,10 @@ const nextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
           },
+          {
+            key: 'timezone',
+            value: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          },
         ],
       },
     ]

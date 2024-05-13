@@ -1,4 +1,4 @@
-import { i18nDate, timezone, utc } from '@custompackages/shared'
+import { getDate, getOffset, i18nDate, tz, utc } from '@custompackages/shared'
 
 import request from '@/api'
 import { getLoginSession } from '@/hooks/login'
@@ -8,24 +8,31 @@ import { DeleteAttendanceByUserId, getAttendanceByUserId, updateAttendanceByUser
 
 type AttendanceExceptUserData = Omit<Attendance, 'userId'>
 
-export const getAttendance = async ({ year, month, day }: AttendanceExceptUserData) => {
+/* 만들때 재구축
+export const getAttendance = async ({ timestamp }: AttendanceExceptUserData) => {
+  const localTime = utc().local().format()
+  const offset = localTime.match(/[+-]\d\d:\d\d$/)[0]
+
   const response = await request<{ data: Attendance[] }>({
     method: 'GET',
     url: '/api/protected/attendance',
-    params: { year, month, day },
+    params: { timestamp, offset },
   })
 
   return response
 }
+*/
 
+/**
+ * TODO: timezone 정보 추가
+ */
 export const putAttendance = async () => {
-  const localTime = utc().local().format()
-  const offset = localTime.match(/[+-]\d\d:\d\d$/)[0]
+  const { unix: timestamp } = getDate('ko')()
 
   const response = request<Attendance>({
     method: 'PUT',
     url: '/api/protected/attendance',
-    params: { offset },
+    params: { timestamp },
   })
   return response
 }
