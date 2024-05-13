@@ -1,16 +1,20 @@
-import { timezone, utc } from '@custompackages/shared'
+import { i18nDate, timezone, utc } from '@custompackages/shared'
 
 import request from '@/api'
+import { getLoginSession } from '@/hooks/login'
 import { Attendance } from '@/server/repository'
+
+import { DeleteAttendanceByUserId, getAttendanceByUserId, updateAttendanceByUserId } from './utils/AttendanceStorage'
 
 type AttendanceExceptUserData = Omit<Attendance, 'userId'>
 
-export const getAttendance = async (attendance: AttendanceExceptUserData) => {
-  const response = request<Attendance>({
+export const getAttendance = async ({ year, month, day }: AttendanceExceptUserData) => {
+  const response = await request<{ data: Attendance[] }>({
     method: 'GET',
     url: '/api/protected/attendance',
-    params: { ...attendance },
+    params: { year, month, day },
   })
+
   return response
 }
 
@@ -21,7 +25,7 @@ export const putAttendance = async () => {
   const response = request<Attendance>({
     method: 'PUT',
     url: '/api/protected/attendance',
-    params: { offset, attendance: 10 },
+    params: { offset },
   })
   return response
 }

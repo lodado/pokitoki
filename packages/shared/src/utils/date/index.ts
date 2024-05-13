@@ -21,12 +21,30 @@ const i18nLocale = (locale: string) => {
   return i18nConverter[locale] ?? locale
 }
 
-const dayjsExt = dayjs
-
 const i18nDate = (locale: string, option?: ConfigType) => {
-  return dayjsExt(option).locale(i18nLocale(locale))
+  return dayjs(option).locale(i18nLocale(locale))
+}
+
+const getUnixTimestamp = ({
+  year,
+  month,
+  day,
+  hour = 13,
+  minute = 0,
+  second = 0,
+}: {
+  year: number
+  month: number
+  day: number
+  hour?: number
+  minute?: number
+  second?: number
+}) => {
+  const date = dayjs(new Date(year, month - 1, day, hour, minute, second))
+
+  return date.unix()
 }
 
 const { tz, utc } = dayjs
 
-export { dayjsExt as dayjs, i18nDate, i18nLocale, tz as timezone, utc }
+export { dayjs, getUnixTimestamp, i18nDate, i18nLocale, tz as timezone, utc }

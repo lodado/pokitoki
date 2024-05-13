@@ -7,14 +7,14 @@ class AttendanceService {
     this.attendanceRepository = attendanceRepository
   }
 
-  readAttendance = async ({ userId, year, month }: Attendance) => {
-    const data = await this.attendanceRepository.readUserAttendance({ userId, year, month })
+  readAttendance = async ({ userId, year, month, day }: Attendance) => {
+    const data = await this.attendanceRepository.readUserAttendance({ userId, year, month, day })
 
     return data
   }
 
-  upsertAttendance = async ({ userId, year, month, attendance }: Required<Attendance>) => {
-    const data = await this.attendanceRepository.upsertUserAttendance({ userId, year, month, attendance })
+  upsertAttendance = async ({ userId, year, month, day }: Attendance) => {
+    const data = await this.attendanceRepository.upsertUserAttendance({ userId, year, month, day })
 
     return data
   }
