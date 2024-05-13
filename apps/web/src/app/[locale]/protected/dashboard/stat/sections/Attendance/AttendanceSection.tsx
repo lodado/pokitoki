@@ -1,4 +1,4 @@
-import { i18nDate } from '@custompackages/shared'
+import { dayjs, i18nDate, timezone } from '@custompackages/shared'
 import React from 'react'
 
 import { getLoginSession } from '@/hooks/login'
@@ -14,6 +14,10 @@ const AttendanceSection = async () => {
   const i18nStat = await getI18n('STAT')
   const locale = await getLocale()
   const monthName = i18nDate(locale).format('MMMM') // 'MMMM' 포맷으로 월 이름 추출
+
+  const monthName123 = timezone.guess()
+
+  console.log(monthName123)
 
   return (
     <section className="flex flex-col ">
