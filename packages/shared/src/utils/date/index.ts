@@ -44,7 +44,20 @@ const getUnixTimestamp = ({
 
   return date.unix()
 }
+const getDate = (locale: string) => (params?: any) => {
+  const i18nDayJs = i18nDate(locale, params)
+  const { year, month, day, hour, minute, second } = {
+    year: i18nDayJs.year(),
+    month: i18nDayJs.month() + 1,
+    day: i18nDayJs.date(),
+    hour: i18nDayJs.hour(),
+    minute: i18nDayJs.minute(),
+    second: i18nDayJs.second(),
+  }
+
+  return { year, month, day, hour, minute, second }
+}
 
 const { tz, utc } = dayjs
 
-export { dayjs, getUnixTimestamp, i18nDate, i18nLocale, tz as timezone, utc }
+export { dayjs, getDate, getUnixTimestamp, i18nDate, i18nLocale, tz as timezone, utc }
