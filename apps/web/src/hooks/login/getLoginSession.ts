@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import { NextAuthSessionResponse } from '@/server/service/auth/type'
 
 import { auth } from '../../lib/nextAuth/auth'
@@ -17,4 +19,4 @@ const getLoginSession = async () => {
   return session as NextAuthSessionResponse
 }
 
-export default getLoginSession
+export default cache(getLoginSession)

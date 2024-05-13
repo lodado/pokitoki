@@ -1,7 +1,7 @@
 import { isServerSide } from '@custompackages/shared'
-import { cookies } from 'next/headers'
 
 import { ROOT_URL } from './constant'
+import { parseServerCookie } from './utils/parseServerCookie'
 
 class MockController {
   abort() {}
@@ -34,12 +34,7 @@ const request = async <T>({
     /**
      * server component에서 서버에 api 호출시 cookie 정보를 빼먹어서 명시적으로 넣어줌
      */
-    const cookieString = cookies()
-      .getAll()
-      .filter(({ name }) => name.startsWith('authjs'))
-      .map(({ name, value }) => `${name}=${value}`)
-      .join('; ')
-
+    const cookieString = await parseServerCookie()
     requestHeaders.Cookie = cookieString
   }
 
@@ -54,7 +49,7 @@ const request = async <T>({
     method,
     body,
     headers: requestHeaders,
-    ...(isServerSide() ? { signal: controller.signal } : {}),
+    ...(!isServerSide() ? { signal: controller.signal } : {}),
     ...options,
   })
 

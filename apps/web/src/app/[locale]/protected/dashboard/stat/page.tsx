@@ -29,7 +29,7 @@ const Page = async ({ params }: LocaleProps) => {
 
   return (
     <LogScreen>
-      <main className="flex flex-col pt-1 gap-spacing-7">
+      <main className="flex flex-col gap-spacing-7">
         <UserInfoSection />
         <TopicOnSituationSection />
         <HistorySection />

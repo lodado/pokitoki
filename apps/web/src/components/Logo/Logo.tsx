@@ -8,7 +8,7 @@ const Logo = ({ title }: { title?: string }) => {
   const secondPart = title.substring(middle)
 
   return (
-    <div className="font-bold font-['Binggrae-two'] text-center">
+    <div className="w-[75px] font-bold font-['Binggrae-two'] text-center">
       <span className="text-black">{firstPart}</span>
       <span className="text-yellow-500">{secondPart}</span>
     </div>
