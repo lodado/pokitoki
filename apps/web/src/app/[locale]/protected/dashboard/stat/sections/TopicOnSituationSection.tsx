@@ -3,6 +3,7 @@ import React from 'react'
 
 import request from '@/api'
 import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
+import { getConversationTopicList } from '@/app/api/protected/conversation/topic/api'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
@@ -20,7 +21,7 @@ const TopicOnSituationSection = async () => {
   const i18nLearn = await getI18n('LEARN')
   const i18nStat = await getI18n('STAT')
 
-  // const i18nDifficulty = await getI18n('DIFFICULTY')
+  const { topics } = await getConversationTopicList()
 
   return (
     <section className="flex flex-col gap-1">
@@ -30,38 +31,19 @@ const TopicOnSituationSection = async () => {
       </div>
 
       <div className="flex flex-row gap-2 px-1 py-2 overflow-x-scroll overflow-y-hidden">
-        <Card
-          className="shrink-0"
-          variant="medium"
-          subTitle="apple"
-          mainTitle="apple"
-          url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
-          alt=""
-        />
-        <Card
-          className="shrink-0"
-          variant="medium"
-          subTitle="apple"
-          mainTitle="apple"
-          url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
-          alt=""
-        />
-        <Card
-          className="shrink-0"
-          variant="medium"
-          subTitle="apple"
-          mainTitle="apple"
-          url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
-          alt=""
-        />
-        <Card
-          className="shrink-0"
-          variant="medium"
-          subTitle="apple"
-          mainTitle="apple"
-          url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
-          alt=""
-        />
+        {topics.map(({ id, description, title }) => {
+          return (
+            <Card
+              key={id}
+              className="shrink-0"
+              variant="medium"
+              subTitle={description}
+              mainTitle={title}
+              url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
+              alt=""
+            />
+          )
+        })}
       </div>
     </section>
   )
