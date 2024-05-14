@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getLoginSession } from '@/hooks/login'
 import AttendanceServiceInstance from '@/server/service/Attendance/AttandanceService'
 
-const { readAttendance, upsertAttendance, addUserStudyTime } = AttendanceServiceInstance
+const { readAttendance, upsertAttendance, updateUserStudyTime } = AttendanceServiceInstance
 
 export const PUT = async (req: NextRequest) => {
   try {
@@ -36,7 +36,7 @@ export const POST = async (req: NextRequest) => {
     const { user } = await getLoginSession()
     const userId = user.id
 
-    await addUserStudyTime({ userId, timestamp, studyTime })
+    await updateUserStudyTime({ userId, timestamp, studyTime, offset })
 
     return NextResponse.json(null, { status: 200 })
   } catch (e) {

@@ -16,8 +16,6 @@ import { Assistant } from '@/server/service/chatgpt/type'
       /> */
 
 const TopicOnSituationSection = async () => {
-  const { assistants } = await getAssistantList()
-
   const i18nLearn = await getI18n('LEARN')
   const i18nStat = await getI18n('STAT')
 

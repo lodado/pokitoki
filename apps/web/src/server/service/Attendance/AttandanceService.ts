@@ -1,4 +1,4 @@
-import { dayjs, getUnixTimestamp } from '@custompackages/shared'
+import { dayjs, getUnixTimestamp, utc } from '@custompackages/shared'
 
 import { Attendance, AttendanceRepository } from '@/server/repository'
 
@@ -29,16 +29,31 @@ class AttendanceService {
     return [...data, ...array]
   }
 
-  upsertAttendance = async ({ userId, timestamp }: Attendance) => {
-    const data = await this.attendanceRepository.upsertUserAttendance({ userId, timestamp })
+  upsertAttendance = async ({ userId, timestamp, studyTime }: Attendance) => {
+    const data = await this.attendanceRepository.upsertUserAttendance({ userId, timestamp, studyTime })
 
     return data
   }
 
-  addUserStudyTime = async ({ userId, timestamp, studyTime }: Attendance & { studyTime: number }) => {
-    const data = await this.attendanceRepository.addUserStudyTime({ userId, timestamp, studyTime })
+  updateUserStudyTime = async ({
+    userId,
+    timestamp,
+    studyTime,
+    offset,
+  }: Attendance & { studyTime: number; offset: number }) => {
+    const latestData = await this.attendanceRepository.getLatestUserAttendance({ userId, timestamp })
 
-    return data
+    if (latestData) {
+      const latestTimestamp = utc(latestData.timestamp).utcOffset(offset)
+      const currentTimestamp = utc(timestamp).utcOffset(offset)
+
+      if (latestTimestamp.isSame(currentTimestamp, 'day')) {
+        this.attendanceRepository.updateUserStudyTime({ latestData, studyTime })
+        return
+      }
+    }
+
+    await this.attendanceRepository.upsertUserAttendance({ userId, timestamp, studyTime })
   }
 }
 
