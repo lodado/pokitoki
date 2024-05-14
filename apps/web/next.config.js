@@ -14,6 +14,7 @@ const withPWA = require('next-pwa')({
 })
 
 const Sentry = require('@sentry/nextjs')
+const { getOffset } = require('@custompackages/shared')
 
 const withNextIntl = createNextIntlPlugin()
 const { withSentryConfig } = Sentry
@@ -116,8 +117,8 @@ const nextConfig = {
             value: 'strict-origin-when-cross-origin',
           },
           {
-            key: 'timezone',
-            value: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            key: 'timezone-offset',
+            value: String(getOffset()),
           },
         ],
       },

@@ -35,8 +35,8 @@ class AttendanceService {
     return data
   }
 
-  addUserStudyTime = async ({ userId, studyTime }: { userId: string; studyTime: number }) => {
-    const data = await this.attendanceRepository.addUserStudyTime({ userId, studyTime })
+  addUserStudyTime = async ({ userId, timestamp, studyTime }: Attendance & { studyTime: number }) => {
+    const data = await this.attendanceRepository.addUserStudyTime({ userId, timestamp, studyTime })
 
     return data
   }

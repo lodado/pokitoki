@@ -24,28 +24,22 @@ export const getAttendance = async ({ timestamp }: AttendanceExceptUserData) => 
 }
 */
 
+/*
 export const putAttendance = async ({ locale, userId }: { locale: string; userId: string }) => {
   const offset = getOffset()
   const { now, year, month, day } = getDate(locale)()
 
   const doesUserAlreadyAttend = await getAttendanceByUserId({ userId, year, day, month, offset })
-
-  if (doesUserAlreadyAttend) return
-
-  request<Attendance>({
-    method: 'PUT',
-    url: '/api/protected/attendance',
-    params: { offset },
-  })
-
-  updateAttendanceByUserId({ userId, year, day, month, offset, data: { now } })
 }
+*/
 
 export const postUserStudyTime = async ({ studyTime }: { studyTime: number }) => {
+  const offset = getOffset()
+
   request<Attendance>({
     method: 'POST',
     url: '/api/protected/attendance',
-    data: { studyTime },
+    params: { studyTime, offset },
     isSignalRequired: false,
   })
 }

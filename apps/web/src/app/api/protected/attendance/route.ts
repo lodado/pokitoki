@@ -27,16 +27,16 @@ export const PUT = async (req: NextRequest) => {
 
 export const POST = async (req: NextRequest) => {
   try {
-    const body = await req.json()
+    const offset = Number(req.nextUrl.searchParams.get('offset')!)
+    const studyTime = Number(req.nextUrl.searchParams.get('studyTime')!)
 
-    console.log('wtf?', body)
-
-    const { studyTime } = body
+    const localTime = utc().utcOffset(offset)
+    const timestamp = localTime.startOf('day').valueOf()
 
     const { user } = await getLoginSession()
     const userId = user.id
 
-    await addUserStudyTime({ userId, studyTime })
+    await addUserStudyTime({ userId, timestamp, studyTime })
 
     return NextResponse.json(null, { status: 200 })
   } catch (e) {

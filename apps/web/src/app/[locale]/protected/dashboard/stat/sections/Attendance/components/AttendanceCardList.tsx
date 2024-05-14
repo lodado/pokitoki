@@ -14,7 +14,7 @@ const AttendanceCardList = async () => {
       {data.map(({ id, studyTime, timestamp }) => {
         const { minute, second, day: timestampDay } = getDate(locale)(timestamp)
 
-        const fontIcon = studyTime > 5 ? '🔥' : '❌'
+        const fontIcon = studyTime > 5 * 60 ? '🔥' : '❌'
 
         return (
           <Card
