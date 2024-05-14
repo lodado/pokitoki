@@ -1,4 +1,5 @@
-import { getDate, getOffset, i18nDate, tz, utc } from '@custompackages/shared'
+import { dayjs, getDate, getOffset, i18nDate, tz, utc } from '@custompackages/shared'
+import { getLocale } from 'next-intl/server'
 
 import request from '@/api'
 import { getLoginSession } from '@/hooks/login'
@@ -23,16 +24,28 @@ export const getAttendance = async ({ timestamp }: AttendanceExceptUserData) => 
 }
 */
 
-/**
- * TODO: timezone 정보 추가
- */
-export const putAttendance = async () => {
-  const { unix: timestamp } = getDate('ko')()
+export const putAttendance = async ({ locale, userId }: { locale: string; userId: string }) => {
+  const offset = getOffset()
+  const { now, year, month, day } = getDate(locale)()
 
-  const response = request<Attendance>({
+  const doesUserAlreadyAttend = await getAttendanceByUserId({ userId, year, day, month, offset })
+
+  if (doesUserAlreadyAttend) return
+
+  request<Attendance>({
     method: 'PUT',
     url: '/api/protected/attendance',
-    params: { timestamp },
+    params: { offset },
   })
-  return response
+
+  updateAttendanceByUserId({ userId, year, day, month, offset, data: { now } })
+}
+
+export const postUserStudyTime = async ({ studyTime }: { studyTime: number }) => {
+  request<Attendance>({
+    method: 'POST',
+    url: '/api/protected/attendance',
+    data: { studyTime },
+    isSignalRequired: false,
+  })
 }

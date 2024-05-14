@@ -8,7 +8,9 @@ const { readUserAttendanceWithinLast14days } = AttendanceServiceInstance
 
 export const GET = async (req: NextRequest) => {
   try {
-    const timestamp = Number(req.nextUrl.searchParams.get('timestamp'))
+    const offset = Number(req.nextUrl.searchParams.get('offset')!)
+    const localTime = utc().utcOffset(offset)
+    const timestamp = localTime.valueOf()
 
     const { user } = await getLoginSession()
     const userId = user.id

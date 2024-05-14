@@ -26,11 +26,10 @@ const i18nDate = (locale: string, option?: ConfigType) => {
 }
 
 const getOffset = () => {
-  const userTimezone = tz.guess()
-  const offset = tz(userTimezone).utcOffset()
+  const date = dayjs().tz()
 
-  console.log('!!!!!!!!!!!!!!!!', offset)
-
+  // timezone offset을 분 단위로 반환
+  const offset = date.utcOffset()
   return offset
 }
 
@@ -66,7 +65,7 @@ const getDate = (locale: string) => (params?: any) => {
     unix: i18nDayJs.unix(),
   }
 
-  return { year, month, day, hour, minute, second, unix }
+  return { now: Date.now(), year, month, day, hour, minute, second, unix }
 }
 
 const { tz, utc } = dayjs

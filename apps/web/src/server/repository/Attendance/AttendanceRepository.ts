@@ -1,4 +1,4 @@
-import { dayjs, getUnixTimestamp } from '@custompackages/shared'
+import { dayjs, getUnixTimestamp, utc } from '@custompackages/shared'
 
 import { supabaseInstance } from '@/lib/supabase'
 
@@ -15,8 +15,8 @@ const readUserAttendance = async ({ userId }: Attendance) => {
 }
 
 const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
-  const firstDayOfMonth = dayjs(timestamp).startOf('month').unix()
-  const fourteenDaysAgo = dayjs(timestamp).subtract(14, 'day').unix()
+  const firstDayOfMonth = utc(timestamp).startOf('month').unix()
+  const fourteenDaysAgo = timestamp
 
   const { data, error } = await supabaseInstance
     .from('attendance')
@@ -47,6 +47,35 @@ const upsertUserAttendance = async ({ userId, timestamp }: Attendance) => {
   return data
 }
 
-const AttendanceRepository = { readUserAttendance, readUserAttendanceWithinLast14days, upsertUserAttendance }
+const addUserStudyTime = async ({ userId, studyTime }: { userId: string; studyTime: number }) => {
+  const { data, error } = await supabaseInstance
+    .from('attendance')
+    .select('id,studyTime')
+    .eq('userId', userId)
+    .order('timestamp', { ascending: false })
+    .limit(1)
+    .single()
+
+  if (error) throw new Error(error.message)
+  if (!data) return
+
+  const newStudyTime = data.studyTime + studyTime
+
+  const { id } = data
+
+  const { error: updateError } = await supabaseInstance
+    .from('attendance')
+    .update({ studyTime: newStudyTime })
+    .eq('id', id)
+
+  if (updateError) throw new Error(updateError.message)
+}
+
+const AttendanceRepository = {
+  readUserAttendance,
+  readUserAttendanceWithinLast14days,
+  upsertUserAttendance,
+  addUserStudyTime,
+}
 
 export default AttendanceRepository

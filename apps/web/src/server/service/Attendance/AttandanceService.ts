@@ -18,10 +18,12 @@ class AttendanceService {
   readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
     const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, timestamp })
 
-    const twentyFourHoursInSeconds = 24 * 60 * 60
+    const twentyFourHoursInSeconds = 24 * 60 * 60 * 1000
 
     const array = Array.from({ length: Math.min(14 - data.length) }).map((_, index) => {
-      return { id: 'None', studyTime: 0, timestamp: timestamp - (index + data.length) * twentyFourHoursInSeconds }
+      const newTimestamp = timestamp - (index + data.length) * twentyFourHoursInSeconds
+
+      return { id: `None${newTimestamp}`, studyTime: 0, timestamp: newTimestamp }
     })
 
     return [...data, ...array]
@@ -29,6 +31,12 @@ class AttendanceService {
 
   upsertAttendance = async ({ userId, timestamp }: Attendance) => {
     const data = await this.attendanceRepository.upsertUserAttendance({ userId, timestamp })
+
+    return data
+  }
+
+  addUserStudyTime = async ({ userId, studyTime }: { userId: string; studyTime: number }) => {
+    const data = await this.attendanceRepository.addUserStudyTime({ userId, studyTime })
 
     return data
   }

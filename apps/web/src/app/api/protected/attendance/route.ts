@@ -4,61 +4,39 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getLoginSession } from '@/hooks/login'
 import AttendanceServiceInstance from '@/server/service/Attendance/AttandanceService'
 
-const { readAttendance, upsertAttendance } = AttendanceServiceInstance
+const { readAttendance, upsertAttendance, addUserStudyTime } = AttendanceServiceInstance
 
-export const GET = async (req: NextRequest) => {
+export const PUT = async (req: NextRequest) => {
   try {
-    const timestamp = Number(req.nextUrl.searchParams.get('timestamp'))
+    const offset = Number(req.nextUrl.searchParams.get('offset')!)
+    const localTime = utc().utcOffset(offset)
+    const timestamp = localTime.startOf('day').valueOf()
 
     const { user } = await getLoginSession()
     const userId = user.id
 
-    const data = await readAttendance({ userId, timestamp })
+    const result = await upsertAttendance({ userId, timestamp })
 
-    return NextResponse.json(
-      { data },
-      {
-        status: 200,
-        headers: new Headers({
-          'Cache-Control': 'private, max-age=600',
-        }),
-      },
-    )
+    return NextResponse.json(result, { status: 200 })
   } catch (e) {
-    console.log('error', e)
+    console.log(e)
 
     return Response.json({}, { status: 400 })
   }
 }
 
-export const PUT = async (req: NextRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
-    const nowUtc = utc()
-    const offset = req.nextUrl.searchParams.get('offset')!
-    const timestamp = Number(req.nextUrl.searchParams.get('timestamp')!)
+    const body = await req.json()
 
-    /* 
-    const offsetHours = parseInt(offset.substring(1, 3), 10)
-    const offsetMinutes = parseInt(offset.substring(4), 10)
+    console.log('wtf?', body)
 
-    if (offsetHours > 14) {
-      throw new Error('offsetHours must be smaller than 14')
-    }
-
-    const localTimeWithOffset = offset.startsWith('+')
-      ? nowUtc.add(offsetHours, 'hour').add(offsetMinutes, 'minute')
-      : nowUtc.subtract(offsetHours, 'hour').subtract(offsetMinutes, 'minute')
-
-    const timestamp = localTimeWithOffset.unix()
-    const year = localTimeWithOffset.year()
-    const month = localTimeWithOffset.month() + 1
-    const day = localTimeWithOffset.date()
-    */
+    const { studyTime } = body
 
     const { user } = await getLoginSession()
     const userId = user.id
 
-    await upsertAttendance({ userId, timestamp })
+    await addUserStudyTime({ userId, studyTime })
 
     return NextResponse.json(null, { status: 200 })
   } catch (e) {

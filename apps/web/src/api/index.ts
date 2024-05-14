@@ -14,12 +14,14 @@ const request = async <T>({
   data,
   params,
   timeout = 5000,
+  isSignalRequired = true,
   ...options
 }: {
   url: string
   data?: Record<string, unknown> | Array<unknown>
   params?: Record<string, unknown>
   timeout?: number
+  isSignalRequired?: boolean
 } & RequestInit): Promise<T> => {
   const controller = isServerSide() ? new AbortController() : (new MockController() as AbortController)
   const body = ['GET', 'HEAD'].includes(method) ? undefined : JSON.stringify(data)
@@ -49,7 +51,7 @@ const request = async <T>({
     method,
     body,
     headers: requestHeaders,
-    ...(!isServerSide() ? { signal: controller.signal } : {}),
+    ...(!isServerSide() && isSignalRequired ? { signal: controller.signal } : {}),
     ...options,
   })
 
