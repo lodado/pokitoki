@@ -85,10 +85,6 @@ const updateUserStudyTime = async ({ latestData, studyTime }: { latestData: any;
     .eq('id', id)
 
   if (updateError) throw new Error(updateError.message)
-
-  /**  const { error: insertError } = await supabaseInstance.from('attendance').insert({ userId, timestamp, studyTime })
-
-    if (insertError) throw new Error(insertError.message) */
 }
 
 const AttendanceRepository = {
