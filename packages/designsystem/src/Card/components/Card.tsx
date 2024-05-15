@@ -6,13 +6,12 @@ import React, { ReactNode } from 'react'
 
 import { BasicCardTemplate } from './templates/Template'
 
-interface CardPropsBase {
-  className?: string
+export interface CardPropsBase extends React.HTMLAttributes<HTMLDivElement> {
   subTitle: ReactNode
   mainTitle: ReactNode
 }
 
-interface CardImageProps extends CardPropsBase {
+export interface CardImageProps extends CardPropsBase {
   alt?: string
   url: string
 
@@ -20,7 +19,7 @@ interface CardImageProps extends CardPropsBase {
   mainTitle: string
 }
 
-interface CheckListProps extends CardPropsBase {
+export interface CheckListProps extends CardPropsBase {
   icon: ReactNode
 }
 
@@ -32,9 +31,12 @@ type VariantPropsMapping = {
   checkList: CheckListProps
 }
 
-const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTitle }) => {
+const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTitle, ...rest }) => {
   return (
-    <BasicCardTemplate className={`${className} flex flex-col items-center justify-between p-spacing-4 h-[7.5rem]`}>
+    <BasicCardTemplate
+      className={`${className} flex flex-col items-center justify-between p-spacing-4 h-[7.5rem]`}
+      {...rest}
+    >
       <BasicCardTemplate.MainTitle title={mainTitle} />
 
       {icon}
@@ -49,28 +51,28 @@ const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTi
 }
 
 /** TO DO - 디자인 시안이 필요함 */
-const SmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle }) => {
+const SmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle, ...rest }) => {
   return (
-    <BasicCardTemplate className={className}>
+    <BasicCardTemplate className={className} {...rest}>
       <BasicCardTemplate.Description subTitle={subTitle} mainTitle={mainTitle} />
     </BasicCardTemplate>
   )
 }
 
 /** TO DO - 디자인 시안이 필요함 */
-const XSmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle }) => {
+const XSmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle, ...rest }) => {
   return (
-    <BasicCardTemplate className={className}>
+    <BasicCardTemplate className={className} {...rest}>
       <BasicCardTemplate.Description subTitle={subTitle} mainTitle={mainTitle} />
     </BasicCardTemplate>
   )
 }
 
-const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url }) => {
+const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url, ...rest }) => {
   return (
-    <BasicCardTemplate className={cn(`w-[280px]`, className)}>
+    <BasicCardTemplate className={cn(`w-[234px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
-        className="w-[280px] h-[108px]"
+        className="w-[234px] h-[108px]"
         alt={alt ?? mainTitle}
         src={url ?? ''}
         width={280}
@@ -90,9 +92,9 @@ const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, 
   )
 }
 
-const LargeCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url }) => {
+const LargeCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url, ...rest }) => {
   return (
-    <BasicCardTemplate className={cn(`w-[396px]`, className)}>
+    <BasicCardTemplate className={cn(`w-[396px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
         className="w-full h-[108px]"
         alt={alt ?? mainTitle}

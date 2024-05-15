@@ -7,6 +7,7 @@ import TutorialConnector from '@/components/Tutorial/TutorialConnector'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import EnterChatInformationDialog from '../components/EnterChatInformationDialog'
 import FreeTalkingSection from './sections/freeTalking/FreeTalkingSection'
 import PersonaSection from './sections/PersonaSection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
@@ -28,12 +29,11 @@ const Page = async () => {
     <LogScreen>
       <main className="flex flex-col gap-spacing-7">
         <FreeTalkingSection />
-
         <TopicOnSituationSection />
-
         <PersonaSection />
       </main>
 
+      <EnterChatInformationDialog />
       {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>
   )

@@ -4,6 +4,7 @@ import React from 'react'
 import request from '@/api'
 import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
 import { getConversationTopicList } from '@/app/api/protected/conversation/topic/api'
+import { AssistantCard } from '@/components'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
@@ -29,9 +30,11 @@ const TopicOnSituationSection = async () => {
       </div>
 
       <div className="flex flex-row gap-2 p-2 overflow-x-scroll overflow-y-hidden">
-        {topics.map(({ id, description, title }) => {
+        {topics.map((params) => {
+          const { id, assistantId, description, title } = params
+
           return (
-            <Card
+            <AssistantCard
               key={id}
               className="shrink-0"
               variant="medium"
@@ -39,6 +42,7 @@ const TopicOnSituationSection = async () => {
               mainTitle={title}
               url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
               alt=""
+              assistantInfo={params}
             />
           )
         })}

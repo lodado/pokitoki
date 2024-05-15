@@ -9,6 +9,7 @@ import { LocaleProps } from '@/interface'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import EnterChatInformationDialog from '../components/EnterChatInformationDialog'
 import AttendanceSection from './sections/Attendance/AttendanceSection'
 import HistorySection from './sections/history/HistorySection'
 import TopicOnSituationSection from './sections/TopicOnSituationSection'
@@ -35,6 +36,8 @@ const Page = async ({ params }: LocaleProps) => {
         <HistorySection />
         <AttendanceSection />
       </main>
+
+      <EnterChatInformationDialog />
 
       {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>
