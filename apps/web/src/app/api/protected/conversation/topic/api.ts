@@ -7,6 +7,7 @@ export const getConversationTopicList = cache(async () => {
   const response = request<{ topics: TopicConversation[] }>({
     method: 'GET',
     url: '/api/protected/conversation/topic',
+    cache: 'force-cache',
   })
   return response
 })
