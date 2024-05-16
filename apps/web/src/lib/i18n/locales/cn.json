@@ -22,7 +22,9 @@
     "SELECT-TOPIC-BASED-SITUATION-TALKING": "请选择主题情境对话",
     "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "自定义对话伙伴角色",
     "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "直接自定义对话伙伴或选择推荐角色",
-    "BUTTON-FOR-CUSTOMIZING-PERSONA": "自定义角色"
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "自定义角色",
+    "DIALOG-HEADER": "主题情境对话",
+    "DIALOG-BODY": "请安静地整理周围环境并开始学习🤫"
   },
   "DIFFICULTY": {
     "RATING": "难度 {rating}"
@@ -38,5 +40,10 @@
     "ATTENDANCE-TITLE": "{month}考勤检查",
     "ATTENDANCE-BUTTON": "检查考勤",
     "ATTENDANCE-DESCRIPTION": "检查{username}的考勤。"
+  },
+  "ENTERDIALOG": {
+    "DIALOG-BODY": "请安静地整理周围环境并开始学习🤫",
+    "SUBMITTEXT": "开始",
+    "CANCELTEXT": "停止"
   }
 }

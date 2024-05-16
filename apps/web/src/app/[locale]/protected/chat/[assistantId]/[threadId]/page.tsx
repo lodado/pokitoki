@@ -8,8 +8,7 @@ import TutorialConnector from '@/components/Tutorial/TutorialConnector'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
-import { ChatContent } from '../../../components/ChatContent'
-import { ChatInput } from '../../../components/ChatInput'
+import { ChatInput } from '../../components/ChatInput'
 import FreetalkingChatContent from './components/FreetalkingChatContent'
 
 interface ChatPageProps extends MetadataParams {

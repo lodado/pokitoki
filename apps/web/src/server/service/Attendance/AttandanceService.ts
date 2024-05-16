@@ -29,12 +29,6 @@ class AttendanceService {
     return [...data, ...array]
   }
 
-  upsertAttendance = async ({ userId, timestamp, studyTime }: Attendance) => {
-    const data = await this.attendanceRepository.upsertUserAttendance({ userId, timestamp, studyTime })
-
-    return data
-  }
-
   updateUserStudyTime = async ({
     userId,
     timestamp,
@@ -53,7 +47,7 @@ class AttendanceService {
       }
     }
 
-    await this.attendanceRepository.upsertUserAttendance({ userId, timestamp, studyTime })
+    await this.attendanceRepository.insertUserAttendance({ userId, timestamp, studyTime })
   }
 }
 

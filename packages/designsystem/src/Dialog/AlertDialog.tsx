@@ -1,5 +1,5 @@
 import { Slot } from '@radix-ui/react-slot'
-import React, { ReactNode } from 'react'
+import React, { ReactNode, use, useEffect } from 'react'
 
 import { Button } from '../Button'
 import { cn } from '../utils'
@@ -12,11 +12,11 @@ interface DialogSubmitFormProps extends Omit<SubmitFormProps, 'children'> {
   cancelText: string
 }
 
-const SubmitForm = ({ submitText, cancelText, onSubmit, onError }: DialogSubmitFormProps) => {
+const SubmitForm = ({ submitText, cancelText, onSubmit, onClose, onError }: DialogSubmitFormProps) => {
   const { onChangeVisibleStatus } = useDialogContext()
 
   return (
-    <Dialog.SubmitForm className="flex flex-col w-full mt-2" onSubmit={onSubmit} onError={onError}>
+    <Dialog.SubmitForm className="flex flex-col w-full mt-2" onClose={onClose} onSubmit={onSubmit} onError={onError}>
       <Button className="w-full mb-2" type="submit" size="medium" variant="primary">
         {submitText}
       </Button>

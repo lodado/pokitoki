@@ -22,7 +22,9 @@
     "SELECT-TOPIC-BASED-SITUATION-TALKING": "주제별 상황 토킹을 선택해 주세요",
     "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "대화 상대 페르소나 커스텀",
     "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "대화 상대를 직접 커스텀하거나 추천 페르소나를 선택해주세요",
-    "BUTTON-FOR-CUSTOMIZING-PERSONA": "페르소나 커스텀"
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "페르소나 커스텀",
+    "DIALOG-HEADER": "주제별 상황 토킹",
+    "DIALOG-BODY": "주변 환경을 조용히 정리하고 학습을 시작해주세요🤫"
   },
   "DIFFICULTY": {
     "RATING": "난이도 {rating}"
@@ -38,5 +40,10 @@
     "ATTENDANCE-TITLE": "{month} 출석 확인",
     "ATTENDANCE-BUTTON": "출석 확인",
     "ATTENDANCE-DESCRIPTION": "{username}님의 출석을 확인하세요."
+  },
+  "ENTERDIALOG": {
+    "DIALOG-BODY": "주변 환경을 조용히 정리하고 학습을 시작해주세요🤫",
+    "SUBMITTEXT": "시작하기",
+    "CANCELTEXT": "그만두기"
   }
 }

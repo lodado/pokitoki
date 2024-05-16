@@ -8,3 +8,12 @@ export const getAssistantList = async () => {
   })
   return response
 }
+
+export const createAssistant = async ({ name, instructions }: { name: string; instructions: string }) => {
+  const response = request<{ assistants: Assistant[] }>({
+    method: 'POST',
+    url: '/api/chatgpt/assistant',
+    data: { name, instructions },
+  })
+  return response
+}

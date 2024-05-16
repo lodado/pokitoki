@@ -22,7 +22,9 @@
     "SELECT-TOPIC-BASED-SITUATION-TALKING": "Please select topic-based situational talking",
     "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "Customize conversation partner persona",
     "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "Customize the conversation partner directly or choose a recommended persona",
-    "BUTTON-FOR-CUSTOMIZING-PERSONA": "Customize persona"
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "Customize persona",
+    "DIALOG-HEADER": "Topic-Based Situation Talking",
+    "DIALOG-BODY": "Please quietly organize your surroundings and start studying🤫"
   },
   "DIFFICULTY": {
     "RATING": "Difficulty {rating}"
@@ -38,5 +40,10 @@
     "ATTENDANCE-TITLE": "{month} Attendance Check",
     "ATTENDANCE-BUTTON": "Check Attendance",
     "ATTENDANCE-DESCRIPTION": "Check {username}'s attendance."
+  },
+  "ENTERDIALOG": {
+    "DIALOG-BODY": "Please quietly organize your surroundings and start studying🤫",
+    "SUBMITTEXT": "Start",
+    "CANCELTEXT": "Quit"
   }
 }

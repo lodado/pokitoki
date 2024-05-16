@@ -139,8 +139,6 @@ export default function vercelPostgresAdapter(): any {
   }
 
   const getSessionAndUser = async (sessionToken: string): Promise<{ session: any; user: any } | null> => {
-    console.log('wtf?', sessionToken)
-
     const session = await sql`
         SELECT * 
         FROM auth_sessions 

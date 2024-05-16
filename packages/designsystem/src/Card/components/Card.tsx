@@ -9,6 +9,7 @@ import { BasicCardTemplate } from './templates/Template'
 export interface CardPropsBase extends React.HTMLAttributes<HTMLDivElement> {
   subTitle: ReactNode
   mainTitle: ReactNode
+  isSelected?: boolean
 }
 
 export interface CardImageProps extends CardPropsBase {
@@ -31,10 +32,11 @@ type VariantPropsMapping = {
   checkList: CheckListProps
 }
 
-const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTitle, ...rest }) => {
+const CheckList: React.FC<CheckListProps> = ({ className, icon, subTitle, mainTitle, isSelected, ...rest }) => {
   return (
     <BasicCardTemplate
       className={`${className} flex flex-col items-center justify-between p-spacing-4 h-[7.5rem]`}
+      isSelected={isSelected}
       {...rest}
     >
       <BasicCardTemplate.MainTitle title={mainTitle} />
@@ -68,9 +70,9 @@ const XSmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle, .
   )
 }
 
-const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url, ...rest }) => {
+const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, isSelected, alt, url, ...rest }) => {
   return (
-    <BasicCardTemplate className={cn(`w-[234px]`, className)} {...rest}>
+    <BasicCardTemplate isSelected={isSelected} className={cn(`w-[234px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
         className="w-[234px] h-[108px]"
         alt={alt ?? mainTitle}
@@ -92,9 +94,9 @@ const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, 
   )
 }
 
-const LargeCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, alt, url, ...rest }) => {
+const LargeCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, isSelected, alt, url, ...rest }) => {
   return (
-    <BasicCardTemplate className={cn(`w-[396px]`, className)} {...rest}>
+    <BasicCardTemplate isSelected={isSelected} className={cn(`w-[396px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
         className="w-full h-[108px]"
         alt={alt ?? mainTitle}

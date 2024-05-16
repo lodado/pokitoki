@@ -3,14 +3,13 @@ import React from 'react'
 import request from '@/api'
 import { getAssistantList } from '@/app/api/chatgpt/assistant/api'
 import { getConversationTopicList } from '@/app/api/protected/conversation/topic/api'
-import { AssistantCard } from '@/components'
+import { ThreadEntranceCard } from '@/components'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
 const TopicOnSituationSection = async () => {
-  const i18nLearn = await getI18n('LEARN')
   const i18nStat = await getI18n('STAT')
-
+  const i18nDialog = await getI18n('ENTERDIALOG')
   const { topics } = await getConversationTopicList()
 
   return (
@@ -25,7 +24,7 @@ const TopicOnSituationSection = async () => {
           const { id, assistantId, description, title } = params
 
           return (
-            <AssistantCard
+            <ThreadEntranceCard
               key={id}
               className="shrink-0"
               variant="medium"
@@ -34,6 +33,10 @@ const TopicOnSituationSection = async () => {
               url="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/image%2034.png"
               alt=""
               assistantInfo={params}
+              chatDialogDescription={{
+                header: i18nStat('RECOMMEND-TITLE'),
+                body: i18nDialog('DIALOG-BODY'),
+              }}
             />
           )
         })}

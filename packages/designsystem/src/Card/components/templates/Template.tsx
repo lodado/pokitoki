@@ -3,12 +3,29 @@
 
 'use client'
 
+import { cn } from '@custompackages/shared'
+import { cva } from 'class-variance-authority'
 import React, { FC } from 'react'
 
 import { ImageProps } from '../../../Image'
 import { BasicCardProps, DescriptionProps } from '../../type'
 import Card from '../CardContainer'
 import { CardImage, MainTitle, SubTitle } from './compound'
+
+const cardStyle = cva(
+  'rounded shadow-card-02 bg-tertiary-default outline-0 focus-within:ring-2  focus-within:ring-border-primary-02 focus-within:bg-primary-02-default',
+  {
+    variants: {
+      isSelected: {
+        true: 'ring-2 ring-border-primary-02 bg-primary-02-default',
+        false: '',
+      },
+    },
+    defaultVariants: {
+      isSelected: false,
+    },
+  },
+)
 
 export const BasicCardTemplate = ({ children, className, isSelected, onClick, ...rest }: BasicCardProps) => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -20,7 +37,7 @@ export const BasicCardTemplate = ({ children, className, isSelected, onClick, ..
     <div
       // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
       tabIndex={0}
-      className={`rounded shadow-card-02 bg-tertiary-default outline-0 focus-within:ring-2  focus-within:ring-border-primary-02 focus-within:bg-primary-02-default   ${className}`}
+      className={cn(cardStyle({ isSelected }), className)}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       {...rest}

@@ -2,7 +2,14 @@
 
 import { useState } from 'react'
 
-const useErrorBoundary = <ErrorType extends Error>() => {
+type HttpError = {
+  message: string
+  statusCode: number
+}
+
+type CustomError = HttpError | Error | unknown
+
+const useErrorBoundary = <ErrorType extends CustomError>() => {
   const [error, setError] = useState<ErrorType | null>(null)
 
   if (error != null) {

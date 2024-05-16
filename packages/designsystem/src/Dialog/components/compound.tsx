@@ -1,7 +1,7 @@
 'use client'
 
 import { contextBuildHelper, noop } from '@custompackages/shared'
-import React, { Dispatch, FormEvent, ReactComponentElement, ReactElement, ReactNode, useState } from 'react'
+import React, { Dispatch, FormEvent, ReactComponentElement, ReactElement, ReactNode, useEffect, useState } from 'react'
 
 import { Close, Content, Overlay, Portal, Root, Trigger } from './radix'
 
@@ -75,6 +75,8 @@ export interface SubmitFormProps {
    */
   onSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>
 
+  onClose?: () => void
+
   /**
    * An optional CSS class name to apply to the form for styling purposes. This allows for custom styling of the
    * form element, making it possible to adapt the appearance of the form to match the rest of the application's design.
@@ -90,8 +92,8 @@ export interface SubmitFormProps {
   onError?: (error: unknown) => void
 }
 
-const SubmitForm = ({ className, children, onSubmit, onError = noop }: SubmitFormProps) => {
-  const { onChangeVisibleStatus } = useDialogContext()
+const SubmitForm = ({ className, children, onSubmit, onClose = noop, onError = noop }: SubmitFormProps) => {
+  const { isDialogVisible, onChangeVisibleStatus } = useDialogContext()
 
   const handleDialogSubmit = async (event: FormEvent<HTMLFormElement>) => {
     try {
@@ -102,6 +104,14 @@ const SubmitForm = ({ className, children, onSubmit, onError = noop }: SubmitFor
       onChangeVisibleStatus(false)
     }
   }
+
+  useEffect(() => {
+    return () => {
+      if (!isDialogVisible) {
+        onClose()
+      }
+    }
+  }, [isDialogVisible])
 
   return (
     <form

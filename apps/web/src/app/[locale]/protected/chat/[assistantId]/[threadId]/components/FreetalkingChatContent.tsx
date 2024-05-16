@@ -2,8 +2,8 @@
 
 import React, { Suspense } from 'react'
 
-import { ChatContent } from '../../../../components/ChatContent'
-import { useChatContentQuery } from '../../../../hooks'
+import { ChatContent } from '../../../components/ChatContent'
+import { useChatContentQuery } from '../../../hooks'
 
 const FreetalkingChatContent = () => {
   const { messages } = useChatContentQuery({ isInitFetchAllowed: false })

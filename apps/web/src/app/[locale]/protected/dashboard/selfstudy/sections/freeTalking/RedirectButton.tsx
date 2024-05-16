@@ -22,7 +22,7 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
     try {
       const { threadId } = await createThread({ assistantId, threadName: 'free-talking' })
 
-      push(`/${locale}/protected/chat/${assistantId}/${threadId}/freetalking`)
+      push(`/${locale}/protected/chat/${assistantId}/${threadId}`)
     } catch (error) {
       console.log(error)
 

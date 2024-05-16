@@ -2,11 +2,13 @@
 
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useLocale } from 'next-intl'
 
 import { MetadataParams } from '@/utils/metadata/metadata'
 
 const useUrl = <T extends Params = MetadataParams>() => {
   const pathname = usePathname()
+  const locale = useLocale()
   const router = useRouter()
   const query = useSearchParams()
   const params = useParams<T>()
@@ -21,7 +23,7 @@ const useUrl = <T extends Params = MetadataParams>() => {
     router.push(newPath)
   }
 
-  return { isSameUrl, push, query, params }
+  return { isSameUrl, locale, push, query, params }
 }
 
 export default useUrl

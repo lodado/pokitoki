@@ -24,7 +24,7 @@ const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attenda
     .eq('userId', userId)
     .gte('timestamp', firstDayOfMonth) // 이번 달 첫 번째 날 0시 0분 0초 이상
     .lte('timestamp', fourteenDaysAgo) // 현재 시간까지
-    .order('timestamp', { ascending: false })
+    .order('pkId', { ascending: false })
     .limit(14)
 
   if (error) {
@@ -46,11 +46,8 @@ const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attenda
   return result
 }
 
-const upsertUserAttendance = async ({ userId, timestamp }: Attendance) => {
-  const { data, error } = await supabaseInstance.from('attendance').upsert([{ userId, timestamp }], {
-    onConflict: 'timestamp',
-  })
-
+const insertUserAttendance = async ({ userId, timestamp, studyTime }: Attendance) => {
+  const { data, error } = await supabaseInstance.from('attendance').insert([{ userId, timestamp, studyTime }])
   if (error) {
     throw new Error(error.message)
   }
@@ -90,7 +87,7 @@ const updateUserStudyTime = async ({ latestData, studyTime }: { latestData: any;
 const AttendanceRepository = {
   readUserAttendance,
   readUserAttendanceWithinLast14days,
-  upsertUserAttendance,
+  insertUserAttendance,
   getLatestUserAttendance,
   updateUserStudyTime,
 }

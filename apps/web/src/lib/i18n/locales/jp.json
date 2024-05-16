@@ -22,7 +22,9 @@
     "SELECT-TOPIC-BASED-SITUATION-TALKING": "トピックベースのシチュエーショントーキングを選んでください",
     "CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE": "会話相手のペルソナをカスタマイズ",
     "CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA": "会話相手を直接カスタマイズするか、推奨されるペルソナを選んでください",
-    "BUTTON-FOR-CUSTOMIZING-PERSONA": "ペルソナのカスタマイズ"
+    "BUTTON-FOR-CUSTOMIZING-PERSONA": "ペルソナのカスタマイズ",
+    "DIALOG-HEADER": "テーマ別状況トーキング",
+    "DIALOG-BODY": "周囲の環境を静かに整理して学習を始めてください🤫"
   },
   "DIFFICULTY": {
     "RATING": "難易度 {rating}"
@@ -38,5 +40,10 @@
     "ATTENDANCE-TITLE": "{month}の出席確認",
     "ATTENDANCE-BUTTON": "出席確認",
     "ATTENDANCE-DESCRIPTION": "{username}様の出席を確認してください。"
+  },
+  "ENTERDIALOG": {
+    "DIALOG-BODY": "周囲の環境を静かに整理して学習を始めてください🤫",
+    "SUBMITTEXT": "始める",
+    "CANCELTEXT": "やめる"
   }
 }
