@@ -1,4 +1,4 @@
 export type ChatDialogDescription = {
-  header: ''
-  body: ''
+  header: string
+  body: string
 }

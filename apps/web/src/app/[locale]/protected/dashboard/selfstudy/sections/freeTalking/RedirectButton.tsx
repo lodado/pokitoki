@@ -3,9 +3,10 @@
 import { Button } from '@custompackages/designsystem'
 import React, { ReactNode } from 'react'
 
-import { DeleteMessageStorageById } from '@/app/api/chatgpt/message/utils/messageStorage'
-import { createThread, getThread } from '@/app/api/chatgpt/thread/api'
-import useUrl from '@/hooks/useUrl'
+import { useThreadManager } from '@/hooks'
+import { useI18n } from '@/lib/i18n'
+import { useAtom, useSetAtom } from '@/lib/jotai'
+import { chatDialogDescriptionAtom, chatInformationDialogAtom, doesChatInformationDialogOpenAtom } from '@/store'
 
 interface RedirectToFreeTalkingButtonProps {
   children: ReactNode
@@ -14,24 +15,59 @@ interface RedirectToFreeTalkingButtonProps {
 
 const assistantId = 'asst_5ypeuMs1rQIPpRWF6YJwEJ9c'
 
-const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalkingButtonProps) => {
-  const { params, push } = useUrl<{ locale: string }>()
-  const { locale } = params
+/*
+const ThreadEntranceCard = (
+  props: ComponentProps<typeof Card> & {
+    assistantInfo: TopicConversation
+    chatDialogDescription: ChatDialogDescription
+  },
+) => {
+  const { assistantInfo, chatDialogDescription, ...rest } = props
 
-  const handleCreateFreeTalkingThread = async () => {
-    try {
-      const { threadId } = await createThread({ assistantId, threadName: 'free-talking' })
+  const setChatInformationDialogOpen = useSetAtom(doesChatInformationDialogOpenAtom)
+  const setChatDescription = useSetAtom(chatDialogDescriptionAtom)
+  const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
 
-      push(`/${locale}/protected/chat/${assistantId}/${threadId}`)
-    } catch (error) {
-      console.log(error)
+  const { id } = chatInformationDialog
 
-      alert('error on create free talking')
-    }
-  }
+  const isCurrentCardChecked = id === assistantInfo.id
 
   return (
-    <Button className={className} size="small" variant="primary" onClick={handleCreateFreeTalkingThread}>
+    <Card
+      {...rest}
+      isSelected={isCurrentCardChecked}
+      onClick={() => {
+        setChatInformationDialogOpen(true)
+        setChatInformationDialog(assistantInfo)
+        setChatDescription(chatDialogDescription)
+      }}
+    />
+  )
+}
+*/
+
+const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalkingButtonProps) => {
+  const i18nLearn = useI18n('LEARN')
+  const i18nEnterDialog = useI18n('ENTERDIALOG')
+
+  const setChatInformationDialogOpen = useSetAtom(doesChatInformationDialogOpenAtom)
+  const setChatDescription = useSetAtom(chatDialogDescriptionAtom)
+  const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
+
+  return (
+    <Button
+      className={className}
+      size="small"
+      variant="primary"
+      onClick={() => {
+        setChatInformationDialogOpen(true)
+        setChatInformationDialog({ id: 0, assistantId, description: '', title: '' })
+        setChatDescription({
+          header: i18nLearn('FREETALKING'),
+          body: i18nEnterDialog('DIALOG-BODY'),
+        })
+      }}
+    >
       {children}
     </Button>
   )
