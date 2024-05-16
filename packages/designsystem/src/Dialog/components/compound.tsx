@@ -46,7 +46,9 @@ const DialogContent = ({ children }: { children: ReactNode }) => {
   return (
     <Portal>
       <Overlay className="fixed inset-0" />
-      <Content className="fixed -translate-x-1/2 -translate-y-1/2 z-dialog top-2/4 left-2/4">{children}</Content>
+      <Content className="fixed -translate-x-1/2 -translate-y-1/2 dialog-content z-dialog top-2/4 left-2/4">
+        {children}
+      </Content>
     </Portal>
   )
 }
