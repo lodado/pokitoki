@@ -20,11 +20,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <h4>
-        <b>채팅 내용</b>
-      </h4>
-
-      <ul className="w-full bg-red-100 h-[85vh]">
+      <ul className="w-full  h-[85vh]">
         {length > 0 && (
           <Virtuoso
             ref={observerRef}

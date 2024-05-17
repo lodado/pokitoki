@@ -1,11 +1,12 @@
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 
 'use client'
 
-import { cn } from '@custompackages/shared'
+import { cn, useHotkeys } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
-import React, { FC } from 'react'
+import React, { FC, RefObject } from 'react'
 
 import { ImageProps } from '../../../Image'
 import { BasicCardProps, DescriptionProps } from '../../type'
@@ -28,20 +29,14 @@ const cardStyle = cva(
 )
 
 export const BasicCardTemplate = ({ children, className, isSelected, onClick, ...rest }: BasicCardProps) => {
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      onClick?.(event as unknown as React.MouseEvent<HTMLDivElement>)
-    }
-  }
+  const ref = useHotkeys(['enter', 'space'], (event) => {
+    onClick?.(event as unknown as React.MouseEvent<HTMLDivElement>)
+    event.preventDefault()
+    event.stopPropagation()
+  }) as RefObject<HTMLDivElement>
+
   return (
-    <div
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={0}
-      className={cn(cardStyle({ isSelected }), className)}
-      onClick={onClick}
-      onKeyDown={handleKeyDown}
-      {...rest}
-    >
+    <div ref={ref} tabIndex={0} onClick={onClick} className={cn(cardStyle({ isSelected }), className)} {...rest}>
       {children}
     </div>
   )

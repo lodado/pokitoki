@@ -9,7 +9,7 @@ import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
 import { ChatInput } from '../../components/ChatInput'
-import FreetalkingChatContent from './components/FreetalkingChatContent'
+import { ChatHeader, FreetalkingChatContent } from './components'
 
 interface ChatPageProps extends MetadataParams {
   params: {
@@ -34,6 +34,7 @@ const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps
   return (
     <LogScreen>
       <main className="w-full h-full min-h-[inherit]">
+        <ChatHeader />
         <FreetalkingChatContent />
         <ChatInput />
       </main>

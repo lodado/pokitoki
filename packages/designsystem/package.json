@@ -42,6 +42,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.303.0",
+
     "react-virtuoso": "^4.7.10"
   }
 }

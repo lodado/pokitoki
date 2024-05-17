@@ -3,6 +3,7 @@ import 'dayjs/locale/zh-cn' // 중국어 간체
 import 'dayjs/locale/ja' // 일본어
 
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import durationForExtends from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utcforExtends from 'dayjs/plugin/utc'
@@ -10,6 +11,7 @@ import utcforExtends from 'dayjs/plugin/utc'
 dayjs.extend(relativeTime)
 dayjs.extend(utcforExtends)
 dayjs.extend(timezone)
+dayjs.extend(durationForExtends)
 
 /** 일단 next-inti 기준으로 맞춤 */
 const i18nConverter = {
@@ -68,6 +70,6 @@ const getDate = (locale: string) => (params?: any) => {
   return { now: Date.now(), year, month, day, hour, minute, second, unix }
 }
 
-const { tz, utc } = dayjs
+const { tz, utc, duration } = dayjs
 
-export { dayjs, getDate, getOffset, getUnixTimestamp, i18nDate, i18nLocale, tz, utc }
+export { dayjs, duration, getDate, getOffset, getUnixTimestamp, i18nDate, i18nLocale, tz, utc }
