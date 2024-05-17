@@ -14,10 +14,10 @@ const ICON_BOOKMARKS = memo((props: SVGPropsExtended) => {
   return (
     <>
       {Children.map(
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
           <path
-            d="M14.1667 2.5H5.83333C4.91667 2.5 4.16667 3.25 4.16667 4.16667V17.5L10 15L15.8333 17.5V4.16667C15.8333 3.25 15.0833 2.5 14.1667 2.5Z"
-            fill="#FFC71E"
+            d="M14.6442 4.44041H7.35579C6.55406 4.44041 5.8981 5.09637 5.8981 5.8981V17.5596L11 15.3731L16.1019 17.5596V5.8981C16.1019 5.09637 15.4459 4.44041 14.6442 4.44041Z"
+            fill="#C1C1C1"
           />
         </svg>,
         (child) => processNode(child, fillOverwrite),

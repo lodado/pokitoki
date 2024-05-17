@@ -7,7 +7,10 @@ import ICON_GOOGLE from './ICON_GOOGLE'
 import ICON_KAKAO from './ICON_KAKAO'
 import ICON_LOGO from './ICON_LOGO'
 import ICON_MENU from './ICON_MENU'
+import ICON_MESSAGE_TOP from './ICON_MESSAGE_TOP'
 import ICON_NAVER from './ICON_NAVER'
+import ICON_SPEAK from './ICON_SPEAK'
+import ICON_TRANSLATION from './ICON_TRANSLATION'
 
 export {
   ICON_BOOKMARK,
@@ -19,5 +22,8 @@ export {
   ICON_KAKAO,
   ICON_LOGO,
   ICON_MENU,
+  ICON_MESSAGE_TOP,
   ICON_NAVER,
+  ICON_SPEAK,
+  ICON_TRANSLATION,
 }
