@@ -7,11 +7,14 @@ import React, { useEffect, useState } from 'react'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { Message } from '@/components/Message'
 
+import { ChatInput } from '../ChatInput'
 import { useInfinityScroll } from './hooks'
 
 interface ChatContentProps {
   messages: ChatMessage[]
 }
+
+const ChatContentFooter = () => <div style={{ height: '10px' }} />
 
 const ChatContent = ({ messages }: ChatContentProps) => {
   // virtuoso 및 server component에 에러가 있는듯?
@@ -20,9 +23,10 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <ul className="w-full  h-[85vh]">
+      <div className="flex flex-col w-full ">
         {length > 0 && (
           <Virtuoso
+            style={{ minHeight: '70vh', marginBottom: '50px' }}
             ref={observerRef}
             // eslint-disable-next-line react/no-unstable-nested-components
             itemContent={(index) => {
@@ -35,9 +39,12 @@ const ChatContent = ({ messages }: ChatContentProps) => {
                 lastMessageRef()
               }
             }}
+            components={{
+              Footer: ChatContentFooter,
+            }}
           />
         )}
-      </ul>
+      </div>
     </>
   )
 }

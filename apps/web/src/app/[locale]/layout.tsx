@@ -40,7 +40,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <link rel="icon" href="/favicon.ico" />
       </head>
 
-      <body style={{ overflowY: 'scroll' }}>
+      <body style={{ overflow: 'hidden' }}>
         <LibraryProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
