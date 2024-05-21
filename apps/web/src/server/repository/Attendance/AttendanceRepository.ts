@@ -32,18 +32,7 @@ const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attenda
   }
   if (!data) return []
 
-  const groupedData = data.reduce((acc: Record<string, { id: string; date: string; studyTime: number }>, curr) => {
-    const date = utc(curr.timestamp).format('YYYY-MM-DD')
-    if (!acc[date]) {
-      acc[date] = { date, ...curr }
-    }
-    acc[date].studyTime += curr.studyTime
-    return acc
-  }, {})
-
-  const result = Object.values(groupedData)
-
-  return result
+  return data
 }
 
 const insertUserAttendance = async ({ userId, timestamp, studyTime }: Attendance) => {

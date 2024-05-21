@@ -14,7 +14,7 @@ export const GET = async (req: NextRequest) => {
 
     const { user } = await getLoginSession()
     const userId = user.id
-    const data = await readUserAttendanceWithinLast14days({ userId, timestamp })
+    const data = await readUserAttendanceWithinLast14days({ userId, timestamp, offset })
 
     return NextResponse.json(
       { data },

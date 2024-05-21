@@ -15,18 +15,31 @@ class AttendanceService {
     return data
   }
 
-  readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
+  readUserAttendanceWithinLast14days = async ({ userId, timestamp, offset }: Attendance & { offset: number }) => {
     const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, timestamp })
 
     const twentyFourHoursInSeconds = 24 * 60 * 60 * 1000
 
-    const array = Array.from({ length: Math.min(14 - data.length) }).map((_, index) => {
-      const newTimestamp = timestamp - (index + data.length) * twentyFourHoursInSeconds
+    const array = Array.from({ length: 14 }).map((_, index) => {
+      const newTimestamp = timestamp - index * twentyFourHoursInSeconds
 
       return { id: `None${newTimestamp}`, studyTime: 0, timestamp: newTimestamp }
     })
 
-    return [...data, ...array]
+    const groupedData = [...data, ...array].reduce(
+      (acc: Record<string, { id: string; date: string; timestamp: number; studyTime: number }>, curr) => {
+        const date = utc(curr.timestamp).utcOffset(offset).format('YYYY-MM-DD')
+
+        if (!acc[date]) {
+          acc[date] = { date, ...curr }
+        }
+        acc[date].studyTime += curr.studyTime
+        return acc
+      },
+      {},
+    )
+
+    return Object.values(groupedData).sort((a, b) => b.timestamp - a.timestamp)
   }
 
   updateUserStudyTime = async ({
