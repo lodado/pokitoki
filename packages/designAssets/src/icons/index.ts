@@ -4,6 +4,7 @@ import ICON_GITHUB from './ICON_GITHUB'
 import ICON_GNB_1 from './ICON_GNB_1'
 import ICON_GNB_2 from './ICON_GNB_2'
 import ICON_GOOGLE from './ICON_GOOGLE'
+import ICON_INPUT_SUBMIT from './ICON_INPUT_SUBMIT'
 import ICON_KAKAO from './ICON_KAKAO'
 import ICON_LOGO from './ICON_LOGO'
 import ICON_MENU from './ICON_MENU'
@@ -19,6 +20,7 @@ export {
   ICON_GNB_1,
   ICON_GNB_2,
   ICON_GOOGLE,
+  ICON_INPUT_SUBMIT,
   ICON_KAKAO,
   ICON_LOGO,
   ICON_MENU,

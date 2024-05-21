@@ -1,4 +1,4 @@
-import React, { SyntheticEvent } from 'react'
+import React, { SyntheticEvent, useState } from 'react'
 import { useFormState } from 'react-dom'
 
 import { postAIMessages } from '@/app/api/chatgpt/message/api'
@@ -17,6 +17,7 @@ const useRefreshMessage = ({ value }: { value: string }) => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { assistantId, threadId } = params
 
+  const [isLoading, setLoading] = useState(false)
   const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
   const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
 
@@ -24,6 +25,10 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
   const handleSubmitMessage = async (e: SyntheticEvent) => {
     e.preventDefault()
+    if (isLoading) return
+
+    setLoading(true)
+
     setChatMessages((oldData: ChatMessage[]) => {
       setChatMessageScrollIndex(oldData.length + 1)
 
@@ -32,10 +37,11 @@ const useRefreshMessage = ({ value }: { value: string }) => {
 
     await postAIMessages({ assistantId, threadId, message: value })
 
+    setLoading(false)
     triggerRefreshForAiAnswer()
   }
 
-  return { handleSubmitMessage }
+  return { isLoading, handleSubmitMessage }
 }
 
 export default useRefreshMessage

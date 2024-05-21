@@ -2,8 +2,8 @@ import React, { ComponentProps, PropsWithChildren } from 'react'
 
 import { Control, Field, Label, Message, Root, Submit, ValidityState } from './components/radix'
 
-const Form = ({ children }: PropsWithChildren) => {
-  return <Root>{children}</Root>
+const Form = ({ children, ...rest }: ComponentProps<typeof Root>) => {
+  return <Root {...rest}>{children}</Root>
 }
 
 const RawField = (props: ComponentProps<typeof Field>) => {

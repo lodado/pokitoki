@@ -14,7 +14,7 @@ interface ChatContentProps {
   messages: ChatMessage[]
 }
 
-const ChatContentFooter = () => <div style={{ height: '10px' }} />
+const ChatContentFooter = () => <div style={{ height: '30px' }} />
 
 const ChatContent = ({ messages }: ChatContentProps) => {
   // virtuoso 및 server component에 에러가 있는듯?
@@ -23,10 +23,10 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="relative flex flex-col flex-1 w-full">
-        {length > 0 && (
+      <div className="relative flex flex-col flex-1 w-full h-full">
+        {length > 0 ? (
           <Virtuoso
-            style={{ height: 'inherit', flexGrow: '10' }}
+            className="scrollbar-hide"
             ref={observerRef}
             // eslint-disable-next-line react/no-unstable-nested-components
             itemContent={(index) => {
@@ -43,6 +43,8 @@ const ChatContent = ({ messages }: ChatContentProps) => {
               Footer: ChatContentFooter,
             }}
           />
+        ) : (
+          <div className="flex-1" role="presentation none" />
         )}
         <ChatInput />
       </div>

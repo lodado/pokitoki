@@ -14,7 +14,7 @@ const Message = ({ index, message }: MessageProps) => {
   const MessageComponent = MessageMap[message.role]
 
   return (
-    <div className="relative w-full h-max min-h-[6rem] flex flex-row my-4">
+    <div className="relative flex flex-row w-full my-4 h-max detail-02-r text-text-02">
       <MessageComponent index={index} message={message} />
     </div>
   )

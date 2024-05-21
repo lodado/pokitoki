@@ -1,7 +1,7 @@
 import { cva } from 'class-variance-authority'
 
 export const StyledMessage = cva(
-  'flex flex-start p-3 shadow-tooltip rounded bg-background-default flex-nowrap break-all',
+  'flex flex-start p-3 top-6 shadow-tooltip rounded bg-background-default flex-nowrap break-all',
   {
     variants: {
       role: {
