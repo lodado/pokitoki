@@ -30,7 +30,7 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <header className="sticky w-screen md:w-[768px] justify-between align-middle top-0 bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01 z-nav">
+      <header className="sticky  w-screen md:w-[768px] justify-between align-middle top-0 bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01 z-nav">
         <nav className="flex justify-between w-full h-full align-middle ">
           <NavigationLinkButton className="flex flex-row items-center w-max">
             <Logo className="w-[75px]" title={t('LOGO')} />
@@ -53,7 +53,8 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
       </header>
 
       {children}
-      <Navigation className="bottom-0 flex items-center justify-center border border-solid sm:hidden border-border-01 bg-surface-up shadow-profile px-spacing-4">
+
+      <Navigation className="bottom-0 flex items-center justify-center flex-grow-0 h-12 border border-solid sm:hidden border-border-01 bg-surface-up shadow-profile px-spacing-4">
         <NavigationTab tabList={dashboardTabList} />
       </Navigation>
     </>

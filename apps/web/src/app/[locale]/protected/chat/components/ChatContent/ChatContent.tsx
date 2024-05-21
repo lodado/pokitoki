@@ -23,10 +23,10 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="flex flex-col w-full min-h-[70vh]">
+      <div className="relative flex flex-col h-screen flex-grow-[10] w-full">
         {length > 0 && (
           <Virtuoso
-            style={{ minHeight: 'inherit', marginBottom: '50px' }}
+            style={{ height: 'inherit', flexGrow: '10' }}
             ref={observerRef}
             // eslint-disable-next-line react/no-unstable-nested-components
             itemContent={(index) => {
@@ -44,6 +44,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
             }}
           />
         )}
+        <ChatInput />
       </div>
     </>
   )

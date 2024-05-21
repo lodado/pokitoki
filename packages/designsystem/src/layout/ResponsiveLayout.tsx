@@ -21,7 +21,11 @@ interface ResponsiveLayoutProps {
  * @returns {JSX.Element} The ResponsiveLayout component.
  */
 const ResponsiveLayout = ({ children, className = '' }: ResponsiveLayoutProps): JSX.Element => {
-  return <div className={`relative left-1/2 -translate-x-1/2 w-screen md:w-[768px] ${className}`}>{children}</div>
+  return (
+    <div className={`flex flex-col relative left-1/2 -translate-x-1/2 w-screen md:w-[768px] h-screen ${className}`}>
+      {children}
+    </div>
+  )
 }
 
 export default ResponsiveLayout
