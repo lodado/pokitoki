@@ -4,9 +4,10 @@
 
 'use client'
 
-import { cn, useHotkeys } from '@custompackages/shared'
+import { cn } from '@custompackages/shared'
 import { cva } from 'class-variance-authority'
 import React, { FC, RefObject } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 import { ImageProps } from '../../../Image'
 import { BasicCardProps, DescriptionProps } from '../../type'

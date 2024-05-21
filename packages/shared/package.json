@@ -69,11 +69,11 @@
   "peerDependencies": {
     "@babel/plugin-transform-runtime": "^7.24.3",
     "@babel/runtime": "^7.24.4",
-    "react": "^18.0.2"
+    "react": "^18.0.2",
+    "react-hotkeys-hook": "^4.5.0"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
-    "react-hotkeys-hook": "^4.5.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.11",
     "tailwind-merge": "^2.3.0"

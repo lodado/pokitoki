@@ -7,6 +7,7 @@ const { COLOR, SPACE } = VARIABLES
 
 const plugin = require('tailwindcss/plugin')
 const animated = require('tailwindcss-animate')
+const scrollBarHide = require('tailwind-scrollbar-hide')
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -74,6 +75,7 @@ export default {
   /** @type {import('tailwindcss/types/config').PluginCreator} */
   plugins: [
     animated,
+    scrollBarHide,
     plugin(function ({ addComponents }) {
       addComponents({ ...TYPOGRAPHY })
     }),
