@@ -23,7 +23,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="relative flex flex-col h-screen flex-grow-[10] w-full">
+      <div className="relative flex flex-col flex-1 w-full">
         {length > 0 && (
           <Virtuoso
             style={{ height: 'inherit', flexGrow: '10' }}
