@@ -27,7 +27,7 @@ const useInfinityScroll = () => {
     if (hasMore) {
       triggerRefreshChatContent()
     }
-  }, 500)
+  }, 50)
 
   const moveChatContentScroll = debounce(() => {
     observerRef.current?.scrollToIndex({ index: chatMessageScrollIndex })

@@ -23,10 +23,10 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="flex flex-col w-full ">
+      <div className="flex flex-col w-full min-h-[70vh]">
         {length > 0 && (
           <Virtuoso
-            style={{ minHeight: '70vh', marginBottom: '50px' }}
+            style={{ minHeight: 'inherit', marginBottom: '50px' }}
             ref={observerRef}
             // eslint-disable-next-line react/no-unstable-nested-components
             itemContent={(index) => {
@@ -35,7 +35,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
             totalCount={Math.max(0, length)}
             initialTopMostItemIndex={length - 1}
             rangeChanged={({ startIndex, endIndex }) => {
-              if (startIndex <= 3) {
+              if (startIndex <= 3 && endIndex !== length - 1) {
                 lastMessageRef()
               }
             }}
