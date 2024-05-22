@@ -1,14 +1,22 @@
+'use client'
+
 import { Badge, BasicCardTemplate } from '@custompackages/designsystem'
-import { i18nDate } from '@custompackages/shared'
-import React from 'react'
+import { i18nDate, useIsClient } from '@custompackages/shared'
+import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
+import React, { use } from 'react'
 
 import { getRecentHistoryList } from '@/app/api/chatgpt/thread/history/api'
-import { getLocale } from '@/lib/next-inti'
 
-const HistoryList = async () => {
-  const { topics } = await getRecentHistoryList()
+const HistoryList = () => {
+  const locale = useLocale()
+  const { data } = useSuspenseQuery({
+    queryKey: ['stat/history/recentHistoryList'],
+    queryFn: () => getRecentHistoryList(),
+    staleTime: 0,
+  })
 
-  const locale = await getLocale()
+  const { topics } = data
 
   return (
     <>

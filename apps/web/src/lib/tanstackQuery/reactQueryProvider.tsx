@@ -9,7 +9,6 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        initialData: [],
         refetchOnWindowFocus: false,
         refetchInterval: false,
         refetchIntervalInBackground: false,
@@ -36,11 +35,7 @@ function getQueryClient() {
   return browserQueryClient
 }
 
-/**
- * refactor: next14 불완전한 지원으로 인하여 일시적인 react-query 삭제
- */
-const ReactQueryProvider = ({ children }: PropsWithChildren) => {
-  /*  
+export const ReactQueryProvider = ({ children }: PropsWithChildren) => {
   const queryClient = getQueryClient()
 
   return (
@@ -48,9 +43,4 @@ const ReactQueryProvider = ({ children }: PropsWithChildren) => {
       {children} <ReactQueryDevtools />
     </QueryClientProvider>
   )
-*/
-
-  return children
 }
-
-export default ReactQueryProvider

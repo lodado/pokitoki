@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { getI18n } from '@/lib/i18n'
 
 import { ResponsiveSectionTitle } from '../../../components/ResponsiveSectionTitle'
 import HistoryList from './components/HistoryList'
+import SSRSafeSuspense from './components/SSRSuspense'
 
 const HistorySection = async () => {
   const i18nStat = await getI18n('STAT')
@@ -19,9 +20,11 @@ const HistorySection = async () => {
         />
       </div>
 
-      <ul className="flex flex-col gap-4 p-2 min-h-[300px]">
-        <HistoryList />
-      </ul>
+      <div className="flex flex-col gap-4 p-2 min-h-[300px]">
+        <SSRSafeSuspense fallback={<></>}>
+          <HistoryList />
+        </SSRSafeSuspense>
+      </div>
     </section>
   )
 }

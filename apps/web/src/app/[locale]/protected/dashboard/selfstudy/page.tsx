@@ -22,9 +22,6 @@ export async function generateMetadata({ params: { locale } }: MetadataParams): 
 }
 
 const Page = async () => {
-  // const t = await getI18n('Index')
-  // const session = await getLoginSession()
-
   return (
     <LogScreen>
       <main className="flex flex-col gap-spacing-7">

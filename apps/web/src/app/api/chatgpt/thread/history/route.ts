@@ -15,6 +15,8 @@ export const GET = async () => {
     const topics = await getThreadRecentHistory({ userId })
     return NextResponse.json({ topics })
   } catch (e) {
+    console.log(e)
+
     return Response.json({}, { status: 400 })
   }
 }
