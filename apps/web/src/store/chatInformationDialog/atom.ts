@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
 import { atom, atomWithReset } from '@/lib/jotai'
-import { TopicConversation } from '@/server/service/conversation/type'
+import { TopicConversation } from '@/server/service/conversation/topic/type'
 
 import { ChatDialogDescription } from './type'
 

@@ -4,6 +4,8 @@ import { OpenAI } from 'openai'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { supabaseInstance } from '@/lib/supabase'
 
+import { RecentHistoryParams } from './type'
+
 type MessageContentText = OpenAI.Beta.Threads.TextContentBlock
 
 const openai = new OpenAI({
@@ -110,8 +112,24 @@ export const createThreadMessage = async (assistantId: string, threadId: string,
 
 // ---------- supabase func ----------
 
+async function getRecentHistory({ userId, limit = 5 }: RecentHistoryParams) {
+  const { data, error } = await supabaseInstance
+    .from('threads')
+    .select('id, assistantId, threadId, threadName, createdAt, threadCategory')
+    .eq('userId', userId)
+    .order('id', { ascending: false })
+    .limit(limit)
+
+  if (error) {
+    console.error('Error fetching topic conversation history', error)
+    throw new Error('Failed to fetch topic conversations')
+  }
+
+  return data || []
+}
+
 // 사용자별 해당 튜터의 스레드(채팅방) 정보를 가져옴
-export const getThreadIds = async (userId: string, assistantId: string) => {
+export const getThreadsByAssistantId = async (userId: string, assistantId: string) => {
   const { data: threadIds } = await supabaseInstance
     .from('threads')
     .select('threadId, threadName')
@@ -140,8 +158,9 @@ export default {
   getAssistants,
   createThread,
   getThreadMessages,
+  getRecentHistory,
   createThreadMessage,
-  getThreadIds,
+  getThreadsByAssistantId,
   insertThread,
   deleteThread,
 }

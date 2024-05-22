@@ -1,5 +1,6 @@
 import { supabaseInstance } from '@/lib/supabase'
-import { TopicConversation } from '@/server/service/conversation/type'
+
+import { TopicConversation } from './type'
 
 export async function getTopicConversations(): Promise<TopicConversation[]> {
   const { data, error } = await supabaseInstance

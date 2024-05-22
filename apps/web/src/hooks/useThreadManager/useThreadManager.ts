@@ -1,9 +1,7 @@
 import { useErrorBoundary } from '@custompackages/designsystem'
-import Error from 'next/error'
-import React from 'react'
 
 import { createThread } from '@/app/api/chatgpt/thread/api'
-import { TopicConversation } from '@/server/service/conversation/type'
+import { TopicConversation } from '@/server/repository/conversation/topic/type'
 
 import useUrl from '../useUrl'
 

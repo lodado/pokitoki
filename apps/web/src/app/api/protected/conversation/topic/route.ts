@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import ConversationServiceInstance from '@/server/service/conversation/ConversationService'
+import ConversationServiceInstance from '@/server/service/conversation/topic/ConversationService'
 
 const { getTopicConversation } = ConversationServiceInstance
 

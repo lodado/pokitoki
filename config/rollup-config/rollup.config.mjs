@@ -82,7 +82,7 @@ const rollupConfigFunc = (config) =>
         ...(isESMFormat ? { preserveModulesRoot: `.`, preserveModules: isESMFormat } : {}),
       },
 
-      external: [/@babel\/runtime/],
+      external: [/@babel\/runtime/, /node_modules/],
 
       plugins: [
         /**

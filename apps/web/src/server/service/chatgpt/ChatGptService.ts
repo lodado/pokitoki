@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { ChatGptRepository } from '@/server/repository'
+import { RecentHistoryParams } from '@/server/repository/chatgpt/type'
 
 class ChatGptService {
   private chatGptRepository: typeof ChatGptRepository
@@ -44,10 +45,20 @@ class ChatGptService {
     }
   }
 
-  // 채팅방 목록 가져오기
-  getChats = async (userId: string, assistantId: string) => {
+  getThreadRecentHistory = async ({ userId }: RecentHistoryParams) => {
     try {
-      const threads = await this.chatGptRepository.getThreadIds(userId, assistantId)
+      const threads = await this.chatGptRepository.getRecentHistory({ userId })
+      return threads
+    } catch (err) {
+      console.error(err)
+      throw err
+    }
+  }
+
+  // 채팅방 목록 가져오기
+  getChatsByAssistantId = async (userId: string, assistantId: string) => {
+    try {
+      const threads = await this.chatGptRepository.getThreadsByAssistantId(userId, assistantId)
       return threads
     } catch (err) {
       console.error(err)

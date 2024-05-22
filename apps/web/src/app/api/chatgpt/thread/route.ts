@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getLoginSession } from '@/hooks/login'
 import ChatGptService from '@/server/service/chatgpt/ChatGptService'
 
-const { getChats, createChat, deleteChat } = ChatGptService
+const { getChatsByAssistantId, createChat, deleteChat } = ChatGptService
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -13,7 +13,7 @@ export const GET = async (req: NextRequest) => {
     const { user } = await getLoginSession()
     const userId = user.id
 
-    const threads = await getChats(userId, assistantId)
+    const threads = await getChatsByAssistantId(userId, assistantId)
     return NextResponse.json({ threads })
   } catch (e) {
     console.log('error', e)

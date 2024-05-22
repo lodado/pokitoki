@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import ConversationRepository from '@/server/repository/conversation/ConversationRepository'
+import ConversationRepository from '@/server/repository/conversation/topic/ConversationRepository'
 
 class ConversationService {
   private conversationRepository: typeof ConversationRepository
