@@ -2,6 +2,7 @@ import { useErrorBoundary } from '@custompackages/designsystem'
 
 import { createThread } from '@/app/api/chatgpt/thread/api'
 import { TopicConversation } from '@/server/repository/conversation/topic/type'
+import { ChatDialogDescription } from '@/store'
 
 import useUrl from '../useUrl'
 
@@ -12,11 +13,13 @@ const useThreadManager = () => {
   const createThreadByAssistantId = async ({
     assistantId,
     description,
+    category,
   }: {
     assistantId: TopicConversation['assistantId']
     description: TopicConversation['description']
+    category: ChatDialogDescription['category']
   }) => {
-    const { threadId } = await createThread({ assistantId, threadName: description })
+    const { threadId } = await createThread({ assistantId, threadName: description, threadCategory: category })
 
     return { threadId }
   }
@@ -34,12 +37,14 @@ const useThreadManager = () => {
   const createAndEnterThread = async ({
     assistantId,
     description,
+    category,
   }: {
     assistantId: TopicConversation['assistantId']
     description: TopicConversation['description']
+    category: ChatDialogDescription['category']
   }) => {
     try {
-      const { threadId } = await createThreadByAssistantId({ assistantId, description })
+      const { threadId } = await createThreadByAssistantId({ assistantId, description, category })
       enterThread({ assistantId, threadId })
     } catch (e) {
       console.log(e)

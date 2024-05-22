@@ -12,7 +12,7 @@ import { MetadataParams } from '@/utils/metadata/metadata'
 import EnterChatInformationDialog from '../components/EnterChatInformationDialog'
 import AttendanceSection from './sections/Attendance/AttendanceSection'
 import HistorySection from './sections/history/HistorySection'
-import TopicOnSituationSection from './sections/TopicOnSituationSection'
+import TodayRecommendSection from './sections/TopicOnSituationSection'
 import UserInfoSection from './sections/UserInfoSection'
 
 export async function generateMetadata({ params: { locale } }: MetadataParams): Promise<Metadata> {
@@ -32,7 +32,7 @@ const Page = async ({ params }: LocaleProps) => {
     <LogScreen>
       <main className="flex flex-col gap-spacing-7">
         <UserInfoSection />
-        <TopicOnSituationSection />
+        <TodayRecommendSection />
         <HistorySection />
         <AttendanceSection />
       </main>

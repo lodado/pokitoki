@@ -32,10 +32,16 @@ class ChatGptService {
   }
 
   // 채팅방 생성 및 실행
-  createChat = async (userId: string, assistantId: string, threadName: string) => {
+  createChat = async (userId: string, assistantId: string, threadName: string, threadCategory: string) => {
     try {
       const threadId = await this.chatGptRepository.createThread(assistantId)
-      const { isSuccess, error } = await this.chatGptRepository.insertThread(userId, assistantId, threadId, threadName)
+      const { isSuccess, error } = await this.chatGptRepository.insertThread(
+        userId,
+        assistantId,
+        threadId,
+        threadName,
+        threadCategory,
+      )
 
       if (!isSuccess || error) throw new Error(JSON.stringify(error))
       return threadId

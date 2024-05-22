@@ -4,7 +4,7 @@ import { Card } from '@custompackages/designsystem'
 import React, { ComponentProps, useEffect } from 'react'
 
 import { useAtom, useResetAtom, useSetAtom } from '@/lib/jotai'
-import { TopicConversation } from '@/server/service/conversation/topic/type'
+import { TopicConversation } from '@/server/repository/conversation/topic/type'
 import {
   ChatDialogDescription,
   chatDialogDescriptionAtom,

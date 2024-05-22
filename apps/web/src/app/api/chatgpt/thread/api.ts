@@ -17,11 +17,19 @@ export const getThread = async ({ assistantId }: { assistantId: string }) => {
 }
 
 // Wrapper for creating a chat
-export const createThread = async ({ assistantId, threadName }: { assistantId: string; threadName: string }) => {
+export const createThread = async ({
+  assistantId,
+  threadName,
+  threadCategory,
+}: {
+  assistantId: string
+  threadName: string
+  threadCategory: string
+}) => {
   return request<{ threadId: string }>({
     method: 'POST',
     url: '/api/chatgpt/thread',
-    data: { assistantId, threadName },
+    data: { assistantId, threadName, threadCategory },
   })
 }
 

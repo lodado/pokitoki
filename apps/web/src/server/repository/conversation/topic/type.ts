@@ -9,7 +9,6 @@ export interface ThreadHistory {
   id: number
   threadName: string
   threadCategory: string
-
   threadId: string
   assistantId: string
   createdAt: string

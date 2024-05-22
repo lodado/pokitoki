@@ -46,6 +46,7 @@ const TopicOnSituationSection = async () => {
               chatDialogDescription={{
                 header: i18nLearn('DIALOG-HEADER'),
                 body: i18nDialog('DIALOG-BODY'),
+                category: 'topic',
               }}
             />
           )

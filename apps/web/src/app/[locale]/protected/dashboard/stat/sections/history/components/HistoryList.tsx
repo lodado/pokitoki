@@ -12,7 +12,7 @@ const HistoryList = async () => {
 
   return (
     <>
-      {topics.map(({ id, threadCategory, createdAt }) => {
+      {topics.map(({ id, threadCategory, threadName, createdAt }) => {
         const dateFormat = i18nDate(locale, createdAt).format('YYYY-MM-DD HH:mm')
 
         return (
@@ -21,7 +21,9 @@ const HistoryList = async () => {
               <Badge className="w-[4rem] align-center" variant="filled" color="brand">
                 {threadCategory}
               </Badge>
-              <span className="flex items-center justify-center text-text-01 body-01-m">{dateFormat}</span>
+              <span className="flex items-center justify-center text-text-01 body-01-m">
+                {threadName} {dateFormat}
+              </span>
             </div>
 
             <div>버튼</div>

@@ -139,10 +139,16 @@ export const getThreadsByAssistantId = async (userId: string, assistantId: strin
 }
 
 // 사용자별 해당 튜터의 스레드(채팅방) 정보를 저장
-export const insertThread = async (userId: string, assistantId: string, threadId: string, threadName: string) => {
+export const insertThread = async (
+  userId: string,
+  assistantId: string,
+  threadId: string,
+  threadName: string,
+  threadCategory: string,
+) => {
   const { error } = await supabaseInstance
     .from('threads')
-    .insert({ userId, assistantId, threadId, threadName } as never)
+    .insert({ userId, assistantId, threadId, threadName, threadCategory } as never)
 
   return { isSuccess: !error, error }
 }

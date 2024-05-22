@@ -22,7 +22,9 @@ const EnterChatInformationDialog = () => {
 
   const handleCreateAndEnterThread = async () => {
     const { assistantId, description } = chatInformationDialog
-    createAndEnterThread({ assistantId, description })
+    const { category } = chatDescription
+
+    createAndEnterThread({ assistantId, description, category })
   }
 
   return (

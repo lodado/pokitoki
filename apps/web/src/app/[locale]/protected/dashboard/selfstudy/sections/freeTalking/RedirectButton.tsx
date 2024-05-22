@@ -15,37 +15,6 @@ interface RedirectToFreeTalkingButtonProps {
 
 const assistantId = 'asst_5ypeuMs1rQIPpRWF6YJwEJ9c'
 
-/*
-const ThreadEntranceCard = (
-  props: ComponentProps<typeof Card> & {
-    assistantInfo: TopicConversation
-    chatDialogDescription: ChatDialogDescription
-  },
-) => {
-  const { assistantInfo, chatDialogDescription, ...rest } = props
-
-  const setChatInformationDialogOpen = useSetAtom(doesChatInformationDialogOpenAtom)
-  const setChatDescription = useSetAtom(chatDialogDescriptionAtom)
-  const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
-
-  const { id } = chatInformationDialog
-
-  const isCurrentCardChecked = id === assistantInfo.id
-
-  return (
-    <Card
-      {...rest}
-      isSelected={isCurrentCardChecked}
-      onClick={() => {
-        setChatInformationDialogOpen(true)
-        setChatInformationDialog(assistantInfo)
-        setChatDescription(chatDialogDescription)
-      }}
-    />
-  )
-}
-*/
-
 const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalkingButtonProps) => {
   const i18nLearn = useI18n('LEARN')
   const i18nEnterDialog = useI18n('ENTERDIALOG')
@@ -61,10 +30,16 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
       variant="primary"
       onClick={() => {
         setChatInformationDialogOpen(true)
-        setChatInformationDialog({ id: 0, assistantId, description: '', title: '' })
+        setChatInformationDialog({
+          id: 0,
+          assistantId,
+          description: 'freeTalking~',
+          title: 'free-talking',
+        })
         setChatDescription({
           header: i18nLearn('FREETALKING'),
           body: i18nEnterDialog('DIALOG-BODY'),
+          category: 'free-talking',
         })
       }}
     >

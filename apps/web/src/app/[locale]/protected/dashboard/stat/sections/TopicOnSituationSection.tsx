@@ -7,7 +7,7 @@ import { ThreadEntranceCard } from '@/components'
 import { getI18n } from '@/lib/i18n'
 import { Assistant } from '@/server/service/chatgpt/type'
 
-const TopicOnSituationSection = async () => {
+const TodayRecommendSection = async () => {
   const i18nStat = await getI18n('STAT')
   const i18nDialog = await getI18n('ENTERDIALOG')
   const { topics } = await getConversationTopicList()
@@ -36,6 +36,7 @@ const TopicOnSituationSection = async () => {
               chatDialogDescription={{
                 header: i18nStat('RECOMMEND-TITLE'),
                 body: i18nDialog('DIALOG-BODY'),
+                category: 'recommend',
               }}
             />
           )
@@ -45,4 +46,4 @@ const TopicOnSituationSection = async () => {
   )
 }
 
-export default TopicOnSituationSection
+export default TodayRecommendSection
