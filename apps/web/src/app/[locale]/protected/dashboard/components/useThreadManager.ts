@@ -16,12 +16,12 @@ const useThreadManager = () => {
   const { assistantId, threadId: _threadId, description } = topic
 
   const createThreadByAssistantId = async () => {
-    const { threadId } = await createThread({ assistantId, threadName: description, threadCategory: category })
+    const { threadId } = await createThread({ assistantId, threadName: description!, threadCategory: category! })
 
     return { threadId }
   }
 
-  const enterThread = ({ threadId }: { threadId: string }) => {
+  const enterThread = ({ threadId }: { threadId?: string }) => {
     push(`/${locale}/protected/chat/${assistantId}/${_threadId ?? threadId}`)
   }
 
@@ -38,14 +38,14 @@ const useThreadManager = () => {
   const handleEnterDialog = async () => {
     switch (state) {
       case 'CREATE':
-        return createThreadByAssistantId
+        return createThreadByAssistantId()
       case 'ENTER':
-        return enterThread
+        return enterThread({})
       case 'CREATE_AND_ENTER':
-        return createAndEnterThread
+        return createAndEnterThread()
       case 'UNMOUNT':
       default:
-        return noop
+        return noop()
     }
   }
 

@@ -1,11 +1,10 @@
-import { atom } from 'jotai'
-
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
+import { atomWithReset } from '@/lib/jotai'
 
-export const chatMessageAtom = atom<ChatMessage[]>([])
+export const chatMessageAtom = atomWithReset<ChatMessage[]>([])
 
-export const isChatLoadingAtom = atom<boolean>(false)
+export const isChatLoadingAtom = atomWithReset<boolean>(false)
 
-export const hasChatMoreAtom = atom<boolean>(true)
+export const hasChatMoreAtom = atomWithReset<boolean>(true)
 
-export const chatMessageScrollIndexAtom = atom<number>(0)
+export const chatMessageScrollIndexAtom = atomWithReset<number>(0)

@@ -1,5 +1,5 @@
 export type ChatDialogDescription = {
   header: string
   body: string
-  category: string
+  category?: string
 }

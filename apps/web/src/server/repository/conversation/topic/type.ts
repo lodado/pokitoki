@@ -1,8 +1,8 @@
 export interface TopicConversation {
-  id: number
+  id?: number
   assistantId: string
-  description: string
-  title: string
+  description?: string
+  title?: string
   threadId?: string
 }
 

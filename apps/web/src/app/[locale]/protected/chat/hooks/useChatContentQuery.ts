@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
 import useUrl from '@/hooks/useUrl'
 import { useAtom, useAtomValue, useSetAtom } from '@/lib'
+import { useResetAtom } from '@/lib/jotai'
 
 import {
   chatMessageAtom,
@@ -37,6 +38,9 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
   const [initChatContentCount] = useState(refreshChatContent)
   const [initAiAnswerCount] = useState(refreshForAiAnswer)
+
+  const resetChatContent = useResetAtom(refreshChatContentAtom)
+  const resetForAiAnswer = useResetAtom(refreshChatContentAtom)
 
   /**
    * 무한스크롤로 데이터를 fetch해오는 부분
@@ -104,6 +108,11 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   useEffect(() => {
     return () => {
       setChatMessages([])
+      resetChatContent()
+      resetForAiAnswer()
+      setHasChatMore(true)
+      setChatMessageScrollIndex(0)
+      setLoading(false)
     }
   }, [])
 

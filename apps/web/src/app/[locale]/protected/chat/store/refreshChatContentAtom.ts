@@ -1,8 +1,10 @@
 import { atom } from 'jotai'
 
-export const refreshChatContentAtom = atom(0)
+import { atomWithReset } from '@/lib/jotai'
 
-export const refreshForAiAnswerAtom = atom(0)
+export const refreshChatContentAtom = atomWithReset(0)
+
+export const refreshForAiAnswerAtom = atomWithReset(0)
 
 export const triggerRefreshChatContentAtom = atom(null, (get, set) => {
   set(refreshChatContentAtom, (prev) => prev + 1)
