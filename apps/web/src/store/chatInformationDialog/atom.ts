@@ -7,15 +7,22 @@ import { ChatDialogDescription } from './type'
 
 export const doesChatInformationDialogOpenAtom = atom<boolean>(false)
 
-export const chatInformationDialogAtom = atomWithReset<TopicConversation>({
-  id: 0,
-  assistantId: '',
-  description: '',
-  title: '',
-})
+export const chatInformationDialogAtom = atomWithReset<{
+  state: 'UNMOUNT' | 'ENTER' | 'CREATE' | 'CREATE_AND_ENTER'
+  topic: TopicConversation
+  chatDialogDescription: ChatDialogDescription
+}>({
+  state: 'UNMOUNT',
+  topic: {
+    id: 0,
+    assistantId: '',
+    description: '',
+    title: '',
+  },
 
-export const chatDialogDescriptionAtom = atomWithReset<ChatDialogDescription>({
-  header: '',
-  body: '',
-  category: '',
+  chatDialogDescription: {
+    header: '',
+    body: '',
+    category: '',
+  },
 })

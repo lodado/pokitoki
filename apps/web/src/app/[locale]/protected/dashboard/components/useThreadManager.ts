@@ -2,10 +2,9 @@ import { useErrorBoundary } from '@custompackages/designsystem'
 import { noop } from '@custompackages/shared'
 
 import { createThread } from '@/app/api/chatgpt/thread/api'
+import { useUrl } from '@/hooks'
 import { useAtomValue } from '@/lib'
 import { chatInformationDialogAtom } from '@/store'
-
-import useUrl from '../useUrl'
 
 const useThreadManager = () => {
   const { locale, push } = useUrl()

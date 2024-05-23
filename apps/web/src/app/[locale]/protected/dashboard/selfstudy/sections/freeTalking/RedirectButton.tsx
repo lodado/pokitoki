@@ -3,10 +3,9 @@
 import { Button } from '@custompackages/designsystem'
 import React, { ReactNode } from 'react'
 
-import { useThreadManager } from '@/hooks'
 import { useI18n } from '@/lib/i18n'
-import { useAtom, useSetAtom } from '@/lib/jotai'
-import { chatDialogDescriptionAtom, chatInformationDialogAtom, doesChatInformationDialogOpenAtom } from '@/store'
+import { useSetAtom } from '@/lib/jotai'
+import { chatInformationDialogAtom } from '@/store'
 
 interface RedirectToFreeTalkingButtonProps {
   children: ReactNode
@@ -19,9 +18,7 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
   const i18nLearn = useI18n('LEARN')
   const i18nEnterDialog = useI18n('ENTERDIALOG')
 
-  const setChatInformationDialogOpen = useSetAtom(doesChatInformationDialogOpenAtom)
-  const setChatDescription = useSetAtom(chatDialogDescriptionAtom)
-  const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
+  const setChatInformationDialog = useSetAtom(chatInformationDialogAtom)
 
   return (
     <Button
@@ -29,17 +26,19 @@ const RedirectToFreeTalkingButton = ({ className, children }: RedirectToFreeTalk
       size="small"
       variant="primary"
       onClick={() => {
-        setChatInformationDialogOpen(true)
         setChatInformationDialog({
-          id: 0,
-          assistantId,
-          description: 'freeTalking~',
-          title: 'free-talking',
-        })
-        setChatDescription({
-          header: i18nLearn('FREETALKING'),
-          body: i18nEnterDialog('DIALOG-BODY'),
-          category: 'free-talking',
+          state: 'CREATE_AND_ENTER',
+          topic: {
+            id: 0,
+            assistantId,
+            description: 'freeTalking~',
+            title: 'free-talking',
+          },
+          chatDialogDescription: {
+            header: i18nLearn('FREETALKING'),
+            body: i18nEnterDialog('DIALOG-BODY'),
+            category: 'free-talking',
+          },
         })
       }}
     >

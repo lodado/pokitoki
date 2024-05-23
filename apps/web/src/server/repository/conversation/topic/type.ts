@@ -3,6 +3,7 @@ export interface TopicConversation {
   assistantId: string
   description: string
   title: string
+  threadId?: string
 }
 
 export interface ThreadHistory {

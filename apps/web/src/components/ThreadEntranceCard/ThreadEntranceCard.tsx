@@ -3,14 +3,9 @@
 import { Card } from '@custompackages/designsystem'
 import React, { ComponentProps, useEffect } from 'react'
 
-import { useAtom, useResetAtom, useSetAtom } from '@/lib/jotai'
+import { useAtom } from '@/lib/jotai'
 import { TopicConversation } from '@/server/repository/conversation/topic/type'
-import {
-  ChatDialogDescription,
-  chatDialogDescriptionAtom,
-  chatInformationDialogAtom,
-  doesChatInformationDialogOpenAtom,
-} from '@/store'
+import { ChatDialogDescription, chatInformationDialogAtom } from '@/store'
 
 const ThreadEntranceCard = (
   props: ComponentProps<typeof Card> & {
@@ -19,13 +14,9 @@ const ThreadEntranceCard = (
   },
 ) => {
   const { assistantInfo, chatDialogDescription, ...rest } = props
-
-  const setChatInformationDialogOpen = useSetAtom(doesChatInformationDialogOpenAtom)
-  const setChatDescription = useSetAtom(chatDialogDescriptionAtom)
   const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
 
-  const { id } = chatInformationDialog
-
+  const { id } = chatInformationDialog.topic
   const isCurrentCardChecked = id === assistantInfo.id
 
   return (
@@ -33,9 +24,11 @@ const ThreadEntranceCard = (
       {...rest}
       isSelected={isCurrentCardChecked}
       onClick={() => {
-        setChatInformationDialogOpen(true)
-        setChatInformationDialog(assistantInfo)
-        setChatDescription(chatDialogDescription)
+        setChatInformationDialog({
+          state: 'CREATE_AND_ENTER',
+          topic: assistantInfo,
+          chatDialogDescription,
+        })
       }}
     />
   )

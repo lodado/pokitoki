@@ -3,32 +3,32 @@
 import { AlertDialog } from '@custompackages/designsystem'
 import React from 'react'
 
-import { useThreadManager, useUrl } from '@/hooks'
 import { useI18n } from '@/lib/i18n'
 import { useAtom, useAtomValue, useResetAtom } from '@/lib/jotai'
-import { chatDialogDescriptionAtom, chatInformationDialogAtom, doesChatInformationDialogOpenAtom } from '@/store'
+import { chatInformationDialogAtom } from '@/store'
+
+import useThreadManager from './useThreadManager'
 
 const EnterChatInformationDialog = () => {
   const t = useI18n('ENTERDIALOG')
-  const [chatDescription, setChatDescription] = useAtom(chatDialogDescriptionAtom)
-  const [isVisible, setVisible] = useAtom(doesChatInformationDialogOpenAtom)
-  const chatInformationDialog = useAtomValue(chatInformationDialogAtom)
-  const resetChatInformation = useResetAtom(chatInformationDialogAtom)
-  const resetChatDescription = useResetAtom(chatDialogDescriptionAtom)
 
-  const { createAndEnterThread } = useThreadManager()
+  const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
+  const resetChatInformationDialog = useResetAtom(chatInformationDialogAtom)
 
-  const { header, body } = chatDescription
+  const { state, chatDialogDescription } = chatInformationDialog
+  const isDialogOpen = state !== 'UNMOUNT'
+  const { header, body } = chatDialogDescription
 
-  const handleCreateAndEnterThread = async () => {
-    const { assistantId, description } = chatInformationDialog
-    const { category } = chatDescription
-
-    createAndEnterThread({ assistantId, description, category })
+  const onChangeVisible = (newVisibleState: boolean) => {
+    setChatInformationDialog((oldData) => {
+      return { ...oldData, state: newVisibleState ? oldData.state : 'UNMOUNT' }
+    })
   }
 
+  const { handleEnterDialog } = useThreadManager()
+
   return (
-    <AlertDialog isVisible={isVisible} onChangeVisible={setVisible}>
+    <AlertDialog isVisible={isDialogOpen} onChangeVisible={onChangeVisible}>
       <AlertDialog.Header>{header}</AlertDialog.Header>
       <AlertDialog.Body>{body}</AlertDialog.Body>
 
@@ -36,11 +36,10 @@ const EnterChatInformationDialog = () => {
         submitText={t('SUBMITTEXT')}
         cancelText={t('CANCELTEXT')}
         onSubmit={async (e) => {
-          await handleCreateAndEnterThread()
+          await handleEnterDialog()
         }}
         onClose={() => {
-          resetChatInformation()
-          resetChatDescription()
+          resetChatInformationDialog()
         }}
       />
     </AlertDialog>
