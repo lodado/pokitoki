@@ -43,9 +43,9 @@ export interface ImageProps extends ComponentProps<typeof NextImage> {
  * />
  * ```
  */
-const Image = ({ src, alt, width, height, ...rest }: ImageProps) => {
+const Image = ({ src, className, alt, width, height, ...rest }: ImageProps) => {
   // Render the Image component from Next.js with provided props or default size.
-  return <NextImage src={src} alt={alt} width={width || 500} height={height || 500} {...rest} />
+  return <NextImage className={className} src={src} alt={alt} width={width || 500} height={height || 500} {...rest} />
 }
 
 export default Image

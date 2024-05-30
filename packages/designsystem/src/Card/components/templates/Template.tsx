@@ -45,17 +45,15 @@ export const BasicCardTemplate = ({ children, className, isSelected, onClick, ..
 
 BasicCardTemplate.CardImage = ({ src, alt, width, className, height }: ImageProps) => {
   return (
-    <div>
-      <CardImage
-        className={className}
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        placeholder="blur"
-        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
-      />
-    </div>
+    <CardImage
+      className={className}
+      src={src}
+      alt={alt}
+      width={width}
+      height={height}
+      placeholder="blur"
+      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFklEQVR42mN8//HLfwYiAOOoQvoqBABbWyZJf74GZgAAAABJRU5ErkJggg=="
+    />
   )
 }
 

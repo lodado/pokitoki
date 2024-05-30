@@ -72,16 +72,16 @@ const XSmallCard: React.FC<CardPropsBase> = ({ className, subTitle, mainTitle, .
 
 const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, isSelected, alt, url, ...rest }) => {
   return (
-    <BasicCardTemplate isSelected={isSelected} className={cn(`w-[234px]`, className)} {...rest}>
+    <BasicCardTemplate isSelected={isSelected} className={cn(`flex flex-col w-[234px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
-        className="w-full h-[108px] object-cover"
+        className="object-cover flex-grow-[3] w-full"
         alt={alt ?? mainTitle}
         src={url ?? ''}
         width={550}
         height={176}
       />
 
-      <div className="flex justify-between w-full h-[48px] pl-4 pr-4 pt-1">
+      <div className="flex items-center justify-between flex-grow-[1] w-full min-h-12 pt-1 pl-4 pr-4">
         <div>
           <BasicCardTemplate.MainTitle title={mainTitle} />
           <BasicCardTemplate.SubTitle title={subTitle} />

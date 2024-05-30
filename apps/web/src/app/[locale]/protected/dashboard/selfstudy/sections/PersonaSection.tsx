@@ -10,7 +10,7 @@ const PersonaSection = async () => {
   const i18nDifficulty = await getI18n('DIFFICULTY')
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col flex-grow">
       <div className="flex flex-row items-center justify-between">
         <ResponsiveSectionTitle
           title={i18nLearn('CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE')}
@@ -20,13 +20,13 @@ const PersonaSection = async () => {
         />
       </div>
 
-      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-2">
+      <div className="relative grid flex-grow grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
         {Array.from({ length: 6 }).map((ele, index) => {
           return (
             <Card
               // mocking code로 곧 변경할것
               key={index as any}
-              className=" w-[100%]"
+              className="w-[100%] h-[100%]"
               variant="medium"
               subTitle="apple"
               mainTitle="apple"

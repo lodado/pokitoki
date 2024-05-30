@@ -24,7 +24,7 @@ export async function generateMetadata({ params: { locale } }: MetadataParams): 
 const Page = async () => {
   return (
     <LogScreen>
-      <main className="flex flex-col gap-spacing-7">
+      <main className="flex flex-col gap-spacing-7 h-[inherit]">
         <FreeTalkingSection />
         <TopicOnSituationSection />
         <PersonaSection />
