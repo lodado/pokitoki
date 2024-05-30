@@ -20,13 +20,13 @@ const PersonaSection = async () => {
         />
       </div>
 
-      <div className="flex flex-row flex-wrap gap-2">
-        {Array.from({ length: 7 }).map((ele, index) => {
+      <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-2">
+        {Array.from({ length: 6 }).map((ele, index) => {
           return (
             <Card
               // mocking code로 곧 변경할것
               key={index as any}
-              className="shrink-0"
+              className=" w-[100%]"
               variant="medium"
               subTitle="apple"
               mainTitle="apple"

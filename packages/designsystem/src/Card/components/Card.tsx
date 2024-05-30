@@ -74,10 +74,10 @@ const MediumCard: React.FC<CardImageProps> = ({ className, subTitle, mainTitle, 
   return (
     <BasicCardTemplate isSelected={isSelected} className={cn(`w-[234px]`, className)} {...rest}>
       <BasicCardTemplate.CardImage
-        className="w-[234px] h-[108px]"
+        className="w-full h-[108px] object-cover"
         alt={alt ?? mainTitle}
         src={url ?? ''}
-        width={280}
+        width={550}
         height={176}
       />
 
