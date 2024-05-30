@@ -1,6 +1,10 @@
 import { dayjs, getUnixTimestamp, utc } from '@custompackages/shared'
 
-import { Attendance, AttendanceRepository } from '@/server/repository'
+import { Attendance, AttendanceRepository, TokenRepository } from '@/server/repository'
+
+import TokenServiceInstance from '../Token/TokenService'
+
+const { addToken } = TokenServiceInstance
 
 class AttendanceService {
   attendanceRepository: typeof AttendanceRepository
@@ -61,6 +65,7 @@ class AttendanceService {
     }
 
     await this.attendanceRepository.insertUserAttendance({ userId, timestamp, studyTime })
+    await addToken({ userId, token: 1000 })
   }
 }
 

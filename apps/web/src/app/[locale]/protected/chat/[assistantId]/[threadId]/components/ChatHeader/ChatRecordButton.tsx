@@ -17,19 +17,27 @@ const ChatRecordButton = () => {
   const resetStudyTime = useResetAtom(studyTimeAtom)
 
   useInterval(() => {
-    if (!document.hidden) setStudyTime((time) => time + 1)
+    if (!document.hidden) {
+      setStudyTime((time) => {
+        startTimeRef.current = time + 1
+        return time + 1
+      })
+    }
   }, 1000)
 
   useEffect(() => {
     let flag = false
 
     const postUserStudyTimeBeforeUnload = async () => {
+      const studyTime1 = startTimeRef.current
+      console.log(studyTime1, flag, 'wtf?')
+
       if (flag) {
         return
       }
 
       flag = true
-      if (studyTime > 60 * 1000) await postUserStudyTime({ studyTime })
+      if (studyTime1 > 0) await postUserStudyTime({ studyTime: studyTime1 })
       flag = false
       resetStudyTime()
     }
