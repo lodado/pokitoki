@@ -1,7 +1,7 @@
 'use client'
 
 import { ICON_INPUT_SUBMIT } from '@custompackages/design-assets'
-import { Form, IconButton, Input } from '@custompackages/designsystem'
+import { ErrorBoundary, Form, IconButton, Input, WithErrorBoundary } from '@custompackages/designsystem'
 import React from 'react'
 
 import useRefreshMessage from './hooks/useRefreshMessage'

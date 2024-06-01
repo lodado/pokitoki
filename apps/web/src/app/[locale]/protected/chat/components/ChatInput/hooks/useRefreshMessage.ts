@@ -1,3 +1,4 @@
+import { useErrorBoundary } from '@custompackages/designsystem'
 import React, { FormEvent, useRef, useState } from 'react'
 
 import { postAIMessages } from '@/app/api/chatgpt/message/api'
@@ -12,11 +13,20 @@ import {
   triggerRefreshForAiAnswerAtom,
 } from '../../../store'
 
+const parseFormData = (e: FormEvent<HTMLFormElement>) => {
+  const data = Object.fromEntries(new FormData(e.currentTarget))
+  const inputValue = data.message as string
+
+  return inputValue
+}
+
 const useRefreshMessage = () => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { assistantId, threadId } = params
 
   const [isLoading, setLoading] = useState(false)
+  const setError = useErrorBoundary()
+
   const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
   const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
 
@@ -26,23 +36,26 @@ const useRefreshMessage = () => {
     e.preventDefault()
     if (isLoading) return
 
-    const data = Object.fromEntries(new FormData(e.currentTarget))
-    const inputValue = data.message as string
+    try {
+      const inputValue = parseFormData(e)
+      if (!inputValue) return
 
-    if (!inputValue) return
-    setLoading(true)
+      setLoading(true)
 
-    setChatMessages((oldData: ChatMessage[]) => {
-      setChatMessageScrollIndex(oldData.length + 1)
+      setChatMessages((oldData: ChatMessage[]) => {
+        setChatMessageScrollIndex(oldData.length + 1)
 
-      return [...oldData, { id: 'none', role: 'user', content: inputValue, createdAt: Date.now() }]
-    })
+        return [...oldData, { id: 'none', role: 'user', content: inputValue, createdAt: Date.now() }]
+      })
 
-    await postAIMessages({ assistantId, threadId, message: inputValue })
+      await postAIMessages({ assistantId, threadId, message: inputValue })
 
-    setLoading(false)
-    triggerRefreshForAiAnswer()
-    ;(e.target as HTMLFormElement).reset()
+      setLoading(false)
+      triggerRefreshForAiAnswer()
+      ;(e.target as HTMLFormElement).reset()
+    } catch (error) {
+      setError(error)
+    }
   }
 
   return { isLoading, handleSubmitMessage }
