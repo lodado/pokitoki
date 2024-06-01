@@ -16,7 +16,7 @@ const PersonaSection = async () => {
           title={i18nLearn('CUSTOMIZE-CONVERSATION-PARTNER-SECTION-TITLE')}
           subTitle={i18nLearn('CUSTOMIZE-PERSONA-OR-CHOOSE-RECOMMENDED-PERSONA')}
           ButtonText={i18nLearn('BUTTON-FOR-CUSTOMIZING-PERSONA')}
-          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
+          difficulty={i18nDifficulty('RATING', { rating: '⭐⭐' })}
         />
       </div>
 

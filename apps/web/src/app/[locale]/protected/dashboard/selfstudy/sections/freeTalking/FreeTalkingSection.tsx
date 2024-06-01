@@ -27,20 +27,18 @@ const FreeTalkingSection = async () => {
         <div className="flex flex-col gap-0.5">
           <h2 className="text-text-01 body-03-m">
             {i18nLearn('FREETALKING')}
-            <span className="ml-0.5 text-text-primary detail-01-r">
-              {i18nDifficulty('RATING', { rating: '별별별' })}
-            </span>
+            <span className="ml-0.5 text-text-primary detail-01-r">{i18nDifficulty('RATING', { rating: '⭐' })}</span>
           </h2>
           <p className="body-01-r text-text-03">{i18nLearn('FREETALKING-BUTTON-TEXT')}</p>
 
-          <RedirectToFreeTalkingButton className="w-full sm:hidden">
-            {i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
+          <RedirectToFreeTalkingButton className="w-max sm:hidden">
+            {i18nLearn('FREETALKING')}
           </RedirectToFreeTalkingButton>
         </div>
       </div>
 
-      <RedirectToFreeTalkingButton className="hidden w-40 sm:flex">
-        {i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
+      <RedirectToFreeTalkingButton className="hidden min-w-40 w-max sm:flex">
+        {i18nLearn('FREETALKING')}
       </RedirectToFreeTalkingButton>
     </section>
   )

@@ -5,24 +5,15 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { PropsWithChildren, useState } from 'react'
 
-function makeQueryClient() {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        refetchInterval: false,
-        refetchIntervalInBackground: false,
+import { queryClientOption } from './queryClientOption'
 
-        // above 0 to avoid refetching immediately on the client
-        staleTime: 20 * 1000,
-      },
-    },
-  })
+export function makeQueryClient() {
+  return new QueryClient(queryClientOption)
 }
 
 let browserQueryClient: QueryClient | undefined
 
-function getQueryClient() {
+export function getQueryClient() {
   if (typeof window === 'undefined') {
     // Server: always make a new query client
     return makeQueryClient()

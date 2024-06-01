@@ -4,7 +4,7 @@ import { LogScreen } from '@custompackages/designsystem'
 import { Metadata } from 'next'
 import { useRef } from 'react'
 
-import TutorialConnector from '@/components/Tutorial/TutorialConnector'
+import TutorialConnector from '@/components/GlobalAdapter/Tutorial/TutorialConnector'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 

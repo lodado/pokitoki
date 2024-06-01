@@ -25,7 +25,7 @@ const TopicOnSituationSection = async () => {
           title={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
           subTitle={i18nLearn('SELECT-TOPIC-BASED-SITUATION-TALKING')}
           ButtonText={i18nLearn('TOPIC-BASED-SITUATION-TALKING-BUTTON')}
-          difficulty={i18nDifficulty('RATING', { rating: '별별별' })}
+          difficulty={i18nDifficulty('RATING', { rating: '⭐⭐' })}
         />
       </div>
 

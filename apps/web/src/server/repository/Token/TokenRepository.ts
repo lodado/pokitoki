@@ -14,13 +14,12 @@ async function getTokenUsage({ userId }: { userId: string }): Promise<Token> {
 }
 
 async function updateTokenUsage({ userId, token }: { userId: string; token: number }) {
-  const { error: upsertError } = await supabaseInstance
+  const { error } = await supabaseInstance
     .from('token_management')
-    .update({ userId, token, updated_at: new Date() })
-    .eq('userId', userId)
+    .upsert({ userId, token, updated_at: new Date() }, { onConflict: 'userId' })
 
-  if (upsertError) {
-    throw upsertError
+  if (error) {
+    throw error
   }
 }
 

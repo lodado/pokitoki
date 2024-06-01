@@ -4,7 +4,7 @@ import { Badge, BasicCardTemplate } from '@custompackages/designsystem'
 import { i18nDate, useIsClient } from '@custompackages/shared'
 import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { useLocale } from 'next-intl'
-import React, { use } from 'react'
+import React, { use, useMemo } from 'react'
 
 import { getRecentHistoryList } from '@/app/api/chatgpt/thread/history/api'
 import { useI18n } from '@/lib/i18n'
@@ -34,6 +34,7 @@ const HistoryList = () => {
 
         return (
           <BasicCardTemplate
+            key={id}
             id={id}
             className="flex flex-row items-center justify-between px-2 h-11"
             onClick={() => {
@@ -44,7 +45,7 @@ const HistoryList = () => {
                   threadId,
                 },
                 chatDialogDescription: {
-                  header: i18nStat('RECOMMEND-TITLE'),
+                  header: i18nStat('HISTORY-SCRIPT-TITLE'),
                   body: i18nDialog('DIALOG-BODY'),
                   category: 'recommend',
                 },

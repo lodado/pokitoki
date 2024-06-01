@@ -18,7 +18,7 @@ const AttendanceCardList = async () => {
 
         return (
           <Card
-            key={id}
+            key={id + timestamp}
             variant="checkList"
             className="flex-shrink-0 min-w-[7rem]"
             mainTitle={`${timestampDay}일`}

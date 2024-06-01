@@ -2,7 +2,7 @@ import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
-import Tutorial from '@/components/Tutorial/Tutorial'
+import GlobalAdapterServer from '@/components/GlobalAdapter/GlobalAdapter.server'
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
 import { GA } from '@/lib/GA'
@@ -42,10 +42,9 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
 
       <body style={{ overflow: 'hidden' }}>
         <LibraryProvider>
+          <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
-
-            <Tutorial />
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />

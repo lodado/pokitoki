@@ -1,13 +1,20 @@
 import React from 'react'
 
+import { getLoginSession } from '@/hooks/login'
+
 import LibraryClientProvider from './LibraryClientProvider'
+import { LoginSessionProvider } from './nextAuth'
 import { ThemeProvider } from './nextTheme'
 
-const LibraryProvider = ({ children }: { children: React.ReactNode }) => {
+const LibraryProvider = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getLoginSession()
+
   return (
-    <ThemeProvider>
-      <LibraryClientProvider>{children}</LibraryClientProvider>
-    </ThemeProvider>
+    <LoginSessionProvider session={session}>
+      <ThemeProvider>
+        <LibraryClientProvider>{children}</LibraryClientProvider>
+      </ThemeProvider>
+    </LoginSessionProvider>
   )
 }
 
