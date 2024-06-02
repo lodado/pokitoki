@@ -39,6 +39,7 @@
     "postdev": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types/client",
     "build": "rollup -c ./rollup.config.mjs",
     "postbuild": "tsc --emitDeclarationOnly --declarationMap false --declaration --declarationDir dist/types/client",
+    "gen:build": "pnpm run build",
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
     "generate:component": "turbo gen react-component",
