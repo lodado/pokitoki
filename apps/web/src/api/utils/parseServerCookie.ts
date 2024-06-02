@@ -4,7 +4,8 @@ const rawParseServerCookie = async () => {
   const cookieString = (await import('next/headers'))
     .cookies()
     .getAll()
-    .filter(({ name }) => name.startsWith('authjs'))
+    .filter(({ name }) => /authjs/.test(name))
+
     .map(({ name, value }) => `${name}=${value}`)
     .join('; ')
 
