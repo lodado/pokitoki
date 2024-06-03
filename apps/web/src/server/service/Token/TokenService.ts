@@ -23,6 +23,8 @@ class TokenService {
     }
 
     await this.updateToken({ userId, token: previousToken + token })
+
+    return { token: previousToken + token }
   }
 }
 

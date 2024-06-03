@@ -4,7 +4,7 @@ import { getLoginSession } from '@/hooks/login'
 import ConversationServiceInstance from '@/server/service/conversation/topic/ConversationService'
 import TokenServiceInstance from '@/server/service/Token/TokenService'
 
-const { getTokenUsage } = TokenServiceInstance
+const { getTokenUsage, addToken } = TokenServiceInstance
 
 export const GET = async () => {
   try {

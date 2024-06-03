@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { getLoginSession } from '@/hooks/login'
 import ChatGptService from '@/server/service/chatgpt/ChatGptService'
+import TokenServiceInstance from '@/server/service/Token/TokenService'
 
 const { getChatDetail, sendChat } = ChatGptService
+const { addToken } = TokenServiceInstance
 
 export const GET = async (req: NextRequest) => {
   try {
@@ -28,6 +31,10 @@ export const POST = async (req: NextRequest) => {
     if (!assistantId || !threadId || !message) throw new Error('invalid assistantId, threadId, message')
 
     const messages = await sendChat(assistantId, threadId, message)
+    const { user } = await getLoginSession()
+    const userId = user.id
+
+    const token = await addToken({ userId, token: -20 })
 
     return NextResponse.json({ data: messages })
   } catch (e) {

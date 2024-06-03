@@ -17,6 +17,8 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
+        <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
+
         <meta name="application-name" content="pokitoki" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />

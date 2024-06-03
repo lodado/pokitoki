@@ -4,13 +4,14 @@ import React from 'react'
 import { getUserToken } from '@/app/api/protected/token/api'
 
 const useToken = () => {
-  const { data, error, isLoading } = useQuery({
+  const query = useQuery({
+    initialData: { token: 0 },
     queryKey: ['userToken'],
     queryFn: getUserToken,
     refetchInterval: 30000,
   })
 
-  return data
+  return query
 }
 
 export default useToken
