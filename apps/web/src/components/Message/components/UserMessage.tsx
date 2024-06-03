@@ -10,7 +10,7 @@ export const UserMessage = ({ message }: MessageProps) => {
     <>
       <div className="flex flex-row-reverse w-full">
         <div className={StyledMessage({ role: message.role })}>
-          <SpeechBalloon className="absolute right-[-11px] z-[-1] -rotate-90 top-3" />
+          <SpeechBalloon className="absolute right-[-11px] z-[-10] -rotate-90 top-3" />
           {message.content}
         </div>
       </div>
