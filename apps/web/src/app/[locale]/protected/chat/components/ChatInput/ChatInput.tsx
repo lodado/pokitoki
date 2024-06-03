@@ -11,7 +11,7 @@ const ChatInput = () => {
 
   return (
     <Form onSubmit={handleSubmitMessage} onReset={() => {}}>
-      <Form.Field name="submitInput" className="sticky bottom-0 flex flex-row items-center w-full h-10 gap-2 mb-3 px-7">
+      <Form.Field name="submitInput" className="sticky bottom-0 flex flex-row items-center w-full h-10 gap-2 my-3 px-7">
         <Form.Control asChild>
           <Input id="submitInput" className="w-full h-full" placeholder="enter your message" name="message" required />
         </Form.Control>
