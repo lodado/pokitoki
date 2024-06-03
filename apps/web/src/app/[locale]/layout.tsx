@@ -17,9 +17,11 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no;" />
-        <meta name="viewport" content="initial-scale=1, viewport-fit=cover" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, width=device-width"
+        />
+
         <meta httpEquiv="X-UA-Compatible" content="IE=Edge" />
 
         <meta name="application-name" content="pokitoki" />
