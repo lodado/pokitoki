@@ -1,3 +1,4 @@
+import type { Viewport } from 'next'
 import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
@@ -6,6 +7,17 @@ import GlobalAdapterServer from '@/components/GlobalAdapter/GlobalAdapter.server
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
 import { GA } from '@/lib/GA'
+
+export function generateViewport(): Viewport {
+  return {
+    initialScale: 1.0,
+    maximumScale: 1.0,
+    minimumScale: 1.0,
+    userScalable: false,
+    viewportFit: 'cover',
+    width: 'device-width',
+  }
+}
 
 /**
  * TO DO - pwa 관련 옵션 수정
@@ -17,11 +29,6 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover, width=device-width"
-        />
-
         <meta httpEquiv="X-UA-Compatible" content="IE=Edge" />
 
         <meta name="application-name" content="pokitoki" />
