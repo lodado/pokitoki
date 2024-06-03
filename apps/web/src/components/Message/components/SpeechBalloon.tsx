@@ -13,7 +13,7 @@ export const SpeechBalloon = (props: any) => {
         clipPath: 'inset(0px -10px -10px)',
 
         display: 'block',
-        zIndex: 5,
+        zIndex: -5,
       }}
       {...props}
     >

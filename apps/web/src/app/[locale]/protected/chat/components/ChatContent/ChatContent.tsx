@@ -23,7 +23,7 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="relative flex flex-col flex-1 w-full h-full">
+      <div className="relative flex flex-col flex-1 flex-grow w-full">
         {length > 0 ? (
           <Virtuoso
             className="scrollbar-hide"

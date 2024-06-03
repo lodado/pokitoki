@@ -16,7 +16,7 @@ export const AssistantMessage = ({ message }: MessageProps) => {
         />
       </div>
       <div className={StyledMessage({ role: message.role })}>
-        <SpeechBalloon className="absolute left-[-12px] z-[-10] top-5 rotate-90" />
+        <SpeechBalloon className="absolute left-[-12px] top-5 rotate-90" />
         {message.content}
         <br />
       </div>
