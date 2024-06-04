@@ -21,7 +21,7 @@ interface NavigationProps {
  * @returns {JSX.Element} The Navigation component.
  */
 const Navigation = ({ children, className }: NavigationProps): JSX.Element => {
-  return <nav className={`sticky w-screen md:w-[768px] ${className}`}>{children}</nav>
+  return <nav className={`sticky bottom-0 w-screen md:w-[768px] ${className}`}>{children}</nav>
 }
 
 export default Navigation

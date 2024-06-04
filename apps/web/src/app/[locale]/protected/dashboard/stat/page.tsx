@@ -32,11 +32,13 @@ const Page = async ({ params }: LocaleProps) => {
   return (
     <LogScreen>
       <main className="flex flex-col gap-spacing-7">
-        <AttendanceSection />
         <ChatInput />
         <UserInfoSection />
         <TodayRecommendSection />
         <HistorySection />
+        <ChatInput />
+        <AttendanceSection />
+        <ChatInput />
       </main>
 
       <EnterChatInformationDialog />

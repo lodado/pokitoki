@@ -54,7 +54,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <link rel="icon" href="/favicon.ico" />
       </head>
 
-      <body style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <body style={{ display: 'flex', flexDirection: 'column' }}>
         <LibraryProvider>
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
