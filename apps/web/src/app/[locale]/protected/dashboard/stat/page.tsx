@@ -9,6 +9,7 @@ import { LocaleProps } from '@/interface'
 import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
+import { ChatInput } from '../../chat/components/ChatInput'
 import EnterChatInformationDialog from '../components/EnterChatInformationDialog'
 import AttendanceSection from './sections/Attendance/AttendanceSection'
 import HistorySection from './sections/history/HistorySection'
@@ -35,6 +36,7 @@ const Page = async ({ params }: LocaleProps) => {
         <TodayRecommendSection />
         <HistorySection />
         <AttendanceSection />
+        <ChatInput />
       </main>
 
       <EnterChatInformationDialog />
