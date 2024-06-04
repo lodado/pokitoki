@@ -46,8 +46,8 @@ const ChatContent = ({ messages }: ChatContentProps) => {
         ) : (
           <div className="flex-1" role="presentation none" />
         )}
+        <ChatInput />
       </div>
-      <ChatInput />
     </>
   )
 }
