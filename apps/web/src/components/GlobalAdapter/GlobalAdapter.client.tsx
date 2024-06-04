@@ -18,10 +18,6 @@ const GlobalAdapterClient = () => {
 
   useEffect(() => {
     setScreenSize()
-    window.addEventListener('resize', setScreenSize)
-    return () => {
-      window.removeEventListener('resize', setScreenSize)
-    }
   }, [])
 
   return (
