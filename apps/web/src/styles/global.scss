@@ -18,3 +18,10 @@ body {
   min-height: 100vh;
   min-height: -webkit-fill-available; 
 }
+
+#make-scrollable {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: calc(100% + 1px); 
+}
