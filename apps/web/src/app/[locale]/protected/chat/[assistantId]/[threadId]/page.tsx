@@ -33,7 +33,7 @@ export async function generateMetadata({
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
   return (
     <LogScreen>
-      <main className="relative flex flex-col w-full h-[calc(100vh-5rem)] sm:h-[calc(100vh-3rem)] bg-background-01 ">
+      <main className="relative flex flex-col flex-grow w-full bg-background-01 ">
         <ChatHeader />
         <FreetalkingChatContent />
       </main>
