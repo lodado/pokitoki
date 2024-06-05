@@ -1,6 +1,8 @@
+'use client'
+
 import { cn } from '@custompackages/shared'
 import { PrimitiveInputProps } from '@radix-ui/react-form'
-import React, { forwardRef, HTMLAttributes, InputHTMLAttributes } from 'react'
+import React, { forwardRef, HTMLAttributes, InputHTMLAttributes, useEffect, useRef } from 'react'
 
 import { InputStyleVariants } from './style'
 
@@ -27,7 +29,31 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) 
   const dataInvalid = props['data-invalid']
   const variant = dataInvalid ? 'invalid' : 'default'
 
-  return <input ref={ref} className={cn(InputStyleVariants({ variant, size: 'medium' }), className)} {...rest} />
+  const testRef = useRef<HTMLInputElement>(null)
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    const handleBlur = () => {
+      scrollToTop()
+    }
+
+    const inputElement = testRef.current
+    if (inputElement) {
+      inputElement.addEventListener('blur', handleBlur)
+    }
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      if (inputElement) {
+        inputElement.removeEventListener('blur', handleBlur)
+      }
+    }
+  }, [])
+
+  return <input ref={testRef} className={cn(InputStyleVariants({ variant, size: 'medium' }), className)} {...rest} />
 })
 
 export default Input
