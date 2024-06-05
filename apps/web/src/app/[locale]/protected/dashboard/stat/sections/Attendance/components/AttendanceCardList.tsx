@@ -12,18 +12,16 @@ const AttendanceCardList = async () => {
   return (
     <>
       {data.map(({ id, studyTime, timestamp }) => {
-        const { format, daySuffix } = getDate('en')(timestamp)
+        const { format } = getDate(locale)(timestamp)
         const fontIcon = studyTime > 5 * 60 ? '🔥' : '❌'
-
-        const month = format('MMMM')
-        const day = format('D')
+        const monthWithDay = format('MMMM Do')
 
         return (
           <Card
             key={id + timestamp}
             variant="checkList"
             className="flex-shrink-0 min-w-[7rem]"
-            mainTitle={`${month} ${daySuffix(day)}`}
+            mainTitle={`${monthWithDay}`}
             subTitle={
               <span className="text-text-01">
                 <span className="body-01-r text-text-03">

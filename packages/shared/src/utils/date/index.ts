@@ -3,15 +3,19 @@ import 'dayjs/locale/zh-cn' // 중국어 간체
 import 'dayjs/locale/ja' // 일본어
 
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
 import durationForExtends from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utcforExtends from 'dayjs/plugin/utc'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
 
 dayjs.extend(relativeTime)
 dayjs.extend(utcforExtends)
 dayjs.extend(timezone)
 dayjs.extend(durationForExtends)
+dayjs.extend(advancedFormat)
+dayjs.extend(weekOfYear)
 
 /** 일단 next-inti 기준으로 맞춤 */
 const i18nConverter = {
@@ -55,12 +59,6 @@ const getUnixTimestamp = ({
   return date.unix()
 }
 
-const getOrdinalSuffix = (n) => {
-  const s = ['th', 'st', 'nd', 'rd']
-  const v = n % 100
-  return n + (s[(v - 20) % 10] || s[v] || s[0])
-}
-
 const getDate = (locale: string) => (params?: any) => {
   const i18nDayJs = i18nDate(locale, params)
   const date = {
@@ -72,7 +70,6 @@ const getDate = (locale: string) => (params?: any) => {
     second: i18nDayJs.second(),
     unix: i18nDayJs.unix(),
     format: (formatStr: string) => i18nDayJs.format(formatStr),
-    daySuffix: getOrdinalSuffix,
   }
 
   return { now: Date.now(), ...date }
