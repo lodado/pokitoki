@@ -36,7 +36,6 @@ const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps
       <main className="relative flex flex-col w-full h-full overflow-y-scroll scrollbar-hide bg-background-01 ">
         <ChatHeader />
         <FreetalkingChatContent />
-        <div id="make-scrollable" />
       </main>
       {/* <TutorialConnector steps={steps} /> */}
     </LogScreen>

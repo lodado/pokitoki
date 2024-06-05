@@ -1,5 +1,5 @@
 import { Card } from '@custompackages/designsystem'
-import { getDate, utc } from '@custompackages/shared'
+import { getDate, i18nDate, utc } from '@custompackages/shared'
 import React from 'react'
 
 import { getUserAttendanceWithinLast14days } from '@/app/api/protected/attendance/last14days/api'
@@ -12,21 +12,23 @@ const AttendanceCardList = async () => {
   return (
     <>
       {data.map(({ id, studyTime, timestamp }) => {
-        const { minute, second, day: timestampDay } = getDate(locale)(timestamp)
-
+        const { format, daySuffix } = getDate('en')(timestamp)
         const fontIcon = studyTime > 5 * 60 ? '🔥' : '❌'
+
+        const month = format('MMMM')
+        const day = format('D')
 
         return (
           <Card
             key={id + timestamp}
             variant="checkList"
             className="flex-shrink-0 min-w-[7rem]"
-            mainTitle={`${timestampDay}일`}
+            mainTitle={`${month} ${daySuffix(day)}`}
             subTitle={
               <span className="text-text-01">
-                {'학습 시간 '}
                 <span className="body-01-r text-text-03">
-                  {Math.ceil(studyTime / (60 * 1000))} : {Math.ceil(studyTime / 1000) % 60} sec
+                  {String(Math.ceil(studyTime / 60)).padStart(2, '0')} :
+                  {String(Math.ceil(studyTime) % 60).padStart(2, '0')}
                 </span>
               </span>
             }

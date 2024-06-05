@@ -55,9 +55,15 @@ const getUnixTimestamp = ({
   return date.unix()
 }
 
+const getOrdinalSuffix = (n) => {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
 const getDate = (locale: string) => (params?: any) => {
   const i18nDayJs = i18nDate(locale, params)
-  const { year, month, day, hour, minute, second, unix } = {
+  const date = {
     year: i18nDayJs.year(),
     month: i18nDayJs.month() + 1,
     day: i18nDayJs.date(),
@@ -65,9 +71,11 @@ const getDate = (locale: string) => (params?: any) => {
     minute: i18nDayJs.minute(),
     second: i18nDayJs.second(),
     unix: i18nDayJs.unix(),
+    format: (formatStr: string) => i18nDayJs.format(formatStr),
+    daySuffix: getOrdinalSuffix,
   }
 
-  return { now: Date.now(), year, month, day, hour, minute, second, unix }
+  return { now: Date.now(), ...date }
 }
 
 const { tz, utc, duration } = dayjs
