@@ -8,7 +8,7 @@ export const SpeechBalloon = (props: any) => {
       viewBox="0 0 30 10"
       preserveAspectRatio="none"
       style={{
-        fill: 'white',
+        fill: 'var(--white-white, white)',
         filter: 'drop-shadow(rgba(0, 0, 0, 0.2) 0px 0px 3px)',
         clipPath: 'inset(0px -10px -10px)',
 
