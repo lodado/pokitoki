@@ -13,8 +13,6 @@ body {
 
 html, body {
   overflow: auto !important;
-  min-height: 100vh;
-  min-height: -webkit-fill-available; 
 }
  
 
@@ -23,8 +21,4 @@ body * {
 }
 
 #make-scrollable {
-  position: absolute;
-  left: 0;
-  width: 1px;
-  height: calc(100% + 1px); 
 }
