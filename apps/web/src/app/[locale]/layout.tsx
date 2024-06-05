@@ -8,6 +8,8 @@ import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
 import { GA } from '@/lib/GA'
 
+import ScreenVhScript from './ScreenVhScript'
+
 export function generateViewport(): Viewport {
   return {
     initialScale: 1.0,
@@ -55,6 +57,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
       </head>
 
       <body style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+        <ScreenVhScript nonce={nonce} />
         <LibraryProvider>
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
