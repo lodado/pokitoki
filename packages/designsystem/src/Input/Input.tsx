@@ -41,15 +41,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props: InputProps, ref) 
     }
 
     const inputElement = testRef.current
-    if (inputElement) {
-      inputElement.addEventListener('blur', handleBlur)
-    }
+    inputElement?.addEventListener('blur', handleBlur)
 
     // Cleanup event listeners on component unmount
     return () => {
-      if (inputElement) {
-        inputElement.removeEventListener('blur', handleBlur)
-      }
+      inputElement?.removeEventListener('blur', handleBlur)
     }
   }, [])
 
