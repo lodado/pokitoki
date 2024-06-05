@@ -33,7 +33,7 @@ export async function generateMetadata({
 const Page = async ({ params: { locale, assistantId, threadId } }: ChatPageProps) => {
   return (
     <LogScreen>
-      <main className="relative flex flex-col h-[calc(var(--vh)*100-4rem)] scrollbar-hide overflow-y-scroll sm:h-h-[calc(var(--vh)*100-3rem)] w-full bg-background-01 ">
+      <main className="relative flex flex-col w-full h-full overflow-y-scroll scrollbar-hide bg-background-01 ">
         <ChatHeader />
         <FreetalkingChatContent />
         <div id="make-scrollable" />
