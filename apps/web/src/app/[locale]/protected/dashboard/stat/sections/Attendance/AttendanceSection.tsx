@@ -1,3 +1,4 @@
+import { SSRSuspense } from '@custompackages/designsystem'
 import { dayjs, i18nDate } from '@custompackages/shared'
 import React from 'react'
 
@@ -25,8 +26,10 @@ const AttendanceSection = async () => {
           difficulty=""
         />
       </div>
-      <ul className="flex flex-row flex-shrink-0 gap-4 p-2 overflow-x-scroll">
-        <AttendanceCardList />
+      <ul className="flex flex-row flex-shrink-0 gap-4 p-2 overflow-x-scroll h-[7.5rem]">
+        <SSRSuspense>
+          <AttendanceCardList />
+        </SSRSuspense>
       </ul>
     </section>
   )

@@ -30,13 +30,9 @@ class AttendanceService {
       return { id: `None${newTimestamp}`, studyTime: 0, timestamp: newTimestamp }
     })
 
-    console.log(data)
-
     const groupedData = [...data, ...array].reduce(
       (acc: Record<string, { id: string; date: string; timestamp: number; studyTime: number }>, curr) => {
         const date = utc(curr.timestamp).utcOffset(offset).format('YYYY-MM-DD')
-
-        console.log('date', date, curr)
 
         if (!acc[date]) {
           acc[date] = { date, ...curr }
@@ -46,8 +42,6 @@ class AttendanceService {
       },
       {},
     )
-
-    console.log('teee', groupedData)
 
     return Object.values(groupedData).sort((a, b) => b.timestamp - a.timestamp)
   }

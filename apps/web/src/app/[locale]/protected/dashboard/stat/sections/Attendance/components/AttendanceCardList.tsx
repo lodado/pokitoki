@@ -1,13 +1,21 @@
+'use client'
+
 import { Card } from '@custompackages/designsystem'
 import { getDate, i18nDate, utc } from '@custompackages/shared'
+import { useLocale } from 'next-intl'
 import React from 'react'
 
 import { getUserAttendanceWithinLast14days } from '@/app/api/protected/attendance/last14days/api'
-import { getLocale } from '@/lib/next-inti'
+import { useSuspenseQuery } from '@/lib/tanstackQuery'
+import { AttendanceItem } from '@/server/repository'
 
-const AttendanceCardList = async () => {
-  const locale = await getLocale()
-  const { data } = await getUserAttendanceWithinLast14days()
+const AttendanceCardList = () => {
+  const locale = useLocale()
+  const { data } = useSuspenseQuery({
+    queryKey: ['attandanceCardList'],
+    queryFn: () => getUserAttendanceWithinLast14days(),
+    select: ({ data: rawData }: { data: AttendanceItem[] }) => rawData,
+  })
 
   return (
     <>
@@ -15,8 +23,6 @@ const AttendanceCardList = async () => {
         const { format } = getDate(locale)(timestamp)
         const fontIcon = studyTime > 5 * 60 ? '🔥' : '❌'
         const monthWithDay = format('MMMM Do')
-
-        console.log('test attendance', id, studyTime, timestamp, locale)
 
         return (
           <Card
