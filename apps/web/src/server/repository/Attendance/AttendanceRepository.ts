@@ -14,8 +14,8 @@ const readUserAttendance = async ({ userId }: Attendance) => {
   return data
 }
 
-const readUserAttendanceWithinLast14days = async ({ userId, timestamp }: Attendance) => {
-  const firstDayOfMonth = utc(timestamp).startOf('month').unix()
+const readUserAttendanceWithinLast14days = async ({ userId, timestamp, offset }: Attendance & { offset: number }) => {
+  const firstDayOfMonth = utc(timestamp).utcOffset(offset).startOf('month').unix()
   const fourteenDaysAgo = timestamp
 
   const { data, error } = await supabaseInstance

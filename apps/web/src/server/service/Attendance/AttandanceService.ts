@@ -20,7 +20,7 @@ class AttendanceService {
   }
 
   readUserAttendanceWithinLast14days = async ({ userId, timestamp, offset }: Attendance & { offset: number }) => {
-    const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, timestamp })
+    const data = await this.attendanceRepository.readUserAttendanceWithinLast14days({ userId, timestamp, offset })
 
     const twentyFourHoursInSeconds = 24 * 60 * 60 * 1000
 

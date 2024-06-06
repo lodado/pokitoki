@@ -16,6 +16,8 @@ const AttendanceCardList = async () => {
         const fontIcon = studyTime > 5 * 60 ? '🔥' : '❌'
         const monthWithDay = format('MMMM Do')
 
+        console.log('test attendance', id, studyTime, timestamp, locale)
+
         return (
           <Card
             key={id + timestamp}
