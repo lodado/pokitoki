@@ -36,7 +36,7 @@ const getOffset = () => {
 
   // timezone offset을 분 단위로 반환
   const offset = date.utcOffset()
-  return offset
+  return offset / 60
 }
 
 const getUnixTimestamp = ({
