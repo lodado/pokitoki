@@ -8,7 +8,7 @@ import { SpeechBalloon } from './SpeechBalloon'
 export const AssistantMessage = ({ message }: MessageProps) => {
   return (
     <>
-      <div className="absolute left-0 flex flex-col items-center justify-center w-max">
+      <div className="absolute flex flex-col items-center justify-center left-3 top-3 w-max">
         <span>pokitoki</span>
         <Profile
           src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
