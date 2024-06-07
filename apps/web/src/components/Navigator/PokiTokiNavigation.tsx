@@ -30,7 +30,7 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="relative flex flex-col items-center w-full h-full">
-      <div className="sticky top-0 flex flex-row justify-center w-screen h-12 border-b border-solid border-b-1 border-border-01 z-nav">
+      <div className="sticky top-0 flex flex-row justify-center w-screen h-12 border-b border-solid header-content border-b-1 border-border-01 z-nav">
         <header className="sticky top-0 w-screen md:w-[768px] justify-between align-middle bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01">
           <nav className="flex justify-between w-full h-full align-middle ">
             <NavigationLinkButton className="flex flex-row items-center w-max">

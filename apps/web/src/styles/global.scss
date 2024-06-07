@@ -17,3 +17,7 @@ html, body, .body-content {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+ 
+.header-content {
+  transition: all 0.5s ease-out;
+}
