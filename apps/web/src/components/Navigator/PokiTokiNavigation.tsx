@@ -54,8 +54,7 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
         </header>
       </div>
 
-      <div />
-      <div className="flex flex-col items-center w-full md:w-[768px] h-full">{children}</div>
+      <div className="flex flex-col items-center w-full md:w-[768px] flex-grow">{children}</div>
 
       <Navigation className="bottom-0 flex items-center justify-center flex-grow-0 h-12 border border-solid sm:hidden border-border-01 bg-surface-up shadow-profile px-spacing-4">
         <NavigationTab tabList={dashboardTabList} />
