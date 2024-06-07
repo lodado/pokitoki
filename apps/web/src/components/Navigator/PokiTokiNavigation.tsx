@@ -29,35 +29,38 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
   ]
 
   return (
-    <>
-      <header className="sticky top-0 w-screen md:w-[768px] justify-between align-middle bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01 z-nav">
-        <nav className="flex justify-between w-full h-full align-middle ">
-          <NavigationLinkButton className="flex flex-row items-center w-max">
-            <Logo className="w-[75px]" title={t('LOGO')} />
-            <ICON_LOGO width="30px" height="30px" className="mb-2" />
-          </NavigationLinkButton>
+    <div className="relative flex flex-col items-center w-full h-full">
+      <div className="sticky top-0 flex flex-row justify-center w-screen h-12 border-b border-solid border-b-1 border-border-01 z-nav">
+        <header className="sticky top-0 w-screen md:w-[768px] justify-between align-middle bg-surface-up h-12 px-spacing-4 border-b border-solid border-border-01">
+          <nav className="flex justify-between w-full h-full align-middle ">
+            <NavigationLinkButton className="flex flex-row items-center w-max">
+              <Logo className="w-[75px]" title={t('LOGO')} />
+              <ICON_LOGO width="30px" height="30px" className="mb-2" />
+            </NavigationLinkButton>
 
-          <div className="hidden sm:flex">
-            <NavigationTab tabList={dashboardTabList} />
-          </div>
+            <div className="hidden sm:flex">
+              <NavigationTab tabList={dashboardTabList} />
+            </div>
 
-          <button type="button">
-            <Profile
-              src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
-              alt="user profile"
-              width={28}
-              height={28}
-            />
-          </button>
-        </nav>
-      </header>
+            <button type="button">
+              <Profile
+                src="https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/avat.png"
+                alt="user profile"
+                width={28}
+                height={28}
+              />
+            </button>
+          </nav>
+        </header>
+      </div>
 
-      {children}
+      <div />
+      <div className="flex flex-col items-center w-full md:w-[768px] h-full">{children}</div>
 
       <Navigation className="bottom-0 flex items-center justify-center flex-grow-0 h-12 border border-solid sm:hidden border-border-01 bg-surface-up shadow-profile px-spacing-4">
         <NavigationTab tabList={dashboardTabList} />
       </Navigation>
-    </>
+    </div>
   )
 }
 
