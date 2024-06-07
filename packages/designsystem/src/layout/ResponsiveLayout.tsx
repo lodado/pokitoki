@@ -22,9 +22,7 @@ interface ResponsiveLayoutProps {
  */
 const ResponsiveLayout = ({ children, className = '' }: ResponsiveLayoutProps): JSX.Element => {
   return (
-    <div
-      className={`flex flex-col relative left-1/2 -translate-x-1/2 w-screen md:w-[768px] h-[calc(var(--vh)*100)] ${className}`}
-    >
+    <div className={`flex flex-col relative left-1/2 -translate-x-1/2 w-screen md:w-[768px] h-inherit ${className}`}>
       {children}
     </div>
   )

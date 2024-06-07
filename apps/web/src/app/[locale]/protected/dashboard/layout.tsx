@@ -7,7 +7,7 @@ import { LayoutProps } from '@/interface/type'
 const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: { locale } }) => {
   return (
     <PokiTokiNavigation>
-      <div className="flex-grow w-full px-6 pt-4 overflow-y-scroll scrollbar-hide bg-background-02">{children}</div>
+      <div className="flex-grow w-full px-6 pt-4 bg-background-02">{children}</div>
     </PokiTokiNavigation>
   )
 }

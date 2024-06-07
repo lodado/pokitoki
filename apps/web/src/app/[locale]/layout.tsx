@@ -56,7 +56,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <link rel="icon" href="/favicon.ico" />
       </head>
 
-      <body style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <body style={{ display: 'flex', flexDirection: 'column' }}>
         <ScreenVhScript nonce={nonce} />
         <LibraryProvider>
           <GlobalAdapterServer />
