@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
+import { Splash } from '@/components'
 import GlobalAdapterServer from '@/components/GlobalAdapter/GlobalAdapter.server'
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
@@ -61,7 +62,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <LibraryProvider>
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
+            <Splash>{children}</Splash>
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />

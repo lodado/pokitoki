@@ -1,4 +1,5 @@
 export * from './Logo'
 export * from './Navigator'
 export * from './Profile'
+export * from './Splash'
 export * from './ThreadEntranceCard'
