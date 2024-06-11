@@ -5,6 +5,7 @@ import React from 'react'
 
 import { Splash } from '@/components'
 import GlobalAdapterServer from '@/components/GlobalAdapter/GlobalAdapter.server'
+import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
 import { LayoutProps } from '@/interface/type'
 import { LibraryProvider } from '@/lib'
 import { GA } from '@/lib/GA'
@@ -62,7 +63,9 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <LibraryProvider>
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Splash>{children}</Splash>
+            <Splash>
+              <PokiTokiNavigation>{children}</PokiTokiNavigation>
+            </Splash>
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />
