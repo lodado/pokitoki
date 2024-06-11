@@ -8,6 +8,7 @@ import { Logo } from '../Logo'
 import { Profile } from '../Profile'
 import NavigationLinkButton from './components/NavigationLinkButton'
 import NavigationTab from './components/NavigationTab'
+import { LEARNING_STATUS, SELECTIVE_LEARNING } from './constant'
 
 const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
   const t = await getI18n('COMMON')
@@ -15,14 +16,14 @@ const PokiTokiNavigation = async ({ children }: { children: ReactNode }) => {
 
   const dashboardTabList = [
     {
-      key: 'LEARNING-STATUS',
-      value: dashboardI18n('LEARNING-STATUS'),
+      key: LEARNING_STATUS,
+      value: dashboardI18n(LEARNING_STATUS),
       Icon: <ICON_GNB_1 fillOverwrite="inherit" />,
       link: '/protected/dashboard',
     },
     {
-      key: 'SELECTIVE-LEARNING',
-      value: dashboardI18n('SELECTIVE-LEARNING'),
+      key: SELECTIVE_LEARNING,
+      value: dashboardI18n(SELECTIVE_LEARNING),
       Icon: <ICON_GNB_2 fillOverwrite="inherit" />,
       link: '/protected/dashboard/selfstudy',
     },

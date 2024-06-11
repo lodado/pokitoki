@@ -1,10 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import React, { cloneElement, ReactElement, useMemo, useState } from 'react'
+import React, { cloneElement, ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 
+import { useUrl } from '@/hooks'
 import { cva } from '@/lib/cva'
+import { atom, useAtom } from '@/lib/jotai'
 
+import { LEARNING_STATUS, SELECTIVE_LEARNING } from '../constant'
+import { activeTabAtom } from './atom'
 import NavigationLinkButton from './NavigationLinkButton'
 
 export interface TabItem {
@@ -37,8 +41,8 @@ const indicatorStyles = cva(
   {
     variants: {
       position: {
-        'LEARNING-STATUS': 'translate-x-0',
-        'SELECTIVE-LEARNING': 'translate-x-full',
+        [LEARNING_STATUS]: 'translate-x-0',
+        [SELECTIVE_LEARNING]: 'translate-x-full',
       },
     },
     defaultVariants: {
@@ -48,7 +52,8 @@ const indicatorStyles = cva(
 )
 
 const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
-  const [activeTab, setActiveTab] = useState<TabTypes>(tabList[0].key)
+  const [activeTab, setActiveTab] = useAtom(activeTabAtom)
+
   const tabWidth = 100 / tabList.length
 
   const handleTabClick = (tab: TabTypes) => {

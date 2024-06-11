@@ -23,7 +23,7 @@ const useUrl = <T extends Params = MetadataParams>() => {
     router.push(newPath)
   }
 
-  return { isSameUrl, locale, push, query, params }
+  return { isSameUrl, pathname, locale, push, query, params }
 }
 
 export default useUrl
