@@ -63,9 +63,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
         <LibraryProvider>
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <Splash>
-              <PokiTokiNavigation>{children}</PokiTokiNavigation>
-            </Splash>
+            <Splash>{children}</Splash>
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />

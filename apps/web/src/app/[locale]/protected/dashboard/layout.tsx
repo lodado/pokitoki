@@ -1,6 +1,7 @@
 import { ResponsiveLayout } from '@custompackages/designsystem'
 import React from 'react'
 
+import { PokiTokiNavigation } from '@/components'
 import { LayoutProps } from '@/interface/type'
 
 const Layout: React.FunctionComponent<LayoutProps> = async ({ children, params: { locale } }) => {

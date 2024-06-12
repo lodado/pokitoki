@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import React, { cloneElement, ReactElement, useEffect, useMemo, useRef, useState } from 'react'
+import React, { cloneElement, memo, ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useUrl } from '@/hooks'
 import { cva } from '@/lib/cva'
@@ -51,7 +51,7 @@ const indicatorStyles = cva(
   },
 )
 
-const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
+const NavigationTab: React.FC<NavigationTabProps> = memo(({ tabList }) => {
   const [activeTab, setActiveTab] = useAtom(activeTabAtom)
 
   const tabWidth = 100 / tabList.length
@@ -80,6 +80,6 @@ const NavigationTab: React.FC<NavigationTabProps> = ({ tabList }) => {
       <span className={indicatorStyles({ position: activeTab! as any })} style={{ width: `${tabWidth}%` }} />
     </div>
   )
-}
+})
 
 export default NavigationTab
