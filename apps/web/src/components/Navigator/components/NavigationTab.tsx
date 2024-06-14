@@ -1,11 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import React, { cloneElement, memo, ReactElement, useEffect, useMemo, useRef, useState } from 'react'
 
-import { useUrl } from '@/hooks'
+import { LocaleLink } from '@/components/Link'
 import { cva } from '@/lib/cva'
-import { atom, useAtom } from '@/lib/jotai'
+import { useAtom } from '@/lib/jotai'
 
 import { LEARNING_STATUS, SELECTIVE_LEARNING } from '../constant'
 import { activeTabAtom } from './atom'
@@ -63,7 +62,7 @@ const NavigationTab: React.FC<NavigationTabProps> = memo(({ tabList }) => {
   return (
     <div className="relative body-01-r flex w-full min-w-[200px] max-w-[50vw]">
       {tabList.map(({ key, value, Icon, link }) => (
-        <Link key={key} href={link} style={{ width: `${tabWidth}%` }} className="w-full" scroll={false}>
+        <LocaleLink key={key} href={link} style={{ width: `${tabWidth}%` }} className="w-full" scroll={false}>
           <NavigationLinkButton
             className={`w-full flex gap-1 justify-center items-center flex-row p-2 cursor-pointer text-secondary-default ${
               activeTab === key ? 'font-bold' : ''
@@ -75,7 +74,7 @@ const NavigationTab: React.FC<NavigationTabProps> = memo(({ tabList }) => {
             })}
             <span className="w-full text-center">{value}</span>
           </NavigationLinkButton>
-        </Link>
+        </LocaleLink>
       ))}
       <span className={indicatorStyles({ position: activeTab! as any })} style={{ width: `${tabWidth}%` }} />
     </div>

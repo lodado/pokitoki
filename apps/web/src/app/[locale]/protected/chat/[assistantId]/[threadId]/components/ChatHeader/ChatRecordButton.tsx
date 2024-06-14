@@ -30,7 +30,6 @@ const ChatRecordButton = () => {
 
     const postUserStudyTimeBeforeUnload = async () => {
       const studyTime1 = startTimeRef.current
-      console.log(studyTime1, flag, 'wtf?')
 
       if (flag) {
         return

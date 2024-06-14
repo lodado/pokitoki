@@ -15,6 +15,8 @@ const AttendanceCardList = () => {
     queryKey: ['attandanceCardList'],
     queryFn: () => getUserAttendanceWithinLast14days(),
     select: ({ data: rawData }: { data: AttendanceItem[] }) => rawData,
+    staleTime: 0,
+    gcTime: 0,
   })
 
   return (
