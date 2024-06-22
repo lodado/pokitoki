@@ -28,11 +28,13 @@ const cspMiddleware = (request: NextRequest, response: NextResponse) => {
     } 'nonce-${nonce}' 'strict-dynamic' cdn.jsdelivr.net;
     script-src-elem 'self' 'nonce-${nonce}';
     object-src 'none';
-    connect-src 'self' https://www.google-analytics.com;
+    connect-src 'self' https://www.google-analytics.com https://o4506497206779904.ingest.sentry.io;
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
     manifest-src 'self';
+    report-uri https://o4506497206779904.ingest.sentry.io/api/4506497210253317/security/?sentry_key=c0d1bc230a8ad553b5f82c9efd56882a;
+    report-to csp-endpoint;
 `
   // Replace newline characters and spaces
   const contentSecurityPolicyHeaderValue = cspHeader.replace(/\s{2,}/g, ' ').trim()
