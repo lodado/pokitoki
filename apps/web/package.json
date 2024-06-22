@@ -5,7 +5,7 @@
   "main": "./index.tsx",
   "source": "./index.tsx",
   "scripts": {
-    "build": "next build --output public",
+    "build": "next build",
     "dev": "next dev",
     "start": "next start",
     "build:analyze": "cross-env ANALYZE=true pnpm run build",
