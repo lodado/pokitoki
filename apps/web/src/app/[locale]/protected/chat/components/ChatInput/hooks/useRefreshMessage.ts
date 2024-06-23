@@ -8,12 +8,7 @@ import useToken from '@/hooks/token/useToken'
 import useUrl from '@/hooks/useUrl'
 import { useAtom, useSetAtom } from '@/lib/jotai'
 
-import {
-  chatMessageAtom,
-  chatMessageScrollIndexAtom,
-  triggerRefreshChatContentAtom,
-  triggerRefreshForAiAnswerAtom,
-} from '../../../store'
+import { chatMessageAtom, chatMessageScrollIndexAtom, triggerRefreshForAiAnswerAtom } from '../../../store'
 
 const parseFormData = (e: FormEvent<HTMLFormElement>) => {
   const data = Object.fromEntries(new FormData(e.currentTarget))
@@ -22,52 +17,82 @@ const parseFormData = (e: FormEvent<HTMLFormElement>) => {
   return inputValue
 }
 
+const useTokenRefresh = () => {
+  const { data, refetch } = useToken()
+  const { token } = data
+
+  console.log('token: ', token)
+
+  const isValidTokenAmount = () => {
+    if (token - TOKEN_MESSAGE_COST <= 0) {
+      alert('beta limit - too many messages in one day. try again next day.')
+      return true
+    }
+
+    return false
+  }
+
+  return { token, refetch, isValidTokenAmount }
+}
+
+const useChatMessage = () => {
+  const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
+  const setChatMessages = useSetAtom(chatMessageAtom)
+  const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
+
+  const addChatMessage = (inputValue: string) => {
+    setChatMessages((oldData: ChatMessage[]) => {
+      setChatMessageScrollIndex(oldData.length + 1)
+
+      return [...oldData, { id: 'none', role: 'user', content: inputValue, createdAt: Date.now() }]
+    })
+  }
+
+  const postChatMessage = async ({
+    assistantId,
+    threadId,
+    message: inputValue,
+  }: {
+    assistantId: string
+    threadId: string
+    message: string
+  }) => {
+    addChatMessage(inputValue)
+    await postAIMessages({ assistantId, threadId, message: inputValue })
+    triggerRefreshForAiAnswer()
+  }
+
+  return { postChatMessage }
+}
+
 const useRefreshMessage = () => {
   const { params } = useUrl<{ threadId: string; assistantId: string }>()
   const { assistantId, threadId } = params
 
-  const { data, refetch } = useToken()
-  const { token } = data
-
   const [isLoading, setLoading] = useState(false)
   const setError = useErrorBoundary()
 
-  const triggerRefreshForAiAnswer = useSetAtom(triggerRefreshForAiAnswerAtom)
-  const setChatMessageScrollIndex = useSetAtom(chatMessageScrollIndexAtom)
-
-  const setChatMessages = useSetAtom(chatMessageAtom)
-
-  console.log('token: ', token)
+  const { refetch, isValidTokenAmount } = useTokenRefresh()
+  const { postChatMessage } = useChatMessage()
 
   const handleSubmitMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    ;(e.target as HTMLFormElement).reset()
 
-    if (token - TOKEN_MESSAGE_COST <= 0) {
-      alert('beta limit - too many messages in one day. try again next day.')
-    }
-
+    if (!isValidTokenAmount()) return
     if (isLoading) return
+    setLoading(true)
 
     try {
       const inputValue = parseFormData(e)
       if (!inputValue) return
 
-      setLoading(true)
-
-      setChatMessages((oldData: ChatMessage[]) => {
-        setChatMessageScrollIndex(oldData.length + 1)
-
-        return [...oldData, { id: 'none', role: 'user', content: inputValue, createdAt: Date.now() }]
-      })
-
-      await postAIMessages({ assistantId, threadId, message: inputValue })
-
-      setLoading(false)
-      triggerRefreshForAiAnswer()
-      ;(e.target as HTMLFormElement).reset()
-      refetch()
+      await postChatMessage({ assistantId, threadId, message: inputValue })
     } catch (error) {
       setError(error)
+    } finally {
+      setLoading(false)
+      refetch()
     }
   }
 
