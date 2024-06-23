@@ -10,7 +10,7 @@ const PageLoading = () => {
   const [textComma, setTextComma] = useState(1)
 
   useInterval(() => {
-    setTextComma((prev) => (prev + 1) % 4)
+    if (isLoading) setTextComma((prev) => (prev + 1) % 4)
   }, 300)
 
   if (!isLoading) return null
