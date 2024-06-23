@@ -1,6 +1,7 @@
 export * from './Link'
 export * from './Logo'
 export * from './Navigator'
+export * from './PageLoading'
 export * from './Profile'
 export * from './Splash'
 export * from './ThreadEntranceCard'

@@ -64,6 +64,8 @@ export default {
 
       /* z-index 시멘틱하게 관리 */
       zIndex: {
+        loading: '10000',
+        overlay: '1000',
         toast: '700',
         dropdown: '500',
         dialog: '100',

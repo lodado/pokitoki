@@ -3,7 +3,7 @@ import { headers } from 'next/headers'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import React from 'react'
 
-import { Splash } from '@/components'
+import { PageLoading, Splash } from '@/components'
 import GlobalAdapterServer from '@/components/GlobalAdapter/GlobalAdapter.server'
 import PokiTokiNavigation from '@/components/Navigator/PokiTokiNavigation'
 import { LayoutProps } from '@/interface/type'
@@ -64,6 +64,7 @@ const RootLayout: React.FunctionComponent<LayoutProps> = ({ children, params: { 
           <GlobalAdapterServer />
           <NextIntlClientProvider locale={locale} messages={messages}>
             <Splash>{children}</Splash>
+            <PageLoading />
           </NextIntlClientProvider>
         </LibraryProvider>
         <GA nonce={nonce} />

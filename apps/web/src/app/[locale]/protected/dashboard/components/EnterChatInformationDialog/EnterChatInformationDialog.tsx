@@ -7,7 +7,7 @@ import { useI18n } from '@/lib/i18n'
 import { useAtom, useAtomValue, useResetAtom } from '@/lib/jotai'
 import { chatInformationDialogAtom } from '@/store'
 
-import useThreadManager from './hook/useThreadManager'
+import useThreadManager from './hooks/useThreadManager'
 
 const EnterChatInformationDialog = () => {
   const t = useI18n('ENTERDIALOG')

@@ -6,7 +6,7 @@ export const usePageLoading = () => {
   const [isLoading, setIsLoading] = useAtom(isThreadManagerLoadingAtom)
 
   const startLoading = (): void => {
-    setIsLoading(false)
+    setIsLoading(true)
   }
 
   const stopLoading = (): void => {
