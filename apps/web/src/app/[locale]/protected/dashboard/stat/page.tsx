@@ -10,7 +10,7 @@ import { getMetadata } from '@/utils'
 import { MetadataParams } from '@/utils/metadata/metadata'
 
 import { ChatInput } from '../../chat/components/ChatInput'
-import EnterChatInformationDialog from '../components/EnterChatInformationDialog'
+import EnterChatInformationDialog from '../components/EnterChatInformationDialog/EnterChatInformationDialog'
 import AttendanceSection from './sections/Attendance/AttendanceSection'
 import HistorySection from './sections/history/HistorySection'
 import TodayRecommendSection from './sections/TopicOnSituationSection'

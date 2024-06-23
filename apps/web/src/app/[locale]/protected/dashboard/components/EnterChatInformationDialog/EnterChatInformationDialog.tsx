@@ -7,15 +7,17 @@ import { useI18n } from '@/lib/i18n'
 import { useAtom, useAtomValue, useResetAtom } from '@/lib/jotai'
 import { chatInformationDialogAtom } from '@/store'
 
-import useThreadManager from './useThreadManager'
+import useThreadManager from './hook/useThreadManager'
 
 const EnterChatInformationDialog = () => {
   const t = useI18n('ENTERDIALOG')
 
   const [chatInformationDialog, setChatInformationDialog] = useAtom(chatInformationDialogAtom)
-  const resetChatInformationDialog = useResetAtom(chatInformationDialogAtom)
-
   const { state, chatDialogDescription } = chatInformationDialog
+
+  const resetChatInformationDialog = useResetAtom(chatInformationDialogAtom)
+  const { handleEnterDialog } = useThreadManager(chatInformationDialog)
+
   const isDialogOpen = state !== 'UNMOUNT'
   const { header, body } = chatDialogDescription
 
@@ -24,8 +26,6 @@ const EnterChatInformationDialog = () => {
       return { ...oldData, state: newVisibleState ? oldData.state : 'UNMOUNT' }
     })
   }
-
-  const { handleEnterDialog } = useThreadManager()
 
   return (
     <AlertDialog isVisible={isDialogOpen} onChangeVisible={onChangeVisible}>

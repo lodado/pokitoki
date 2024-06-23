@@ -1,16 +1,16 @@
 import { useErrorBoundary } from '@custompackages/designsystem'
 import { noop } from '@custompackages/shared'
+import { useState } from 'react'
 
 import { createThread } from '@/app/api/chatgpt/thread/api'
-import { useUrl } from '@/hooks'
-import { useAtomValue } from '@/lib'
-import { chatInformationDialogAtom } from '@/store'
+import { isThreadManagerLoadingAtom, usePageLoading, useUrl } from '@/hooks'
+import { useAtom, useAtomValue } from '@/lib'
+import { ChatInformationDialogProp } from '@/store'
 
-const useThreadManager = () => {
+const useThreadManager = ({ state, topic, chatDialogDescription }: ChatInformationDialogProp) => {
   const { locale, push } = useUrl()
+  const { isLoading, startLoading, stopLoading } = usePageLoading()
   const setError = useErrorBoundary()
-  const chatInformationDialog = useAtomValue(chatInformationDialogAtom)
-  const { state, topic, chatDialogDescription } = chatInformationDialog
 
   const { category } = chatDialogDescription
   const { assistantId, threadId: _threadId, description } = topic
@@ -36,17 +36,29 @@ const useThreadManager = () => {
   }
 
   const handleEnterDialog = async () => {
+    startLoading()
+
+    if (isLoading) return noop()
+
+    let ReturnFunction
+
     switch (state) {
       case 'CREATE':
-        return createThreadByAssistantId()
+        ReturnFunction = await createThreadByAssistantId()
+        break
       case 'ENTER':
-        return enterThread({})
+        ReturnFunction = enterThread({})
+        break
       case 'CREATE_AND_ENTER':
-        return createAndEnterThread()
+        ReturnFunction = await createAndEnterThread()
+        break
       case 'UNMOUNT':
       default:
-        return noop()
+        ReturnFunction = noop()
     }
+
+    stopLoading()
+    return ReturnFunction
   }
 
   return { handleEnterDialog }
