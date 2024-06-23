@@ -26,10 +26,10 @@ const useTokenRefresh = () => {
   const isValidTokenAmount = () => {
     if (token - TOKEN_MESSAGE_COST <= 0) {
       alert('beta limit - too many messages in one day. try again next day.')
-      return true
+      return false
     }
 
-    return false
+    return true
   }
 
   return { token, refetch, isValidTokenAmount }
@@ -77,16 +77,16 @@ const useRefreshMessage = () => {
 
   const handleSubmitMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    ;(e.target as HTMLFormElement).reset()
 
+    const inputValue = parseFormData(e)
+
+    if (!inputValue) return
     if (!isValidTokenAmount()) return
     if (isLoading) return
     setLoading(true)
+    ;(e.target as HTMLFormElement).reset()
 
     try {
-      const inputValue = parseFormData(e)
-      if (!inputValue) return
-
       await postChatMessage({ assistantId, threadId, message: inputValue })
     } catch (error) {
       setError(error)

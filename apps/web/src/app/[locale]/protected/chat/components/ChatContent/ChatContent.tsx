@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react'
 import { ChatMessage } from '@/app/api/chatgpt/message/type'
 import { Message } from '@/components/Message'
 
-import { ChatInput } from '../ChatInput'
 import { useInfinityScroll } from './hooks'
 
 interface ChatContentProps {
@@ -23,31 +22,28 @@ const ChatContent = ({ messages }: ChatContentProps) => {
 
   return (
     <>
-      <div className="relative flex flex-col flex-1 flex-grow w-full">
-        {length > 0 ? (
-          <Virtuoso
-            className="scrollbar-hide"
-            ref={observerRef}
-            // eslint-disable-next-line react/no-unstable-nested-components
-            itemContent={(index) => {
-              return <Message index={index} message={messages[index]} />
-            }}
-            totalCount={Math.max(0, length)}
-            initialTopMostItemIndex={length - 1}
-            rangeChanged={({ startIndex, endIndex }) => {
-              if (startIndex <= 3 && endIndex !== length - 1) {
-                lastMessageRef()
-              }
-            }}
-            components={{
-              Footer: ChatContentFooter,
-            }}
-          />
-        ) : (
-          <div className="flex-1" role="presentation none" />
-        )}
-        <ChatInput />
-      </div>
+      {length > 0 ? (
+        <Virtuoso
+          className="scrollbar-hide"
+          ref={observerRef}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          itemContent={(index) => {
+            return <Message index={index} message={messages[index]} />
+          }}
+          totalCount={Math.max(0, length)}
+          initialTopMostItemIndex={length - 1}
+          rangeChanged={({ startIndex, endIndex }) => {
+            if (startIndex <= 3 && endIndex !== length - 1) {
+              lastMessageRef()
+            }
+          }}
+          components={{
+            Footer: ChatContentFooter,
+          }}
+        />
+      ) : (
+        <div className="flex-1" role="presentation none" />
+      )}
     </>
   )
 }

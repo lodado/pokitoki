@@ -1,3 +1,4 @@
 import SSRSuspense from './SSRSuspense'
+import WithSSRSuspense from './WithSuspense'
 
-export { SSRSuspense }
+export { SSRSuspense, WithSSRSuspense }

@@ -1,5 +1,6 @@
 'use client'
 
+import { useErrorBoundary } from '@custompackages/designsystem'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { getAIMessages } from '@/app/api/chatgpt/message/api'
@@ -31,6 +32,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const refreshForAiAnswer = useAtomValue(refreshForAiAnswerAtom)
 
   const [isLoading, setLoading] = useAtom(isChatLoadingAtom)
+  const setError = useErrorBoundary()
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)
@@ -53,22 +55,26 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
       setLoading(true)
 
       const cursor = chatMessage[0]?.id
-
       const dataLimit = 60
 
-      const { data } = await getAIMessages({
-        assistantId,
-        threadId,
-        isFirstLoad,
-        runRequired,
-        cursor,
-        dataLimit,
-      })
+      try {
+        const { data } = await getAIMessages({
+          assistantId,
+          threadId,
+          isFirstLoad,
+          runRequired,
+          cursor,
+          dataLimit,
+        })
 
-      setChatMessageScrollIndex(data.length)
-      setChatMessages((oldData) => [...data, ...oldData])
-      setLoading(false)
-      setHasChatMore(data.length > 0)
+        setChatMessageScrollIndex(data.length)
+        setChatMessages((oldData) => [...data, ...oldData])
+        setHasChatMore(data.length > 0)
+      } catch (e) {
+        setError(e)
+      } finally {
+        setLoading(false)
+      }
     }
 
     if (hasChatMore && !isLoading) requestAiMessages()
@@ -83,23 +89,27 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
 
     const requestAiAnswerMessages = async () => {
       setLoading(true)
-
       const dataLimit = 1
 
-      const { data } = await getAIMessages({
-        assistantId,
-        threadId,
-        isFirstLoad,
-        runRequired,
-        dataLimit,
-        cursor: undefined,
-      })
+      try {
+        const { data } = await getAIMessages({
+          assistantId,
+          threadId,
+          isFirstLoad,
+          runRequired,
+          dataLimit,
+          cursor: undefined,
+        })
 
-      const newData = [...chatMessage, ...data]
+        const newData = [...chatMessage, ...data]
 
-      setChatMessages(newData)
-      setChatMessageScrollIndex(newData.length)
-      setLoading(false)
+        setChatMessages(newData)
+        setChatMessageScrollIndex(newData.length)
+      } catch (e) {
+        setError(e)
+      } finally {
+        setLoading(false)
+      }
     }
 
     if (!isFirstLoad) requestAiAnswerMessages()
@@ -116,5 +126,5 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
     }
   }, [])
 
-  return { messages: chatMessage }
+  return { isLoading, messages: chatMessage }
 }
