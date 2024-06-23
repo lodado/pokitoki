@@ -3,15 +3,17 @@ import React, { ComponentType, PropsWithChildren, ReactNode } from 'react'
 
 import SSRSuspense from './SSRSuspense'
 
+export interface WithSSRSuspenseProps<Props extends Record<string, unknown> = Record<string, never>> {
+  Component: ComponentType<Props>
+  fallback: NonNullable<React.ReactNode> | null
+  Wrapper?: ({ children }: PropsWithChildren) => JSX.Element
+}
+
 const WithSSRSuspense = <Props extends Record<string, unknown> = Record<string, never>>({
   Component,
   fallback,
   Wrapper = ({ children }: PropsWithChildren) => <>{children}</>,
-}: {
-  Component: ComponentType<Props>
-  fallback: NonNullable<React.ReactNode> | null
-  Wrapper?: ({ children }: PropsWithChildren) => JSX.Element
-}) => {
+}: WithSSRSuspenseProps<Props>) => {
   const Wrapped = (props: Props) => (
     <Wrapper>
       <SSRSuspense fallback={fallback}>
