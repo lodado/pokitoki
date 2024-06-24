@@ -1,6 +1,5 @@
-import { ErrorBoundary, ErrorSuspense, RenderFallbackProps, useErrorBoundary } from '@custompackages/designsystem'
+import { ErrorBoundary, useErrorBoundary } from '@custompackages/designsystem'
 import type { Meta, StoryObj } from '@storybook/react'
-import { ReactNode } from 'react'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof ErrorBoundary> = {
@@ -27,20 +26,12 @@ const ErrorExample = () => {
   )
 }
 
-const Fallback = () => <div>error!</div>
+const Fallback = ({ reset }: any) => <div onClick={reset}>error! reset to click this div</div>
 
 export const ErrorBoundaryExample = () => {
   return (
     <ErrorBoundary fallback={Fallback}>
       <ErrorExample />
     </ErrorBoundary>
-  )
-}
-
-export const ErrorSuspenseExample = () => {
-  return (
-    <ErrorSuspense ErrorFallback={Fallback} LoadingFallback={<Fallback />}>
-      <ErrorExample />
-    </ErrorSuspense>
   )
 }

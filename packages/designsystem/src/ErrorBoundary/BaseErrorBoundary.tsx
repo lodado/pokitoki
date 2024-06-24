@@ -3,10 +3,13 @@
 /* eslint-disable react/no-unused-class-component-methods */
 import { Component, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode } from 'react'
 
+import { compareArrays } from './utils'
+
 export type RenderFallbackProps<ErrorType extends Error = Error> = {
   error: ErrorType
   reset: () => void
 }
+
 export type IgnoreErrorType = <ErrorType extends Error = Error>(error: ErrorType) => boolean
 export type RenderFallbackType = <ErrorType extends Error>(
   props: RenderFallbackProps<ErrorType>,
@@ -24,6 +27,8 @@ export type ErrorBoundaryProps<ErrorType extends Error = Error> = {
   ignoreError?: IgnoreErrorType
 
   children: ReactNode
+
+  deps?: unknown[]
 }
 
 const initialState: State = {
@@ -47,6 +52,17 @@ export class BaseErrorBoundary extends Component<PropsWithRef<PropsWithChildren<
 
   componentDidUpdate(prevProps: ErrorBoundaryProps) {
     const { error } = this.state
+    const { deps } = this.props
+
+    if (Array.isArray(deps) && Array.isArray(prevProps.deps)) {
+      if (!compareArrays(deps, prevProps.deps)) {
+        this.resetState()
+      }
+    }
+
+    if (deps !== prevProps.deps) {
+      this.resetState()
+    }
 
     /* 
     if (error == null) {
@@ -61,7 +77,7 @@ export class BaseErrorBoundary extends Component<PropsWithRef<PropsWithChildren<
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    const { onError, ignoreError } = this.props
+    const { onError, ignoreError, deps } = this.props
 
     if (ignoreError?.(error)) {
       throw error
