@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 type HttpError = {
   message: string
@@ -12,11 +12,15 @@ type CustomError = HttpError | Error | unknown
 const useErrorBoundary = <ErrorType extends CustomError>() => {
   const [error, setError] = useState<ErrorType | null>(null)
 
+  const reset = useCallback(() => {
+    setError(null)
+  }, [error])
+
   if (error != null) {
     throw error
   }
 
-  return setError
+  return { error, setError, reset }
 }
 
 export default useErrorBoundary

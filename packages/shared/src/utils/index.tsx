@@ -1,3 +1,4 @@
+export * from './compareArrays'
 export * from './ContextBuildHelper'
 export * from './date'
 export * from './getNotNullableObject'

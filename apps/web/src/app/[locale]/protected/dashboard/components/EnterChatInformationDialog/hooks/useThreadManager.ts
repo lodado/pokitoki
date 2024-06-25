@@ -10,7 +10,7 @@ import { ChatInformationDialogProp } from '@/store'
 const useThreadManager = ({ state, topic, chatDialogDescription }: ChatInformationDialogProp) => {
   const { locale, push } = useUrl()
   const { isLoading, startLoading, stopLoading } = usePageLoading()
-  const setError = useErrorBoundary()
+  const { setError } = useErrorBoundary()
 
   const { category } = chatDialogDescription
   const { assistantId, threadId: _threadId, description } = topic

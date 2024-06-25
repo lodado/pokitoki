@@ -4,4 +4,6 @@ import WithErrorSuspense from './WithErrorSuspense'
 
 export * from './BaseErrorBoundary'
 export * from './hooks'
+export * from './WithErrorSuspense'
+
 export { ErrorBoundary, WithErrorBoundary, WithErrorSuspense }

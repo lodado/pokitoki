@@ -1,7 +1,8 @@
 'use client'
 
-import { WithErrorSuspense } from '@custompackages/designsystem'
 import React from 'react'
+
+import { WithSentryErrorSuspense } from '@/components'
 
 import { ChatContent } from '../../../components/ChatContent'
 import { ChatInput } from '../../../components/ChatInput'
@@ -18,7 +19,7 @@ const RawFreetalkingChatContent = () => {
   )
 }
 
-const FreetalkingChatContent = WithErrorSuspense({
+const FreetalkingChatContent = WithSentryErrorSuspense({
   Wrapper: ({ children }) => <div className="relative flex flex-col flex-1 flex-grow w-full">{children}</div>,
   Component: RawFreetalkingChatContent,
   ErrorBoundaryProps: {

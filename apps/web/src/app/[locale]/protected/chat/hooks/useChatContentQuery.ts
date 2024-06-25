@@ -32,7 +32,7 @@ export const useChatContentQuery = ({ isInitFetchAllowed }: { isInitFetchAllowed
   const refreshForAiAnswer = useAtomValue(refreshForAiAnswerAtom)
 
   const [isLoading, setLoading] = useAtom(isChatLoadingAtom)
-  const setError = useErrorBoundary()
+  const { setError } = useErrorBoundary()
 
   const [chatMessage, setChatMessages] = useAtom(chatMessageAtom)
   const [hasChatMore, setHasChatMore] = useAtom(hasChatMoreAtom)

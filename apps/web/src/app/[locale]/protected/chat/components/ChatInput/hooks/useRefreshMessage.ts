@@ -70,7 +70,7 @@ const useRefreshMessage = () => {
   const { assistantId, threadId } = params
 
   const [isLoading, setLoading] = useState(false)
-  const setError = useErrorBoundary()
+  const { setError } = useErrorBoundary()
 
   const { refetch, isValidTokenAmount } = useTokenRefresh()
   const { postChatMessage } = useChatMessage()

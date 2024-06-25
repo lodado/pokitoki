@@ -6,7 +6,7 @@ import { SSRSuspense, WithSSRSuspense, WithSSRSuspenseProps } from '../SSRSuspen
 import { ErrorBoundaryProps as RawErrorBoundaryProps } from './BaseErrorBoundary'
 import ErrorBoundary from './ErrorBoundary'
 
-interface WithErrorAndSuspenseProps {
+export interface WithErrorAndSuspenseProps {
   Component: ComponentType<Record<string, unknown>>
   ErrorBoundaryProps: Omit<RawErrorBoundaryProps, 'children'>
   SSRSuspenseProps: Omit<WithSSRSuspenseProps, 'Component' | 'Wrapper'>
@@ -22,11 +22,11 @@ const WithErrorSuspense = <Props extends Record<string, unknown> = Record<string
 }: WithErrorAndSuspenseProps) => {
   const Wrapped = (props: Props) => (
     <Wrapper>
-      <SSRSuspense fallback={SSRSuspenseProps.fallback}>
-        <ErrorBoundary {...ErrorBoundaryProps}>
+      <ErrorBoundary {...ErrorBoundaryProps}>
+        <SSRSuspense fallback={SSRSuspenseProps.fallback}>
           <Component {...props} />
-        </ErrorBoundary>
-      </SSRSuspense>
+        </SSRSuspense>
+      </ErrorBoundary>
     </Wrapper>
   )
 

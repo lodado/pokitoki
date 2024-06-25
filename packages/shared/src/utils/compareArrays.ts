@@ -1,4 +1,8 @@
 export function compareArrays(arr1: unknown[], arr2: unknown[]): boolean {
+  if (!Array.isArray(arr1) || !Array.isArray(arr2)) {
+    return true
+  }
+
   if (arr1.length !== arr2.length) {
     return false
   }

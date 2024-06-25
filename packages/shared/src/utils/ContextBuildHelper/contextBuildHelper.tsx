@@ -7,14 +7,18 @@ export interface ContextBuildHelperParams<ContextValuesType extends object> {
   id: string
 
   defaultContext?: ContextValuesType | undefined
+
+  option?: {
+    contextThrowNeed?: boolean
+  }
 }
 
 type ProviderProps<ContextValuesType> = (ContextValuesType & { children: ReactNode }) | { children: ReactNode }
 
 export const contextBuildHelper = <ContextValuesType extends object>({
   id,
-
   defaultContext,
+  option = {},
 }: ContextBuildHelperParams<ContextValuesType>) => {
   const Context = createContext<ContextValuesType | undefined>(defaultContext ?? undefined)
 
@@ -29,16 +33,14 @@ export const contextBuildHelper = <ContextValuesType extends object>({
 
   const useHelperContext = () => {
     const context = useContext(Context)
-
-    if (context != null) {
-      return context
-    }
+    const { contextThrowNeed = true } = option
 
     if (defaultContext != null) {
       return defaultContext
     }
+    if (contextThrowNeed && context == null) throw new Error(`${id} context must be provided in provider`)
 
-    throw new Error(`${id} context must be provided in provider`)
+    return context
   }
 
   HelperProvider.displayName = `${id}provider`

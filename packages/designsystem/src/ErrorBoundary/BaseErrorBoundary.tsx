@@ -1,9 +1,8 @@
 'use client'
 
+import { compareArrays } from '@custompackages/shared'
 /* eslint-disable react/no-unused-class-component-methods */
-import { Component, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode } from 'react'
-
-import { compareArrays } from './utils'
+import { Component, createElement, ErrorInfo, PropsWithChildren, PropsWithRef, ReactNode } from 'react'
 
 export type RenderFallbackProps<ErrorType extends Error = Error> = {
   error: ErrorType
@@ -47,6 +46,7 @@ export class BaseErrorBoundary extends Component<PropsWithRef<PropsWithChildren<
   }
 
   static getDerivedStateFromError(error: Error) {
+    // sentry에 에러를 보내는 로직 작성
     return { error }
   }
 
@@ -54,26 +54,9 @@ export class BaseErrorBoundary extends Component<PropsWithRef<PropsWithChildren<
     const { error } = this.state
     const { deps } = this.props
 
-    if (Array.isArray(deps) && Array.isArray(prevProps.deps)) {
-      if (!compareArrays(deps, prevProps.deps)) {
-        this.resetState()
-      }
-    }
-
-    if (deps !== prevProps.deps) {
+    if (!compareArrays(deps as unknown[], prevProps.deps as unknown[])) {
       this.resetState()
     }
-
-    /* 
-    if (error == null) {
-    }
-   
-    if (!this.updatedWithError) {
-      this.updatedWithError = true
-    }
-
-    추가동작..
-    */
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
