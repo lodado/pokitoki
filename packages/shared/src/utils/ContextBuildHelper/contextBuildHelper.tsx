@@ -40,7 +40,7 @@ export const contextBuildHelper = <ContextValuesType extends object>({
     }
     if (contextThrowNeed && context == null) throw new Error(`${id} context must be provided in provider`)
 
-    return context
+    return context!
   }
 
   HelperProvider.displayName = `${id}provider`

@@ -3,6 +3,7 @@ import WithErrorBoundary from './WithErrorBoundary'
 import WithErrorSuspense from './WithErrorSuspense'
 
 export * from './BaseErrorBoundary'
+export * from './ErrorGroupProvider'
 export * from './hooks'
 export * from './WithErrorSuspense'
 

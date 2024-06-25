@@ -1,4 +1,9 @@
-import { ErrorBoundary, useErrorBoundary } from '@custompackages/designsystem'
+import {
+  ErrorBoundary,
+  ErrorGroupBoundaryProvider,
+  useErrorBoundary,
+  useErrorGroupBoundaryContext,
+} from '@custompackages/designsystem'
 import type { Meta, StoryObj } from '@storybook/react'
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
@@ -35,5 +40,31 @@ export const ErrorBoundaryExample = () => {
     <ErrorBoundary fallback={Fallback}>
       <ErrorExample />
     </ErrorBoundary>
+  )
+}
+
+const RefreshTrigger = () => {
+  const { refreshTrigger } = useErrorGroupBoundaryContext()
+
+  return (
+    <div>
+      <button type="button" onClick={refreshTrigger}>
+        refresh
+      </button>
+    </div>
+  )
+}
+
+export const ErrorGroupProviderExample = () => {
+  return (
+    <ErrorGroupBoundaryProvider>
+      <RefreshTrigger />
+      <ErrorBoundary fallback={Fallback}>
+        <ErrorExample />
+      </ErrorBoundary>
+      <ErrorBoundary fallback={Fallback}>
+        <ErrorExample />
+      </ErrorBoundary>
+    </ErrorGroupBoundaryProvider>
   )
 }
