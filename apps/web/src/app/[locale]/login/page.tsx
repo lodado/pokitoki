@@ -18,7 +18,7 @@ const Page = async ({ params: { locale } }: any) => {
 
   return (
     <LogScreen>
-      <ResponsiveLayout className="flex bg-[length:150px_150px] bg-[url('https://qmwtuvttspuxwuwrsuci.supabase.co/storage/v1/object/public/pokitokiStorage/login_bg.png')] bg-repeat-round bg-center flex-col justify-center items-center h-screen relative">
+      <ResponsiveLayout className="relative flex flex-col items-center justify-center h-screen">
         <div className="flex flex-col items-center justify-center w-full h-3/5">
           <header className="flex flex-col items-center justify-center w-full h-[40rem] mt-[-3.5rem]">
             <span className="text-white text-[56px] sm:text-[67px] w-full h-[5rem] flex justify-center items-center ">
