@@ -1,6 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 const config = {
-  serverUrl: process.env.REACT_APP_API_PATH || 'http://localhost:3000',
+  // @ts-ignore
+  serverUrl: process.env.NEXT_PUBLIC_CLIENT_URL || 'http://localhost:3000',
 }
 
 class Logger {
