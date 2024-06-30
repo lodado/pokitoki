@@ -1,3 +1,5 @@
+'use client'
+
 import { contextBuildHelper } from '@custompackages/shared'
 import { Dispatch, PropsWithChildren, SetStateAction, useReducer, useState } from 'react'
 
