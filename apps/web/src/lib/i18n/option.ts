@@ -4,4 +4,8 @@ const i18nOption = {
   localePrefix: 'always',
 }
 
+export const GenerateStaticParamsI18n = () => {
+  return i18nOption.locales.map((locale) => ({ locale }))
+}
+
 export default i18nOption

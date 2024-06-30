@@ -3,14 +3,17 @@ import { LogScreen, ResponsiveLayout } from '@custompackages/designsystem'
 
 import { Logo } from '@/components'
 import { getI18n } from '@/lib/i18n'
+import { setServerComponentSSG } from '@/lib/i18n/index.server'
+import { GenerateStaticParamsI18n } from '@/lib/i18n/option'
 
 import LoginForm from './components/LoginForm'
 
-/**
- * next-intl 버그로 인해 ssg로 제공해야하지만 일시적으로 ssr로 제공함
- * https://github.com/amannn/next-intl/discussions/819
- */
-const Page = async () => {
+export function generateStaticParams() {
+  return GenerateStaticParamsI18n()
+}
+
+const Page = async ({ params: { locale } }: any) => {
+  setServerComponentSSG(locale)
   const t = await getI18n('LOGIN')
 
   return (

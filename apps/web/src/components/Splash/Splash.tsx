@@ -3,7 +3,7 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 
 const Splash = ({ children }: PropsWithChildren) => {
-  const [isVisible, setVisible] = useState(true)
+  const [isVisible, setVisible] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
