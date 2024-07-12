@@ -50,6 +50,7 @@ export const headingRule = (nodeType: NodeType, maxLevel: number) =>
 
 export const buildInputRules = (schema: Schema) => {
   const rules = smartQuotes.concat(ellipsis, emDash)
+
   if (schema.nodes.blockquote) rules.push(blockQuoteRule(schema.nodes.blockquote))
   if (schema.nodes.ordered_list) rules.push(orderedListRule(schema.nodes.ordered_list))
   if (schema.nodes.bullet_list) rules.push(bulletListRule(schema.nodes.bullet_list))

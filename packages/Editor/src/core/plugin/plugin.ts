@@ -12,6 +12,7 @@ export const createPlugin = (schema: Schema) => {
     buildInputRules(schema),
     keymap({
       ...baseKeymap,
+      'Mod-x': undo,
       'Mod-y': redo,
     }),
 
