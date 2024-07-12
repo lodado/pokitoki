@@ -8,7 +8,7 @@ module.exports = {
 
     'no-unused-vars': 'off',
     '@next/next/no-html-link-for-pages': 'off',
-    'import/prefer-default-export': 'warn',
+    'import/prefer-default-export': 0,
     'prettier/prettier': 0,
     'lines-between-class-members': 0,
     'class-methods-use-this': 0,
