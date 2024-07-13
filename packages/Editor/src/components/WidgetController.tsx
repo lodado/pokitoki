@@ -8,7 +8,7 @@ class _WidgetController {
   widgets = WIDGET_REGISTER
 
   getPlugins() {
-    return this.widgets.map((widget) => widget.plugin())
+    return this.widgets.flatMap((widget) => widget.plugin())
   }
 
   Widgets = () => {
