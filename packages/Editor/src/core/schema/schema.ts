@@ -12,8 +12,6 @@ const customNodes = {
 
 const customMarks = {}
 
-console.log(customNodes)
-
 export const createSchema: () => Schema = () =>
   new Schema({
     nodes: addListNodes(nodes.append(customNodes), 'paragraph block*', 'block'),
