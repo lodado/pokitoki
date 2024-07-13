@@ -443,39 +443,54 @@ importers:
 
   packages/Editor:
     dependencies:
-      '@radix-ui/react-dialog':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react-dom@18.2.6)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@radix-ui/react-form':
-        specifier: ^0.0.3
-        version: 0.0.3(@types/react-dom@18.2.6)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@radix-ui/react-portal':
         specifier: ^1.0.4
         version: 1.0.4(@types/react-dom@18.2.6)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@radix-ui/react-slot':
-        specifier: ^1.0.2
-        version: 1.0.2(@types/react@18.2.21)(react@18.2.0)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.0.7
-        version: 1.0.7(@types/react-dom@18.2.6)(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      lottie-react:
-        specifier: ^2.4.0
-        version: 2.4.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      lucide-react:
-        specifier: ^0.303.0
-        version: 0.303.0(react@18.2.0)
+      mobx:
+        specifier: ^6.13.0
+        version: 6.13.0
+      mobx-react:
+        specifier: ^9.1.1
+        version: 9.1.1(mobx@6.13.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      prosemirror-commands:
+        specifier: ^1.5.2
+        version: 1.5.2
+      prosemirror-dropcursor:
+        specifier: ^1.8.1
+        version: 1.8.1
+      prosemirror-example-setup:
+        specifier: ^1.2.2
+        version: 1.2.2
       prosemirror-gapcursor:
         specifier: ^1.3.2
         version: 1.3.2
+      prosemirror-history:
+        specifier: ^1.4.0
+        version: 1.4.1
       prosemirror-inputrules:
         specifier: ^1.4.0
         version: 1.4.0
-      react-hotkeys-hook:
-        specifier: ^4.5.0
-        version: 4.5.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-virtuoso:
-        specifier: ^4.7.10
-        version: 4.7.10(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      prosemirror-keymap:
+        specifier: ^1.2.2
+        version: 1.2.2
+      prosemirror-model:
+        specifier: ^1.21.3
+        version: 1.21.3
+      prosemirror-schema-basic:
+        specifier: ^1.2.2
+        version: 1.2.2
+      prosemirror-schema-list:
+        specifier: ^1.4.0
+        version: 1.4.0
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.3
+      prosemirror-utils:
+        specifier: ^1.2.2
+        version: 1.2.2(prosemirror-model@1.21.3)(prosemirror-state@1.4.3)
+      prosemirror-view:
+        specifier: ^1.33.8
+        version: 1.33.8
     devDependencies:
       '@custompackages/clientlogger':
         specifier: workspace:*
@@ -513,48 +528,12 @@ importers:
       next:
         specifier: ^14.2.2
         version: 14.2.2(@babel/core@7.24.4)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.75.0)
-      prosemirror-commands:
-        specifier: ^1.5.2
-        version: 1.5.2
-      prosemirror-dropcursor:
-        specifier: ^1.8.1
-        version: 1.8.1
-      prosemirror-example-setup:
-        specifier: ^1.2.2
-        version: 1.2.2
-      prosemirror-history:
-        specifier: ^1.4.0
-        version: 1.4.1
-      prosemirror-keymap:
-        specifier: ^1.2.2
-        version: 1.2.2
-      prosemirror-model:
-        specifier: ^1.21.3
-        version: 1.21.3
-      prosemirror-schema-basic:
-        specifier: ^1.2.2
-        version: 1.2.2
-      prosemirror-schema-list:
-        specifier: ^1.4.0
-        version: 1.4.0
-      prosemirror-state:
-        specifier: ^1.4.3
-        version: 1.4.3
-      prosemirror-utils:
-        specifier: ^1.2.2
-        version: 1.2.2(prosemirror-model@1.21.3)(prosemirror-state@1.4.3)
-      prosemirror-view:
-        specifier: ^1.33.8
-        version: 1.33.8
       react:
         specifier: 18.2.0
         version: 18.2.0
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-joyride:
-        specifier: ^2.8.1
-        version: 2.8.1(@types/react@18.2.21)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       tailwind-config:
         specifier: workspace:*
         version: link:../../config/tailwind-config
@@ -7049,6 +7028,35 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  mobx-react-lite@4.0.7:
+    resolution: {integrity: sha512-RjwdseshK9Mg8On5tyJZHtGD+J78ZnCnRaxeQDSiciKVQDUbfZcXhmld0VMxAwvcTnPEHZySGGewm467Fcpreg==}
+    peerDependencies:
+      mobx: ^6.9.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
+  mobx-react@9.1.1:
+    resolution: {integrity: sha512-gVV7AdSrAAxqXOJ2bAbGa5TkPqvITSzaPiiEkzpW4rRsMhSec7C2NBCJYILADHKp2tzOAIETGRsIY0UaCV5aEw==}
+    peerDependencies:
+      mobx: ^6.9.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+
+  mobx@6.13.0:
+    resolution: {integrity: sha512-1laWODrBWmB7mDJ8EClCjUQTyLwJ0ydJgE4FtK7t9r3JnjXgc9OhmYs2P4RtHrY1co5+4T6cKP2UswX2SU29mA==}
+
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
     engines: {node: '>=10'}
@@ -9526,6 +9534,11 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   utf-8-validate@6.0.3:
     resolution: {integrity: sha512-uIuGf9TWQ/y+0Lp+KGZCMuJWc3N9BHA+l/UmHd/oUHwJJDeysyTRxNQVkbzsIWfGFbRe3OcgML/i0mvVRPOyDA==}
@@ -17562,6 +17575,24 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
+  mobx-react-lite@4.0.7(mobx@6.13.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      mobx: 6.13.0
+      react: 18.2.0
+      use-sync-external-store: 1.2.2(react@18.2.0)
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
+
+  mobx-react@9.1.1(mobx@6.13.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      mobx: 6.13.0
+      mobx-react-lite: 4.0.7(mobx@6.13.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+    optionalDependencies:
+      react-dom: 18.2.0(react@18.2.0)
+
+  mobx@6.13.0: {}
+
   mrmime@2.0.0: {}
 
   ms@2.0.0: {}
@@ -20320,6 +20351,10 @@ snapshots:
       tslib: 2.6.2
     optionalDependencies:
       '@types/react': 18.2.21
+
+  use-sync-external-store@1.2.2(react@18.2.0):
+    dependencies:
+      react: 18.2.0
 
   utf-8-validate@6.0.3:
     dependencies:

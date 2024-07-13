@@ -9,6 +9,7 @@ import { EditorState, Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 import React, { createContext, useEffect, useRef, useState } from 'react'
 
+import { WidgetController } from './components'
 import { createState, createView } from './core'
 import { EditorProvider } from './EditorProvider'
 
@@ -38,11 +39,15 @@ const Editor = () => {
   const { editorRef, view, editorState } = useEditorView()
 
   return (
-    <EditorProvider view={view!} editorState={editorState!}>
-      <div className="editor-sandbox">
-        <div ref={editorRef} />
-      </div>
-    </EditorProvider>
+    <>
+      <EditorProvider view={view!} editorState={editorState!}>
+        <div className="editor-sandbox">
+          <div ref={editorRef} />
+        </div>
+      </EditorProvider>
+
+      <WidgetController.Widgets />
+    </>
   )
 }
 
