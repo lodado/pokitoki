@@ -1,10 +1,10 @@
 import { action, makeAutoObservable, makeObservable, observable } from 'mobx'
 
 import OpenableStore from '../model/OpenableStore'
-import { DropdownPosition } from './type'
+import { Position } from './type'
 
-class DropdownStore extends OpenableStore {
-  position: DropdownPosition = { x: 0, y: 0 }
+class BlockCreateButtonStore extends OpenableStore {
+  position: Position = { x: 0, y: 0 }
 
   constructor() {
     super()
@@ -15,8 +15,8 @@ class DropdownStore extends OpenableStore {
     })
   }
 
-  openTrigger({ x, y }: DropdownPosition) {
-    this.position = { x, y }
+  openTrigger({ x, y }: Position) {
+    this.position = { x: 0, y }
     this.open()
   }
 
@@ -26,5 +26,5 @@ class DropdownStore extends OpenableStore {
   }
 }
 
-const dropdownStore = new DropdownStore()
-export default dropdownStore
+const blockCreateButtonStore = new BlockCreateButtonStore()
+export default blockCreateButtonStore

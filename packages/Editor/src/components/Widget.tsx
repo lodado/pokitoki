@@ -1,4 +1,5 @@
 import { Plugin } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
 
 let id = 0
 

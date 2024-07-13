@@ -6,11 +6,7 @@ import dropdownStore from './model'
 import { DropdownPosition } from './type'
 import { Dropdown } from './ui'
 
-const count = 0
-
 export default class DropdownWidget extends Widget {
-  key = count
-
   render() {
     return <Dropdown />
   }
@@ -27,8 +23,7 @@ export default class DropdownWidget extends Widget {
 
             if (node) {
               const coords = view.coordsAtPos(pos)
-              dropdownStore.openDropdown({ x: coords.left, y: coords.bottom })
-              return true
+              dropdownStore.openTrigger({ x: coords.left, y: coords.bottom })
             }
             return false
           },

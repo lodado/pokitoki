@@ -8,6 +8,14 @@
   "files": [
     "./**"
   ],
+  "exports": {
+    ".": {
+      "require": "./index.tsx",
+      "import": "./index.tsx",
+      "types": "./index.tsx"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "lint": "eslint \"**/*.ts*\"",
     "test": "jest --passWithNoTests",
