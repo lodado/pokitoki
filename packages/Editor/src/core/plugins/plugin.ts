@@ -6,13 +6,13 @@ import { keymap } from 'prosemirror-keymap'
 import { Schema } from 'prosemirror-model'
 
 import { WidgetController } from '../../components'
-import { buildInputRules } from './inputRules'
+import { NodeController } from '../nodes'
 import { customShiftEnter } from './keyMap'
 
 export const createPlugin = (schema: Schema) => {
   return [
     ...WidgetController.getPlugins(),
-    buildInputRules(schema),
+    ...NodeController.getPlugins(schema),
     keymap({
       ...baseKeymap,
       'Mod-x': undo,

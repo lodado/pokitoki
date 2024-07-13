@@ -21,13 +21,13 @@ export default class BlockCreateButtonWidget extends Widget {
 
               // @ts-ignore
               const pos = view.posAtDOM(target, 0)
-              const { doc } = view.state
+              const { doc, schema } = view.state
               const $pos = doc.resolve(pos)
               const node = $pos.parent
 
               const coords = view.coordsAtPos(pos)
 
-              if (node && node.content.size === 0) {
+              if (node) {
                 // Adjust this condition as needed
                 blockCreateButtonStore.openTrigger({ x: coords.left, y: coords.bottom - 20 })
               } else {
