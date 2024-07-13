@@ -19,17 +19,13 @@ const useEditorView = () => {
   const [editorState, setEditorState] = useState<EditorState | null>(null)
 
   useEffect(() => {
-    if (editorRef.current) {
-      const state = createState({ editor: editorRef.current! })
-      const viewInstance = createView({ editor: editorRef.current!, state })
+    const state = createState({ editor: editorRef.current! })
+    const viewInstance = createView({ editor: editorRef.current!, state })
 
-      setEditorState(state)
-      setView(viewInstance)
+    setEditorState(state)
+    setView(viewInstance)
 
-      return () => viewInstance.destroy()
-    }
-
-    return () => {}
+    return () => viewInstance.destroy()
   }, [])
 
   return { editorRef, editorState, view }
