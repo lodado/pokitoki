@@ -25,12 +25,7 @@ export default class Italic extends BaseMark {
   inputRules(): InputRule[] {
     return [
       new InputRule(/(?<!\*)\*(?!\*)([^*]+)(?<!\*)\*(?!\*)/, (state, match, start, end) => {
-        const { tr } = state
-
-        if (match[1]) {
-          tr.replaceWith(start - 1, end, this.schema.text(match[1], [this.type.create()]))
-        }
-        return tr
+        return this.updateMark(state, match, start - 1, end)
       }),
     ]
   }

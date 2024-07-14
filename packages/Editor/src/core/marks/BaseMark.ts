@@ -1,7 +1,9 @@
 import { InputRule, inputRules } from 'prosemirror-inputrules'
 import { keymap } from 'prosemirror-keymap'
 import { MarkType, Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror-model'
-import { Command, Plugin } from 'prosemirror-state'
+import { Command, EditorState, Plugin } from 'prosemirror-state'
+
+import { getMarksAtRange, uniqueMarks } from './utils'
 
 export default abstract class BaseMark {
   schema!: Schema
@@ -38,5 +40,25 @@ export default abstract class BaseMark {
 
   commands() {
     return (attrs: any) => {}
+  }
+
+  /**
+   * Merges marks within the specified range in the editor state.
+   *
+   * @param state - The editor state.
+   * @param match - The regular expression match array.
+   * @param start - The start position of the range.
+   * @param end - The end position of the range.
+   * @returns The updated editor transaction.
+   */
+  protected updateMark = (state: EditorState, match: RegExpMatchArray, start: number, end: number) => {
+    const { tr } = state
+
+    const marks = getMarksAtRange(state, start, end)
+
+    if (match[1]) {
+      tr.replaceWith(Math.max(start, 1), end, this.schema.text(match[1], uniqueMarks([this.type.create(), ...marks])))
+    }
+    return tr
   }
 }

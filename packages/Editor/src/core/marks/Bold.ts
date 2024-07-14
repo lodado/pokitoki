@@ -1,6 +1,7 @@
 import { toggleMark } from 'prosemirror-commands'
 import { InputRule } from 'prosemirror-inputrules'
-import { DOMOutputSpec, Node } from 'prosemirror-model'
+import { DOMOutputSpec, Mark, Node } from 'prosemirror-model'
+import { EditorState } from 'prosemirror-state'
 
 import BaseMark from './BaseMark'
 
@@ -24,12 +25,7 @@ export default class Bold extends BaseMark {
   inputRules() {
     return [
       new InputRule(/(?:\*\*)([^*]+)(?:\*\*)$/, (state, match, start, end) => {
-        const { tr } = state
-
-        if (match[1]) {
-          tr.replaceWith(Math.max(start - 2, 1), end, this.schema.text(match[1], [this.type.create()]))
-        }
-        return tr
+        return this.updateMark(state, match, start - 2, end)
       }),
     ]
   }

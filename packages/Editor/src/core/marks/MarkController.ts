@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { MarkSpec, NodeSpec, Schema } from 'prosemirror-model'
-import { Plugin } from 'prosemirror-state'
+import { MarkSpec, Schema } from 'prosemirror-model'
 import React from 'react'
 
 import Bold from './Bold'
