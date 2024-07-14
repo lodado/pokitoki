@@ -14,6 +14,7 @@ class _NodeController {
   getPlugins(schema: Schema) {
     return this.nodes.flatMap((node) => {
       const type = schema.nodes[node.name]
+
       node.setMetadata({ type, schema })
       return node.plugins()
     })

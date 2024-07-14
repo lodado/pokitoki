@@ -6,6 +6,7 @@ import { keymap } from 'prosemirror-keymap'
 import { Schema } from 'prosemirror-model'
 
 import { WidgetController } from '../../components'
+import { MarkController } from '../marks'
 import { NodeController } from '../nodes'
 import { hoverHighlightPlugin } from './highlightPlugin'
 import { customShiftEnter } from './keyMap'
@@ -14,6 +15,7 @@ export const createPlugin = (schema: Schema) => {
   return [
     ...WidgetController.getPlugins(),
     ...NodeController.getPlugins(schema),
+    ...MarkController.getPlugins(schema),
     keymap({
       ...baseKeymap,
       'Mod-x': undo,
