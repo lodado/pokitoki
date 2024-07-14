@@ -13,6 +13,10 @@ export default abstract class BaseNode {
     return {}
   }
 
+  get defaultOptions() {
+    return {}
+  }
+
   setMetadata({ type, schema }: { type: NodeType; schema: Schema<any, any> }) {
     this.schema = schema
     this.type = type

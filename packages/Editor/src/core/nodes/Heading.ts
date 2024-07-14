@@ -12,10 +12,36 @@ export default class Heading extends BaseNode {
     return 'heading'
   }
 
+  private toggleHeading() {
+    return (state: EditorState, dispatch: (tr: Transaction) => void = () => {}) => {
+      const { $from, $to } = state.selection
+
+      const range = $from.blockRange($to)
+      if (!range) return false
+
+      const node = state.doc.nodeAt(range.start)!
+
+      if (node && node.type === this.type) {
+        const collapsed = !node.attrs.collapsed
+
+        if (dispatch) {
+          dispatch(
+            state.tr.setNodeMarkup(range.start, undefined, {
+              ...node.attrs,
+              collapsed,
+            }),
+          )
+        }
+        return true
+      }
+      return false
+    }
+  }
+
   get defaultOptions() {
     return {
       levels: [1, 2, 3, 4],
-      collapsed: undefined,
+      collapsed: false,
     }
   }
 
@@ -25,20 +51,30 @@ export default class Heading extends BaseNode {
         level: {
           default: 1,
         },
+        collapsed: { default: false },
       },
-      content: '(text)*',
+      content: '(inline|text)*',
       group: 'block',
       defining: true,
       parseDOM: this.defaultOptions.levels.map((level) => ({
         tag: `h${level}`,
-        getAttrs: () => ({ level }),
+        attrs: () => {
+          return { level, collapsed: this.defaultOptions.collapsed }
+        },
       })),
-      toDOM: (node: Node) => [`h${node.attrs.level}`, 0] satisfies DOMOutputSpec,
+      toDOM: (node: Node) =>
+        [
+          `h${node.attrs.level}`,
+          {
+            'data-collapsed': node.attrs.collapsed ? 'true' : 'false',
+          },
+          0,
+        ] satisfies DOMOutputSpec,
     }
   }
 
   commands() {
-    return (attrs: { level: number }) =>
+    return (attrs: { level: number; collapsed: boolean }) =>
       (state: EditorState, dispatch: (tr: Transaction) => void = () => {}) => {
         const { $from, $to } = state.selection
 
@@ -54,15 +90,17 @@ export default class Heading extends BaseNode {
     return this.defaultOptions.levels.map((level: number) =>
       textblockTypeInputRule(new RegExp(`^(#{1,${level}})\\s$`), this.type, () => ({
         level,
+        collapsed: this.defaultOptions.collapsed,
       })),
     )
   }
 
-  keys() {
+  keys = () => {
     return this.defaultOptions.levels.reduce(
       (items, level) => ({
         ...items,
-        [`Shift-Ctrl-${level}`]: this.commands()({ level }),
+        [`Shift-Ctrl-${level}`]: this.commands()({ level, collapsed: this.defaultOptions.collapsed }),
+        'Shift-Ctrl-h': this.toggleHeading(),
       }),
       {},
     )

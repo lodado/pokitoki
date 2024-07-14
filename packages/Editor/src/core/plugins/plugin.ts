@@ -7,6 +7,7 @@ import { Schema } from 'prosemirror-model'
 
 import { WidgetController } from '../../components'
 import { NodeController } from '../nodes'
+import { hoverHighlightPlugin } from './highlightPlugin'
 import { customShiftEnter } from './keyMap'
 
 export const createPlugin = (schema: Schema) => {
@@ -23,5 +24,7 @@ export const createPlugin = (schema: Schema) => {
     history(),
     gapCursor(),
     dropCursor(),
+
+    hoverHighlightPlugin,
   ]
 }

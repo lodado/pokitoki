@@ -4,13 +4,16 @@ import { addListNodes } from 'prosemirror-schema-list'
 
 import { NodeController } from '../nodes'
 
-const { nodes, marks } = basicSchema.spec
+const { nodes: basicNodes, marks } = basicSchema.spec
 
-const customNodes = {
-  nodes: NodeController.getNodes(),
-}
+const customNodes = NodeController.getNodes()
+let nodes = basicNodes
 
 const customMarks = {}
+
+Object.keys(customNodes).forEach((key) => {
+  nodes = nodes.remove(key)
+})
 
 export const createSchema: () => Schema = () =>
   new Schema({
