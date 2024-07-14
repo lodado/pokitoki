@@ -6,6 +6,7 @@ import { EditorView } from 'prosemirror-view'
 import React from 'react'
 
 import { SPACE } from '../../constants'
+import Break from '../nodes/Break'
 import Bold from './Bold'
 import Highlight from './Highlight'
 import InlineCodeSnippet from './InlineCodeSnippet'

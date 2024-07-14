@@ -4,9 +4,10 @@ import { Plugin } from 'prosemirror-state'
 import React from 'react'
 
 import BaseNode from './BaseNode'
+import Break from './Break'
 import Heading from './Heading'
 
-const NODE_REGISTER = [new Heading()]
+const NODE_REGISTER = [new Heading(), new Break()]
 
 class _NodeController {
   nodes = NODE_REGISTER

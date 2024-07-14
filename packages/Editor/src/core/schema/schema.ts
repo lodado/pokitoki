@@ -10,7 +10,7 @@ const { nodes: basicNodes, marks: basicMarks } = basicSchema.spec
 const customNodes = NodeController.getNodes()
 const customMarks = MarkController.getMarks()
 
-let nodes = basicNodes
+let nodes = basicNodes.remove('hard_break')
 let marks = basicMarks.remove('em').remove('strong')
 
 Object.keys(customNodes).forEach((key) => {
