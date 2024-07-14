@@ -25,7 +25,7 @@ export default class Bold extends BaseMark {
   inputRules() {
     return [
       new InputRule(/(?:\*\*)([^*]+)(?:\*\*)$/, (state, match, start, end) => {
-        return this.updateMark(state, match, start - 2, end)
+        return this.updateMark(state, match, start, end)
       }),
     ]
   }

@@ -1,6 +1,6 @@
 import { InputRule, inputRules } from 'prosemirror-inputrules'
 import { keymap } from 'prosemirror-keymap'
-import { MarkType, Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror-model'
+import { MarkSpec, MarkType, Node as ProsemirrorNode, NodeType, Schema } from 'prosemirror-model'
 import { Command, EditorState, Plugin } from 'prosemirror-state'
 
 import { getMarksAtRange, uniqueMarks } from './utils'
@@ -11,7 +11,7 @@ export default abstract class BaseMark {
 
   abstract get name(): string
 
-  get createSchema(): NodeSpec {
+  get createSchema(): MarkSpec {
     return {}
   }
 
@@ -34,7 +34,7 @@ export default abstract class BaseMark {
     return []
   }
 
-  keys(): Record<string, Command> {
+  keys(): Record<string, Command> | Record<string, (...any: any) => boolean> {
     return {}
   }
 

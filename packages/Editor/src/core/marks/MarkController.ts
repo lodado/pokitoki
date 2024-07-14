@@ -3,10 +3,20 @@ import { MarkSpec, Schema } from 'prosemirror-model'
 import React from 'react'
 
 import Bold from './Bold'
+import Highlight from './Highlight'
+import InlineCodeSnippet from './InlineCodeSnippet'
 import Italic from './Italic'
+import Strike from './Strike'
 import Underline from './Underline'
 
-const MARK_REGISTER = [new Bold(), new Italic(), new Underline()]
+const MARK_REGISTER = [
+  new Bold(),
+  new Italic(),
+  new Underline(),
+  new Highlight(),
+  new Strike(),
+  new InlineCodeSnippet(),
+]
 
 class _MarkController {
   marks = MARK_REGISTER

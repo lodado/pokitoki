@@ -21,7 +21,7 @@ export default class Underline extends BaseMark {
   inputRules(): InputRule[] {
     return [
       new InputRule(/(?:_)([^_]+)(?:_)$/, (state, match, start, end) => {
-        return this.updateMark(state, match, start - 1, end)
+        return this.updateMark(state, match, start, end)
       }),
     ]
   }

@@ -19,7 +19,6 @@ Object.keys(customNodes).forEach((key) => {
 
 Object.keys(customMarks).forEach((key) => {
   marks = marks.remove(key)
-
   marks = marks.addToEnd(key, customMarks[key])
 })
 
