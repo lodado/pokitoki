@@ -5,6 +5,7 @@ import { Command, EditorState, TextSelection, Transaction } from 'prosemirror-st
 import { EditorView } from 'prosemirror-view'
 import React from 'react'
 
+import { SPACE } from '../../constants'
 import Bold from './Bold'
 import Highlight from './Highlight'
 import InlineCodeSnippet from './InlineCodeSnippet'
@@ -36,8 +37,7 @@ class _MarkController {
     if (isInmark) {
       const blockEnd = $from.end()
       if (from === blockEnd) {
-        // 삽입할 문자
-        const tempChar = '\u00A0'
+        const tempChar = SPACE
         let tr = state.tr.insert(blockEnd, schema.text(tempChar))
 
         // Ensure the new position is within the document bounds
@@ -50,7 +50,7 @@ class _MarkController {
     return false
   }
 
-  keymap = () => {
+  private globalMarkKeymaps = () => {
     return keymap({
       ArrowRight: (state: EditorState, dispatch?: (tr: Transaction) => void) =>
         this.moveCursorOutOfMark(state, dispatch),
@@ -65,7 +65,7 @@ class _MarkController {
       return mark.plugins()
     })
 
-    plugins.push(this.keymap())
+    plugins.push(this.globalMarkKeymaps())
 
     return plugins
   }
