@@ -18,7 +18,8 @@ export const createPlugin = (schema: Schema) => {
     ...MarkController.getPlugins(schema),
     keymap({
       ...baseKeymap,
-      'Mod-x': undo,
+      'Mod-z': undo,
+      'Mod-Shift-z': redo, // Redo command for Mac
       'Mod-y': redo,
       'Shift-Enter': customShiftEnter,
     }),

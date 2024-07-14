@@ -1,5 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { MarkSpec, Schema } from 'prosemirror-model'
+import { keymap } from 'prosemirror-keymap'
+import { MarkSpec, MarkType, Schema } from 'prosemirror-model'
+import { Command, EditorState, TextSelection, Transaction } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
 import React from 'react'
 
 import Bold from './Bold'
@@ -8,6 +11,7 @@ import InlineCodeSnippet from './InlineCodeSnippet'
 import Italic from './Italic'
 import Strike from './Strike'
 import Underline from './Underline'
+import { isCursorInMark } from './utils'
 
 const MARK_REGISTER = [
   new Bold(),
@@ -21,13 +25,49 @@ const MARK_REGISTER = [
 class _MarkController {
   marks = MARK_REGISTER
 
+  private moveCursorOutOfMark = (state: EditorState, dispatch?: (tr: Transaction) => void): boolean => {
+    if (!dispatch) return false
+
+    const { schema, selection } = state
+    const { from, $from } = selection
+
+    const isInmark = isCursorInMark(state)
+
+    if (isInmark) {
+      const blockEnd = $from.end()
+      if (from === blockEnd) {
+        // 삽입할 문자
+        const tempChar = '\u00A0'
+        let tr = state.tr.insert(blockEnd, schema.text(tempChar))
+
+        // Ensure the new position is within the document bounds
+        const newPos = blockEnd + 1
+        tr = tr.setSelection(TextSelection.create(tr.doc, newPos))
+        dispatch(tr)
+      }
+    }
+
+    return false
+  }
+
+  keymap = () => {
+    return keymap({
+      ArrowRight: (state: EditorState, dispatch?: (tr: Transaction) => void) =>
+        this.moveCursorOutOfMark(state, dispatch),
+    })
+  }
+
   getPlugins(schema: Schema) {
-    return this.marks.flatMap((mark) => {
+    const plugins = this.marks.flatMap((mark) => {
       const type = schema.marks[mark.name]
 
       mark.setMetadata({ type, schema })
       return mark.plugins()
     })
+
+    plugins.push(this.keymap())
+
+    return plugins
   }
 
   getMarks() {
