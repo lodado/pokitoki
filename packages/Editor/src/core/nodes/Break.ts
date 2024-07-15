@@ -28,7 +28,7 @@ export default class Break extends BaseNode {
         if (dispatch) {
           dispatch(state.tr.replaceSelectionWith(hardBreak.create()).scrollIntoView())
         }
-        return true
+        return false
       },
     }
   }

@@ -5,9 +5,15 @@ import React from 'react'
 
 import BaseNode from './BaseNode'
 import Break from './Break'
+import Code from './Code'
+import { CodeMirrorNode } from './CodeMirror'
 import Heading from './Heading'
+import Indent from './Indent'
+import Paragraph from './Paragraph'
 
-const NODE_REGISTER = [new Heading(), new Break()]
+const NODE_REGISTER: BaseNode[] = [new Heading(), new Break(), new Code(), new CodeMirrorNode(), new Indent()]
+
+NODE_REGISTER.push(new Paragraph())
 
 class _NodeController {
   nodes = NODE_REGISTER

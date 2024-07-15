@@ -2,11 +2,8 @@
 import { keymap } from 'prosemirror-keymap'
 import { MarkSpec, MarkType, Schema } from 'prosemirror-model'
 import { Command, EditorState, TextSelection, Transaction } from 'prosemirror-state'
-import { EditorView } from 'prosemirror-view'
-import React from 'react'
 
 import { SPACE } from '../../constants'
-import Break from '../nodes/Break'
 import Bold from './Bold'
 import Highlight from './Highlight'
 import InlineCodeSnippet from './InlineCodeSnippet'

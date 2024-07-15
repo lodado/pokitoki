@@ -15,6 +15,7 @@ let marks = basicMarks.remove('em').remove('strong')
 
 Object.keys(customNodes).forEach((key) => {
   nodes = nodes.remove(key)
+  nodes = nodes.addToStart(key, customNodes[key])
 })
 
 Object.keys(customMarks).forEach((key) => {
@@ -22,8 +23,10 @@ Object.keys(customMarks).forEach((key) => {
   marks = marks.addToEnd(key, customMarks[key])
 })
 
+console.log(basicNodes, customNodes, nodes, marks)
+
 export const createSchema: () => Schema = () =>
   new Schema({
-    nodes: addListNodes(nodes.append(customNodes), 'paragraph block*', 'block'),
+    nodes,
     marks,
   })

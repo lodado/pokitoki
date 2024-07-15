@@ -19,6 +19,7 @@ export default abstract class BaseNode {
 
   setMetadata({ type, schema }: { type: NodeType; schema: Schema<any, any> }) {
     this.schema = schema
+
     this.type = type
   }
 
@@ -32,7 +33,7 @@ export default abstract class BaseNode {
     return []
   }
 
-  keys(): Record<string, Command> {
+  keys(): Record<string, Command> | Record<string, (...any: any) => boolean> {
     return {}
   }
 
