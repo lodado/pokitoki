@@ -8,10 +8,18 @@ import Break from './Break'
 import Code from './Code'
 import { CodeMirrorNode } from './CodeMirror'
 import Heading from './Heading'
+import ProseImage from './Image/Image'
 import Indent from './Indent'
 import Paragraph from './Paragraph'
 
-const NODE_REGISTER: BaseNode[] = [new Heading(), new Break(), new Code(), new CodeMirrorNode(), new Indent()]
+const NODE_REGISTER: BaseNode[] = [
+  new ProseImage(),
+  new Heading(),
+  new Break(),
+  new Code(),
+  new CodeMirrorNode(),
+  new Indent(),
+]
 
 /**
  * schema가 역순으로 배열 읽게 설정해놨는데

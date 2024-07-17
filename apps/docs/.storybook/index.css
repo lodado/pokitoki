@@ -1,2 +1,13 @@
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
+
+.editor-placeholder {
+  position: absolute;
+  opacity: 0;
+}
+
+.editor-placeholder:hover {
+  color: grey;
+  opacity: 1;
+}
