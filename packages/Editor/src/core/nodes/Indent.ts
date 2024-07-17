@@ -21,7 +21,9 @@ export default class Indent extends BaseNode {
       parseDOM: [
         {
           tag: 'div',
-          getAttrs: (dom) => ({ indent: dom.style.marginLeft ? parseInt(dom.style.marginLeft, 10) / 2 : 0 }),
+          getAttrs: (dom) => ({
+            indent: Number(dom.style.marginLeft ?? 0) > 0 ? parseInt(dom.style.marginLeft, 10) / 2 : 0,
+          }),
         },
       ],
       toDOM: (node) => ['div', { style: `padding-left: ${node.attrs.indent}em` }, 0],
@@ -58,18 +60,35 @@ export default class Indent extends BaseNode {
   unindentCommand(): Command {
     return (state, dispatch) => {
       const { selection } = state
-      const { $from, $to } = selection
-      let { tr } = state
+      const { $from } = selection
+      const parentNode = $from.node(-1)
+      const node = $from.node()
 
-      state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
-        if (node.type === this.type && node.attrs.indent > 0) {
-          const currentIndent = node.attrs.indent
-          tr = tr.setNodeMarkup(pos, undefined, { ...node.attrs, indent: currentIndent - 1 })
+      // 현재 노드가 indent 내부에 있는지 확인
+      if (parentNode.type === this.type) {
+        const grandParentNode = $from.node(-2)
+        const parentPos = $from.before(-1)
+        const newPos = parentPos
+
+        let { tr } = state
+
+        // 부모 노드에서 현재 노드를 삭제
+        tr = tr.delete($from.start(-1), $from.end(-1))
+
+        const arr: any[] = []
+
+        // 모든 자식 노드를 새로운 위치에 삽입
+        parentNode.content.forEach((child, offset) => {
+          arr.push(child)
+        })
+
+        arr.reverse().forEach((child) => {
+          tr = tr.insert(newPos, child)
+        })
+
+        if (dispatch) {
+          dispatch(tr)
         }
-      })
-
-      if (dispatch) {
-        dispatch(tr)
       }
 
       return true

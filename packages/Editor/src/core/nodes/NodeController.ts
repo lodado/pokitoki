@@ -13,6 +13,10 @@ import Paragraph from './Paragraph'
 
 const NODE_REGISTER: BaseNode[] = [new Heading(), new Break(), new Code(), new CodeMirrorNode(), new Indent()]
 
+/**
+ * schema가 역순으로 배열 읽게 설정해놨는데
+ * paragraph를 가장 먼저 안 읽으면 화면 터짐
+ */
 NODE_REGISTER.push(new Paragraph())
 
 class _NodeController {
