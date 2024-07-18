@@ -6,8 +6,6 @@ import { EditorView } from 'prosemirror-view'
 
 import BaseNode from './BaseNode'
 
-const SplitId = 1
-
 export default class SplitScreen extends BaseNode {
   get name() {
     return 'split_screen'
