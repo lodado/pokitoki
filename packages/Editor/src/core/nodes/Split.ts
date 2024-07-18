@@ -1,6 +1,6 @@
 import { exitCode } from 'prosemirror-commands'
 import { keymap } from 'prosemirror-keymap'
-import { Fragment, NodeSpec, NodeType, Schema } from 'prosemirror-model'
+import { Fragment, NodeSpec, NodeType, Schema, Slice } from 'prosemirror-model'
 import { EditorState, Plugin, Transaction } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 
@@ -13,7 +13,7 @@ export default class SplitScreen extends BaseNode {
 
   get createSchema(): NodeSpec {
     return {
-      content: 'block*',
+      content: 'block+',
       group: 'block',
       defining: true,
       attrs: {
@@ -33,6 +33,37 @@ export default class SplitScreen extends BaseNode {
         ]
       },
     }
+  }
+
+  private handleDrop = (view: EditorView, event: Event, slice: Slice, moved: boolean) => {
+    // Check if more than one block is being dragged
+    let blockCount = 0
+    slice.content.forEach((node) => {
+      if (node.isBlock) blockCount += 1
+    })
+
+    // Check if the drop target is a split_screen node
+    // @ts-ignore
+    const target = view.posAtCoords({ left: event.clientX, top: event.clientY })
+    if (target) {
+      const $target = view.state.doc.resolve(target.pos)
+
+      let { depth } = $target
+
+      while (depth > 0) {
+        const targetNode = $target.node(depth)
+        if (targetNode.type === this.type && blockCount > 1) {
+          event.preventDefault()
+
+          alert('only one block can be moved into split layout')
+          return true
+        }
+
+        depth -= 1
+      }
+    }
+
+    return false
   }
 
   private toggleSplitScreen = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
@@ -104,6 +135,13 @@ export default class SplitScreen extends BaseNode {
   }
 
   plugins(): Plugin[] {
-    return super.plugins()
+    return [
+      ...super.plugins(),
+      new Plugin({
+        props: {
+          handleDrop: this.handleDrop,
+        },
+      }),
+    ]
   }
 }
