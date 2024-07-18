@@ -26,7 +26,7 @@ export default class Indent extends BaseNode {
           }),
         },
       ],
-      toDOM: (node) => ['div', { style: `padding-left: ${node.attrs.indent}em` }, 0],
+      toDOM: (node) => ['div', { style: `margin-left: ${node.attrs.indent}em` }, 0],
     }
   }
 
@@ -62,11 +62,9 @@ export default class Indent extends BaseNode {
       const { selection } = state
       const { $from } = selection
       const parentNode = $from.node(-1)
-      const node = $from.node()
+      const arr: any[] = []
 
-      // 현재 노드가 indent 내부에 있는지 확인
       if (parentNode.type === this.type) {
-        const grandParentNode = $from.node(-2)
         const parentPos = $from.before(-1)
         const newPos = parentPos
 
@@ -74,8 +72,6 @@ export default class Indent extends BaseNode {
 
         // 부모 노드에서 현재 노드를 삭제
         tr = tr.delete($from.start(-1), $from.end(-1))
-
-        const arr: any[] = []
 
         // 모든 자식 노드를 새로운 위치에 삽입
         parentNode.content.forEach((child, offset) => {
@@ -86,6 +82,9 @@ export default class Indent extends BaseNode {
           tr = tr.insert(newPos, child)
         })
 
+        const newCursorPos = Math.max(0, $from.end() - 1)
+        tr = tr.setSelection(TextSelection.create(tr.doc, newCursorPos))
+
         if (dispatch) {
           dispatch(tr)
         }
@@ -95,31 +94,10 @@ export default class Indent extends BaseNode {
     }
   }
 
-  handleBackspace(): Command {
-    return (state, dispatch, view) => {
-      const { selection } = state
-      const { $cursor } = selection as TextSelection
-      if ($cursor && $cursor.pos === $cursor.start()) {
-        const { $from } = selection
-        const node = $from.node()
-        if (node.type === this.type && node.attrs.indent > 0) {
-          const currentIndent = node.attrs.indent
-          const tr = state.tr.setNodeMarkup($from.before(), undefined, { ...node.attrs, indent: currentIndent - 1 })
-          if (dispatch) {
-            dispatch(tr)
-          }
-          return true
-        }
-      }
-      return false
-    }
-  }
-
   keys(): Record<string, Command> {
     return {
       Tab: this.wrapIndentCommand(),
       'Shift-Tab': this.unindentCommand(),
-      Backspace: this.handleBackspace(),
     }
   }
 }

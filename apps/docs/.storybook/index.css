@@ -11,3 +11,41 @@
   color: grey;
   opacity: 1;
 }
+
+.split-screen {
+  display: flex;
+  flex-direction: row;
+}
+
+
+/** split**/
+
+.split-screen.vertical {
+  flex-direction: row;
+}
+
+.split-screen.horizontal {
+  flex-direction: column;
+}
+
+.split-screen:hover{
+  border: 1px solid red;
+}
+
+
+.split-screen > * {
+  flex: 1;
+  overflow: auto; /* 내용이 많을 경우 스크롤 */
+
+  border: 1px solid red;
+}
+
+
+.split-divider {
+  flex: 1;
+  cursor: row-resize; /* 커서를 분할 선 모양으로 변경 */
+  height: 100%;
+  width: 2px;
+  background-color: #666;
+}
+ 

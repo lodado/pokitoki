@@ -11,6 +11,7 @@ import Heading from './Heading'
 import ProseImage from './Image/Image'
 import Indent from './Indent'
 import Paragraph from './Paragraph'
+import Split from './Split'
 
 const NODE_REGISTER: BaseNode[] = [
   new ProseImage(),
@@ -19,6 +20,7 @@ const NODE_REGISTER: BaseNode[] = [
   new Code(),
   new CodeMirrorNode(),
   new Indent(),
+  new Split(),
 ]
 
 /**

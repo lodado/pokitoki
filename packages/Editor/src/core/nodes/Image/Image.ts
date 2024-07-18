@@ -11,7 +11,7 @@ export default class ProseImage extends BaseNode {
 
   get createSchema(): NodeSpec {
     return {
-      inline: false,
+      inline: true,
       attrs: {
         src: {},
         alt: { default: null },
@@ -19,7 +19,7 @@ export default class ProseImage extends BaseNode {
         width: { default: 'auto' },
         height: { default: 'auto' },
       },
-      group: 'block',
+      group: 'inline',
       draggable: true,
       parseDOM: [
         {
@@ -73,7 +73,7 @@ export default class ProseImage extends BaseNode {
       new Plugin({
         props: {
           nodeViews: {
-            codeMirror: (node, view, getPos) => {
+            image: (node, view, getPos) => {
               return new ImageNodeView(node, view, () => getPos() ?? 0)
             },
           },
