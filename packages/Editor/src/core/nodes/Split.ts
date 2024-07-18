@@ -1,12 +1,14 @@
+import { exitCode } from 'prosemirror-commands'
 import { keymap } from 'prosemirror-keymap'
 import { Fragment, NodeSpec, NodeType, Schema } from 'prosemirror-model'
 import { EditorState, Plugin, Transaction } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
 
 import BaseNode from './BaseNode'
 
 const SplitId = 1
 
-export default class SplitScreenNode extends BaseNode {
+export default class SplitScreen extends BaseNode {
   get name() {
     return 'split_screen'
   }
@@ -35,7 +37,7 @@ export default class SplitScreenNode extends BaseNode {
     }
   }
 
-  toggleSplitScreen = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
+  private toggleSplitScreen = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
     const { selection, tr } = state
     const { from, to, $from } = selection
     const { paragraph } = state.schema.nodes
@@ -52,7 +54,7 @@ export default class SplitScreenNode extends BaseNode {
       const firstHalf = content.cut(0, content.size)
       const secondHalf = content.cut(content.size, content.size)
 
-      const splitNode = state.schema.nodes.split_screen.create({ orientation: newOrientation }, [
+      const splitNode = this.type.create({ orientation: newOrientation }, [
         paragraph.create({}, firstHalf),
         paragraph.create({}, secondHalf),
       ])
@@ -65,9 +67,41 @@ export default class SplitScreenNode extends BaseNode {
     return false
   }
 
+  private handleEnterInterrupted = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
+    const { selection } = state
+    const { $from } = selection
+
+    let node = $from.node()
+    let { depth } = $from
+
+    while (depth > 0) {
+      if (node.type.name === this.name) {
+        return true
+      }
+      depth -= 1
+      node = $from.node(depth)
+    }
+
+    return false
+  }
+
+  private handleBackspace = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
+    const { selection } = state
+    const { $from } = selection
+
+    const { pos } = $from
+
+    const resolvedPos = state.doc.resolve(pos - 1)
+    if (resolvedPos?.nodeBefore?.type === this.type) return true
+
+    return false
+  }
+
   keys() {
     return {
       'Ctrl-Shift-S': this.toggleSplitScreen,
+      Enter: this.handleEnterInterrupted,
+      Backspace: this.handleBackspace,
     }
   }
 
