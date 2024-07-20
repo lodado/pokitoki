@@ -10,7 +10,7 @@ import { CodeMirror } from './CodeMirror'
 import Heading from './Heading'
 import ProseImage from './Image/Image'
 import Indent from './Indent'
-import ListItem from './ListItem'
+import { BulletList, UnorderedList } from './List'
 import Paragraph from './Paragraph'
 import SplitScreen from './Split'
 
@@ -30,10 +30,22 @@ const molecules = {
   code: new Code({ paragraph: atomics.paragraph }),
   codeMirror: new CodeMirror({ paragraph: atomics.paragraph }),
 
-  ListItem: new ListItem({ paragraph: atomics.paragraph }),
+  BulletList: new BulletList({ paragraph: atomics.paragraph }),
 }
 
-const NODE_REGISTER: BaseNode[] = [...Object.values(atomics), ...Object.values(molecules)].reverse()
+const Organisms = {
+  UnorderedList: new UnorderedList({
+    paragraph: atomics.paragraph,
+    bulletList: molecules.BulletList,
+    indent: atomics.indent,
+  }),
+}
+
+const NODE_REGISTER: BaseNode[] = [
+  ...Object.values(atomics),
+  ...Object.values(molecules),
+  ...Object.values(Organisms),
+].reverse()
 
 class _NodeController {
   nodes = NODE_REGISTER
