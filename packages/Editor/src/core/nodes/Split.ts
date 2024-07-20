@@ -1,14 +1,20 @@
-import { exitCode } from 'prosemirror-commands'
-import { keymap } from 'prosemirror-keymap'
 import { Fragment, NodeSpec, NodeType, Schema, Slice } from 'prosemirror-model'
 import { EditorState, Plugin, Transaction } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 
 import BaseNode from './BaseNode'
+import Paragraph from './Paragraph'
 
 export default class SplitScreen extends BaseNode {
+  paragraph: Paragraph
+
+  constructor({ paragraph }: { paragraph: Paragraph }) {
+    super()
+    this.paragraph = paragraph
+  }
+
   get name() {
-    return 'split_screen'
+    return 'splitScreen'
   }
 
   get createSchema(): NodeSpec {
@@ -66,10 +72,41 @@ export default class SplitScreen extends BaseNode {
     return false
   }
 
+  private handlePaste = (view: EditorView, event: ClipboardEvent, slice: Slice) => {
+    // Check if more than one block is being pasted
+    let blockCount = 0
+    slice.content.forEach((node) => {
+      if (node.isBlock) blockCount += 1
+    })
+
+    // Check if the paste target is a split_screen node
+    const { state } = view
+    const { selection } = state
+    const { $from } = selection
+
+    let { depth } = $from
+
+    while (depth > 0) {
+      const targetNode = $from.node(depth)
+      if (targetNode.type === this.type && blockCount > 1) {
+        event.preventDefault()
+
+        alert('only one block can be pasted into split layout')
+        return true
+      }
+
+      depth -= 1
+    }
+
+    return false
+  }
+
   private toggleSplitScreen = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
     const { selection, tr } = state
     const { from, to, $from } = selection
-    const { paragraph } = state.schema.nodes
+
+    const paragraph = this.paragraph.type
+
     const $pos = state.doc.resolve(from)
     const node = $pos.node($pos.depth) // 현재 노드
     const parentNode = $pos.node(-1)
@@ -97,7 +134,7 @@ export default class SplitScreen extends BaseNode {
   }
 
   private handleEnterInterrupted = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
-    const { selection } = state
+    const { selection, schema } = state
     const { $from } = selection
 
     let node = $from.node()
@@ -105,6 +142,11 @@ export default class SplitScreen extends BaseNode {
 
     while (depth > 0) {
       if (node.type.name === this.name) {
+        if (dispatch) {
+          const { br } = schema.nodes
+          const tr = state.tr.replaceSelectionWith(br.create())
+          dispatch(tr)
+        }
         return true
       }
       depth -= 1
@@ -140,6 +182,7 @@ export default class SplitScreen extends BaseNode {
       new Plugin({
         props: {
           handleDrop: this.handleDrop,
+          handlePaste: this.handlePaste,
         },
       }),
     ]

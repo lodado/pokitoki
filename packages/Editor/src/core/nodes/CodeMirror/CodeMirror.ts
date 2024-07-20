@@ -3,12 +3,20 @@ import { InputRule, inputRules, textblockTypeInputRule } from 'prosemirror-input
 import { keymap } from 'prosemirror-keymap'
 import { DOMOutputSpec, Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror-model'
 import { Command, EditorState, Plugin, Transaction } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
 
 import BaseNode from '../BaseNode'
+import Paragraph from '../Paragraph'
 import CodeMirrorView from './CodeMirrorView'
 
-export default class CodeMirrorNode extends BaseNode {
+export default class CodeMirror extends BaseNode {
   codeMirror!: CodeMirrorView
+  paragraph: Paragraph
+
+  constructor({ paragraph }: { paragraph: Paragraph }) {
+    super()
+    this.paragraph = paragraph
+  }
 
   get name() {
     return 'codeMirror'
@@ -35,6 +43,7 @@ export default class CodeMirrorNode extends BaseNode {
 
   plugins() {
     const plugins = super.plugins()
+    const instance = this
 
     return [
       ...plugins,
@@ -42,7 +51,7 @@ export default class CodeMirrorNode extends BaseNode {
         props: {
           nodeViews: {
             codeMirror: (node, view, getPos) => {
-              this.codeMirror = new CodeMirrorView(node, view, getPos)
+              this.codeMirror = new CodeMirrorView(node, view, getPos, this.paragraph)
 
               return this.codeMirror
             },
@@ -58,7 +67,7 @@ export default class CodeMirrorNode extends BaseNode {
                 const { nodeBefore } = $from
                 const node = $from.node()
 
-                if (node && this.codeMirror?.isEmpty() && node.type.name === 'codeMirror') {
+                if (node && this.codeMirror?.isEmpty() && node.type === this.type) {
                   const tr = state.tr.delete(Math.max($from.pos - node.nodeSize, 0), $from.pos)
                   dispatch(tr)
                   return true

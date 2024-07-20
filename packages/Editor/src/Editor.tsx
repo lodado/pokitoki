@@ -1,5 +1,6 @@
 'use client'
 
+import { DOMParser } from 'prosemirror-model'
 import { EditorState, Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 import React, { createContext, useEffect, useRef, useState } from 'react'
@@ -16,7 +17,7 @@ const useEditorView = () => {
   const [editorState, setEditorState] = useState<EditorState | null>(null)
 
   useEffect(() => {
-    const state = createState({ editor: editorRef.current! })
+    const state = createState({ getDoc: (schema) => DOMParser.fromSchema(schema).parse(editorRef.current!) })
     const viewInstance = createView({ editor: editorRef.current!, state })
 
     setEditorState(state)

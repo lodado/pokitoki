@@ -10,7 +10,10 @@ import { Node as ProsemirrorNode, Schema } from 'prosemirror-model'
 import { Command, EditorState, Selection, TextSelection, Transaction } from 'prosemirror-state'
 import { EditorView, NodeView } from 'prosemirror-view'
 
+import Paragraph from '../Paragraph'
+
 export default class CodeMirrorView implements NodeView {
+  paragraph: Paragraph
   node: ProsemirrorNode
   view: EditorView
   schema: Schema
@@ -22,7 +25,7 @@ export default class CodeMirrorView implements NodeView {
   private exit = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
     if (!dispatch) return false
 
-    const nodeType = this.schema.nodes.paragraph
+    const nodeType = this.paragraph.type
     const newNode = nodeType.createAndFill()
 
     if (newNode) {
@@ -44,11 +47,12 @@ export default class CodeMirrorView implements NodeView {
     return false
   }
 
-  constructor(node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined) {
+  constructor(node: ProsemirrorNode, view: EditorView, getPos: () => number | undefined, paragraph: Paragraph) {
     // Store for later
     this.node = node
     this.view = view
     this.schema = view.state.schema
+    this.paragraph = paragraph
 
     this.getPos = () => {
       return getPos() ?? 0
@@ -79,29 +83,23 @@ export default class CodeMirrorView implements NodeView {
   }
 
   forwardUpdate(update: ViewUpdate) {
-    if (this.updating || !this.cm.hasFocus) return
-    const offset = this.getPos() + 1
+    if (this.updating) return // 업데이트 루프 방지
 
-    const pos = this.getPos()
-    if (pos === 0) return
+    // CodeMirror의 포커스 상태를 확인하고, 변경 사항이 있을 경우만 처리
+    if (update.docChanged && this.cm.hasFocus) {
+      const newText = this.cm.state.doc.toString() // CodeMirror의 현재 텍스트
+      const pos = this.getPos()
 
-    const nodeStart = pos + 1
-    const nodeEnd = nodeStart + this.node.nodeSize - 2
+      // ProseMirror 노드의 현재 텍스트와 비교
+      if (newText !== this.node.textContent) {
+        // ProseMirror 트랜잭션 생성
+        const { tr } = this.view.state
+        const nodePos = pos + 1 // 노드의 시작 위치
+        const nodeEnd = nodePos + this.node.nodeSize - 2 // 노드의 끝 위치
 
-    const { main } = update.state.selection
-    const selFrom = offset + main.from
-    const selTo = offset + main.to
-    const pmSel = this.view.state.selection
-    if (update.docChanged || pmSel.from !== selFrom || pmSel.to !== selTo) {
-      const { tr } = this.view.state
-
-      if (selFrom >= nodeStart && selTo <= nodeEnd) {
-        try {
-          tr.setSelection(TextSelection.create(tr.doc, selFrom, selTo))
-          this.view.dispatch(tr)
-        } catch (e) {
-          console.log('codeMirror Error - e')
-        }
+        // 노드의 텍스트를 새로운 텍스트로 교체
+        tr.replaceWith(nodePos, nodeEnd, this.schema.text(newText))
+        this.view.dispatch(tr) // 트랜잭션 적용
       }
     }
   }
@@ -157,6 +155,18 @@ export default class CodeMirrorView implements NodeView {
         run: () => {
           if (!exitCode(view.state, view.dispatch)) return false
           view.focus()
+          return true
+        },
+      },
+      {
+        key: 'Tab',
+        run: () => {
+          return true
+        },
+      },
+      {
+        key: 'Shift-Tab',
+        run: () => {
           return true
         },
       },

@@ -1,3 +1,3 @@
-import CodeMirrorNode from './CodeMirror'
+import CodeMirror from './CodeMirror'
 
-export { CodeMirrorNode }
+export { CodeMirror }

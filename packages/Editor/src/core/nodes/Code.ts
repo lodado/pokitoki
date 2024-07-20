@@ -4,9 +4,17 @@ import { NodeSpec, NodeType, Schema } from 'prosemirror-model'
 import { Command, Plugin, TextSelection } from 'prosemirror-state'
 
 import BaseNode from './BaseNode'
+import Paragraph from './Paragraph'
 import { handleKeyBackspaceDown, toggleBlockType } from './utils'
 
 export default class Code extends BaseNode {
+  paragraph: Paragraph
+
+  constructor({ paragraph }: { paragraph: Paragraph }) {
+    super()
+    this.paragraph = paragraph
+  }
+
   get name(): string {
     return 'code_block'
   }
@@ -39,7 +47,7 @@ export default class Code extends BaseNode {
 
   keys(): Record<string, Command> {
     return {
-      'Shift-Ctrl-\\': toggleBlockType(this.type, this.schema.nodes.paragraph),
+      'Shift-Ctrl-\\': toggleBlockType(this.type, this.paragraph.type),
       Backspace: (state, dispatch) => {
         return handleKeyBackspaceDown({ state, dispatch })
       },
@@ -47,6 +55,6 @@ export default class Code extends BaseNode {
   }
 
   commands() {
-    return (attrs: any) => toggleBlockType(this.type, this.schema.nodes.paragraph)
+    return (attrs: any) => toggleBlockType(this.type, this.paragraph.type)
   }
 }

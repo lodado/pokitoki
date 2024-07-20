@@ -2,7 +2,6 @@ import { Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror
 import { Command, EditorState, Plugin, Transaction } from 'prosemirror-state'
 
 import BaseNode from '../BaseNode' // BaseNode가 저장된 파일의 경로를 지정하세요.
-import ImageNodeView from './ImageNodeView'
 
 export default class ProseImage extends BaseNode {
   get name() {
@@ -73,9 +72,9 @@ export default class ProseImage extends BaseNode {
       new Plugin({
         props: {
           nodeViews: {
-            image: (node, view, getPos) => {
-              return new ImageNodeView(node, view, () => getPos() ?? 0)
-            },
+            // image: (node, view, getPos) => {
+            //   return new ImageNodeView(node, view, () => getPos() ?? 0)
+            // },
           },
         },
       }),

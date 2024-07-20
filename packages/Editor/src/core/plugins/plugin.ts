@@ -9,6 +9,7 @@ import { WidgetController } from '../../components'
 import { MarkController } from '../marks'
 import { NodeController } from '../nodes'
 import { hoverHighlightPlugin } from './highlightPlugin'
+import { saveDocument } from './utils/saveDocument'
 
 export const createPlugin = (schema: Schema) => {
   return [
@@ -20,6 +21,7 @@ export const createPlugin = (schema: Schema) => {
       'Mod-z': undo,
       'Mod-Shift-z': redo, // Redo command for Mac
       'Mod-y': redo,
+      'Mod-s': saveDocument,
     }),
 
     history(),

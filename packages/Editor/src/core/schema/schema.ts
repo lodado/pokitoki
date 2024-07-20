@@ -23,10 +23,9 @@ Object.keys(customMarks).forEach((key) => {
   marks = marks.addToEnd(key, customMarks[key])
 })
 
-console.log(basicNodes, customNodes, nodes, marks)
+const schema = new Schema({
+  nodes,
+  marks,
+})
 
-export const createSchema: () => Schema = () =>
-  new Schema({
-    nodes,
-    marks,
-  })
+export const createSchema: () => Schema = () => schema
