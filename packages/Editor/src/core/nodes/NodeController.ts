@@ -10,6 +10,7 @@ import { CodeMirror } from './CodeMirror'
 import Heading from './Heading'
 import ProseImage from './Image/Image'
 import Indent from './Indent'
+import ListItem from './ListItem'
 import Paragraph from './Paragraph'
 import SplitScreen from './Split'
 
@@ -21,15 +22,15 @@ const atomics = {
   proseImage: new ProseImage(),
   heading: new Heading(),
   break: new Break(),
-
   indent: new Indent(),
 }
 
 const molecules = {
   splitScreen: new SplitScreen({ paragraph: atomics.paragraph }),
   code: new Code({ paragraph: atomics.paragraph }),
-
   codeMirror: new CodeMirror({ paragraph: atomics.paragraph }),
+
+  ListItem: new ListItem({ paragraph: atomics.paragraph }),
 }
 
 const NODE_REGISTER: BaseNode[] = [...Object.values(atomics), ...Object.values(molecules)].reverse()
