@@ -15,7 +15,7 @@ export default class BulletList extends BaseNode {
   }
 
   get name(): string {
-    return 'list_item2'
+    return 'bulletList'
   }
 
   get createSchema(): NodeSpec {
