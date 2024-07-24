@@ -17,6 +17,7 @@
     "@custompackages/clientlogger": "workspace:*",
     "@custompackages/design-assets": "workspace:*",
     "@custompackages/shared": "workspace:*",
+    "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.6",
