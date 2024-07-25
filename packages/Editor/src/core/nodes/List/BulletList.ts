@@ -22,8 +22,8 @@ export default class BulletList extends BaseNode {
 
   get createSchema(): NodeSpec {
     return {
-      content: 'inline*',
-      group: 'block',
+      content: 'block*',
+      group: 'ul',
       defining: true,
       parseDOM: [{ tag: 'li' }],
       toDOM: () => ['li', 0],
@@ -44,8 +44,6 @@ export default class BulletList extends BaseNode {
 
   keys() {
     return {
-      'Mod-]': sinkListItem(this.type),
-      'Mod-[': liftListItem(this.type),
       Enter: this.EnterToEscapeList,
     }
   }
