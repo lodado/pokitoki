@@ -4,13 +4,6 @@ import { EditorView } from 'prosemirror-view'
 
 import BaseNode from '../BaseNode' // BaseNode가 저장된 파일의 경로를 지정하세요.
 
-let id = 0
-
-function getId() {
-  id += 1
-  return id
-}
-
 export default class ProseImage extends BaseNode {
   get name() {
     return 'image'
@@ -21,7 +14,7 @@ export default class ProseImage extends BaseNode {
       inline: true,
       attrs: {
         src: {},
-        id: { default: 0 },
+
         alt: { default: null },
         title: { default: null },
         width: { default: 'auto' },
@@ -33,7 +26,6 @@ export default class ProseImage extends BaseNode {
         {
           tag: 'img[src]',
           getAttrs: (dom) => ({
-            id: dom.getAttribute('data-id') || getId(),
             src: dom.getAttribute('src'),
             alt: dom.getAttribute('alt'),
             title: dom.getAttribute('title'),
@@ -114,7 +106,6 @@ export default class ProseImage extends BaseNode {
 
     if (selection.empty) {
       const node = this.type.create({
-        id: getId(),
         src: 'https://via.placeholder.com/150',
         alt: 'Placeholder Image',
         title: 'Placeholder Image',
