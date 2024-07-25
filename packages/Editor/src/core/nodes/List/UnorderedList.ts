@@ -2,13 +2,20 @@ import { setBlockType, wrapIn } from 'prosemirror-commands'
 import { wrappingInputRule } from 'prosemirror-inputrules'
 import { Node as ProsemirrorNode, NodeRange, NodeSpec, NodeType, Schema } from 'prosemirror-model'
 import { liftListItem, sinkListItem, splitListItem, wrapInList } from 'prosemirror-schema-list'
-import { EditorState, Transaction } from 'prosemirror-state'
+import { Command, EditorState, Transaction } from 'prosemirror-state'
 import { findWrapping } from 'prosemirror-transform'
+import { findParentNode } from 'prosemirror-utils'
 
 import BaseNode from '../BaseNode'
 import Indent from '../Indent'
 import Paragraph from '../Paragraph'
+import { chainTransactions } from '../utils/chainTransaction'
+import clearNodes from '../utils/clearNode'
 import BulletList from './BulletList'
+
+function isList(node: ProsemirrorNode, schema: Schema) {
+  return node.type === schema.nodes.ul || node.type === schema.nodes.bulletList
+}
 
 export default class UnorderedList extends BaseNode {
   paragraph: Paragraph
@@ -35,48 +42,40 @@ export default class UnorderedList extends BaseNode {
     }
   }
 
-  toggleList = (state: EditorState, dispatch: (tr: Transaction) => void) => {
-    const nodesToReplace: ProsemirrorNode[] = []
+  protected toggleList(listType: NodeType, itemType: NodeType): Command {
+    return (state, dispatch) => {
+      const { schema, selection } = state
+      const { $from, $to } = selection
+      const range = $from.blockRange($to)
+      const { tr } = state
 
-    const { $from, $to } = state.selection
-    let isInListContainer = false
-    let transaction = state.tr
-
-    let startPos: number | null = null
-    let endPos: number | null = null
-
-    state.doc.nodesBetween($from.pos, $to.pos, (node, pos) => {
-      if (node.type === this.type) {
-        isInListContainer = true
+      if (!range) {
         return false
       }
 
-      if (node.type === this.paragraph.type) {
-        if (startPos === null) {
-          startPos = pos
-        }
-        endPos = pos + node.nodeSize
+      const parentList = findParentNode((node) => isList(node, schema))(selection)
 
-        nodesToReplace.push(node)
+      if (range.depth >= 1 && parentList && range.depth - parentList.depth <= 1) {
+        if (parentList.node.type === listType) {
+          return liftListItem(itemType)(state, dispatch)
+        }
+
+        if (isList(parentList.node, schema) && listType.validContent(parentList.node.content)) {
+          tr.setNodeMarkup(parentList.pos, listType)
+
+          dispatch?.(tr)
+          return false
+        }
       }
 
-      return true
-    })
+      const canWrapInList = wrapInList(listType)(state)
 
-    if (isInListContainer) return true
+      if (canWrapInList) {
+        return wrapInList(listType)(state, dispatch)
+      }
 
-    if (nodesToReplace.length > 0 && startPos !== null && endPos !== null) {
-      const newListNode = this.type.create(
-        null,
-        nodesToReplace.map((node) => this.bulletList.type.create(null, this.paragraph.type.create(null, node.content))),
-      )
-      transaction = transaction.replaceRangeWith(startPos, endPos, newListNode)
+      return chainTransactions(clearNodes(), wrapInList(listType))(state, dispatch)
     }
-
-    // Apply the transaction
-    dispatch(transaction.scrollIntoView())
-
-    return true
   }
 
   handleTabKey = (state: EditorState, dispatch: (tr: Transaction) => void) => {
@@ -90,7 +89,7 @@ export default class UnorderedList extends BaseNode {
 
   keys() {
     return {
-      'Ctrl-Shift-8': this.toggleList,
+      'Ctrl-Shift-8': this.toggleList(this.type, this.bulletList.type),
       Tab: this.handleTabKey,
     }
   }
