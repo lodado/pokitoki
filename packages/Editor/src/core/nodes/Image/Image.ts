@@ -67,6 +67,7 @@ export default class ProseImage extends BaseNode {
     return []
   }
 
+  /** TO-DO throttle 걸기 */
   private handleImageResize(view: EditorView, event: MouseEvent) {
     const handle = event.target as HTMLElement
     const img = handle.previousSibling as HTMLElement
