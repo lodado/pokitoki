@@ -1,7 +1,15 @@
 import { Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror-model'
 import { Command, EditorState, Plugin, Transaction } from 'prosemirror-state'
+import { EditorView } from 'prosemirror-view'
 
 import BaseNode from '../BaseNode' // BaseNode가 저장된 파일의 경로를 지정하세요.
+
+let id = 0
+
+function getId() {
+  id += 1
+  return id
+}
 
 export default class ProseImage extends BaseNode {
   get name() {
@@ -13,6 +21,7 @@ export default class ProseImage extends BaseNode {
       inline: true,
       attrs: {
         src: {},
+        id: { default: 0 },
         alt: { default: null },
         title: { default: null },
         width: { default: 'auto' },
@@ -24,6 +33,7 @@ export default class ProseImage extends BaseNode {
         {
           tag: 'img[src]',
           getAttrs: (dom) => ({
+            id: dom.getAttribute('data-id') || getId(),
             src: dom.getAttribute('src'),
             alt: dom.getAttribute('alt'),
             title: dom.getAttribute('title'),
@@ -32,12 +42,69 @@ export default class ProseImage extends BaseNode {
           }),
         },
       ],
-      toDOM: (node) => ['img', { ...node.attrs }],
+      toDOM: (node) => [
+        'div',
+        { style: 'position: relative;', 'data-image-id': `image-${node.attrs.id}` },
+
+        [
+          'div',
+          { style: 'position: relative; width: max-content; height: max-content;' },
+          [
+            'img',
+            {
+              src: node.attrs.src,
+              title: node.attrs.title,
+              alt: node.attrs.alt,
+              style: `width: ${node.attrs.width}; height: ${node.attrs.height};`,
+            },
+          ],
+          [
+            'div',
+            {
+              class: 'resize-handle',
+              style:
+                'width: 10px; height: 10px; background: gray; cursor: se-resize; position: absolute; right: 0px; bottom: 0px;',
+            },
+          ],
+        ],
+      ],
     }
   }
 
   inputRules() {
     return []
+  }
+
+  private handleImageResize(view: EditorView, event: MouseEvent) {
+    const handle = event.target as HTMLElement
+    const img = handle.previousSibling as HTMLElement
+    const startX = event.clientX
+    const startY = event.clientY
+
+    const startWidth = parseInt(document.defaultView?.getComputedStyle(img).width || '0', 10)
+    const startHeight = parseInt(document.defaultView?.getComputedStyle(img).height || '0', 10)
+
+    const doDrag = (e: MouseEvent) => {
+      img.style.width = `${startWidth + e.clientX - startX}px`
+      img.style.height = `${startHeight + e.clientY - startY}px`
+    }
+
+    function stopDrag(e: MouseEvent) {
+      document.documentElement.removeEventListener('mousemove', doDrag, false)
+      document.documentElement.removeEventListener('mouseup', stopDrag, false)
+
+      // 이미지 노드 업데이트
+      const tr = view.state.tr.setNodeMarkup(view.state.selection.from, null, {
+        // @ts-ignore
+        ...view.state.selection.node.attrs,
+        width: img.style.width,
+        height: img.style.height,
+      })
+      view.dispatch(tr)
+    }
+
+    document.documentElement.addEventListener('mousemove', doDrag, false)
+    document.documentElement.addEventListener('mouseup', stopDrag, false)
   }
 
   handleInsertImage = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
@@ -47,6 +114,7 @@ export default class ProseImage extends BaseNode {
 
     if (selection.empty) {
       const node = this.type.create({
+        id: getId(),
         src: 'https://via.placeholder.com/150',
         alt: 'Placeholder Image',
         title: 'Placeholder Image',
@@ -71,6 +139,16 @@ export default class ProseImage extends BaseNode {
 
       new Plugin({
         props: {
+          handleDOMEvents: {
+            dblclick: (view, event) => {
+              if ((event.target as HTMLElement)?.className === 'resize-handle') {
+                this.handleImageResize(view, event)
+                return true
+              }
+              return false
+            },
+          },
+
           nodeViews: {
             // image: (node, view, getPos) => {
             //   return new ImageNodeView(node, view, () => getPos() ?? 0)
