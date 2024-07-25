@@ -11,7 +11,6 @@ export default class ProseImage extends BaseNode {
 
   get createSchema(): NodeSpec {
     return {
-      inline: true,
       attrs: {
         src: {},
 
@@ -20,7 +19,7 @@ export default class ProseImage extends BaseNode {
         width: { default: 'auto' },
         height: { default: 'auto' },
       },
-      group: 'inline',
+      group: 'block',
       draggable: true,
       parseDOM: [
         {
@@ -48,6 +47,7 @@ export default class ProseImage extends BaseNode {
               title: node.attrs.title,
               alt: node.attrs.alt,
               style: `width: ${node.attrs.width}; height: ${node.attrs.height};`,
+              contentEditable: 'false',
             },
           ],
           [
