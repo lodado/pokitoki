@@ -1,3 +1,5 @@
+/*
+
 import { PokiTokiNavigation } from '@pokitoki/web'
 import type { Meta, StoryObj } from '@storybook/react'
 
@@ -15,3 +17,4 @@ type Story = StoryObj<typeof PokiTokiNavigation>
 export const NavigationExample: Story = {
   args: {},
 }
+*/
