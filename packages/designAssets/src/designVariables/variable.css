@@ -1,4 +1,4 @@
-[data-theme="light"] {
+:root[data-theme="light"] {
   /* colors */
   --amber-100: #ffe4b7;
   --amber-200: #ffc67c;
@@ -141,7 +141,7 @@
   --yellow-800: #795908;
   --yellow-900: #513a00;
 }
-[data-theme="dark"] {
+:root[data-theme="dark"] {
   /* colors */
   --amber-100: #6b4100;
   --amber-200: #904a07;
@@ -284,7 +284,7 @@
   --yellow-800: #fff7bf;
   --yellow-900: #fffbe1;
 }
-[data-theme="Mode 1"] {
+:root {
   /* numbers */
   --radius-50: 0.25rem;
   --radius-100: 0.5rem;
@@ -300,7 +300,7 @@
   --spacing-8: 2rem;
 }
 
-[data-theme="light"] {
+:root[data-theme="light"] {
   /* colors */
   --accent-01-default: var(--purple-600, #944de7);
   --accent-01-hover: var(--purple-500, #a964f7);
@@ -419,7 +419,7 @@
   --warning-02-press: var(--orange-200, #ffd3bc);
   --warning-02-select: var(--orange-100, #fee2d4);
 }
-[data-theme="dark"] {
+:root[data-theme="dark"] {
   /* colors */
   --accent-01-default: var(--purple-600, #944de7);
   --accent-01-hover: var(--purple-500, #a964f7);
