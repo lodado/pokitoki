@@ -1,12 +1,18 @@
+import { cn } from '@custompackages/shared'
 import { Content as RadixContent, Portal } from '@radix-ui/react-dropdown-menu'
-import React, { PropsWithChildren } from 'react'
+import React, { ComponentProps } from 'react'
 
-export interface ContentProps extends PropsWithChildren {}
+export interface ContentProps extends ComponentProps<typeof RadixContent> {}
 
-const Content = ({ children }: ContentProps) => {
+const Content = ({ children, className, ...rest }: ContentProps) => {
+  console.log(rest)
+
   return (
     <Portal>
-      <RadixContent className="min-w-[8rem] bg-red-100 rounded-[6px] p-[5px] shadow-[0px_10px_38px_-10px_rgba(22,23,24,0.35),_0px_10px_20px_-15px_rgba(22,23,24,0.2)] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,opacity]">
+      <RadixContent
+        className={cn('min-w-[17rem] p-2 flex flex-col rounded-lg shadow-card-01 gap-2 bg-surface-01', className)}
+        {...rest}
+      >
         {children}
       </RadixContent>
     </Portal>

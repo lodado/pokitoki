@@ -42,12 +42,17 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
+    "@custompackages/designsystem": "workspace:*",
     "@codemirror/basic-setup": "^0.20.0",
     "@codemirror/commands": "^6.6.0",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/language": "^6.10.2",
     "@codemirror/state": "^6.4.1",
     "@codemirror/view": "^6.28.4",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.6",
+    "@mui/material": "^5.16.6",
     "@radix-ui/react-portal": "^1.0.4",
     "mobx": "^6.13.0",
     "mobx-react": "^9.1.1",

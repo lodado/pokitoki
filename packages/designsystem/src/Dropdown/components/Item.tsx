@@ -1,6 +1,5 @@
+import { cn } from '@custompackages/shared'
 import { ComponentProps, PropsWithChildren, ReactNode } from 'react'
-
-import { cn } from '@/utils'
 
 import { Item as RadixItem } from './radix'
 
@@ -9,8 +8,12 @@ export interface ItemProps extends PropsWithChildren, ComponentProps<typeof Radi
 const Item = (props: ItemProps) => {
   const { className, ...rest } = props
 
-  /** TODO - 디자인 시안 넣을것 */
-  return <RadixItem className={cn('', className)} {...rest} />
+  return (
+    <RadixItem
+      className={cn('h-8 bg-tertiary-default body-01-r rounded justify-start items-center inline-flex', className)}
+      {...rest}
+    />
+  )
 }
 
 export default Item
