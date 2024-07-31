@@ -4,6 +4,7 @@ import { Root } from '@radix-ui/react-portal'
 import { observer } from 'mobx-react'
 import React from 'react'
 
+import { BlockCreateContent } from './components/BlockCreateContent'
 import blockCreateButtonStore from './model'
 
 export const BlockCreateButton = observer(() => {
@@ -13,26 +14,25 @@ export const BlockCreateButton = observer(() => {
   return (
     <Root>
       <Dropdown>
-        <Dropdown.Trigger asChild>
-          <button
-            type="button"
-            className="bg-transparent text-cancel-default"
-            style={{
-              position: 'absolute',
-              top: position.y,
-              left: position.x,
-            }}
-          >
-            <AddRoundedIcon role="none presentation" aria-hidden={false} />
-            <ScreenReaderOnly>Create block</ScreenReaderOnly>
-          </button>
+        <Dropdown.Trigger
+          type="button"
+          className="bg-transparent text-cancel-default"
+          style={{
+            position: 'absolute',
+            top: position.y,
+            left: position.x,
+          }}
+        >
+          <AddRoundedIcon role="none presentation" aria-hidden={false} />
+          <ScreenReaderOnly>Create block</ScreenReaderOnly>
         </Dropdown.Trigger>
-        <Dropdown.Content style={{ position: 'absolute', top: position.y, left: position.x }}>
-          <Dropdown.Item>Text</Dropdown.Item>
-          <Dropdown.Item>Image</Dropdown.Item>
-          <Dropdown.Item>Video</Dropdown.Item>
-          <Dropdown.Item>Divider</Dropdown.Item>
-        </Dropdown.Content>
+
+        <BlockCreateContent>
+          <BlockCreateContent.Item>Text</BlockCreateContent.Item>
+          <BlockCreateContent.Item>Image</BlockCreateContent.Item>
+          <BlockCreateContent.Item>Video</BlockCreateContent.Item>
+          <BlockCreateContent.Item>Divider</BlockCreateContent.Item>
+        </BlockCreateContent>
       </Dropdown>
     </Root>
   )
