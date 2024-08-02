@@ -5,8 +5,6 @@ import React, { ComponentProps } from 'react'
 export interface ContentProps extends ComponentProps<typeof RadixContent> {}
 
 const Content = ({ children, className, ...rest }: ContentProps) => {
-  console.log(rest)
-
   return (
     <Portal>
       <RadixContent

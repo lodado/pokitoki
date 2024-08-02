@@ -4,11 +4,11 @@
 
 .editor-placeholder {
   position: absolute;
+  color: var(--text-placeholder, #C1C1C1);
   opacity: 0;
 }
 
 .editor-placeholder:hover {
-  color: grey;
   opacity: 1;
 }
 
@@ -17,6 +17,37 @@
   flex-direction: row;
 }
 
+
+.ProseMirror {
+  background: var(--tertiary-default, #FFF);
+}
+
+.editor-block {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 1em;  
+
+  padding: var(--Spacing-2, 8px);
+
+  gap: var(--Spacing-1, 4px);
+  
+  background-color: transparent;
+  color: var(--text-02, #555);
+}
+
+.editor-block:hover {
+  background: var(--tertiary-hover, #F7F7F7);
+}
+ 
+.ProseMirror .empty-node::before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  float: left;
+  height: 0;
+}
 
 /** split**/
 

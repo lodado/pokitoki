@@ -1,24 +1,29 @@
 import { NodeType } from 'prosemirror-model'
 import { EditorState, TextSelection, Transaction } from 'prosemirror-state'
 
-export const exit = (node: NodeType) => (state: EditorState, dispatch?: (tr: Transaction) => void) => {
-  if (!dispatch) return false
+export const exit =
+  (node: NodeType, transaction?: Transaction, pos?: number) =>
+  (state: EditorState, dispatch?: (tr: Transaction) => void) => {
+    if (!dispatch) return false
 
-  const nodeType = node
-  const newNode = nodeType.createAndFill()
+    const nodeType = node
+    const newNode = nodeType.createAndFill()
 
-  if (newNode) {
-    // 트랜잭션 생성
-    const { tr } = state
-    const endPos = state.doc.content.size
+    if (newNode) {
+      // 트랜잭션 생성
+      let { tr } = state
 
-    tr.insert(endPos, newNode)
-    tr.setSelection(TextSelection.near(tr.doc.resolve(endPos)))
+      if (transaction) tr = transaction
 
-    dispatch(tr)
+      const endPos = pos ?? state.doc.content.size
 
-    return true
+      tr.insert(endPos, newNode)
+      tr.setSelection(TextSelection.near(tr.doc.resolve(endPos)))
+
+      dispatch(tr)
+
+      return true
+    }
+
+    return false
   }
-
-  return false
-}

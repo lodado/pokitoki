@@ -19,13 +19,15 @@ import SplitScreen from './Split'
  */
 const atomics = {
   paragraph: new Paragraph(),
-  proseImage: new ProseImage(),
+
   heading: new Heading(),
   break: new Break(),
   indent: new Indent(),
 }
 
 const molecules = {
+  proseImage: new ProseImage({ paragraph: atomics.paragraph }),
+
   splitScreen: new SplitScreen({ paragraph: atomics.paragraph }),
   code: new Code({ paragraph: atomics.paragraph }),
   codeMirror: new CodeMirror({ paragraph: atomics.paragraph }),

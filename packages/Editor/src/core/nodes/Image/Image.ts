@@ -1,10 +1,19 @@
 import { Node as ProsemirrorNode, NodeSpec, NodeType, Schema } from 'prosemirror-model'
-import { Command, EditorState, Plugin, Transaction } from 'prosemirror-state'
+import { Command, EditorState, Plugin, TextSelection, Transaction } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 
 import BaseNode from '../BaseNode' // BaseNode가 저장된 파일의 경로를 지정하세요.
+import Paragraph from '../Paragraph'
+import { exit } from '../utils'
+import { sanitizeUrl } from './sanitizeUrl'
 
 export default class ProseImage extends BaseNode {
+  paragraph: Paragraph
+
+  constructor({ paragraph }: { paragraph: Paragraph }) {
+    super()
+    this.paragraph = paragraph
+  }
   get name() {
     return 'image'
   }
@@ -17,7 +26,7 @@ export default class ProseImage extends BaseNode {
         alt: { default: null },
         title: { default: null },
         width: { default: 'auto' },
-        height: { default: 'auto' },
+        ratio: { default: '1/1' },
       },
       group: 'block',
       draggable: true,
@@ -29,7 +38,7 @@ export default class ProseImage extends BaseNode {
             alt: dom.getAttribute('alt'),
             title: dom.getAttribute('title'),
             width: dom.style.width || 'auto',
-            height: dom.style.height || 'auto',
+            ratio: dom.style.aspectRatio || '1/1',
           }),
         },
       ],
@@ -43,10 +52,10 @@ export default class ProseImage extends BaseNode {
           [
             'img',
             {
-              src: node.attrs.src,
+              src: sanitizeUrl(node.attrs.src),
               title: node.attrs.title,
               alt: node.attrs.alt,
-              style: `width: ${node.attrs.width}; height: ${node.attrs.height};`,
+              style: `width: ${node.attrs.width}; aspect-ratio: ${node.attrs.ratio}; object-fit: cover;`,
               contentEditable: 'false',
             },
           ],
@@ -55,7 +64,7 @@ export default class ProseImage extends BaseNode {
             {
               class: 'resize-handle',
               style:
-                'width: 10px; height: 10px; background: gray; cursor: se-resize; position: absolute; right: 0px; bottom: 0px;',
+                'width: 10px; height: 10px; background: gray; cursor: se-resize; position: absolute; right: 0px; bottom: 0px; ',
             },
           ],
         ],
@@ -79,10 +88,10 @@ export default class ProseImage extends BaseNode {
 
     const doDrag = (e: MouseEvent) => {
       img.style.width = `${startWidth + e.clientX - startX}px`
-      img.style.height = `${startHeight + e.clientY - startY}px`
+      // img.style.height = `${startHeight + e.clientY - startY}px`
     }
 
-    function stopDrag(e: MouseEvent) {
+    const stopDrag = (e: MouseEvent) => {
       document.documentElement.removeEventListener('mousemove', doDrag, false)
       document.documentElement.removeEventListener('mouseup', stopDrag, false)
 
@@ -91,7 +100,6 @@ export default class ProseImage extends BaseNode {
         // @ts-ignore
         ...view.state.selection.node.attrs,
         width: img.style.width,
-        height: img.style.height,
       })
       view.dispatch(tr)
     }
@@ -99,28 +107,39 @@ export default class ProseImage extends BaseNode {
     document.documentElement.addEventListener('mousemove', doDrag, false)
     document.documentElement.addEventListener('mouseup', stopDrag, false)
   }
-
   handleInsertImage = (state: EditorState, dispatch?: (tr: Transaction) => void) => {
     const { selection } = state
-    const { $from, $to } = selection
+    const { $from } = selection
     const position = $from.pos
 
-    if (selection.empty) {
-      const node = this.type.create({
-        src: 'https://via.placeholder.com/150',
-        alt: 'Placeholder Image',
-        title: 'Placeholder Image',
-      })
-      const transaction = state.tr.insert(position, node)
-      dispatch?.(transaction)
-      return true
+    const node = this.type.create({
+      src: 'https://via.placeholder.com/150',
+      alt: 'Placeholder Image',
+      title: 'Placeholder Image',
+
+      width: '150px',
+      ratio: 1 / 1,
+    })
+
+    const transaction = state.tr.insert(position, node)
+
+    // 노드의 끝 위치 확인
+    const nodeEnd = $from.end()
+
+    if (position === nodeEnd) {
+      return exit(this.paragraph.type, transaction, position + 2)(state, dispatch)
     }
 
-    return false
+    dispatch?.(transaction)
+    return true
   }
 
   keys() {
     return {
+      /* TODO
+        테스트를 위해 잠시 넣어둔 커맨드로 삭제해야함. 
+    
+      */
       'Ctrl-Space': this.handleInsertImage,
     }
   }

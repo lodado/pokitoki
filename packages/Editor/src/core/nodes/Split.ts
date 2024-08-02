@@ -35,7 +35,7 @@ export default class SplitScreen extends BaseNode {
         return [
           'div',
           { style: 'position: relative' },
-          ['div', { class: `split-screen ${node.attrs.orientation}` }, 0], // 콘텐츠 홀을 별도의 컨테이너에 넣음
+          ['div', { class: `body-02-r split-screen ${node.attrs.orientation}` }, 0], // 콘텐츠 홀을 별도의 컨테이너에 넣음
         ]
       },
     }

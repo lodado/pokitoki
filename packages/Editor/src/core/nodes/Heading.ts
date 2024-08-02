@@ -66,6 +66,7 @@ export default class Heading extends BaseNode {
         [
           `h${node.attrs.level}`,
           {
+            class: this.defaultClassName,
             'data-collapsed': node.attrs.collapsed ? 'true' : 'false',
           },
           0,

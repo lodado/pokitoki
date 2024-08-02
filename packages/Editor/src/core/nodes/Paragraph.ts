@@ -22,7 +22,7 @@ export default class Paragraph extends BaseNode {
           tag: 'p',
         },
       ],
-      toDOM: (node) => ['p', 0],
+      toDOM: (node) => ['p', { class: this.defaultClassName }, 0],
     }
   }
 
@@ -35,6 +35,7 @@ export default class Paragraph extends BaseNode {
   plugins() {
     return [
       ...super.plugins(),
+
       new Plugin({
         props: {
           decorations: (state) => {
@@ -42,7 +43,7 @@ export default class Paragraph extends BaseNode {
             const { doc } = state
 
             doc.descendants((node, pos) => {
-              if (node.type.name === this.name && node.content.size === 0) {
+              if (node.type.name === this.name && node.content.size <= 1) {
                 const widget = document.createElement('span')
                 widget.className = 'editor-placeholder'
                 widget.textContent = 'Type something...'
