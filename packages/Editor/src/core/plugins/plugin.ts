@@ -27,7 +27,5 @@ export const createPlugin = (schema: Schema) => {
     history(),
     gapCursor(),
     dropCursor(),
-
-    hoverHighlightPlugin,
   ]
 }

@@ -19,6 +19,9 @@ export const BlockCreateButton = observer(() => {
           className="bg-transparent text-cancel-default"
           style={{
             position: 'absolute',
+
+            width: '37px',
+            height: '37px',
             top: position.y,
             left: position.x,
           }}

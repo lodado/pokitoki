@@ -1,9 +1,10 @@
 import React from 'react'
 
 import BlockCreateButtonWidget from './BlockCreateButton/widget'
+import DragButtonWidget from './DragButton/widget'
 import DropdownWidget from './Dropdown/widget'
 
-const WIDGET_REGISTER = [new DropdownWidget(), new BlockCreateButtonWidget()]
+const WIDGET_REGISTER = [new DragButtonWidget(), new BlockCreateButtonWidget()]
 
 class _WidgetController {
   widgets = WIDGET_REGISTER

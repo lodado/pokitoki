@@ -1,4 +1,4 @@
-import { Node, ResolvedPos } from 'prosemirror-model'
+import { Fragment, Node, ResolvedPos, Schema, Slice } from 'prosemirror-model'
 import { Selection } from 'prosemirror-state'
 
 type Predicate = (node: Node) => boolean

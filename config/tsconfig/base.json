@@ -19,9 +19,7 @@
     "strict": true,
     "allowSyntheticDefaultImports": true,
 
-    "paths": {
-      "@/*": ["../../apps/web/src/*", "../../packages/modules/src/*", "../../packages/shared/src/*"]
-    }
+
   },
   "exclude": ["node_modules"],
   "include": ["custom.d.ts", "**/*.svg"]

@@ -1,5 +1,6 @@
 'use client'
 
+import { dropCursor } from 'prosemirror-dropcursor'
 import { DOMParser } from 'prosemirror-model'
 import { EditorState, Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
@@ -18,10 +19,12 @@ const useEditorView = () => {
 
   useEffect(() => {
     const state = createState({ getDoc: (schema) => DOMParser.fromSchema(schema).parse(editorRef.current!) })
+
     const viewInstance = createView({ editor: editorRef.current!, state })
 
     setEditorState(state)
     setView(viewInstance)
+
     setIsMounted(true)
 
     return () => viewInstance.destroy()
@@ -36,7 +39,7 @@ const Editor = () => {
   return (
     <>
       <EditorProvider view={view!} editorState={editorState!}>
-        <div className="w-full pl-10 bg-red-100 h-[50rem]">
+        <div className="pl-10">
           <div ref={editorRef} />
         </div>
 
