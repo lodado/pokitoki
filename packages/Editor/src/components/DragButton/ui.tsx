@@ -45,45 +45,46 @@ export const DragButton = observer(() => {
 
       const targetPoss = dragButtonStore.pos!
 
-      const { node: targetNode, pos: targetPos } = findTopLevelNode(view.state.doc, targetPoss.pos)
+      // eslint-disable-next-line prefer-const
+      let { node: targetNode, pos: targetPos } = findTopLevelNode(view.state.doc, targetPoss.pos)
 
-      try {
-        const pos = view.posAtCoords({ left: e.clientX + 80, top: e.clientY })
-        const node = pos && pos.inside >= 0 && view.state.doc.nodeAt(pos.inside)
+      const pos = view.posAtCoords({ left: e.clientX + 80, top: e.clientY })
+      const node = pos && pos.inside >= 0 && view.state.doc.nodeAt(pos.inside)
 
-        if (pos && node) {
-          const target: number | null = pos.pos
+      if (!targetNode) {
+        targetNode = view.state.schema.nodes.paragraph.createAndFill()!
+      }
 
-          if (true) {
-            // 트랜잭션을 실행하여 노드 이동
-            const { tr } = view.state
-            let offset = 0
+      if (pos && node) {
+        const target: number | null = pos.pos
 
-            // Delete the original node before inserting the new one
-            if (targetPos + targetNode!.nodeSize > 0) {
-              tr.delete(targetPos, targetPos + targetNode!.nodeSize)
-              offset = targetNode!.nodeSize + 1
-            }
+        if (true) {
+          // 트랜잭션을 실행하여 노드 이동
+          const { tr } = view.state
+          let offset = 0
 
-            const point = dropPoint(
-              view.state.doc,
-              view.posAtCoords({ left: e.clientX + 80, top: e.clientY })!.pos,
-              new Slice(Fragment.from(targetNode), 0, 0),
-            )
-
-            if (point !== null) {
-              if (point <= targetPos) {
-                offset = 0
-              }
-
-              tr.insert(point - offset, Fragment.from(targetNode))
-            }
-
-            view.dispatch(tr)
+          // Delete the original node before inserting the new one
+          if (targetNode.nodeSize > 0) {
+            tr.delete(targetPos, targetPos + targetNode!.nodeSize)
+            offset = targetNode!.nodeSize + 1
           }
+
+          const point = dropPoint(
+            view.state.doc,
+            view.posAtCoords({ left: e.clientX + 80, top: e.clientY })!.pos,
+            new Slice(Fragment.from(targetNode), 0, 0),
+          )
+
+          if (point !== null) {
+            if (point <= targetPos) {
+              offset = 0
+            }
+
+            tr.insert(point - offset, Fragment.from(targetNode))
+          }
+
+          view.dispatch(tr)
         }
-      } catch (error) {
-        console.error('Error while moving node', error)
       }
 
       setDragFlag(false)
