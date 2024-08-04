@@ -1,3 +1,4 @@
+import { Node as ProseMirrorNode } from 'prosemirror-model'
 import { Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 
@@ -21,6 +22,20 @@ function getNodeFromEvent(view: EditorView, event: MouseEvent) {
   return null
 }
 
+export const hoverPluginDispatcher = (view: EditorView) => {
+  return {
+    disPatchHoverPlaceHolder: (nodeInfo: { node: ProseMirrorNode; start: number; end: number; point: number }) => {
+      const { node, start, end, point } = nodeInfo
+
+      view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, { node, start, end, point }))
+    },
+
+    disPatchCleanHoverPlaceHolder: () => {
+      view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, null))
+    },
+  }
+}
+
 export const hoverHighlightPlugin = new Plugin({
   props: {
     decorations(state) {
@@ -40,6 +55,8 @@ export const hoverHighlightPlugin = new Plugin({
       }
 
       const { start, point, end } = nodeInfo
+
+      console.log(start, point, end)
 
       if (start <= -1) {
         return old
