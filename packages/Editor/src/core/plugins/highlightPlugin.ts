@@ -26,19 +26,6 @@ export const hoverHighlightPlugin = new Plugin({
     decorations(state) {
       return this.getState(state)
     },
-    handleDOMEvents: {
-      mousemove(view, event) {
-        const nodeInfo = getNodeFromEvent(view, event)
-        if (nodeInfo) {
-          view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, nodeInfo))
-        }
-        return false
-      },
-      mouseleave(view, event) {
-        view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, null))
-        return false
-      },
-    },
   },
   state: {
     init() {
@@ -52,13 +39,13 @@ export const hoverHighlightPlugin = new Plugin({
         return DecorationSet.empty
       }
 
-      const { start, end } = nodeInfo
+      const { start, point, end } = nodeInfo
 
       if (start <= -1) {
         return old
       }
 
-      const deco = Decoration.node(start, end, { class: 'hover-border' })
+      const deco = Decoration.node(start, end, { class: `hover-border ${point < end ? 'start' : 'end'}` })
       return DecorationSet.create(tr.doc, [deco])
     },
   },
@@ -70,7 +57,15 @@ export const hoverHighlightPlugin = new Plugin({
 const style = document.createElement('style')
 style.innerHTML = `
   .hover-border {
-    border: 1px solid blue; /* Change this to your preferred style */
+   
+  }
+
+  .hover-border.start {
+    border-top: 4px solid blue; 
+  }
+
+  .hover-border.end {
+    border-bottom: 4px solid blue; 
   }
 `
 document.head.appendChild(style)
