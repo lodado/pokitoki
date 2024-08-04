@@ -38,6 +38,8 @@ const Editor = () => {
 
   return (
     <>
+      <div style={{ width: '300px', height: '300px' }}>123</div>
+
       <EditorProvider view={view!} editorState={editorState!}>
         <div className="pl-10">
           <div ref={editorRef} />

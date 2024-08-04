@@ -1,6 +1,7 @@
 import { Plugin, PluginKey } from 'prosemirror-state'
 import React, { PropsWithChildren, useState } from 'react'
 
+import { getActualCoord } from '../../utils'
 import Widget from '../Widget'
 import blockCreateButtonStore from './model'
 import { BlockCreateButton } from './ui'
@@ -25,11 +26,11 @@ export default class BlockCreateButtonWidget extends Widget {
               const $pos = doc.resolve(pos)
               const node = $pos.parent
 
-              const coords = view.coordsAtPos(pos)
+              const actualCoords = getActualCoord({ view, pos })
 
               if (node) {
                 // Adjust this condition as needed
-                blockCreateButtonStore.openTrigger({ x: coords.left, y: coords.bottom - 20 })
+                blockCreateButtonStore.openTrigger({ x: actualCoords.left, y: actualCoords.bottom - 20 })
               } else {
                 blockCreateButtonStore.closeTrigger()
               }

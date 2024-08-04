@@ -2,41 +2,21 @@ import { Node as ProseMirrorNode } from 'prosemirror-model'
 import { Plugin } from 'prosemirror-state'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
 
-// Helper function to get the node under the mouse pointer
-function getNodeFromEvent(view: EditorView, event: MouseEvent) {
-  const pos = view.posAtCoords({ left: event.clientX, top: event.clientY })
-  if (!pos) return null
-
-  const resolvedPos = view.state.doc.resolve(pos.pos)
-  const node = resolvedPos.node(resolvedPos.depth)
-
-  if (node) {
-    const start = resolvedPos.start(resolvedPos.depth) - 1
-    const end = resolvedPos.end(resolvedPos.depth) + 1
-    return {
-      node,
-      start,
-      end,
-    }
-  }
-  return null
-}
-
-export const hoverPluginDispatcher = (view: EditorView) => {
+export const blockDnDHoverPluginDispatcher = (view: EditorView) => {
   return {
-    disPatchHoverPlaceHolder: (nodeInfo: { node: ProseMirrorNode; start: number; end: number; point: number }) => {
+    hoverDndPlaceholderDispatcher: (nodeInfo: { node: ProseMirrorNode; start: number; end: number; point: number }) => {
       const { node, start, end, point } = nodeInfo
 
-      view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, { node, start, end, point }))
+      view.dispatch(view.state.tr.setMeta(BlockDnDHighlightPlugin, { node, start, end, point }))
     },
 
-    disPatchCleanHoverPlaceHolder: () => {
-      view.dispatch(view.state.tr.setMeta(hoverHighlightPlugin, null))
+    resetHoverDndPlaceholderDispatcher: () => {
+      view.dispatch(view.state.tr.setMeta(BlockDnDHighlightPlugin, null))
     },
   }
 }
 
-export const hoverHighlightPlugin = new Plugin({
+export const BlockDnDHighlightPlugin = new Plugin({
   props: {
     decorations(state) {
       return this.getState(state)
@@ -47,7 +27,7 @@ export const hoverHighlightPlugin = new Plugin({
       return DecorationSet.empty
     },
     apply(tr, old) {
-      const nodeInfo = tr.getMeta(hoverHighlightPlugin)
+      const nodeInfo = tr.getMeta(BlockDnDHighlightPlugin)
       if (nodeInfo === undefined) return old
 
       if (nodeInfo === null) {
@@ -55,8 +35,6 @@ export const hoverHighlightPlugin = new Plugin({
       }
 
       const { start, point, end } = nodeInfo
-
-      console.log(start, point, end)
 
       if (start <= -1) {
         return old

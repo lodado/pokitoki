@@ -6,10 +6,10 @@ import { observer } from 'mobx-react'
 import { Fragment, Node as ProseMirrorNode, Schema, Slice } from 'prosemirror-model'
 import { dropPoint } from 'prosemirror-transform'
 import { Decoration, DecorationSet, EditorView } from 'prosemirror-view'
-import React, { MouseEventHandler, useState } from 'react'
+import React, { MouseEventHandler, SyntheticEvent, useState } from 'react'
 
 import { findTopLevelNode } from '../../core/nodes/utils'
-import { hoverHighlightPlugin, hoverPluginDispatcher } from '../../core/plugins/highlightPlugin'
+import { BlockDnDHighlightPlugin, blockDnDHoverPluginDispatcher } from '../../core/plugins/highlightPlugin'
 import { useEditorContext } from '../../EditorProvider'
 import { useNodeDnDPlaceHolder } from './hook'
 import dragButtonStore from './model'
@@ -26,11 +26,11 @@ export const DragButton = observer(() => {
   } = useNodeDnDPlaceHolder()
 
   const { isOpen, position, dragFlag, setDragFlag } = dragButtonStore
-  const { disPatchHoverPlaceHolder, disPatchCleanHoverPlaceHolder } = hoverPluginDispatcher(view)
+  const { hoverDndPlaceholderDispatcher, resetHoverDndPlaceholderDispatcher } = blockDnDHoverPluginDispatcher(view)
 
   if (!isOpen) return null
 
-  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = (event) => {
+  const handleMouseDown: MouseEventHandler<HTMLButtonElement> = (event: SyntheticEvent) => {
     event.preventDefault()
     setDragFlag(true)
     handleShowPlaceholder(true)
@@ -38,7 +38,10 @@ export const DragButton = observer(() => {
     let dragStartPos: { x: number; y: number } | null = null
     let animationFrameId: number
 
-    const initPos = view.posAtCoords({ left: event.clientX + 50, top: event.clientY })
+    const initPos = view.posAtCoords({
+      left: (event as unknown as MouseEvent).clientX + 50,
+      top: (event as unknown as MouseEvent).clientY,
+    })
 
     if (initPos) {
       const resolvedPos = view.state.doc.resolve(initPos.pos)
@@ -70,7 +73,7 @@ export const DragButton = observer(() => {
         const start = resolvedPos.start(resolvedPos.depth) - 1
         const end = resolvedPos.end(resolvedPos.depth) + 1
 
-        disPatchHoverPlaceHolder({ node, start, end, point })
+        hoverDndPlaceholderDispatcher({ node, start, end, point })
       }
 
       cancelAnimationFrame(animationFrameId)
@@ -80,7 +83,7 @@ export const DragButton = observer(() => {
         ;(event.target as HTMLButtonElement).style.cursor = `grabbing`
         document.body.style.cursor = 'grabbing'
 
-        handlePlaceholderPos({ x: e.clientX + 50, y: e.clientY })
+        handlePlaceholderPos({ x: e.pageX + 50, y: e.pageY })
       })
     }
 
@@ -136,7 +139,7 @@ export const DragButton = observer(() => {
         console.error(error)
       }
 
-      disPatchCleanHoverPlaceHolder()
+      resetHoverDndPlaceholderDispatcher()
 
       handleNodeContent(null)
       handleShowPlaceholder(false)
