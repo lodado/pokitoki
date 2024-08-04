@@ -17,6 +17,7 @@ class BlockCreateButtonStore extends OpenableStore {
 
   openTrigger({ x, y }: Position) {
     this.position = { x: 0, y: y - 10 }
+
     this.open()
   }
 

@@ -8,7 +8,7 @@ import { Schema } from 'prosemirror-model'
 import { WidgetController } from '../../components'
 import { MarkController } from '../marks'
 import { NodeController } from '../nodes'
-import { hoverHighlightPlugin } from './highlightPlugin'
+import { BlockDnDHighlightPlugin } from './highlightPlugin'
 import { saveDocument } from './utils/saveDocument'
 
 export const createPlugin = (schema: Schema) => {
@@ -27,5 +27,7 @@ export const createPlugin = (schema: Schema) => {
     history(),
     gapCursor(),
     dropCursor(),
+
+    BlockDnDHighlightPlugin,
   ]
 }

@@ -38,6 +38,8 @@ const Editor = () => {
 
   return (
     <>
+      <div style={{ width: '100%', height: '100px' }}>margin for test</div>
+
       <EditorProvider view={view!} editorState={editorState!}>
         <div className="pl-10">
           <div ref={editorRef} />
