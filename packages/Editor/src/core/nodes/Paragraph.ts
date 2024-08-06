@@ -43,7 +43,7 @@ export default class Paragraph extends BaseNode {
             const { doc } = state
 
             doc.descendants((node, pos) => {
-              if (node.type.name === this.name && node.content.size <= 1) {
+              if (node.type.name === this.name && node.content.size < 1) {
                 const widget = document.createElement('span')
                 widget.className = 'editor-placeholder'
                 widget.textContent = 'Type something...'

@@ -56,7 +56,6 @@ export default class ProseImage extends BaseNode {
               title: node.attrs.title,
               alt: node.attrs.alt,
               style: `width: ${node.attrs.width}; aspect-ratio: ${node.attrs.ratio}; object-fit: cover;`,
-              contentEditable: 'false',
             },
           ],
           [

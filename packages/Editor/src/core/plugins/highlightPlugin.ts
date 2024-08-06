@@ -50,7 +50,7 @@ export const BlockDnDHighlightPlugin = new Plugin({
   나중 css 관리법 정하면 이동시키기
 */
 const style = document.createElement('style')
-style.innerHTML = `
+style.textContent = `
   .hover-border {
    
   }

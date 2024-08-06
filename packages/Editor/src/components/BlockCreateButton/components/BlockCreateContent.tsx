@@ -34,7 +34,7 @@ const BlockCreateItem = ({ children }: PropsWithChildren) => {
 
 export const BlockCreateContent = ({ children }: PropsWithChildren) => {
   return (
-    <Dropdown.Content className="flex">
+    <Dropdown.Content className="flex ml-[60px]">
       <Input placeholder="example" />
 
       <h5 className="h-4 px-2 item-center body-01-r text-text-02">Section Header</h5>

@@ -28,7 +28,7 @@ export default class DragButtonWidget extends Widget {
 
               const actualCoords = getActualCoord({ view, pos })
 
-              if (node) {
+              if (node && node.type.name !== 'doc') {
                 // Adjust this condition as needed
                 DragButtonStore.openTrigger({ x: actualCoords.left, y: actualCoords.bottom - 20, node, pos: $pos })
               } else {

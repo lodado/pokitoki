@@ -1,3 +1,4 @@
+import { history, redoDepth, undoDepth } from 'prosemirror-history'
 import { Node as ProsemirrorNode } from 'prosemirror-model'
 import { EditorState, Transaction } from 'prosemirror-state'
 import { EditorView, NodeViewConstructor } from 'prosemirror-view'

@@ -7,14 +7,21 @@ const fragmentToReactNode = (fragment: Fragment): ReactNode => {
   fragment.forEach((node, offset, index) => {
     if (node.type.name === 'image') {
       children.push(
-        <img key={index} src={node.attrs.src} alt="Content" style={{ maxWidth: '100%', maxHeight: '100%' }} />,
+        <img
+          key={node.type.name + index}
+          src={node.attrs.src}
+          alt="Content"
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
+        />,
       )
+    } else if (node.type.name === 'br') {
+      children.push(<br key={node.type.name + index} />)
     } else if (node.isText) {
-      children.push(<span key={index}>{node.text}</span>)
+      children.push(<span key={node.type.name + index}>{node.text}</span>)
     } else if (node.isBlock) {
-      children.push(<div key={index}>{fragmentToReactNode(node.content)}</div>)
+      children.push(<div key={node.type.name + index}>{fragmentToReactNode(node.content)}</div>)
     } else {
-      children.push(<span key={index}>Unsupported content</span>)
+      children.push(<span key={node.type.name + index}>Unsupported content</span>)
     }
   })
 
